@@ -1,5 +1,6 @@
 import './DashBoardForAdmin.css'
 import { Link, Outlet } from 'react-router-dom';
+import { useForm } from "react-hook-form";
 import logo from '../../assets/logo/Dream-Records Logo-(Light).png';
 import { 
     HomeIcon, 
@@ -13,7 +14,7 @@ import { useState } from 'react';
 import { Drawer } from 'antd';
 
 const DashBoardForAdmin = () => {
-
+    // Mobile Navigation Humbergo ______________________
     const [open, setOpen] = useState(false);
     const showDrawer = () => {
         setOpen(true);
@@ -21,6 +22,12 @@ const DashBoardForAdmin = () => {
     const onClose = () => {
         setOpen(false);
     };
+
+    // React Hook Form Submit Function For Create User _________________________
+    const { register, handleSubmit, formState: { errors }} = useForm();
+    const onSubmit = (data) => console.log(data);
+
+
 
     return (
         <>
@@ -52,11 +59,10 @@ const DashBoardForAdmin = () => {
                                     <div className="flex flex-col w-full border-opacity-50">
                                         <div className="divider mt-0"></div>
                                     </div>
-                                    <form action="">
-                                        <input type="email" placeholder="Enter User Email" className="input input-bordered w-full" />
-                                        <br />
-                                        <br />
-                                        <input className='btn btn-neutral btn-sm rounded-full' type="submit" value={'Create User'}/>
+                                    <form onSubmit={handleSubmit(onSubmit)}>
+                                        <input type="email" placeholder="Enter User Email" className="input input-bordered w-full" {...register("email", { required: true})}/>
+                                        {errors.email && <span className='text-red-600 pt-2 block'>Please Fill Email</span>}
+                                        <input className='btn btn-neutral btn-sm rounded-full mt-4' type="submit" value={'Create User'}/>
                                     </form>
                                 </div>
                             </dialog>
