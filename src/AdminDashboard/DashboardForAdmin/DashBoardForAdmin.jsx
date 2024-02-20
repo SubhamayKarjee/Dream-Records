@@ -1,6 +1,5 @@
 import './DashBoardForAdmin.css'
 import { Link, Outlet } from 'react-router-dom';
-import { useForm } from "react-hook-form";
 import logo from '../../assets/logo/Dream-Records Logo-(Light).png';
 import { 
     HomeIcon, 
@@ -12,6 +11,7 @@ import {
  } from '@heroicons/react/24/solid'
 import { useState } from 'react';
 import { Drawer } from 'antd';
+import CreateUserForm from './CreateUserForm';
 
 const DashBoardForAdmin = () => {
     // Mobile Navigation Humbergo ______________________
@@ -23,15 +23,9 @@ const DashBoardForAdmin = () => {
         setOpen(false);
     };
 
-    // React Hook Form Submit Function For Create User _________________________
-    const { register, handleSubmit, formState: { errors }} = useForm();
-    const onSubmit = (data) => console.log(data);
-
 
 
     return (
-        <>
-  
         <section className='md:h-screen bg-slate-950'>
             <div className='xl:max-w-[1300px] lg:max-w-[96%] md:max-w-[96%] sm:max-w-[100%] w-[100%] mx-auto'>
                 <div className="md:grid md:gap-4 grid-cols-5 md:py-4 md:h-screen">
@@ -47,26 +41,19 @@ const DashBoardForAdmin = () => {
                             <button onClick={()=>document.getElementById('create_user_modal').showModal()} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
                                + Create User
                             </button>
-                            {/* Open Modal For Create User Start _____________________ */}
+                            {/* Open Modal For Create User Start __________________________________________________________________________ */}
                             <dialog id="create_user_modal" className="modal modal-bottom sm:modal-middle">
                                 <div className="modal-box">
                                     {/* Close Modal Icon right Corner ________________ */}
                                     <form method="dialog">
                                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                     </form>
-                                    {/* Close Modal Icon right Corner ________________ */}
-                                    <h2 className='text-lg font-bold'>Create a new User</h2>
-                                    <div className="flex flex-col w-full border-opacity-50">
-                                        <div className="divider mt-0"></div>
-                                    </div>
-                                    <form onSubmit={handleSubmit(onSubmit)}>
-                                        <input type="email" placeholder="Enter User Email" className="input input-bordered w-full" {...register("email", { required: true})}/>
-                                        {errors.email && <span className='text-red-600 pt-2 block'>Please Fill Email</span>}
-                                        <input className='btn btn-neutral btn-sm rounded-full mt-4' type="submit" value={'Create User'}/>
-                                    </form>
+                                    {/* User Form Components _________________________ */}
+                                    <CreateUserForm/>
                                 </div>
                             </dialog>
-                            {/* Open Modal For Create User End --_____________________ */}
+                             {/* __________________________________________________________________________________________________________ */}
+                            {/* Admin All Nav Link ________________________________________________________________________________________ */}
                             <div className='mt-2 py-2'> 
                                 <Link className='text-white flex items-center py-2' to={'/admin-dashboard'}>
                                     <HomeIcon className="h-7 w-7 pe-2" />
@@ -95,9 +82,9 @@ const DashBoardForAdmin = () => {
                             </div>
                         </div>
                     </div>
-                    {/* Admin Page Outlate Div __________________________________________________________________________ */}
+                     {/* __________________________________________________________________________________________________________ */}
                     <div className="bg-white col-span-4 p-2 md:p-4 md:rounded-lg">
-                        {/* Admin Profile image right Side ______________________________________________________________ */}
+                        {/* Admin Profile image right Side ________________________________________________________________________ */}
                         <div style={{marginTop: '-10px'}} className='hidden md:block md:flex justify-end items-center border-b'>
                             <div className="flex-none gap-2">
                                 <div className="dropdown dropdown-end">
@@ -114,14 +101,15 @@ const DashBoardForAdmin = () => {
                                 </div>
                             </div>
                         </div>
-
-                        {/* Mobile Menu ____________________________________________________________________________________________________________________________________ */}
-                        <div className='block md:hidden flex justify-between items-center'>
-                            {/* Left Icon Drower ____________________________________________________________________________________ */}
-
+                        {/* ______________________________________________________________________________________________________________ */}
+                        {/* Mobile Menu Start !!!!!!!!!_______________________________________________________________________________________!!!!!!!!!! */}
+                        <div className='block mb-4 md:hidden flex justify-between items-center'>
+                            {/* Left Drawer Icon _________________________________________________________________________________________ */}
                             <button type="primary" onClick={showDrawer}>
                                 <Bars3BottomLeftIcon className="h-10 w-10" />
                             </button>
+                            {/* __________________________________________________________________________________________________________ */}
+                            {/* Drawer____________________________________________________________________________________________________ */}
                             <Drawer className='bg-slate-950' onClose={onClose} open={open}>
                                 <div className="pt-4 bg-slate-950">
                                     <div className="avatar">
@@ -132,33 +120,12 @@ const DashBoardForAdmin = () => {
                                     <h1 className='text-xl font-extrabold text-white'>DR Admin</h1>
                                     <p className='text-white text-sm'>Explore the site Admin. Easily Manage Your Site</p>
                                     <div className='py-4'>
-                                        <button onClick={onClose} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
-                                        + Create User
-                                        </button>
-                                        {/* <button onClick={()=>document.getElementById('create_user_modal').showModal()} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
-                                        + Create User
-                                        </button> */}
-                                        {/* Open Modal For Create User Start _____________________ */}
-                                        <dialog id="create_user_modal" className="modal modal-bottom sm:modal-middle">
-                                            <div className="modal-box">
-                                                {/* Close Modal Icon right Corner ________________ */}
-                                                <form method="dialog">
-                                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                                                </form>
-                                                {/* Close Modal Icon right Corner ________________ */}
-                                                <h2 className='text-lg font-bold'>Create a new User</h2>
-                                                <div className="flex flex-col w-full border-opacity-50">
-                                                    <div className="divider mt-0"></div>
-                                                </div>
-                                                <form action="">
-                                                    <input type="email" placeholder="Enter User Email" className="input input-bordered w-full" />
-                                                    <br />
-                                                    <br />
-                                                    <input className='btn btn-neutral btn-sm rounded-full' type="submit" value={'Create User'}/>
-                                                </form>
-                                            </div>
-                                        </dialog>
-                                        {/* Open Modal For Create User End --_____________________ */}
+                                        <Link to={'/admin-dashboard/create-user'}>
+                                            <button onClick={onClose} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
+                                                + Create User
+                                            </button>
+                                        </Link>
+                                        
                                         <div className='mt-2 py-2'> 
                                             <Link onClick={onClose} className='text-white flex items-center py-2' htmlFor="menu_drower" aria-label="close sidebar" to={'/admin-dashboard'}>
                                                 <HomeIcon className="h-7 w-7 pe-2" />
@@ -188,8 +155,8 @@ const DashBoardForAdmin = () => {
                                     </div>
                                 </div>
                             </Drawer>
-
-                            {/* Right Admin Profile ____________________________________________________________________________________ */}
+                            {/* __________________________________________________________________________________________________________ */}
+                            {/* Right Admin Profile ______________________________________________________________________________________ */}
                             <div className='flex justify-end items-center border-b'>
                                 <div className="flex-none gap-2">
                                     <div className="dropdown dropdown-end">
@@ -207,14 +174,15 @@ const DashBoardForAdmin = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* OutLet __________________________ */}
-                        <Outlet/>
+                        {/* __________________________________________________________________________________________________________ */}
+                        {/* Admin Page Outlate Div ___________________________________________________________________________________ */}
+                        <main>
+                            <Outlet/>
+                        </main>
                     </div>
-                    {/* ___________________________________________________________________________________________________ */}
                 </div>
             </div>
         </section>
-        </>
     );
 };
 

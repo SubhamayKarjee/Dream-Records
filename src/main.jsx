@@ -7,10 +7,12 @@ import {
 } from "react-router-dom";
 import { Suspense } from 'react';
 import LoadingComponentsForPage from './LoadingComponents/LoadingComponentsForPage';
+import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsInsidePage';
 
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
 const SignUp = React.lazy(() => import('./Authentication/SignUp/SignUp'));
-const DashBoardForAdmin = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/DashBoardForAdmin'))
+const DashBoardForAdmin = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/DashBoardForAdmin'));
+const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/CreateUserForm'));
 
 // className='xl:max-w-[1140px] lg:max-w-[90%] md:max-w-[90%] sm:max-w-[90%] w-[95%] mx-auto'
 // Route Start ________________________________
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/admin-dashboard',
         element: <div>Mehedi Hasan</div>
+      },
+      {
+        path: '/admin-dashboard/create-user',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><CreateUserForm/></Suspense>,
       },
       {
         path: '/admin-dashboard/all-user',
