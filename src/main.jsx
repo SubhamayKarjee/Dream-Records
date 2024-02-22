@@ -9,7 +9,9 @@ import { Suspense } from 'react';
 import LoadingComponentsForPage from './LoadingComponents/LoadingComponentsForPage';
 import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsInsidePage';
 
+
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
+const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
 const SignUp = React.lazy(() => import('./Authentication/SignUp/SignUp'));
 const DashBoardForAdmin = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/DashBoardForAdmin'));
 const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/CreateUserForm'));
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/log-in",
     element: <Suspense fallback={<LoadingComponentsForPage/>}><LogIn/></Suspense>,
+  },
+  {
+    path: "/admin",
+    element: <Suspense fallback={<LoadingComponentsForPage/>}><AdminLoginPage/></Suspense>,
   },
   {
     path: "/sign-up/:email",

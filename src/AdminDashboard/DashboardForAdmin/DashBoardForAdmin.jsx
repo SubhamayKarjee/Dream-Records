@@ -24,7 +24,6 @@ const DashBoardForAdmin = () => {
     };
 
 
-
     return (
         <section className='md:h-screen bg-slate-950'>
             <div className='xl:max-w-[1300px] lg:max-w-[96%] md:max-w-[96%] sm:max-w-[100%] w-[100%] mx-auto'>
