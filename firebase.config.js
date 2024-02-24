@@ -3,13 +3,13 @@ import { getAuth } from "firebase/auth";
 // import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDEobeNVHfvQ1eH7-sMnSr-iePR9_y3APw",
-    authDomain: "dream-records-private-limited.firebaseapp.com",
-    projectId: "dream-records-private-limited",
-    storageBucket: "dream-records-private-limited.appspot.com",
-    messagingSenderId: "487884364438",
-    appId: "1:487884364438:web:8c85eb4d2f3f027e1780b7",
-    measurementId: "G-WFPYE302ZY"
+    apiKey: import.meta.env.VITE_apiKey,
+    authDomain: import.meta.env.VITE_authDomain,
+    projectId: import.meta.env.VITE_projectId,
+    storageBucket: import.meta.env.VITE_storageBucket,
+    messagingSenderId: import.meta.env.VITE_messagingSenderId,
+    appId: import.meta.env.VITE_appId,
+    measurementId: import.meta.env.VITE_measurementId,
 };
 
 // Initialize Firebase
