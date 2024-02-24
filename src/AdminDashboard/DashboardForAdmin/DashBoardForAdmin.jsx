@@ -42,11 +42,7 @@ const DashBoardForAdmin = () => {
                             </button>
                             {/* Open Modal For Create User Start __________________________________________________________________________ */}
                             <dialog id="create_user_modal" className="modal modal-bottom sm:modal-middle">
-                                <div className="modal-box">
-                                    {/* Close Modal Icon right Corner ________________ */}
-                                    <form method="dialog">
-                                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                                    </form>
+                                <div className="modal-box">                                    
                                     {/* User Form Components _________________________ */}
                                     <CreateUserForm/>
                                 </div>

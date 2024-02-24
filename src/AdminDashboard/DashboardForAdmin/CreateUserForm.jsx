@@ -10,26 +10,37 @@ const CreateUserForm = () => {
 
     const [formHidden, setFormHidden] = useState(false)
     const [message, setMessage] = useState('');
+    const [userId, setUserId] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [loading, setLoading] = useState(false);
     // React Hook Form Submit Function For Create User _________________________
-    const { register, handleSubmit, formState: { errors }} = useForm();
+    const { register, handleSubmit, reset, formState: { errors }} = useForm();
     const onSubmit = (data) => {
         setLoading(true)
         axios.post('http://localhost:5000/api/v1/users', data).then(res => {
             if(res.status == 200){
                 setMessage(res.data.message);
-                setUserEmail(res.data.email);
+                setUserEmail(res.data.email)
+                setUserId(res.data.data.insertedId);
                 setLoading(false);
                 setFormHidden(true);
-                console.log(res)
+                reset();
+                console.log(res.data)
             }
             
         })
-        // console.log(data)
     };
+
+    const handleFormDiv = () => {
+        setFormHidden(false)
+    }
+
+
     return (
         <>
+            <form onClick={handleFormDiv} method="dialog">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
             <h2 className='text-lg font-bold'>Create a new User</h2>
             <div className="flex flex-col w-full border-opacity-50">
                 <div className="divider mt-0"></div>
@@ -51,7 +62,7 @@ const CreateUserForm = () => {
                                                 message &&  <p className="font-bold">{message} <span className="text-green-500 font-bold">{userEmail}</span></p>
                                             }
                                             <div className="flex justify-between items-center">
-                                                <span>http://localhost:5173/set-password/{userEmail}</span>
+                                                <span>http://localhost:5173/set-password/{userId}</span>
                                                 {/* <span style={{cursor: 'pointer'}} className="pointer bg-slate-100 rounded-md p-2"><LinkIcon className='w-4 h-4'/></span> */}
                                             </div>
                                         </div>
