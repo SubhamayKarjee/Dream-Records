@@ -21,7 +21,7 @@ const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdm
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div><p className='font-bold'>font-semibold</p></div>,
+    element: <Suspense fallback={<LoadingComponentsForPage/>}><LogIn/></Suspense>,
   },
   {
     path: "/log-in",
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     element: <Suspense fallback={<LoadingComponentsForPage/>}><AdminLoginPage/></Suspense>,
   },
   {
-    path: "/sign-up/:email",
+    path: "/set-password/:email",
     element: <Suspense fallback={<LoadingComponentsForPage/>}><SignUp/></Suspense>,
   },
   {
