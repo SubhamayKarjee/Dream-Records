@@ -5,18 +5,23 @@ import {
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import auth from "../../../firebase.config";
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useAuthState, useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 import axios from "axios";
 
 const SignUp = () => {
     // Get Data From React Router Loader _______________
-    const {data} = useLoaderData();
-    const id = data.data._id;
-    const email = data.data.email;
-    const roll = data.data.roll;
+    const userData = useLoaderData();
+
+    const [user] = useAuthState(auth);
+    console.log(user);
+
+    const id = userData.data.data._id;
+    const email = userData.data.data.email;
+    const roll = userData.data.data.roll;
 
     const [loadingHandle, setLoadingHandle] = useState(false)
+    const [existUser, setExistUser] = useState('')
 
     // Create User IN Firebase __________________________
     const [
@@ -26,27 +31,40 @@ const SignUp = () => {
         error,
       ] = useCreateUserWithEmailAndPassword(auth);
 
+      const [updateProfile, updating, error1] = useUpdateProfile(auth);
+
+
 
     // User Update Form _________________________________
     const [passwordError, setPasswordError] = useState();
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = async (data) => {
-        const openingDate = new Date();
-        if(data.password1 === data.password2){
-            const password = data.password1;
-            const name = data.name;
-            // _________________
-            createUserWithEmailAndPassword(email, password);
-            const userData = {email, name, roll, openingDate};
-            setLoadingHandle(true)
-            axios.put(`http://localhost:5000/api/v1/users/${id}`, userData).then(res => {
-                if(res.status == 200){
-                    setLoadingHandle(false);
-                    console.log(res.data)
-                }
-            })
+        const date = new Date();
+        const openingDate = date.toLocaleDateString();
+        const openingTime = date.toLocaleTimeString([], { hour12: true});
+        
+        if(!userData?.data?.data?.name){
+            if(data.password1 === data.password2){
+                const password = data.password1;
+                const name = data.name;
+                // _________________
+                await createUserWithEmailAndPassword(email, password);
+                const userData = {email, name, roll, openingDate, openingTime};
+                setLoadingHandle(true)
+                await axios.put(`http://localhost:5000/api/v1/users/${id}`, userData).then( async res => {
+                    const displayName = `${name} '__' ${id} '__' ${roll}` 
+                    if(res.status == 200){
+                        setLoadingHandle(false);
+                        await updateProfile({ displayName });
+                        console.log(res.data)
+                        console.log(user);
+                    }
+                })
+            }else{
+                setPasswordError('Password Not Match')
+            }
         }else{
-            setPasswordError('Password Not Match')
+            setExistUser('All ready Have an Account')
         }
     }
 
@@ -85,12 +103,21 @@ const SignUp = () => {
                                     loadingHandle && loading  && <LoadingComponentsInsidePage/>
                                 }
                                 {
+                                    updating && <LoadingComponentsInsidePage/>
+                                }
+                                {
                                     error && <span className='text-red-600 pb-2 block font-bold'>{error}</span>
+                                }
+                                {
+                                    error1 && <span className='text-red-600 pb-2 block font-bold'>{error1}</span>
+                                }
+                                {
+                                    existUser && <span className='text-red-600 pb-2 block font-bold'>{existUser}</span>
                                 }
                             </div>
                             <div className="flex justify-center mt-4">
                                 {
-                                    !data ? <input className="btn btn-neutral rounded-full btn-wide" type="submit" value={'Submit'} disabled/> : <input className="btn btn-neutral rounded-full btn-wide" type="submit" value={'Submit'} />
+                                    !userData.data ? <input className="btn btn-neutral rounded-full btn-wide" type="submit" value={'Submit'} disabled/> : <input className="btn btn-neutral rounded-full btn-wide" type="submit" value={'Submit'} />
                                 }
                             </div>
                         </form>
