@@ -1,5 +1,6 @@
 import { BellIcon } from "@heroicons/react/24/solid";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Outlet } from "react-router-dom";
 import auth from "../../../firebase.config";
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 
@@ -22,15 +23,20 @@ const UserProfile = () => {
                         </div>
                     </div>
                     <div>
-                        <h1 className="text-lg font-bold">{userName}</h1>
-                        <p className="text-sm font-semibold">{user.email}</p>
+                        <h1 className="text-lg font-bold text-white">{userName}</h1>
+                        <p className="text-sm text-white">{user.email}</p>
                     </div>
+                </div>
+                <div>
+                    <Outlet/>
                 </div>
             </div>
 
             {/* Blog Post Div  _______________________________*/}
-            <div className="p-2 md:basis-1/4">
-                <h4 className='flex items-center font-bold text-lg text-slate-500 border-b'> <BellIcon className='w-6 h-6 me-2 text-slate-500'/> Notification</h4>
+            <div className="md:basis-1/4">
+                <div className='p-2 border-b'>
+                    <h4 className='flex items-center font-bold text-lg text-slate-500'> <BellIcon className='w-6 h-6 me-2 text-slate-500'/> Notification</h4>
+                </div>
             </div>
         </div>
     );

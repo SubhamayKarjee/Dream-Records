@@ -23,6 +23,8 @@ const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdm
 // User Dashboard Routes import_________________________________________________________
 const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdminHomePage/UserAdminHomePage'));
 const UserHomePage = React.lazy(() => import('./UserAdminDashboard/UserHomePage/UserHomePage'));
+// User Profile Routes________________
+const ProfileHomeComponents = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/ProfileHomeComponents'));
 
 
 
@@ -76,7 +78,33 @@ const router = createBrowserRouter([
       },
       {
         path: '/account',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserProfile/></Suspense>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserProfile/></Suspense>,
+        children: [
+          {
+            path: '/account',
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProfileHomeComponents/></Suspense>,
+          },
+          {
+            path: '/account/update-profile-information',
+            element: 'Update Profile Information'
+          },
+          {
+            path: '/account/change-password',
+            element: 'Change Password'
+          },
+          {
+            path: '/account/change-email',
+            element: 'Change Email'
+          },
+          {
+            path: '/account/youtube-oac-request',
+            element: 'Youtube OAC Request'
+          },
+          {
+            path: '/account/youtube-claim-release',
+            element: 'You Claim Release'
+          },
+        ]
       },
     ]
   },
