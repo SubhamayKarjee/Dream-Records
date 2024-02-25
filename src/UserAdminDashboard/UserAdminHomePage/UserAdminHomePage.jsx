@@ -9,6 +9,7 @@ import {
     UsersIcon,
     ChartPieIcon,
     UserCircleIcon,
+    ClipboardDocumentListIcon,
  } from '@heroicons/react/24/solid'
 import { useState } from 'react';
 import { Drawer } from 'antd';
@@ -82,6 +83,10 @@ const UserAdminHomePage = () => {
                                     <ChartPieIcon className="h-7 w-7 pe-2" />
                                     Statistics
                                 </Link>
+                                <Link className='text-white flex items-center py-2' to={'/'}>
+                                    <ClipboardDocumentListIcon className="h-7 w-7 pe-2" />
+                                    Blog
+                                </Link>
                                 <Link className='text-white flex items-center py-2' to={'/account'}>
                                     <UserCircleIcon className="h-7 w-7 pe-2" />
                                     Account
@@ -153,6 +158,10 @@ const UserAdminHomePage = () => {
                                             <Link onClick={onClose} className='text-white flex items-center py-2' to={'/'}>
                                                 <ChartPieIcon className="h-7 w-7 pe-2" />
                                                 Statistics
+                                            </Link>
+                                            <Link className='text-white flex items-center py-2' to={'/blog'}>
+                                                <ClipboardDocumentListIcon className="h-7 w-7 pe-2" />
+                                                Blog
                                             </Link>
                                             <Link onClick={onClose} className='text-white flex items-center py-2' to={'/account'}>
                                                 <UserCircleIcon className="h-7 w-7 pe-2" />
