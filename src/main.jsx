@@ -9,21 +9,27 @@ import { Suspense } from 'react';
 import LoadingComponentsForPage from './LoadingComponents/LoadingComponentsForPage';
 import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsInsidePage';
 import axios from 'axios';
-// import axios from 'axios';
 
 
+// Commont Routes import_______________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
 const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
 const SignUp = React.lazy(() => import('./Authentication/SignUp/SignUp'));
+// Admin Routes import__________________________________________________________________
 const DashBoardForAdmin = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/DashBoardForAdmin'));
 const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/CreateUserForm'));
 
+// User Dashboard Routes import_________________________________________________________
+const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdminHomePage/UserAdminHomePage'))
+
+
+
 // Route Start ________________________________
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Suspense fallback={<LoadingComponentsForPage/>}><LogIn/></Suspense>,
-  },
+  // {
+  //   path: "/",
+  //   element: <Suspense fallback={<LoadingComponentsForPage/>}><LogIn/></Suspense>,
+  // },
   {
     path: "/log-in",
     element: <Suspense fallback={<LoadingComponentsForPage/>}><LogIn/></Suspense>,
@@ -37,6 +43,7 @@ const router = createBrowserRouter([
     loader: ({ params }) => axios.get(`http://localhost:5000/api/v1/users/${params.id}`),
     element: <Suspense fallback={<LoadingComponentsForPage/>}><SignUp/></Suspense>,
   },
+  // Admin Dashboard________________________________________________________________________
   {
     path: "/admin-dashboard",
     element: <Suspense fallback={<LoadingComponentsForPage/>}><DashBoardForAdmin/></Suspense>,
@@ -53,6 +60,19 @@ const router = createBrowserRouter([
         path: '/admin-dashboard/all-user',
         element: <div>All User</div>
       },
+    ]
+  },
+
+  // User Dashboard________________________________________________________________________
+  {
+    path: "/",
+    element: <Suspense fallback={<LoadingComponentsForPage/>}><UserAdminHomePage/></Suspense>,
+    children: [
+      {
+        path: '/',
+        element: <div>Main page outlate</div>
+      },
+      
     ]
   },
 ]);
