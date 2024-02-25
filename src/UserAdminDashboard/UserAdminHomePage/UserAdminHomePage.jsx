@@ -1,4 +1,4 @@
-import '../../AdminDashboard/DashboardForAdmin/DashBoardForAdmin.css'
+import './UserAdminHomePage.css'
 import { Link, Outlet } from 'react-router-dom';
 import logo from '../../assets/logo/Dream-Records Logo-(Light).png';
 import { 
@@ -40,7 +40,7 @@ const UserAdminHomePage = () => {
         <section className='md:h-screen bg-slate-950'>
             <div className='xl:max-w-[1300px] lg:max-w-[96%] md:max-w-[96%] sm:max-w-[100%] w-[100%] mx-auto'>
                 <div className="md:grid md:gap-4 grid-cols-5 md:py-4 md:h-screen">
-                    <div className="pt-4 hidden md:block overflow-auto">
+                    <div className="pt-4 hidden md:block h-full overflow-y-auto">
                         <div className="avatar">
                             <div className="w-32">
                                 <img src={logo} />
@@ -62,11 +62,11 @@ const UserAdminHomePage = () => {
                              {/* __________________________________________________________________________________________________________ */}
                             {/* Admin All Nav Link ________________________________________________________________________________________ */}
                             <div className='mt-2 py-2'> 
-                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard'}>
+                                <Link className='text-white flex items-center py-2' to={'/'}>
                                     <HomeIcon className="h-7 w-7 pe-2" />
                                     Home
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/all-user'}>
+                                <Link className='text-white flex items-center py-2' to={'/'}>
                                     <DocumentCheckIcon className="h-7 w-7 pe-2" />
                                     Releases
                                 </Link>
@@ -90,7 +90,7 @@ const UserAdminHomePage = () => {
                         </div>
                     </div>
                      {/* __________________________________________________________________________________________________________ */}
-                    <div className="bg-white col-span-4 p-2 md:p-4 md:rounded-lg">
+                    <div className="bg-white col-span-4 p-2 md:p-4 md:rounded-lg h-full overflow-hidden">
                         {/* Admin Profile image right Side ________________________________________________________________________ */}
                         <div style={{marginTop: '-10px'}} className='hidden md:block md:flex justify-end items-center border-b'>
                             <div className="flex-none gap-2">
@@ -134,7 +134,7 @@ const UserAdminHomePage = () => {
                                         </Link>
                                         
                                         <div className='mt-2 py-2'> 
-                                            <Link onClick={onClose} className='text-white flex items-center py-2' htmlFor="menu_drower" aria-label="close sidebar" to={'/admin-dashboard'}>
+                                            <Link onClick={onClose} className='text-white flex items-center py-2' htmlFor="menu_drower" aria-label="close sidebar" to={'/'}>
                                                 <HomeIcon className="h-7 w-7 pe-2" />
                                                 Home
                                             </Link>
@@ -183,7 +183,7 @@ const UserAdminHomePage = () => {
                         </div>
                         {/* __________________________________________________________________________________________________________ */}
                         {/* Admin Page Outlate Div ___________________________________________________________________________________ */}
-                        <main>
+                        <main className='outlet_layout_issue'>
                             <Outlet/>
                         </main>
                     </div>

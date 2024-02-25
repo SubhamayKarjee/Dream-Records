@@ -1,0 +1,10 @@
+.ant-drawer-body{
+    background-color: #020617 !important;
+}
+
+
+@media only screen and (min-width: 668px) {
+    .outlet_layout_issue{
+        height: 92%;
+    }
+  }

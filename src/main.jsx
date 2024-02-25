@@ -20,7 +20,8 @@ const DashBoardForAdmin = React.lazy(() => import('./AdminDashboard/DashboardFor
 const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/CreateUserForm'));
 
 // User Dashboard Routes import_________________________________________________________
-const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdminHomePage/UserAdminHomePage'))
+const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdminHomePage/UserAdminHomePage'));
+const UserHomePage = React.lazy(() => import('./UserAdminDashboard/UserHomePage/UserHomePage'));
 
 
 
@@ -70,7 +71,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <div>Main page outlate</div>
+        element: <Suspense fallback={<LoadingComponentsForPage/>}><UserHomePage/></Suspense>
       },
       
     ]
