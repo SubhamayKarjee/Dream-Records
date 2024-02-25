@@ -82,7 +82,7 @@ const UserAdminHomePage = () => {
                                     <ChartPieIcon className="h-7 w-7 pe-2" />
                                     Statistics
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/'}>
+                                <Link className='text-white flex items-center py-2' to={'/account'}>
                                     <UserCircleIcon className="h-7 w-7 pe-2" />
                                     Account
                                 </Link>
@@ -102,7 +102,7 @@ const UserAdminHomePage = () => {
                                 </div>
                                 <ul tabIndex={0} className="border mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                                     <h3 className='text-lg font-bold px-2 border-b'>{userData[0]}</h3>
-                                    <li><Link className='font-bold py-2 my-2' to={'/'}>Account</Link></li>
+                                    <li><Link className='font-bold py-2 my-2' to={'/account'}>Account</Link></li>
                                     <li><Link className='btn btn-sm btn-error' to={'/'}>Logout</Link></li>
                                 </ul>
                                 </div>
@@ -154,7 +154,7 @@ const UserAdminHomePage = () => {
                                                 <ChartPieIcon className="h-7 w-7 pe-2" />
                                                 Statistics
                                             </Link>
-                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/'}>
+                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/account'}>
                                                 <UserCircleIcon className="h-7 w-7 pe-2" />
                                                 Account
                                             </Link>
@@ -174,7 +174,7 @@ const UserAdminHomePage = () => {
                                     </div>
                                     <ul tabIndex={0} className="border mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                                         <h3 className='text-lg font-bold px-2 border-b'>{userData[0]}</h3>
-                                        <li><Link className='font-bold py-2 my-2' to={'/'}>Account</Link></li>
+                                        <li><Link className='font-bold py-2 my-2' to={'/account'}>Account</Link></li>
                                         <li><Link className='btn btn-sm btn-error' to={'/'}>Logout</Link></li>
                                     </ul>
                                     </div>

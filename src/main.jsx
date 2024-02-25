@@ -9,6 +9,7 @@ import { Suspense } from 'react';
 import LoadingComponentsForPage from './LoadingComponents/LoadingComponentsForPage';
 import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsInsidePage';
 import axios from 'axios';
+import UserProfile from './UserAdminDashboard/UserProfile/UserProfile';
 
 
 // Commont Routes import_______________________________________________________________
@@ -71,9 +72,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Suspense fallback={<LoadingComponentsForPage/>}><UserHomePage/></Suspense>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserHomePage/></Suspense>
       },
-      
+      {
+        path: '/account',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserProfile/></Suspense>
+      },
     ]
   },
 ]);
