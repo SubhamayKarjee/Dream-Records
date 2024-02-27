@@ -1,17 +1,13 @@
 import { BellIcon } from "@heroicons/react/24/solid";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useContext } from "react";
 import { Outlet } from "react-router-dom";
-import auth from "../../../firebase.config";
-import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
+import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 
 const UserProfile = () => {
 
-    const [user, loading] = useAuthState(auth);
-    if(loading){
-        return <LoadingComponentsInsidePage/>
-    }
-    console.log(user);
-    const userName = user.displayName.split("'__'")[0]
+    const {user, userNameIdRoll} = useContext(AuthContext)
+
+    // const userName = user.displayName.split("'__'")[0]
 
     return (
         <div className="md:flex md:h-full">
@@ -23,7 +19,7 @@ const UserProfile = () => {
                         </div>
                     </div>
                     <div>
-                        <h1 className="text-lg font-bold text-white">{userName}</h1>
+                        <h1 className="text-lg font-bold text-white">{userNameIdRoll[0]}</h1>
                         <p className="text-sm text-white">{user.email}</p>
                     </div>
                 </div>

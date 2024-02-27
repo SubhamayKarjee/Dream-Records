@@ -12,6 +12,10 @@ const ProfileHomeComponents = () => {
                 Youtube OAC Request
             </Link>
             <Link className="block py-2 px-2 font-semibold flex items-center  text-[#595959] hover:bg-slate-100 rounded-md" to={'/account/youtube-claim-release'}><ExclamationCircleIcon className="w-5 h-5 me-2 text-[#595959]"/>Claim Release</Link>
+
+            <div className="flex justify-end me-4 mt-4">
+                <button className="btn btn-neutral py-1 rounded-full btn-sm border-none">Log Out</button>
+            </div>
         </div>
     );
 };

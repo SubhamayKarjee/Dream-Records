@@ -10,6 +10,7 @@ import LoadingComponentsForPage from './LoadingComponents/LoadingComponentsForPa
 import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsInsidePage';
 import axios from 'axios';
 import UserProfile from './UserAdminDashboard/UserProfile/UserProfile';
+import UpdateProfileInformation from './UserAdminDashboard/UserProfile/UserProfileComponents/UpdateProfileInformation';
 
 
 // Commont Routes import_______________________________________________________________
@@ -86,7 +87,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/account/update-profile-information',
-            element: 'Update Profile Information'
+            element: <UpdateProfileInformation/>
           },
           {
             path: '/account/change-password',
