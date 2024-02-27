@@ -12,6 +12,7 @@ import axios from 'axios';
 import UserProfile from './UserAdminDashboard/UserProfile/UserProfile';
 import UpdateProfileInformation from './UserAdminDashboard/UserProfile/UserProfileComponents/UpdateProfileInformation';
 import UserPassUpdateComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserPassUpdateComponent';
+import UserEmailUpdateComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserEmailUpdateComponent';
 
 
 // Commont Routes import_______________________________________________________________
@@ -96,7 +97,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/account/change-email',
-            element: 'Change Email'
+            element: <UserEmailUpdateComponent/>
           },
           {
             path: '/account/youtube-oac-request',
