@@ -13,6 +13,8 @@ import UserProfile from './UserAdminDashboard/UserProfile/UserProfile';
 import UpdateProfileInformation from './UserAdminDashboard/UserProfile/UserProfileComponents/UpdateProfileInformation';
 import UserPassUpdateComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserPassUpdateComponent';
 import UserEmailUpdateComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserEmailUpdateComponent';
+import UserYoutubeOacRequestComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserYoutubeOacRequestComponent';
+import UserClaimReleaseComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserClaimReleaseComponent';
 
 
 // Commont Routes import_______________________________________________________________
@@ -101,11 +103,11 @@ const router = createBrowserRouter([
           },
           {
             path: '/account/youtube-oac-request',
-            element: 'Youtube OAC Request'
+            element: <UserYoutubeOacRequestComponent/>
           },
           {
             path: '/account/youtube-claim-release',
-            element: 'You Claim Release'
+            element: <UserClaimReleaseComponent/>
           },
         ]
       },
