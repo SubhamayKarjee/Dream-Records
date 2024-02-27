@@ -1,7 +1,36 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+import { useUpdatePassword } from "react-firebase-hooks/auth";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import auth from "../../../../firebase.config";
+import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
 
 const UserPassUpdateComponent = () => {
+
+    const [updatePassword, updating, error] = useUpdatePassword(auth);
+
+    const [passMatchErr, setPassMatchErr] = useState('')
+    const { register, handleSubmit, formState: { errors }} = useForm();
+    const onSubmit = async (data) => {
+    if(data.pass1 === data.pass2){
+        setPassMatchErr('');
+        const password = data.pass1;
+        const success = await updatePassword(password)
+        if(success){
+            alert('Password Updated Successfully!')
+        }
+    }else{
+        setPassMatchErr('Password Not Match');
+        return;
+    }
+    
+
+
+
+    };
+
+
     return (
         <div>
             <div className="my-4">
@@ -9,21 +38,24 @@ const UserPassUpdateComponent = () => {
             </div>
             <div>
                 <h2 className="text-lg font-semibold text-slate-500 px-2">Update your Password</h2>
-                <div className="p-3 border mt-2 rounded-lg">
-                    <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Current Password</p>
-                    <input type="text" placeholder="Current Password" className="input rounded-full input-bordered w-full"/>
-                    {/* <input type="text" placeholder="Last Name" className="input rounded-full input-bordered w-full" {...register("nick_name", { required: true})}/> */}
-                    {/* {errors.nick_name && <span className='text-red-600 pt-2 block'>Nick/Display Name Required</span>} */}
+                <form onSubmit={handleSubmit(onSubmit)} className="p-3 border mt-2 rounded-lg">
                     <p className="my-1 text-sm font-semibold text-slate-500 ms-2">New Password</p>
-                    <input type="text" placeholder="New Password" className="input rounded-full input-bordered w-full"/>
-                    {/* <input type="text" placeholder="Last Name" className="input rounded-full input-bordered w-full" {...register("nick_name", { required: true})}/> */}
-                    {/* {errors.nick_name && <span className='text-red-600 pt-2 block'>Nick/Display Name Required</span>} */}
+                    <input type="password" placeholder="New Password" className="input rounded-full input-bordered w-full" {...register("pass1", { required: true})}/>
+                    {errors.pass1 && <span className='text-red-600 pt-2 block'>New Password Required</span>}
                     <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Confirm Password</p>
-                    <input type="text" placeholder="Confirm Password" className="input rounded-full input-bordered w-full"/>
-                    {/* <input type="text" placeholder="Last Name" className="input rounded-full input-bordered w-full" {...register("nick_name", { required: true})}/> */}
-                    {/* {errors.nick_name && <span className='text-red-600 pt-2 block'>Nick/Display Name Required</span>} */}
+                    <input type="password" placeholder="Confirm Password" className="input rounded-full input-bordered w-full" {...register("pass2", { required: true})}/>
+                    {errors.pass2 && <span className='text-red-600 pt-2 block'>Confirm Password Required</span>}
+                    {
+                        passMatchErr && <span className='text-red-600 pt-2 block'>{passMatchErr}</span>
+                    }
+                    {
+                        updating && <LoadingComponentsInsidePage/>
+                    }
+                    {
+                        error && <span className='text-red-600 pt-2 block'>{error.message}</span>
+                    }
                     <input type="submit" value={'Update'} className="btn btn-sm my-4 px-6 btn-accent rounded-full" />
-                </div>
+                </form>
             </div>
         </div>
     );
