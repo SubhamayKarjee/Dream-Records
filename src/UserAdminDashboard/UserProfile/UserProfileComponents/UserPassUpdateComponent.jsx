@@ -13,21 +13,17 @@ const UserPassUpdateComponent = () => {
     const [passMatchErr, setPassMatchErr] = useState('')
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = async (data) => {
-    if(data.pass1 === data.pass2){
-        setPassMatchErr('');
-        const password = data.pass1;
-        const success = await updatePassword(password)
-        if(success){
-            alert('Password Updated Successfully!')
+        if(data.pass1 === data.pass2){
+            setPassMatchErr('');
+            const password = data.pass1;
+            const success = await updatePassword(password)
+            if(success){
+                alert('Password Updated Successfully!')
+            }
+        }else{
+            setPassMatchErr('Password Not Match');
+            return;
         }
-    }else{
-        setPassMatchErr('Password Not Match');
-        return;
-    }
-    
-
-
-
     };
 
 

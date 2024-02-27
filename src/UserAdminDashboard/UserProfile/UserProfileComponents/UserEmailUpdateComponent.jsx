@@ -1,7 +1,24 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { useVerifyBeforeUpdateEmail } from "react-firebase-hooks/auth";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import auth from "../../../../firebase.config";
+import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
 
 const UserEmailUpdateComponent = () => {
+
+    const [verifyBeforeUpdateEmail, updating, error] = useVerifyBeforeUpdateEmail(auth);
+
+    const { register, handleSubmit, formState: { errors }} = useForm();
+    const onSubmit = async (data) => {
+
+        const email = data.email;
+        const success = await verifyBeforeUpdateEmail(email)
+        if(success){
+            alert('Please Go to your Email inbox and verify your Email')
+        }
+    };
+
     return (
         <div>
             <div className="my-4">
@@ -9,13 +26,18 @@ const UserEmailUpdateComponent = () => {
             </div>
             <div>
                 <h2 className="text-lg font-semibold text-slate-500 px-2">Update your Email</h2>
-                <div className="p-3 border mt-2 rounded-lg">
+                <form onSubmit={handleSubmit(onSubmit)} className="p-3 border mt-2 rounded-lg">
                     <p className="my-1 text-sm font-semibold text-slate-500 ms-2">New Email</p>
-                    <input type="text" placeholder="New Email" className="input rounded-full input-bordered w-full"/>
-                    {/* <input type="text" placeholder="Last Name" className="input rounded-full input-bordered w-full" {...register("nick_name", { required: true})}/> */}
-                    {/* {errors.nick_name && <span className='text-red-600 pt-2 block'>Nick/Display Name Required</span>} */}
+                    <input type="email" placeholder="New Email" className="input rounded-full input-bordered w-full" {...register("email", { required: true})}/>
+                    {errors.email && <span className='text-red-600 pt-2 block'>Email Required</span>}
+                    {
+                        updating && <LoadingComponentsInsidePage/>
+                    }
+                    {
+                        error && <span className='text-red-600 pt-2 block'>{error.message}</span>
+                    }
                     <input type="submit" value={'Update'} className="btn btn-sm my-4 px-6 btn-accent rounded-full" />
-                </div>
+                </form>
             </div>
         </div>
     );
