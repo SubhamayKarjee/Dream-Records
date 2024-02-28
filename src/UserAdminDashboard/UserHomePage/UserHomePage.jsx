@@ -1,5 +1,6 @@
 import { ClipboardDocumentListIcon } from '@heroicons/react/24/solid';
 import UserArtistComponentForHomePage from '../UserArtistPage/UserArtistComponentForHomePage';
+import PendingMusicComponent from './PendingMusicComponent';
 import './UserHomePage.css';
 
 const UserHomePage = () => {
@@ -21,6 +22,7 @@ const UserHomePage = () => {
                     </div>
                 </div>
                 <UserArtistComponentForHomePage/>
+                <PendingMusicComponent/>
             </div>
 
             {/* Blog Post Div  _______________________________*/}
