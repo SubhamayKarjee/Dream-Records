@@ -43,7 +43,6 @@ const UserAdminHomePage = () => {
     
     let userNameIdRoll = user?.displayName?.split("'__'");
     const contextValue = {user, userNameIdRoll}
-    // console.log(userData);
 
     return (
         <section className='md:h-screen bg-slate-950'>
