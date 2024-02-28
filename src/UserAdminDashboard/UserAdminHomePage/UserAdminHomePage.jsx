@@ -67,7 +67,7 @@ const UserAdminHomePage = () => {
                         <div  className='my-4 first_layoutIssue'>
                              {/* __________________________________________________________________________________________________________ */}
                             {/* Admin All Nav Link ________________________________________________________________________________________ */}
-                            <div className='mt-2 py-2'> 
+                            <div className='py-2'> 
                                 <Link className='text-white flex items-center py-2' to={'/'}>
                                     <HomeIcon className="h-7 w-7 pe-2" />
                                     Home

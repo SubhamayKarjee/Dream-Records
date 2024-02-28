@@ -37,7 +37,7 @@ const DashBoardForAdmin = () => {
                             </div>
                             <h1 className='text-xl font-extrabold text-white'>DR Admin</h1>
                             <p className='text-white text-sm'>Explore the site Admin. Easily Manage Your Site</p>
-                                <div className='pt-2'>
+                                <div className='pt-3'>
                                     <button onClick={()=>document.getElementById('create_user_modal').showModal()} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
                                     + Create User
                                     </button>
