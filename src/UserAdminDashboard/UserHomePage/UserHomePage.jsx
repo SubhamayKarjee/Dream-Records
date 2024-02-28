@@ -1,9 +1,15 @@
-import { ClipboardDocumentListIcon } from '@heroicons/react/24/solid';
+import { ClipboardDocumentListIcon, DocumentMagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { useContext } from 'react';
+import BlogComponents from '../BlogPostPage/BlogComponents';
+import { AuthContext } from '../UserAdminHomePage/UserAdminHomePage';
 import UserArtistComponentForHomePage from '../UserArtistPage/UserArtistComponentForHomePage';
 import PendingMusicComponent from './PendingMusicComponent';
 import './UserHomePage.css';
 
 const UserHomePage = () => {
+
+    const { userNameIdRoll} = useContext(AuthContext)
+
     return (
         <div className="md:flex md:h-full">
             <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2'>
@@ -11,8 +17,8 @@ const UserHomePage = () => {
                     <div className='h-full bg-gradient-to-r from-[#EF4136]'>
                         <div className='p-3 h-full flex items-end '>
                             <div>
-                                <h1 className='text-xl font-bold text-white'>Dream Records Private Limited</h1>
-                                <p className='font-semibold text-sm text-white'>Create and manage releases</p>
+                                <h1 className='text-xl font-bold text-white'>Hi, {userNameIdRoll[0]}</h1>
+                                <p className='font-semibold text-sm text-white'>Welcome to Dream Records</p>
                                 <div className='py-1'>
                                     <button className='btn btn-neutral py-1 rounded-full btn-sm border-none me-2'>Create</button>
                                     <button className='btn btn-neutral py-1 rounded-full btn-sm border-none '>Releases</button>
@@ -23,6 +29,13 @@ const UserHomePage = () => {
                 </div>
                 <UserArtistComponentForHomePage/>
                 <PendingMusicComponent/>
+                {/* Blog Post Component Start ________________________________________________________________ */}
+                <div className="flex items-center py-3">
+                    <DocumentMagnifyingGlassIcon className="h-5 w-5 text-slate-500 me-2"/>
+                    <p className="text-sm font-semibold text-slate-500">Blog Post</p>
+                </div>
+                <BlogComponents/>
+                {/* Blog Post Component End ________________________________________________________________ */}
             </div>
 
             {/* Blog Post Div  _______________________________*/}

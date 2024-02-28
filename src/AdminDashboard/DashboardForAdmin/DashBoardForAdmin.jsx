@@ -28,28 +28,32 @@ const DashBoardForAdmin = () => {
         <section className='md:h-screen bg-slate-950'>
             <div className='xl:max-w-[1300px] lg:max-w-[96%] md:max-w-[96%] sm:max-w-[100%] w-[100%] mx-auto'>
                 <div className="md:grid md:gap-4 grid-cols-5 md:py-4 md:h-screen">
-                    <div className="pt-4 hidden md:block overflow-auto">
-                        <div className="avatar">
-                            <div className="w-32">
-                                <img src={logo} />
-                            </div>
-                        </div>
-                        <h1 className='text-xl font-extrabold text-white'>DR Admin</h1>
-                        <p className='text-white text-sm'>Explore the site Admin. Easily Manage Your Site</p>
-                        <div className='py-4'>
-                            <button onClick={()=>document.getElementById('create_user_modal').showModal()} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
-                               + Create User
-                            </button>
-                            {/* Open Modal For Create User Start __________________________________________________________________________ */}
-                            <dialog id="create_user_modal" className="modal modal-bottom sm:modal-middle">
-                                <div className="modal-box">                                    
-                                    {/* User Form Components _________________________ */}
-                                    <CreateUserForm/>
+                    <div className="pt-4 hidden md:block relative">
+                        <div className='admin_dashboard_height_issue_logo_div'>
+                            <div className="avatar">
+                                <div className="w-32">
+                                    <img src={logo} />
                                 </div>
-                            </dialog>
-                             {/* __________________________________________________________________________________________________________ */}
+                            </div>
+                            <h1 className='text-xl font-extrabold text-white'>DR Admin</h1>
+                            <p className='text-white text-sm'>Explore the site Admin. Easily Manage Your Site</p>
+                                <div className='pt-2'>
+                                    <button onClick={()=>document.getElementById('create_user_modal').showModal()} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
+                                    + Create User
+                                    </button>
+                                    {/* Open Modal For Create User Start __________________________________________________________________________ */}
+                                    <dialog id="create_user_modal" className="modal modal-bottom sm:modal-middle">
+                                        <div className="modal-box">                                    
+                                            {/* User Form Components _________________________ */}
+                                            <CreateUserForm/>
+                                        </div>
+                                    </dialog>
+                                    {/* __________________________________________________________________________________________________________ */}
+                                </div>
+                            </div>
+                        <div className='my-4 admin_dashboard_first_layoutIssue'>                             
                             {/* Admin All Nav Link ________________________________________________________________________________________ */}
-                            <div className='mt-2 py-2'> 
+                            <div className='pb-2'> 
                                 <Link className='text-white flex items-center py-2' to={'/admin-dashboard'}>
                                     <HomeIcon className="h-7 w-7 pe-2" />
                                     Home
@@ -171,7 +175,7 @@ const DashBoardForAdmin = () => {
                         </div>
                         {/* __________________________________________________________________________________________________________ */}
                         {/* Admin Page Outlate Div ___________________________________________________________________________________ */}
-                        <main>
+                        <main className='outlet_layout_issue_admin'>
                             <Outlet/>
                         </main>
                     </div>

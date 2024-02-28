@@ -13,7 +13,6 @@ import {
  } from '@heroicons/react/24/solid'
 import { useState } from 'react';
 import { Drawer } from 'antd';
-import CreateUserForm from '../../AdminDashboard/DashboardForAdmin/CreateUserForm';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.config';
 import LoadingComponentsForPage from '../../LoadingComponents/LoadingComponentsForPage';
@@ -48,25 +47,24 @@ const UserAdminHomePage = () => {
         <section className='md:h-screen bg-slate-950'>
             <div className='xl:max-w-[1300px] lg:max-w-[96%] md:max-w-[96%] sm:max-w-[100%] w-[100%] mx-auto'>
                 <div className="md:grid md:gap-4 grid-cols-5 md:py-4 md:h-screen">
-                    <div className="pt-4 hidden md:block h-full overflow-y-auto">
-                        <div className="avatar">
-                            <div className="w-32">
-                                <img src={logo} />
+                    <div className="pt-4 hidden md:block h-full relative">
+                        <div className='for_height_issue_logo_div'>
+                            <div className="avatar">
+                                <div className="w-32">
+                                    <img src={logo} />
+                                </div>
+                            </div>
+                            <div style={{marginTop: '-20px'}}>
+                                <h1 className='text-xl font-extrabold text-white'>Dream Records</h1>
+                                <p className='text-white text-sm'>Sell your music worldwide.</p>
+                                <div className='pt-3'>
+                                    <button onClick={()=>document.getElementById('create_user_modal').showModal()} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
+                                    + Create
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <h1 className='text-xl font-extrabold text-white'>Hi, {userNameIdRoll[0]}</h1>
-                        <p className='text-white text-sm'>Welcome to Dream Records. You are now a member of Dream Records</p>
-                        <div className='py-4'>
-                            <button onClick={()=>document.getElementById('create_user_modal').showModal()} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
-                               + Create
-                            </button>
-                            {/* Open Modal For Create User Start __________________________________________________________________________ */}
-                            <dialog id="create_user_modal" className="modal modal-bottom sm:modal-middle">
-                                <div className="modal-box">                                    
-                                    {/* User Form Components _________________________ */}
-                                    <CreateUserForm/>
-                                </div>
-                            </dialog>
+                        <div  className='my-4 first_layoutIssue'>
                              {/* __________________________________________________________________________________________________________ */}
                             {/* Admin All Nav Link ________________________________________________________________________________________ */}
                             <div className='mt-2 py-2'> 
@@ -138,8 +136,8 @@ const UserAdminHomePage = () => {
                                                 <img src={logo} />
                                             </div>
                                         </div>
-                                        <h1 className='text-xl font-extrabold text-white'>Hi, {userNameIdRoll[0]}</h1>
-                                        <p className='text-white text-sm'>Welcome to Dream Records. You are now a member of Dream Records</p>
+                                        <h1 className='text-xl font-extrabold text-white'>Dream Records</h1>
+                                        <p className='text-white text-sm'>Sell your music worldwide.</p>
                                         <div className='py-4'>
                                             <Link to={'/admin-dashboard/create-user'}>
                                                 <button onClick={onClose} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
