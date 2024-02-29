@@ -23,24 +23,22 @@ const PendingMusicComponent = () => {
 
             <div className="grid cols md:grid-cols-3 sm:grid-cols-2 gap-3">
                 {
-                    pendingItems && pendingItems.map(i => {
-                        return <>
-                            <div key={i.id} className="card_parent_div">
-                                <img src={i.img} alt="" />
-                                <div className="card_child_div">
-                                    <div className="card_content">
-                                        <h3 className="text-sm font-semibold text-white">ID: {i.id}</h3>
-                                        <p className="font-bold text-white">{i.text}</p>
-                                    </div>
+                    pendingItems && pendingItems.map(i => 
+                        <div key={i.id} className="card_parent_div">
+                            <img src={i.img} alt="" />
+                            <div className="card_child_div">
+                                <div className="card_content">
+                                    <h3 className="text-sm font-semibold text-white">ID: {i.id}</h3>
+                                    <p className="font-bold text-white">{i.text}</p>
                                 </div>
-                                    {/* Status  */}
-                                    <div className="flex items-center p-1 music_status bg-amber-500 rounded-md shadow">
-                                        <ClockIcon className="h-3 w-3 text-white me-1"/>
-                                        <p className="text-xs font-semibold text-white">Pending</p>
-                                    </div>
                             </div>
-                        </>
-                    })
+                                {/* Status  */}
+                                <div className="flex items-center p-1 music_status bg-amber-500 rounded-md shadow">
+                                    <ClockIcon className="h-3 w-3 text-white me-1"/>
+                                    <p className="text-xs font-semibold text-white">Pending</p>
+                                </div>
+                        </div>
+                    )
                 }
             </div>
         </div>

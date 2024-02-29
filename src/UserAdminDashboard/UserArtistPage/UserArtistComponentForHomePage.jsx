@@ -19,15 +19,13 @@ const UserArtistComponentForHomePage = () => {
                 <Link className="w-12 h-12 outline-dashed outline-1 outline-slate-500 rounded-full flex items-center justify-center"><PlusIcon className="w-6 h-6 text-slate-500"/></Link>
 
                 {
-                    images && images.map((image) =>{
-                        return <>
-                            <div key={image.id} className="avatar">
-                                <div className="w-12 rounded-full outline outline-1 outline-offset-2 outline-[#EF4136]">
-                                    <img src={image.img} />
-                                </div>
+                    images && images.map((image) =>
+                        <div key={image.id} className="avatar">
+                            <div className="w-12 rounded-full outline outline-1 outline-offset-2 outline-[#EF4136]">
+                                <img src={image.img} />
                             </div>
-                        </>
-                    })
+                        </div>
+                    )
                 }
 
                 
