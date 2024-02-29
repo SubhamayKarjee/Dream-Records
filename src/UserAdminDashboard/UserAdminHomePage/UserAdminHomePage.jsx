@@ -58,9 +58,11 @@ const UserAdminHomePage = () => {
                                 <h1 className='text-xl font-extrabold text-white'>Dream Records</h1>
                                 <p className='text-white text-sm'>Sell your music worldwide.</p>
                                 <div className='pt-3'>
-                                    <button onClick={()=>document.getElementById('create_user_modal').showModal()} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
-                                    + Create
-                                    </button>
+                                    <Link to={'/create-music'}>
+                                        <button onClick={()=>document.getElementById('create_user_modal').showModal()} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
+                                        + Create
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +141,7 @@ const UserAdminHomePage = () => {
                                         <h1 className='text-xl font-extrabold text-white'>Dream Records</h1>
                                         <p className='text-white text-sm'>Sell your music worldwide.</p>
                                         <div className='py-4'>
-                                            <Link to={'/admin-dashboard/create-user'}>
+                                            <Link to={'/create-music'}>
                                                 <button onClick={onClose} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
                                                     + Create
                                                 </button>

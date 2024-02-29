@@ -15,6 +15,9 @@ import UserPassUpdateComponent from './UserAdminDashboard/UserProfile/UserProfil
 import UserEmailUpdateComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserEmailUpdateComponent';
 import UserYoutubeOacRequestComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserYoutubeOacRequestComponent';
 import UserClaimReleaseComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserClaimReleaseComponent';
+import CreateMusicPage from './UserAdminDashboard/CreateMusicPage/CreateMusicPage';
+import CreateMusicSecondStep from './UserAdminDashboard/CreateMusicPage/CreateMusicSecondStep';
+import FirstStep from './UserAdminDashboard/CreateMusicPage/FirstStep';
 
 
 // Commont Routes import_______________________________________________________________
@@ -81,6 +84,22 @@ const router = createBrowserRouter([
         path: '/',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserHomePage/></Suspense>
       },
+      {
+        path: '/create-music',
+        element: <CreateMusicPage/>,
+        children: [
+          {
+            path: '/create-music',
+            element: <FirstStep/>
+          },
+          {
+            path: '/create-music/tracks',
+            element: <CreateMusicSecondStep/>
+          }
+          
+        ]
+      },
+      //User Account Page _________________________________________________________________________________________
       {
         path: '/account',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserProfile/></Suspense>,

@@ -1,0 +1,13 @@
+.steps .step:before {
+    width: 130%;
+}
+
+input[type=file]::file-selector-button {
+    border: none;
+    color: white;
+    border-radius: 20px;
+    padding: .2em .8em;
+    background-color: #434343;
+    transition: 1s;
+    cursor: pointer;
+}
