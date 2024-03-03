@@ -5,7 +5,7 @@ import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 
 const UserProfile = () => {
 
-    const {user, userNameIdRoll} = useContext(AuthContext)
+    const {user, userNameIdRoll, mainProfileImage} = useContext(AuthContext)
 
     // const userName = user.displayName.split("'__'")[0]
 
@@ -15,7 +15,10 @@ const UserProfile = () => {
                 <div className='flex p-2 rounded-md bg-gradient-to-r from-[#EF4136] to-[#fff]'>
                     <div className="avatar me-2">
                         <div className="w-16 rounded-md">
-                            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Tailwind-CSS-Avatar-component" />
+                            {
+                                mainProfileImage ? <img className="bg-slate-200" src={mainProfileImage} alt="Profile Img" /> : <img className="bg-slate-200" src={user.photoURL} alt="Profile Img" />
+                            }
+                            
                         </div>
                     </div>
                     <div>

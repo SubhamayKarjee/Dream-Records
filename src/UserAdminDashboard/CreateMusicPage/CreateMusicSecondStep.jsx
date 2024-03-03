@@ -1,8 +1,9 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { Modal } from "antd";
+import { Modal, Select } from "antd";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import './CreateMusicPage.css';
 
 const CreateMusicSecondStep = () => {
 
@@ -19,7 +20,7 @@ const CreateMusicSecondStep = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-    
+
     // Modal Function For Label __________________________________
     const [isModalOpen1, setIsModalOpen1] = useState(false);
     const showModal1 = () => {
@@ -30,6 +31,14 @@ const CreateMusicSecondStep = () => {
     };
     const handleCancel1 = () => {
         setIsModalOpen1(false);
+    };
+
+
+    const [selectValue, setSelectValue] = useState()
+    // Select Function ______________________________________________
+    const handleChange = (value) => {
+        setSelectValue(value)
+        console.log(`selected ${value}`);
     };
 
 
@@ -47,12 +56,36 @@ const CreateMusicSecondStep = () => {
             <ul style={{width: '100%'}} className="steps">
                 <li data-content="✓" className="step step-info font-bold">Basic</li>
                 <li className="step step-info font-bold">Tracks</li>
+                <li data-content="●" className="step font-bold">Done</li>
             </ul>
             <div className="py-3">
                 <h2 className="text-lg font-semibold text-slate-500 px-2">Tracks</h2>
                 
                 <form onSubmit={handleSubmit(onSubmit)} className="p-3 border mt-2 rounded-lg">
-                    <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Title</p>
+                    <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Release Type</p>
+                    <Select
+                        defaultValue="Single"
+                        size="large"
+                        className="font-bold mb-2"
+                        style={{
+                            width: '100%',
+                        }}
+                        onChange={handleChange}
+                        options={[
+                            { value: 'Single', label: 'Single',},
+                            { value: 'Album', label: 'Album',},
+                        ]}
+                    />
+
+                    {
+                        selectValue == 'Album' && <>
+                            <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Album Name <span className="text-red-500">*</span></p>
+                            <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("albumName", { required: true})}/>
+                            {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>}
+                        </>
+                    }
+
+                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Title</p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("releaseTitle")}/>
                     {/* {errors.releaseTitle && <span className='text-red-600 pt-2 block'>Release Title Required</span>} */}
 

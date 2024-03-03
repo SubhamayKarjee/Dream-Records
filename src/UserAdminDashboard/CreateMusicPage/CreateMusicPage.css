@@ -11,3 +11,7 @@ input[type=file]::file-selector-button {
     transition: 1s;
     cursor: pointer;
 }
+
+.ant-select-selector{
+    border-radius: 50px !important;
+}

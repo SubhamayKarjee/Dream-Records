@@ -52,7 +52,7 @@ const SignUp = () => {
                 const userData = {email, name, roll, openingDate, openingTime};
                 setLoadingHandle(true)
                 await axios.put(`http://localhost:5000/api/v1/users/${id}`, userData).then( async res => {
-                    const displayName = `${name} '__' ${id} '__' ${roll}` 
+                    const displayName = `${name}'__'${id}'__'${roll}`
                     if(res.status == 200){
                         setLoadingHandle(false);
                         await updateProfile({ displayName });

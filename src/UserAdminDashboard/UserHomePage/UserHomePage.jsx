@@ -17,7 +17,9 @@ const UserHomePage = () => {
                     <div className='h-full bg-gradient-to-r from-[#EF4136]'>
                         <div className='p-3 h-full flex items-end '>
                             <div>
-                                <h1 className='text-xl font-bold text-white'>Hi, {userNameIdRoll[0]}</h1>
+                                {
+                                    userNameIdRoll ? <h1 className='text-xl font-bold text-white'>Hi, {userNameIdRoll[0]}</h1> : <h1 className='text-xl font-bold text-white'>No User</h1>
+                                }
                                 <p className='font-semibold text-sm text-white'>Welcome to Dream Records</p>
                                 <div className='py-1'>
                                     <button className='btn btn-neutral py-1 rounded-full btn-sm border-none me-2'>Create</button>

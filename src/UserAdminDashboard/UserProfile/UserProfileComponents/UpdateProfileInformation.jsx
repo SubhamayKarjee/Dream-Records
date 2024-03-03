@@ -1,59 +1,146 @@
+// /* eslint-disable no-unused-vars */
 import {  ChevronLeftIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { useUpdateProfile } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import auth from "../../../../firebase.config";
+import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
+import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
 import './UserProfile.css'
 
 const UpdateProfileInformation = () => {
+    // Get And Set Data Using Context API ________________________________________
+    const {user, userNameIdRoll, uploadedProfileImg, setUploadedProfileImg, setMainProfileImage } = useContext(AuthContext);
 
 
-    const [imageInfo, setImageInfo] = useState()
-    const [image, setImage] = useState(null);
+    const [userData, setUserData] = useState({});
+    const [getUserDataLoading, setGetUserDataLoading] = useState(false)
+    // Fetch User Data ___________________________________________________________
+    const [firstNameHandle, setFirstNameHandle] = useState();
+    const [lastNameHandle, setLastNameHandle] = useState();
+    const [addressHandle, setAddressHandle] = useState();
+    useEffect( () => {
+        setGetUserDataLoading(true)
+        axios.get(`http://localhost:5000/api/v1/users/${userNameIdRoll[1]}`)
+            .then( res => {
+                setFirstNameHandle(res.data.data.first_name)
+                setLastNameHandle(res.data.data.last_name)
+                setAddressHandle(res.data.data.address)
+
+                setUserData(res.data.data)
+                setUploadedProfileImg(user.photoURL)
+                setGetUserDataLoading(false)
+                console.log(res.data.data);
+            })
+            .catch(er => console.log(er));
+    },[])
+
+
+
     const [errorMessage, setErrorMessage] = useState('');
+    const [upLoadLoading, setUploadLoading] = useState(false)
+    const [imageData, setImageData] = useState()
+    // Upload Profile Image Function _____________________________________________
+    const handleImageChange = (e) => {
+        setUploadLoading(true)
+        const file = e[0];
+        const formData = new FormData();
+        formData.append('file', file);
 
-    const handleImageChange = (event) => {
-    const selectedImage = event.target.files[0];
-    setImageInfo(selectedImage)
-    console.log(selectedImage);
-    if (!selectedImage) return;
+        // Check image size ___________________________________
+        if (file.size > 1000000) {
+        setErrorMessage('Image size must be less than 1 MB.');
+        return;
+        }
 
-    // Check image size
-    if (selectedImage.size > 1000000) {
-      setErrorMessage('Image size must be less than 1 MB.');
-      return;
-    }
-
-   
-    // Save image to local storage
-    const reader = new FileReader();
-    reader.onload = () => {
-      localStorage.setItem('uploadedImage', reader.result);
-      setImage(reader.result);
-      setErrorMessage('');
+        axios.post('http://localhost:5000/api/v1/users/upload-profile-img', formData)
+            .then(res => {
+                if(res.status == 200){
+                    setUploadedProfileImg(res.data.data.imgUrl);
+                    setImageData(res.data.data)
+                    setUploadLoading(false)
+                }
+            })
+            .catch(er => console.log(er))
     };
-    reader.readAsDataURL(selectedImage);
-  };
-
-  // React Hook Form Submit Function For Create User _________________________
-  const { register, handleSubmit, formState: { errors }} = useForm();
-  const onSubmit = (data) => {
-
-    // Clear image from local storage
-    const formData = {...data, imageInfo}
-    console.log(formData);
-    localStorage.removeItem('uploadedImage');
-    setImage(null);
 
 
-    //   setLoading(true)
-    //   axios.post('http://localhost:5000/api/v1/users', formData).then(res => {
-    //       if(res.status == 200){
-              
-    //       }
-    //   })
-  };
+    const [updateProfile, updating, error] = useUpdateProfile(auth);
+
+    const [udateLoading, setUpdateLoading] = useState(false)
+    // React Hook Form Submit Function For Create User _________________________
+    const { register, handleSubmit, formState: { errors }} = useForm();
+    const onSubmit = async (data) => {
+        setUpdateLoading(true)
+        let first_name;
+        let last_name;
+        let address;
+        if(data.preName){
+            first_name = data.preName;
+        }
+        if(data.newName){
+            first_name = data.newName
+        }
+
+        if(data.preLast){
+            last_name = data.preLast
+        }
+        if(data.newLast){
+            last_name = data.newLast
+        }
+
+        if(data.preAdd){
+            address = data.preAdd
+        }
+        if(data.newLast){
+            address = data.newAdd
+        }
+
+        
+        let photoURL;
+        let imgKey;
+        if(imageData){
+            photoURL = imageData.imgUrl;
+            imgKey = imageData.key;
+        }
+        if(!imageData && user.photoURL){
+            photoURL = user.photoURL;
+            let forKey = user.photoURL.split("/");
+            imgKey = `${forKey[3]}/${forKey[4]}`
+            console.log(imgKey);
+        }
+        if(!imageData && !user.photoURL){
+            photoURL = user.photoURL;
+            imgKey = '';
+        }
+
+        const nick_name = data.nick_name;
+        const formData = {first_name, last_name, address, photoURL, imgKey, nick_name}
+        
+
+        // // setMainProfileImage
+        const displayName = `${data.nick_name}'__'${userNameIdRoll[1]}'__'${userNameIdRoll[2]}`;
+        const success = await updateProfile({ displayName, photoURL });
+
+        if(success){
+           axios.put(`http://localhost:5000/api/v1/users/${userNameIdRoll[1]}`, formData)
+            .then(res => {
+                setUserData(res.data.data);
+                setMainProfileImage(res.data.data.photoURL)
+                setUpdateLoading(false)
+                alert('Updated')
+            })
+            .catch(er => console.log(er)) 
+        }
+    
+    };
 
 
+    if(getUserDataLoading){
+        return <LoadingComponentsInsidePage/>
+    }
 
     return (
         <div>
@@ -62,42 +149,66 @@ const UpdateProfileInformation = () => {
             </div>
             <div>
                 <div className="border rounded-lg p-2">
-                    {/* <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Upload/Change Profile Image</p>
-                    <img className="h-16 w-16 rounded-full bg-slate-300" src="/" alt="" />
-                    <input type="file" name="file" id="" onChange={e => profileImageUpload(e.target.files)} className="my-2"/>
-                    {
-                        uploadError && <p className="font-bold text-red">{uploadError}</p>
-                    } */}
+
                     <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Upload/Change Profile Image</p>
-                    {
-                        !image && <img className="h-16 w-16 my-2 rounded-full bg-slate-300" src={'/'} alt="" />
-                    }
-                    {image && <img className="h-16 w-16 my-2 rounded-full bg-slate-300" src={image} alt="" />}
-                    <input type="file" id="fileInput" accept="image/*" onChange={handleImageChange}/>
+                    <img className="h-16 w-16 my-2 rounded-full bg-slate-300" src={uploadedProfileImg} alt="" />
+                    <div className="flex items-center ">
+                        {
+                            upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                        }
+                        <input type="file" id="fileInput" name='image' onChange={e => handleImageChange(e.target.files)} />
+                    </div>
                     {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
+
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-wrap gap-2 md:flex-nowrap justify-between items-center">
                         <div className="flex-1">
                             <p className="my-1 text-sm font-semibold text-slate-500 ms-2">First Name</p>
-                            <input type="text" placeholder="Firs Name" className="input rounded-full input-bordered w-full" {...register("first_name")}/>
-                            {/* {errors.first_name && <span className='text-red-600 pt-2 block'>First Name Required</span>} */}
+                            {
+                                firstNameHandle && <input type="text" defaultValue={firstNameHandle} className="input rounded-full input-bordered w-full" {...register("preName")}/>
+                            }
+                            {
+                                !firstNameHandle && <input type="text" className="input rounded-full input-bordered w-full" {...register("newName")}/>
+                            }
                         </div>
+                        
                         <div className="flex-1">
                             <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Last Name</p>
-                            <input type="text" placeholder="Last Name" className="input rounded-full input-bordered w-full" {...register("last_name")}/>
-                            {/* {errors.last_name && <span className='text-red-600 pt-2 block'>Last Name Required</span>} */}
-                        </div>                        
+                            {
+                                lastNameHandle && <input type="text" defaultValue={userData.last_name} className="input rounded-full input-bordered w-full" {...register("preLast")}/>
+                            }
+                            {
+                                !lastNameHandle && <input type="text" className="input rounded-full input-bordered w-full" {...register("newLast")}/>
+                            }
+                        </div>
                     </div>
                     <div className="mt-2">
                         <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Display Name/Nick Name</p>
-                        <input type="text" placeholder="Last Name" className="input rounded-full input-bordered w-full" {...register("nick_name", { required: true})}/>
+                        <input type="text" defaultValue={userNameIdRoll[0]} className="input rounded-full input-bordered w-full" {...register("nick_name", { required: true})}/>
                         {errors.nick_name && <span className='text-red-600 pt-2 block'>Nick/Display Name Required</span>}
 
                         <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Address</p>
-                        <input type="text" placeholder="Full Address" className="input rounded-full input-bordered w-full" {...register("address")}/>
+                        {
+                            addressHandle && <input type="text" defaultValue={userData.address} className="input rounded-full input-bordered w-full" {...register("preAdd")}/> 
+                        }
+                        {
+                            !addressHandle && <input type="text" className="input rounded-full input-bordered w-full" {...register("newAdd")}/> 
+                        }
                     </div>   
-                    <input type="submit" value={'Update'} className="btn btn-sm my-4 px-6 btn-accent rounded-full" />
+                    {
+                        error && <span className='text-red-600 pt-2 block'>{error.message}</span>
+                    }
+                    {
+                        udateLoading || updating && <span className="block loading loading-spinner loading-md me-2"></span>
+                    }
+                    
+                    <div className="flex items-center my-4">
+                        {
+                            udateLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                        }
+                        <input type="submit" value={'Update'} className="btn btn-sm my-4 px-6 btn-accent rounded-full" />
+                    </div>
                 </form>
             </div>
         </div>

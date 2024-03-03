@@ -13,7 +13,7 @@ import {
  } from '@heroicons/react/24/solid'
 import { useState } from 'react';
 import { Drawer } from 'antd';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.config';
 import LoadingComponentsForPage from '../../LoadingComponents/LoadingComponentsForPage';
 import { createContext } from 'react';
@@ -21,8 +21,10 @@ import { createContext } from 'react';
 export const AuthContext = createContext();
 
 const UserAdminHomePage = () => {
+    const [signOut, error1] = useSignOut(auth);
     const [user, loading] = useAuthState(auth);
-
+    const [uploadedProfileImg, setUploadedProfileImg] = useState(user?.photoURL);
+    const [mainProfileImage, setMainProfileImage] = useState(user?.photoURL)
 
     // Mobile Navigation Humbergo ______________________
     const [open, setOpen] = useState(false);
@@ -38,10 +40,12 @@ const UserAdminHomePage = () => {
         return <LoadingComponentsForPage/>
     }
 
-    console.log('user', user);
+    // console.log('user', user);
     
     let userNameIdRoll = user?.displayName?.split("'__'");
-    const contextValue = {user, userNameIdRoll}
+    
+
+    const contextValue = {user, userNameIdRoll, uploadedProfileImg, setUploadedProfileImg, mainProfileImage, setMainProfileImage}
 
     return (
         <section className='md:h-screen bg-slate-950'>
@@ -111,13 +115,24 @@ const UserAdminHomePage = () => {
                                     <div className="dropdown dropdown-end">
                                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                         <div className="w-12 rounded-full">
-                                        <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                        {
+                                            mainProfileImage ? <img className='bg-slate-200' alt="Profile Img" src={mainProfileImage} /> : <img className='bg-slate-200' alt="Profile Img" src={user?.photoURL} />
+                                        }
                                         </div>
                                     </div>
                                     <ul tabIndex={0} className="border mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                        <h3 className='text-lg font-bold px-2 border-b'>{userNameIdRoll[0]}</h3>
+                                        {
+                                           userNameIdRoll?  <h3 className='text-lg font-bold px-2 border-b'>{userNameIdRoll[0]}</h3> : ''
+                                        }
                                         <li><Link className='font-bold py-2 my-2' to={'/account'}>Account</Link></li>
-                                        <li><Link className='btn btn-sm btn-error' to={'/'}>Logout</Link></li>
+                                        <li><button onClick={async () => { const success = await signOut();
+                                                                                if (success) {
+                                                                                    alert('You are sign out');
+                                                                                }
+                                                                                if(error1){
+                                                                                    alert(error1.message)
+                                                                                }
+                                                                                }} className='btn btn-sm btn-error'>Logout</button></li>
                                     </ul>
                                     </div>
                                 </div>
@@ -187,13 +202,24 @@ const UserAdminHomePage = () => {
                                         <div className="dropdown dropdown-end">
                                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                             <div className="w-12 rounded-full">
-                                            <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                                {
+                                                    mainProfileImage ? <img className='bg-slate-200' alt="Profile Img" src={mainProfileImage} /> : <img className='bg-slate-200' alt="Profile Img" src={user?.photoURL} />
+                                                }
                                             </div>
                                         </div>
                                         <ul tabIndex={0} className="border mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                            <h3 className='text-lg font-bold px-2 border-b'>{userNameIdRoll[0]}</h3>
+                                            {
+                                               userNameIdRoll?  <h3 className='text-lg font-bold px-2 border-b'>{userNameIdRoll[0]}</h3> : ''
+                                            }
                                             <li><Link className='font-bold py-2 my-2' to={'/account'}>Account</Link></li>
-                                            <li><Link className='btn btn-sm btn-error' to={'/'}>Logout</Link></li>
+                                            <li><button onClick={async () => { const success = await signOut();
+                                                                                if (success) {
+                                                                                    alert('You are sign out');
+                                                                                }
+                                                                                if(error1){
+                                                                                    alert(error1.message)
+                                                                                }
+                                                                                }} className='btn btn-sm btn-error'>Logout</button></li>
                                         </ul>
                                         </div>
                                     </div>
