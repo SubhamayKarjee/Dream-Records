@@ -116,8 +116,8 @@ const UpdateProfileInformation = () => {
             imgKey = '';
         }
 
-        const nick_name = data.nick_name;
-        const formData = {first_name, last_name, address, photoURL, imgKey, nick_name}
+        const name = data.nick_name;
+        const formData = {first_name, last_name, address, photoURL, imgKey, name}
         
 
         // // setMainProfileImage
