@@ -24,7 +24,11 @@ const UserAdminHomePage = () => {
     const [signOut, error1] = useSignOut(auth);
     const [user, loading] = useAuthState(auth);
     const [uploadedProfileImg, setUploadedProfileImg] = useState(user?.photoURL);
-    const [mainProfileImage, setMainProfileImage] = useState(user?.photoURL)
+    const [mainProfileImage, setMainProfileImage] = useState(user?.photoURL);
+
+    // Refetch API Data Handle ___________________________________________________
+    const [refatchArtistData, setRefatchArtistData] = useState(1)
+    const [refatchLabelsData, setRefatchLabelsData] = useState(1)
 
     // Mobile Navigation Humbergo ______________________
     const [open, setOpen] = useState(false);
@@ -45,7 +49,18 @@ const UserAdminHomePage = () => {
     let userNameIdRoll = user?.displayName?.split("'__'");
     
 
-    const contextValue = {user, userNameIdRoll, uploadedProfileImg, setUploadedProfileImg, mainProfileImage, setMainProfileImage}
+    const contextValue = {
+        user,
+        userNameIdRoll,
+        uploadedProfileImg,
+        setUploadedProfileImg,
+        mainProfileImage,
+        setMainProfileImage,
+        refatchArtistData,
+        setRefatchArtistData,
+        refatchLabelsData,
+        setRefatchLabelsData,
+    }
 
     return (
         <section className='md:h-screen bg-slate-950'>
