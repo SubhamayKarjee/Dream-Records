@@ -156,7 +156,7 @@ const UpdateProfileInformation = () => {
                         {
                             upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                         }
-                        <input type="file" id="fileInput" name='image' onChange={e => handleImageChange(e.target.files)} />
+                        <input type="file" accept="image/*" id="fileInput" name='image' onChange={e => handleImageChange(e.target.files)} />
                     </div>
                     {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
 

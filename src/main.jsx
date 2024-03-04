@@ -20,6 +20,8 @@ import CreateMusicSecondStep from './UserAdminDashboard/CreateMusicPage/CreateMu
 import FirstStep from './UserAdminDashboard/CreateMusicPage/FirstStep';
 
 
+
+
 // Commont Routes import_______________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
 const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
@@ -31,6 +33,10 @@ const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdm
 // User Dashboard Routes import_________________________________________________________
 const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdminHomePage/UserAdminHomePage'));
 const UserHomePage = React.lazy(() => import('./UserAdminDashboard/UserHomePage/UserHomePage'));
+const UserArtistPage = React.lazy(() => import('./UserAdminDashboard/UserArtistPage/UserArtistPage'));
+const UserLabelsPage = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/UserLabelsPage'));
+
+
 // User Profile Routes________________
 const ProfileHomeComponents = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/ProfileHomeComponents'));
 
@@ -98,6 +104,14 @@ const router = createBrowserRouter([
           }
           
         ]
+      },
+      {
+        path: '/artist',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserArtistPage/></Suspense>
+      },
+      {
+        path: '/labels',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserLabelsPage/></Suspense>
       },
       //User Account Page _________________________________________________________________________________________
       {

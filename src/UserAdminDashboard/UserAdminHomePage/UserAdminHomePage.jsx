@@ -82,11 +82,11 @@ const UserAdminHomePage = () => {
                                     <DocumentCheckIcon className="h-7 w-7 pe-2" />
                                     Releases
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/'}>
+                                <Link className='text-white flex items-center py-2' to={'/artist'}>
                                     <UsersIcon className="h-7 w-7 pe-2" />
                                     Artists
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/'}>
+                                <Link className='text-white flex items-center py-2' to={'/labels'}>
                                     <UserGroupIcon className="h-7 w-7 pe-2" />    
                                     Labels
                                 </Link>
@@ -171,11 +171,11 @@ const UserAdminHomePage = () => {
                                                     <DocumentCheckIcon className="h-7 w-7 pe-2" />
                                                     Releases
                                                 </Link>
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/'}>
+                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/artist'}>
                                                     <UsersIcon className="h-7 w-7 pe-2" />
                                                     Artists
                                                 </Link>
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/'}>
+                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/labels'}>
                                                     <UserGroupIcon className="h-7 w-7 pe-2" />    
                                                     Labels
                                                 </Link>

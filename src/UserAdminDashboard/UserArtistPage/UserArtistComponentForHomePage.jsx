@@ -16,7 +16,7 @@ const UserArtistComponentForHomePage = () => {
                 <p className="text-sm font-semibold text-slate-500">Artists</p>
             </div>
             <div className="flex gap-4 flex-wrap py-3">
-                <Link className="w-12 h-12 outline-dashed outline-1 outline-slate-500 rounded-full flex items-center justify-center"><PlusIcon className="w-6 h-6 text-slate-500"/></Link>
+                <Link to={'/artist'} className="w-12 h-12 outline-dashed outline-1 outline-slate-500 rounded-full flex items-center justify-center"><PlusIcon className="w-6 h-6 text-slate-500"/></Link>
 
                 {
                     images && images.map((image) =>
