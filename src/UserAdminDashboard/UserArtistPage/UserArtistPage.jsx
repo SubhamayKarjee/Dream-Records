@@ -1,14 +1,18 @@
 import { BellIcon, ChevronLeftIcon, ExclamationCircleIcon, GlobeAmericasIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import './UserArtistPage.css'
 
 const UserArtistPage = () => {
 
+    const { userNameIdRoll } = useContext(AuthContext);
+
     const [errorMessage, setErrorMessage] = useState('');
     const [upLoadLoading, setUploadLoading] = useState(false);
+    const [submitLoading, setSubmitLoading] = useState(false);
     const [uploadedImage, setUploadedImage] = useState('');
     const [uploadedImageLink, setUploadedImageLink] = useState('')
 
@@ -41,9 +45,20 @@ const UserArtistPage = () => {
 
     // React Hook Form For Create New Artist _________________________
     const { register, handleSubmit, formState: { errors }} = useForm();
+
     const onSubmit = async (data) => {
-      const formData = {...data, ...uploadedImage}
-        console.log(formData);
+      setSubmitLoading(true)
+      const masterUserId = userNameIdRoll[1];
+      const formData = {...data, ...uploadedImage, masterUserId};
+      console.log(formData);
+      axios.post('http://localhost:5000/api/v1/artist/create-artist', formData)
+          .then(res => {
+              if(res.status == 200){
+                console.log(res.data);
+                setSubmitLoading(false);
+              }
+          })
+          .catch(er => console.log(er))
     }
 
 
@@ -119,7 +134,7 @@ const UserArtistPage = () => {
 
                                     <div className="flex items-center ">
                                       {
-                                          upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                                          submitLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                                       }
                                       <input type="submit" className="btn btn-sm rounded-full btn-neutral" value="Create" />
                                     </div>

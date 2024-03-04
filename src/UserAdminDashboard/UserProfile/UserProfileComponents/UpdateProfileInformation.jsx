@@ -40,7 +40,7 @@ const UpdateProfileInformation = () => {
 
 
     const [errorMessage, setErrorMessage] = useState('');
-    const [upLoadLoading, setUploadLoading] = useState(false)
+    const [upLoadLoading, setUploadLoading] = useState(false);
     const [imageData, setImageData] = useState()
     // Upload Profile Image Function _____________________________________________
     const handleImageChange = (e) => {
@@ -199,13 +199,10 @@ const UpdateProfileInformation = () => {
                     {
                         error && <span className='text-red-600 pt-2 block'>{error.message}</span>
                     }
-                    {
-                        udateLoading || updating && <span className="block loading loading-spinner loading-md me-2"></span>
-                    }
                     
                     <div className="flex items-center my-4">
                         {
-                            udateLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                            udateLoading || updating && <span className="block loading loading-spinner loading-md me-2"></span>
                         }
                         <input type="submit" value={'Update'} className="btn btn-sm my-4 px-6 btn-accent rounded-full" />
                     </div>
