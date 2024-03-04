@@ -1,5 +1,6 @@
 // /* eslint-disable no-unused-vars */
 import {  ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { Image } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useUpdateProfile } from "react-firebase-hooks/auth";
@@ -8,7 +9,8 @@ import { Link } from "react-router-dom";
 import auth from "../../../../firebase.config";
 import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
 import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
-import './UserProfile.css'
+import './UserProfile.css';
+import fallbackImage from '../../../assets/fallbackImage.jpg'
 
 const UpdateProfileInformation = () => {
     // Get And Set Data Using Context API ________________________________________
@@ -35,6 +37,7 @@ const UpdateProfileInformation = () => {
                 console.log(res.data.data);
             })
             .catch(er => console.log(er));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
 
@@ -151,7 +154,15 @@ const UpdateProfileInformation = () => {
                 <div className="border rounded-lg p-2">
 
                     <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Upload/Change Profile Image</p>
-                    <img className="h-16 w-16 my-2 rounded-full bg-slate-300" src={uploadedProfileImg} alt="" />
+                    <Image
+                        width={80}
+                        height={80}
+                        className="rounded-full"
+                        src={uploadedProfileImg}
+                        fallback={fallbackImage}
+                        preview={false}
+                        alt="profile-image"
+                    />
                     <div className="flex items-center ">
                         {
                             upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>

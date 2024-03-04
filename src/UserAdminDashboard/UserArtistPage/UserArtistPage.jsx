@@ -76,11 +76,6 @@ const UserArtistPage = () => {
                     artistData?.map((data) => 
                       <div key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
                         <div className="flex items-center">
-                          {/* <div className="avatar">
-                            <div className="w-14 mask mask-squircle">
-                              <img src={data.imgUrl} alt={data.artistName}/>
-                            </div>
-                          </div> */}
                               <Image
                                 width={55}
                                 height={55}

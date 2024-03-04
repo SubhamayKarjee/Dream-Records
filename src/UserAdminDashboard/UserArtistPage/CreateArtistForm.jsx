@@ -1,9 +1,10 @@
 import { GlobeAmericasIcon } from "@heroicons/react/24/solid";
-import { Result } from "antd";
+import { Image, Result } from "antd";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
+import fallbackImage from "../../assets/fallbackImage.jpg"
 
 const CreateArtistForm = () => {
 
@@ -83,7 +84,15 @@ const CreateArtistForm = () => {
                                   <div className="border rounded-lg p-2">
 
                                   <p className="my-1 text-sm font-semibold text-slate-500">Upload Artist Image</p>
-                                  <img className="h-24 w-24 my-2 rounded-md bg-slate-300" src={uploadedImageLink} alt="" />
+                                  <Image
+                                        width={105}
+                                        height={105}
+                                        className="rounded-lg"
+                                        src={uploadedImageLink}
+                                        fallback={fallbackImage}
+                                        preview={false}
+                                        alt="artist-image"
+                                    />
                                   <div className="flex items-center ">
                                       {
                                           upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
