@@ -1,5 +1,5 @@
 import { BellIcon, ChevronLeftIcon, ExclamationCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { Empty, Image } from "antd";
+import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -12,6 +12,12 @@ const UserArtistPage = () => {
 
     const { userNameIdRoll, refatchArtistData } = useContext(AuthContext);
 
+    // Paginatin State __________________________________________________
+    const [totalItems, setTotalItems] = useState();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [forSearchCount, setForSearchCount] = useState();
+    const [itemPerPage] = useState(10);
+
     const [artistData, setArtistData] = useState();
     const [searchArtistData, setSearchArtistData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false)
@@ -20,18 +26,44 @@ const UserArtistPage = () => {
       axios.get(`http://localhost:5000/api/v1/artist/${userNameIdRoll[1]}`)
           .then( res => {
               setFetchLoading(false);
-              setSearchArtistData(res.data.data)
-              setArtistData(res.data.data)
+              setSearchArtistData(res.data.data);
+              setTotalItems(res.data.data);
+              setForSearchCount(res.data.data);
+              // Calculate Pagination___________________________________________________
+              const indexOfLastItem = currentPage * itemPerPage;
+              const indexOfFirstItem = indexOfLastItem - itemPerPage;
+              const currentItems = res.data.data.slice(indexOfFirstItem, indexOfLastItem);
+              setArtistData(currentItems);
+
           })
           .catch(er => console.log(er));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[refatchArtistData])
 
+    // Pagination ______________________________________________________________
+    useEffect(() => {
+      // Calculate Pagination __________________________________________________
+      const indexOfLastItem = currentPage * itemPerPage;
+      const indexOfFirstItem = indexOfLastItem - itemPerPage;
+      const currentItems = totalItems?.slice(indexOfFirstItem, indexOfLastItem);
+      setArtistData(currentItems)
+    }, [currentPage]);
+
+    const handlePageChange = (page) => {
+      setCurrentPage(page)
+    };
+
+    
+
     const handleSearch = (e) => {
       const search = searchArtistData.filter(d =>d.artistName.toLowerCase().includes(e.toLowerCase()));
-      setArtistData(search)
+      if(e){
+        setTotalItems(search)
+      }else{
+        setTotalItems(forSearchCount)
+      }
+      setArtistData(search);
     }
-
 
 
 
@@ -65,7 +97,7 @@ const UserArtistPage = () => {
                           <ExclamationCircleIcon className="w-6 h-6 me-1 text-slate-500"/>
                           Artist Count
                       </div>
-                      <div><span className="text-sm font-bold">10</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">50</span> </div>
+                      <div><span className="text-sm font-bold">{artistData?.length}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{totalItems?.length}</span> </div>
                   </div>
 
                   {/* Artist List and Relase Title Section _____________________________________________________________________________ */}
@@ -105,11 +137,15 @@ const UserArtistPage = () => {
                   {
                     !artistData && !fetchLoading && <Empty className="pt-12" />
                   }
+                  <div className="flex justify-center items-center my-4">
+                    <Pagination 
+                      defaultCurrent={currentPage} 
+                      total={totalItems?.length}
+                      onChange={handlePageChange}
+                    /> 
+                  </div>
                   
                 </main>
-
-
-
             {/* _________ */}
             </div>
 
