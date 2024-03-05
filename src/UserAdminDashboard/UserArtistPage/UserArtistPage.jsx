@@ -10,7 +10,7 @@ import fallbackImage from '../../assets/fallbackImage.jpg'
 
 const UserArtistPage = () => {
 
-    const { userNameIdRoll, refatchArtistData } = useContext(AuthContext);
+    const { userNameIdRoll, refatchArtistData, setRefatchArtistData } = useContext(AuthContext);
 
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
@@ -25,9 +25,11 @@ const UserArtistPage = () => {
       setFetchLoading(true)
       axios.get(`http://localhost:5000/api/v1/artist/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}`)
           .then( res => {
+            if(res.status == 200){
               setFetchLoading(false);
               setTotalItems(res.data.dataCount);
               setArtistData(res.data.data);
+            }
           })
           .catch(er => console.log(er));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,11 +41,14 @@ const UserArtistPage = () => {
       setFetchLoading(true)
       axios.get(`http://localhost:5000/api/v1/artist/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}`)
           .then( res => {
+            if(res.status == 200){
               setFetchLoading(false);
               setTotalItems(res.data.dataCount);
               setArtistData(res.data.data);
+            }
           })
           .catch(er => console.log(er));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
 
 
@@ -61,13 +66,29 @@ const UserArtistPage = () => {
         setFetchLoading(true);
         axios.get(`http://localhost:5000/api/v1/artist/search/${userNameIdRoll[1]}?search=${searchText}`)
           .then( res => {
+            if(res.status == 200){
               setFetchLoading(false);
               setTotalItems(res.data.dataCount);
               setArtistData(res.data.data);
+            }
           })
           .catch(er => console.log(er));
       }
     };
+
+    const deleteArtist = (id, imgKey) => {
+      setFetchLoading(true)
+      axios.delete(`http://localhost:5000/api/v1/artist/delete-artist/${id}?imgKey=${imgKey}`)
+        .then( res => {
+          if(res.status == 200){
+            const refetch = refatchArtistData + 1
+            setFetchLoading(false)
+            setRefatchArtistData(refetch)
+            console.log(res.data.message);
+          }
+        })
+        .catch(er => console.log(er));
+    }
 
 
 
@@ -78,7 +99,7 @@ const UserArtistPage = () => {
                       <button><Link className="px-2 py-1 font-semibold text-sm text-slate-500 flex items-center inline bg-slate-200 rounded-md" to={'/'}><ChevronLeftIcon className="w-4 h-4 me-1 font-bold"/>Back</Link></button>
                   </div>
                   {/* Search and Create Artist Section ______________________________________________________________________________ */}
-                  <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg sticky top-0 z-10">
+                  <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg">
                       <div className="my-2">
                           <input type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm rounded-full input-bordered w-full"/>
                       </div>
@@ -111,42 +132,42 @@ const UserArtistPage = () => {
                 
                 {/* Show All Artist Data __________________________________________________________________________________________________ */}
                 <main className="my-2 p-2">
-                  {
-                    fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
-                  }
-                  {
-                    artistData?.map((data) => 
-                      <div key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
-                        <div className="flex items-center">
-                              <Image
-                                width={55}
-                                height={55}
-                                className="rounded-lg"
-                                src={data.imgUrl}
-                                fallback={fallbackImage}
-                              />
-                          <div className="ps-2">
-                            <h2 className="font-bold">{data.artistName}</h2>
-                            <p className="text-sm text-slate-400">ID: {data._id}</p>
+                    {
+                      fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
+                    }
+                    {
+                      artistData?.map((data) => 
+                        <div key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
+                          <div className="flex items-center">
+                                <Image
+                                  width={55}
+                                  height={55}
+                                  className="rounded-lg"
+                                  src={data.imgUrl}
+                                  fallback={fallbackImage}
+                                />
+                            <div className="ps-2">
+                              <h2 className="font-bold">{data.artistName}</h2>
+                              <p className="text-sm text-slate-400">ID: {data._id}</p>
+                            </div>
+                          </div>
+                          <div>
+                            <button onClick={() => deleteArtist(data._id, data.key)}><TrashIcon className="w-5 h-5 text-red-500"/></button>
                           </div>
                         </div>
-                        <div>
-                          <button><TrashIcon className="w-5 h-5 text-red-500"/></button>
-                        </div>
-                      </div>
-                    )
-                  }
-                  
-                  {
-                    !artistData && !fetchLoading && <Empty className="pt-12" />
-                  }
-                  <div className="flex justify-center items-center my-4">
-                    <Pagination 
-                      defaultCurrent={currentPage} 
-                      total={totalItems}
-                      onChange={handlePageChange}
-                    /> 
-                  </div>
+                      )
+                    }
+                    
+                    {
+                      !artistData && !fetchLoading && <Empty className="pt-12" />
+                    }
+                    <div className="flex justify-center items-center my-4">
+                      <Pagination 
+                        defaultCurrent={currentPage} 
+                        total={totalItems}
+                        onChange={handlePageChange}
+                      /> 
+                    </div>
                   
                 </main>
             {/* _________ */}

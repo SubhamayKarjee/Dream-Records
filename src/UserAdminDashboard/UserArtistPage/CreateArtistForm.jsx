@@ -108,10 +108,6 @@ const CreateArtistForm = () => {
                                       <input type="text" className="input rounded-full input-bordered w-full" {...register("artistName", { required: true})}/>
                                       {errors.artistName && <span className='text-red-600 pt-2 block'>Artist Name Required</span>}
 
-                                      <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Artist Email <span className="text-red-500">*</span></p> 
-                                      <input type="text" className="input rounded-full input-bordered w-full" {...register("artistEmail", { required: true})}/>
-                                      {errors.artistEmail && <span className='text-red-600 pt-2 block'>Artist Email Required</span>}
-
                                       <div className="border rounded-md p-2 my-2">
                                         <p className="my-2 font-semibold text-slate-500 ms-2">Artist Link</p> 
                                         <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Facebook</p> 

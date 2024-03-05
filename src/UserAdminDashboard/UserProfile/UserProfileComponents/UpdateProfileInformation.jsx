@@ -130,10 +130,12 @@ const UpdateProfileInformation = () => {
         if(success){
            axios.put(`http://localhost:5000/api/v1/users/${userNameIdRoll[1]}`, formData)
             .then(res => {
-                setUserData(res.data.data);
-                setMainProfileImage(res.data.data.photoURL)
-                setUpdateLoading(false)
-                alert('Updated')
+                if(res.status == 200){
+                    setUserData(res.data.data);
+                    setMainProfileImage(res.data.data.photoURL)
+                    setUpdateLoading(false)
+                    alert('Updated')
+                }
             })
             .catch(er => console.log(er)) 
         }
