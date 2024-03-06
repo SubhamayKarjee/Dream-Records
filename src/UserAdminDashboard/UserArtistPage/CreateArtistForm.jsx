@@ -108,23 +108,24 @@ const CreateArtistForm = () => {
                                       <input type="text" className="input rounded-full input-bordered w-full" {...register("artistName", { required: true})}/>
                                       {errors.artistName && <span className='text-red-600 pt-2 block'>Artist Name Required</span>}
 
-                                      <div className="border rounded-md p-2 my-2">
-                                        <p className="my-2 font-semibold text-slate-500 ms-2">Artist Link</p> 
-                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Facebook</p> 
+                                      <div className="border rounded-lg p-2 my-2">
+                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Instagram ID</p> 
+                                        <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("instagramId")}/>
+                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Spotify ID</p> 
+                                        <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("spotifyId")}/>
+                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Apple ID</p> 
+                                        <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("appleId")}/>
+                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Facebook URL</p> 
                                         <label className="input input-bordered rounded-full input-sm flex items-center gap-2">
                                           <GlobeAmericasIcon className="w-4 h-4 text-slate-500"/>
                                           <input type="text" className="grow" {...register("facebook")}/>
                                         </label>
-                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Twitter</p> 
-                                        <label className="input input-bordered rounded-full input-sm flex items-center gap-2">
-                                          <GlobeAmericasIcon className="w-4 h-4 text-slate-500"/>
-                                          <input type="text" className="grow" {...register("twitter")}/>
-                                        </label>
-                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Instagram</p> 
-                                        <label className="input input-bordered rounded-full input-sm flex items-center gap-2 mb-3">
-                                          <GlobeAmericasIcon className="w-4 h-4 text-slate-500"/>
-                                          <input type="text" className="grow" {...register("instagram")}/>
-                                        </label>
+                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Youtube</p> 
+                                        <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("youtube")}/>
+                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Channel ID</p> 
+                                        <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("youtubeChannelId")}/>
+                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">(YouTube OAC Request)</p> 
+                                        <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("youtubeOac")}/>
                                       </div>
 
                                       <div className="flex items-center ">
