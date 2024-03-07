@@ -9,7 +9,7 @@ import fallbackImage from "../../assets/fallbackImage.jpg"
 
 const UserLabelsPage = () => {
     // Get Data From Context API
-    const { userNameIdRoll, refatchLabelsData } = useContext(AuthContext);
+    const { userNameIdRoll, refatchLabelsData, setRefatchLabelsData } = useContext(AuthContext);
 
     // Paginatin and Search State __________________________________________________
     const [lebelStatus, setLabelStatus] = useState('Pending')
@@ -79,6 +79,20 @@ const UserLabelsPage = () => {
         }
     };
 
+    const deleteLabels = (id, imgKey) => {
+        setFetchLoading(true)
+        axios.delete(`http://localhost:5000/api/v1/labels/delete-labels/${id}?imgKey=${imgKey}`)
+          .then( res => {
+            if(res.status == 200){
+              const refetch = refatchLabelsData + 1
+              setFetchLoading(false)
+              setRefatchLabelsData(refetch)
+              console.log(res.data.message);
+            }
+          })
+          .catch(er => console.log(er));
+      }
+
 
     return (
         <div className="md:flex md:h-full">
@@ -146,8 +160,7 @@ const UserLabelsPage = () => {
                           </div>
                           <div className="flex items-start">
                             <span className="bg-yellow-500 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {data.status}</span>
-                            {/* <button onClick={() => deleteArtist(data._id, data.key)}><TrashIcon className="w-5 h-5 text-red-500"/></button> */}
-                            <button><TrashIcon className="w-5 h-5 text-red-500"/></button>
+                            <button onClick={() => deleteLabels(data._id, data.key)}><TrashIcon className="w-5 h-5 text-red-500"/></button>
                           </div>
                         </div>
                       )
