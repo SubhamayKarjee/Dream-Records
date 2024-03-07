@@ -1,13 +1,16 @@
 import { Image } from "antd";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import { ReleaseContext } from "./CreateMusicPage";
 
 const FirstStep = () => {
 
-    // const navigate = useNavigate('')
+    const { setReleaseFormData } = useContext(ReleaseContext);
+
+    const navigate = useNavigate('')
 
 
     const [errorMessage, setErrorMessage] = useState('');
@@ -19,6 +22,7 @@ const FirstStep = () => {
     const releaseImageUpload = (e) => {
         setUploadLoading(true)
         const file = e[0];
+        console.log(file);
         const formData = new FormData();
         formData.append('file', file);
   
@@ -46,9 +50,10 @@ const FirstStep = () => {
 
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = (data) => {
-        const formData = {...data, ...uploadedImage}
+        const formData = {...data, ...uploadedImage};
+        setReleaseFormData(formData)
         console.log(formData);
-        // navigate('/create-music/tracks')
+        navigate('/create-music/tracks')
     };
 
 
@@ -77,7 +82,7 @@ const FirstStep = () => {
                         {
                             upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                         }
-                        <input type="file" accept="image/*" id="fileInput" name='image' onChange={e => releaseImageUpload(e.target.files)} />
+                        <input type="file" accept=".jpeg" id="fileInput" name='image' onChange={e => releaseImageUpload(e.target.files)} />
                     </div>
                     {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
                 </div>

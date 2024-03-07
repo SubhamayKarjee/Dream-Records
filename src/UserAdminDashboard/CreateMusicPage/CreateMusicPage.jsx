@@ -1,8 +1,18 @@
 import { BellIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { createContext, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import './CreateMusicPage.css'
+import './CreateMusicPage.css';
+
+export const ReleaseContext = createContext();
 
 const CreateMusicPage = () => {
+
+
+    const [releaseFormData, setReleaseFormData] = useState()
+    const releaseContextValue = {
+        releaseFormData,
+        setReleaseFormData
+    }
 
    
 
@@ -14,7 +24,9 @@ const CreateMusicPage = () => {
                 <div>
                     <button><Link className="px-2 py-1 font-semibold text-sm text-slate-500 flex items-center inline bg-slate-200 rounded-md" to={'/'}><ChevronLeftIcon className="w-4 h-4 me-1 font-bold"/>Back</Link></button>
                 </div>
-                <Outlet/>
+                <ReleaseContext.Provider value={releaseContextValue}>
+                    <Outlet/>
+                </ReleaseContext.Provider>
             </div>
 
             {/* Blog Post Div  _______________________________*/}

@@ -8,8 +8,13 @@ import ArtistList from "./artistListComponent/ArtistList";
 import './CreateMusicPage.css';
 import LabelsList from "./labelsListComponent/LabelsList";
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import { ReleaseContext } from "./CreateMusicPage";
 
 const CreateMusicSecondStep = () => {
+
+    const { releaseFormData } = useContext(ReleaseContext);
+
+    console.log(releaseFormData);
 
     const navigate = useNavigate('');
     const { artist, setArtist, labels, setLabels } = useContext(AuthContext);
@@ -98,18 +103,28 @@ const CreateMusicSecondStep = () => {
                         </>
                     }
 
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Title</p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("releaseTitle")}/>
-                    {/* {errors.releaseTitle && <span className='text-red-600 pt-2 block'>Release Title Required</span>} */}
-
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Upload <span className="text-red-500">*</span></p>
+                    <div className="mt-1">
+                        <span className="text-xs bg-slate-100 text-slate-500 font-bold mx-2 px-2 py-1 rounded-md">Audio Formate Only Allow WEB</span>
+                    </div>
                     <div className="border rounded-full py-2 px-2">
                         <input type="file" />
                     </div>
                     {/* {errors.releaseTitle && <span className='text-red-600 pt-2 block'>Release Title Required</span>} */}
 
+                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Featuring</p>
+                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("featuring")}/>
+
+                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Author <span className="text-red-500">*</span></p>
+                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("author", { required: true})}/>
+                    {errors.author && <span className='text-red-600 pt-2 block'>Author Required</span>}
+
+                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Lyrics language <span className="text-red-500">*</span></p>
+                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("lyricsLanguage", { required: true})}/>
+                    {errors.lyricsLanguage && <span className='text-red-600 pt-2 block'>Lyrics language Required</span>}
+
                     {/* Artist Select Option ______________________________________________________________ */}
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Artist</p>
+                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Artist <span className="text-red-500">*</span></p>
                     {
                         artist && 
                         <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
@@ -140,7 +155,7 @@ const CreateMusicSecondStep = () => {
                             </div>
                         </Modal>
                     {/* Label Select Option ______________________________________________________________ */}
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label</p>
+                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label <span className="text-red-500">*</span></p>
                     {
                         labels && 
                         <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
@@ -170,8 +185,15 @@ const CreateMusicSecondStep = () => {
                             </div>
                         </Modal>
 
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Composer</p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("composer")}/>
+                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Composer <span className="text-red-500">*</span></p>
+                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("composer", { required: true})}/>
+                    {errors.composer && <span className='text-red-600 pt-2 block'>Composer Required</span>}
+
+                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">ISRC</p>
+                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("ISRC")}/>
+                    <div className="mt-1">
+                        <span className="text-xs bg-slate-100 text-slate-500 font-bold mx-2 px-2 py-1 rounded-md">(if released before ISRC required otherwise optional)</span>
+                    </div>
 
                     <div className="my-4 flex justify-between">
                         <button onClick={() => navigate('/create-music')} className="btn btn-sm px-6 btn-neutral rounded-full">Previus</button>
