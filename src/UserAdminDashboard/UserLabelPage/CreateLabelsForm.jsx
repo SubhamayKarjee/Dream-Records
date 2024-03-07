@@ -45,7 +45,7 @@ const CreateLabelsForm = () => {
 
     const onSubmit = async (data) => {
       setSubmitLoading(true)
-      const status = 'pending';
+      const status = 'Pending';
       const masterUserId = userNameIdRoll[1];
       const formData = {...data, ...uploadedImage, masterUserId, status};
       axios.post('http://localhost:5000/api/v1/labels/create-labels', formData)

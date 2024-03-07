@@ -161,13 +161,15 @@ const UserArtistPage = () => {
                     {
                       !artistData && !fetchLoading && <Empty className="pt-12" />
                     }
-                    <div className="flex justify-center items-center my-4">
-                      <Pagination 
-                        defaultCurrent={currentPage} 
-                        total={totalItems}
-                        onChange={handlePageChange}
-                      /> 
+                    {
+                      !fetchLoading && <div className="flex justify-center items-center my-4">
+                        <Pagination 
+                          defaultCurrent={currentPage} 
+                          total={totalItems}
+                          onChange={handlePageChange}
+                        /> 
                     </div>
+                    }
                   
                 </main>
             {/* _________ */}
