@@ -68,7 +68,6 @@ const CreateLabelsForm = () => {
       setModalBoxChange(false)
     }
 
-
     return (
         <>
             {/* Modal Close Right top Side Icon ___________________________________________________ */}

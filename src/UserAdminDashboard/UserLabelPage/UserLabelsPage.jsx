@@ -8,20 +8,18 @@ import CreateLabelsForm from "./CreateLabelsForm";
 import fallbackImage from "../../assets/fallbackImage.jpg"
 
 const UserLabelsPage = () => {
-
+    // Get Data From Context API
     const { userNameIdRoll, refatchLabelsData } = useContext(AuthContext);
 
     // Paginatin and Search State __________________________________________________
-    // const status = 'Pending'
     const [lebelStatus, setLabelStatus] = useState('Pending')
     const [totalItems, setTotalItems] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage] = useState(10);
-
-    // const [searchText, setSearchText] = useState('');
+    const [searchText, setSearchText] = useState('');
 
     const [labelsData, setLabelsData] = useState();
-    const [fetchLoading, setFetchLoading] = useState(false)
+    const [fetchLoading, setFetchLoading] = useState(false);
     useEffect( () => {
       setFetchLoading(true)
       axios.get(`http://localhost:5000/api/v1/labels/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
@@ -53,7 +51,6 @@ const UserLabelsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage, lebelStatus]);
 
-
     const handlePageChange = (page) => {
       setCurrentPage(page)
     };
@@ -62,25 +59,37 @@ const UserLabelsPage = () => {
         setLabelStatus(e)
     }
 
-    // const handleSearch = (e) => {
-    //   setSearchText(e)
-    // }
+    const handleSearch = (e) => {
+        setSearchText(e)
+    }
 
-  
-
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+          console.log(currentPage);
+          setFetchLoading(true);
+          axios.get(`http://localhost:5000/api/v1/labels/search/${userNameIdRoll[1]}?status=${lebelStatus}&search=${searchText}`)
+            .then( res => {
+              if(res.status == 200){
+                setFetchLoading(false);
+                setTotalItems(res.data.dataCount);
+                setLabelsData(res.data.data);
+              }
+            })
+            .catch(er => console.log(er));
+        }
+    };
 
 
     return (
         <div className="md:flex md:h-full">
             <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2'>
-
                 <div className="mb-4">
                     <button><Link className="px-2 py-1 font-semibold text-sm text-slate-500 flex items-center inline bg-slate-200 rounded-md" to={'/'}><ChevronLeftIcon className="w-4 h-4 me-1 font-bold"/>Back</Link></button>
                 </div>
                 {/* Search and Create Artist Section ______________________________________________________________________________ */}
                 <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg">
                     <div className="my-2">
-                        <input type="text" placeholder="Type to Search" className="input input-sm rounded-full input-bordered w-full"/>
+                        <input type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm rounded-full input-bordered w-full"/>
                     </div>
                     <div className="my-2">
                         <button onClick={()=>document.getElementById('create_artist_modal').showModal()} className='btn btn-neutral py-1 px-6 rounded-full btn-sm border-none me-2 w-full'>Create Label</button>
@@ -93,7 +102,6 @@ const UserLabelsPage = () => {
                         </div>
                     </dialog>
                     {/* Create Artist form with Modal End _______________________________________________________________________ */}
-
 
                 {/* Total Artist Count Section _____________________________________________________________________________________ */}
                 <div className="flex justify-between items-center my-3">
@@ -110,9 +118,6 @@ const UserLabelsPage = () => {
                     <h4 className="font-bold text-slate-600">Releases</h4>
                 </div>
 
-                <div>
-
-                </div>
                 {/* Main Div ______________________________________________Labels list */}
                 <main className="my-2 p-2">
                     <div>
