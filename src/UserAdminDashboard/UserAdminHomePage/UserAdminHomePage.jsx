@@ -26,6 +26,10 @@ const UserAdminHomePage = () => {
     const [uploadedProfileImg, setUploadedProfileImg] = useState(user?.photoURL);
     const [mainProfileImage, setMainProfileImage] = useState(user?.photoURL);
 
+    // State for Labels and Artist for Create Release ___________________________
+    const [artist, setArtist] = useState();
+    const [labels, setLabels] = useState();
+
     // Refetch API Data Handle ___________________________________________________
     const [refatchArtistData, setRefatchArtistData] = useState(1)
     const [refatchLabelsData, setRefatchLabelsData] = useState(1)
@@ -60,6 +64,10 @@ const UserAdminHomePage = () => {
         setRefatchArtistData,
         refatchLabelsData,
         setRefatchLabelsData,
+        artist,
+        setArtist,
+        labels,
+        setLabels,
     }
 
     return (

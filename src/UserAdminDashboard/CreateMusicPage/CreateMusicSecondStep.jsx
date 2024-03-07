@@ -1,14 +1,18 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { Modal, Select } from "antd";
-import { useState } from "react";
+import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { Image, Modal, Select } from "antd";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import ArtistList from "./artistListComponent/ArtistList";
 import './CreateMusicPage.css';
+import LabelsList from "./labelsListComponent/LabelsList";
+import fallbackImage from '../../assets/fallbackImage.jpg'
 
 const CreateMusicSecondStep = () => {
 
     const navigate = useNavigate('');
+    const { artist, setArtist, labels, setLabels } = useContext(AuthContext);
 
     // Modal Function For Artist __________________________________
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,12 +46,20 @@ const CreateMusicSecondStep = () => {
         console.log(`selected ${value}`);
     };
 
+    const removeArtist = () => {
+        setArtist()
+    }
+    const removeLabels = () => {
+        setLabels()
+    }
+
 
 
     // eslint-disable-next-line no-unused-vars
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = (data) => {
-        console.log(data);
+        const d = {...data, labels, artist}
+        console.log(d);
     };
 
 
@@ -98,23 +110,62 @@ const CreateMusicSecondStep = () => {
 
                     {/* Artist Select Option ______________________________________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Artist</p>
+                    {
+                        artist && 
+                        <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                            <div className="flex items-center">
+                                    <Image
+                                    width={55}
+                                    height={55}
+                                    className="rounded-lg"
+                                    src={artist.imgUrl}
+                                    fallback={fallbackImage}
+                                    />
+                                <div className="ps-2">
+                                <h2 className="font-bold">{artist.artistName}</h2>
+                                <p className="text-sm text-slate-400">ID: {artist._id}</p>
+                                </div>
+                            </div>
+                            <button onClick={removeArtist}><TrashIcon className="w-5 h-5 text-red-500"/></button>
+                        </div>
+                    }
+
                     <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
                         <Modal title="Search/Select Artist" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
                             <div>
                                 <input type="text" placeholder="Search" className="input input-sm rounded-full input-bordered w-full"/>
                                 <div>
-                                    <ArtistList/>
+                                    <ArtistList handleCancel={handleCancel}/>
                                 </div>
                             </div>
                         </Modal>
                     {/* Label Select Option ______________________________________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label</p>
+                    {
+                        labels && 
+                        <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                            <div className="flex items-center">
+                                    <Image
+                                    width={55}
+                                    height={55}
+                                    className="rounded-lg"
+                                    src={artist.imgUrl}
+                                    fallback={fallbackImage}
+                                    />
+                                <div className="ps-2">
+                                <h2 className="font-bold">{labels.artistName}</h2>
+                                <p className="text-sm text-slate-400">ID: {labels._id}</p>
+                                </div>
+                            </div>
+                            <button onClick={removeLabels}><TrashIcon className="w-5 h-5 text-red-500"/></button>
+                        </div>
+                    }
                     <span onClick={showModal1} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
                         <Modal title="Search/Select Label" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
                             <div>
                                 <input type="text" placeholder="Search" className="input input-sm rounded-full input-bordered w-full"/>
                                 <div>
-                                    Mehedi
+                                    <LabelsList handleCancel1={handleCancel}/>
                                 </div>
                             </div>
                         </Modal>

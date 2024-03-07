@@ -4,9 +4,10 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
 import fallbackImage from '../../../assets/fallbackImage.jpg'
 
-const ArtistList = () => {
+// eslint-disable-next-line react/prop-types
+const ArtistList = ({handleCancel}) => {
 
-    const { userNameIdRoll } = useContext(AuthContext);
+    const { userNameIdRoll, setArtist } = useContext(AuthContext);
 
     const [totalItems, setTotalItems] = useState();
     const [artistData, setArtistData] = useState();
@@ -24,9 +25,14 @@ const ArtistList = () => {
             })
             .catch(er => console.log(er));
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      },[])
+    },[])
+
+    const handleData = (data) => {
+        setArtist(data)
+    }
 
 
+      
     return (
         <div>
             {
@@ -34,20 +40,22 @@ const ArtistList = () => {
             }
             {
               artistData?.map((data) => 
-                <div key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
-                  <div className="flex items-center">
-                        <Image
-                          width={55}
-                          height={55}
-                          className="rounded-lg"
-                          src={data.imgUrl}
-                          fallback={fallbackImage}
-                        />
-                    <div className="ps-2">
-                      <h2 className="font-bold">{data.artistName}</h2>
-                      <p className="text-sm text-slate-400">ID: {data._id}</p>
+                <div style={{cursor: 'pointer'}} onClick={handleCancel} key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
+                    <div  onClick={() => handleData(data)} className="w-full">
+                        <div className="flex items-center">
+                                <Image
+                                width={55}
+                                height={55}
+                                className="rounded-lg"
+                                src={data.imgUrl}
+                                fallback={fallbackImage}
+                                />
+                            <div className="ps-2">
+                            <h2 className="font-bold">{data.artistName}</h2>
+                            <p className="text-sm text-slate-400">ID: {data._id}</p>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
               )
             }
