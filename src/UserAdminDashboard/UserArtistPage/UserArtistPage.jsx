@@ -159,10 +159,10 @@ const UserArtistPage = () => {
                     }
                     
                     {
-                      !artistData && !fetchLoading && <Empty className="pt-12" />
+                      !totalItems && !fetchLoading && <Empty className="pt-12" />
                     }
                     {
-                      !fetchLoading && <div className="flex justify-center items-center my-4">
+                      totalItems > 1 && !fetchLoading && <div className="flex justify-center items-center my-4">
                         <Pagination 
                           defaultCurrent={currentPage} 
                           total={totalItems}

@@ -1,4 +1,4 @@
-import { BellIcon, ChevronLeftIcon, ExclamationCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { BellIcon, ChevronLeftIcon, ClockIcon, ExclamationCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -12,6 +12,8 @@ const UserLabelsPage = () => {
     const { userNameIdRoll, refatchLabelsData } = useContext(AuthContext);
 
     // Paginatin and Search State __________________________________________________
+    // const status = 'Pending'
+    const [lebelStatus, setLabelStatus] = useState('Pending')
     const [totalItems, setTotalItems] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage] = useState(10);
@@ -22,7 +24,7 @@ const UserLabelsPage = () => {
     const [fetchLoading, setFetchLoading] = useState(false)
     useEffect( () => {
       setFetchLoading(true)
-      axios.get(`http://localhost:5000/api/v1/labels/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}`)
+      axios.get(`http://localhost:5000/api/v1/labels/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);
@@ -38,7 +40,7 @@ const UserLabelsPage = () => {
     useEffect(() => {
       // Calculate Pagination __________________________________________________
       setFetchLoading(true)
-      axios.get(`http://localhost:5000/api/v1/labels/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}`)
+      axios.get(`http://localhost:5000/api/v1/labels/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
           .then( res => {
             if(res.status == 200){
               console.log(res.data.data);
@@ -49,12 +51,16 @@ const UserLabelsPage = () => {
           })
           .catch(er => console.log(er));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage]);
+    }, [currentPage, lebelStatus]);
 
 
     const handlePageChange = (page) => {
       setCurrentPage(page)
     };
+
+    const handleStatus = (e) => {
+        setLabelStatus(e)
+    }
 
     // const handleSearch = (e) => {
     //   setSearchText(e)
@@ -109,12 +115,17 @@ const UserLabelsPage = () => {
                 </div>
                 {/* Main Div ______________________________________________Labels list */}
                 <main className="my-2 p-2">
+                    <div>
+                        <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral mx-1">Pending</button>
+                        <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral mx-1">Approved</button>
+                        <button onClick={() => handleStatus('Rejected')} className="btn btn-sm btn-neutral mx-1">Rejected</button>
+                    </div>
                     {
                       fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
                     {
                       labelsData?.map((data) => 
-                        <div key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
+                        <div key={data._id} className="flex justify-between p-1 my-1 rounded-md">
                           <div className="flex items-center">
                                 <Image
                                   width={55}
@@ -128,8 +139,8 @@ const UserLabelsPage = () => {
                               <p className="text-sm text-slate-400">ID: {data._id}</p>
                             </div>
                           </div>
-                          <div className="flex items-center">
-                            <span className="bg-yellow-500 py-1 px-2 rounded-md text-sm me-4 font-bold">{data.status}</span>
+                          <div className="flex items-start">
+                            <span className="bg-yellow-500 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {data.status}</span>
                             {/* <button onClick={() => deleteArtist(data._id, data.key)}><TrashIcon className="w-5 h-5 text-red-500"/></button> */}
                             <button><TrashIcon className="w-5 h-5 text-red-500"/></button>
                           </div>
@@ -138,10 +149,10 @@ const UserLabelsPage = () => {
                     }
                     
                     {
-                      !labelsData && !fetchLoading && <Empty className="pt-12" />
+                        !totalItems && !fetchLoading && <Empty className="pt-12" />
                     }
                     {
-                        !fetchLoading && <div className="flex justify-center items-center my-4">
+                        totalItems > 1 && !fetchLoading && <div className="flex justify-center items-center my-4">
                             <Pagination 
                             defaultCurrent={currentPage} 
                             total={totalItems}
