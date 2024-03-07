@@ -54,7 +54,8 @@ const UpdateProfileInformation = () => {
 
         // Check image size ___________________________________
         if (file.size > 1000000) {
-        setErrorMessage('Image size must be less than 1 MB.');
+            setErrorMessage('Image size must be less than 1 MB.');
+            setUploadLoading(false)
         return;
         }
 

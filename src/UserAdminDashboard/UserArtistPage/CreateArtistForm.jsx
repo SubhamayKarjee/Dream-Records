@@ -25,8 +25,9 @@ const CreateArtistForm = () => {
 
       // Check image size ___________________________________
       if (file.size > 1000000) {
-      setErrorMessage('Image size must be less than 1 MB.');
-      return;
+        setErrorMessage('Image size must be less than 1 MB.');
+        setUploadLoading(false)
+        return;
       }
 
       axios.post('http://localhost:5000/api/v1/artist/upload-artist-img', formData)
