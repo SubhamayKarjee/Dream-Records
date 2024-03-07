@@ -3,6 +3,7 @@ import { Modal, Select } from "antd";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import ArtistList from "./artistListComponent/ArtistList";
 import './CreateMusicPage.css';
 
 const CreateMusicSecondStep = () => {
@@ -102,7 +103,7 @@ const CreateMusicSecondStep = () => {
                             <div>
                                 <input type="text" placeholder="Search" className="input input-sm rounded-full input-bordered w-full"/>
                                 <div>
-                                    Mehedi
+                                    <ArtistList/>
                                 </div>
                             </div>
                         </Modal>
