@@ -12,41 +12,46 @@ const FirstStep = () => {
 
     const navigate = useNavigate('')
 
-
     const [errorMessage, setErrorMessage] = useState('');
     const [upLoadLoading, setUploadLoading] = useState(false);
-    // const [submitLoading, setSubmitLoading] = useState(false);
     const [uploadedImage, setUploadedImage] = useState('');
     const [uploadedImageLink, setUploadedImageLink] = useState('');
 
-    const releaseImageUpload = (e) => {
+    const releaseImageUpload = (event) => {
+        setErrorMessage('')
         setUploadLoading(true)
-        const file = e[0];
-        console.log(file);
+        const file = event.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
   
         // Check image size ___________________________________
-        if (file.size > 1000000) {
-            setErrorMessage('Image size must be less than 1 MB.');
-            setUploadLoading(false)
-            return;
+        if (file) {
+            const img = new window.Image();
+            img.onload = function() {
+                if (this.width === 3000 && this.height === 3000) {
+                    setErrorMessage('');
+                } else {
+                    setErrorMessage('Please upload an image with dimensions 3000x3000 pixels.');
+                    if (event.target) {
+                        event.target.value = ''; // Clear the input field
+                    }
+                    setUploadLoading(false)
+                    return;
+                }
+            };
+            img.src = URL.createObjectURL(file);
         }
   
         axios.post('http://localhost:5000/api/v1/release/upload-release-img', formData)
             .then(res => {
                 if(res.status == 200){
-                  setUploadedImageLink(res.data.data.imgUrl);
-                  setUploadedImage(res.data.data)
-                  setUploadLoading(false)
+                    setUploadedImageLink(res.data.data.imgUrl);
+                    setUploadedImage(res.data.data)
+                    setUploadLoading(false)
                 }
             })
             .catch(er => console.log(er))
     }
-
-
-
-   
 
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = (data) => {
@@ -82,7 +87,7 @@ const FirstStep = () => {
                         {
                             upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                         }
-                        <input type="file" accept=".jpeg" id="fileInput" name='image' onChange={e => releaseImageUpload(e.target.files)} />
+                        <input type="file" accept=".jpeg" id="fileInput" name='image' onChange={releaseImageUpload} />
                     </div>
                     {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
                 </div>
