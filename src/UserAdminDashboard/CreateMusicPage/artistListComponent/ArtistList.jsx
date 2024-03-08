@@ -12,6 +12,7 @@ const ArtistList = ({handleCancel}) => {
     const [totalItems, setTotalItems] = useState();
     const [artistData, setArtistData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false);
+    const [forSearch, setForSearch] = useState()
 
     useEffect( () => {
         setFetchLoading(true)
@@ -21,20 +22,30 @@ const ArtistList = ({handleCancel}) => {
                 setFetchLoading(false);
                 setTotalItems(res.data.dataCount);
                 setArtistData(res.data.data);
+                setForSearch(res.data.data);
               }
             })
             .catch(er => console.log(er));
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
+
     const handleData = (data) => {
         setArtist(data)
     }
+
+    const handleSearch = (e) => {
+      const searchData = forSearch.filter(d =>d.artistName.toLowerCase().includes(e.toLowerCase()));
+      setArtistData(searchData);
+    }
+
+    
 
 
       
     return (
         <div>
+            <input type="text" placeholder="Search" onChange={e => handleSearch(e.target.value)} className="input input-sm rounded-full input-bordered w-full"/>
             {
                 fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
             }

@@ -108,7 +108,7 @@ const CreateMusicSecondStep = () => {
                         <span className="text-xs bg-slate-100 text-slate-500 font-bold mx-2 px-2 py-1 rounded-md">Audio Formate Only Allow WEB</span>
                     </div>
                     <div className="border rounded-full py-2 px-2">
-                        <input type="file" />
+                        <input type="file" accept=".web"/>
                     </div>
                     {/* {errors.releaseTitle && <span className='text-red-600 pt-2 block'>Release Title Required</span>} */}
 
@@ -148,10 +148,7 @@ const CreateMusicSecondStep = () => {
                     <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
                         <Modal title="Search/Select Artist" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
                             <div>
-                                <input type="text" placeholder="Search" className="input input-sm rounded-full input-bordered w-full"/>
-                                <div>
-                                    <ArtistList handleCancel={handleCancel}/>
-                                </div>
+                                <ArtistList handleCancel={handleCancel}/>
                             </div>
                         </Modal>
                     {/* Label Select Option ______________________________________________________________ */}
@@ -178,10 +175,7 @@ const CreateMusicSecondStep = () => {
                     <span onClick={showModal1} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
                         <Modal title="Search/Select Label" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
                             <div>
-                                <input type="text" placeholder="Search" className="input input-sm rounded-full input-bordered w-full"/>
-                                <div>
-                                    <LabelsList handleCancel1={handleCancel}/>
-                                </div>
+                                <LabelsList handleCancel1={handleCancel}/>
                             </div>
                         </Modal>
 

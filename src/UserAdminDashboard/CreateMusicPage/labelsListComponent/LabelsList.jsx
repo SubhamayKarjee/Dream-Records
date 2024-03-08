@@ -12,6 +12,7 @@ const LabelsList = ({handleCancel}) => {
     const [totalItems, setTotalItems] = useState();
     const [labelsData, setLabelsData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false);
+    const [forSearch, setForSearch] = useState()
 
     useEffect( () => {
         setFetchLoading(true)
@@ -21,6 +22,7 @@ const LabelsList = ({handleCancel}) => {
                 setFetchLoading(false);
                 setTotalItems(res.data.dataCount);
                 setLabelsData(res.data.data);
+                setForSearch(res.data.data);
               }
             })
             .catch(er => console.log(er));
@@ -31,9 +33,15 @@ const LabelsList = ({handleCancel}) => {
         setLabels(data)
     }
 
+    const handleSearch = (e) => {
+      const searchData = forSearch.filter(d =>d.labelName.toLowerCase().includes(e.toLowerCase()));
+      setLabelsData(searchData);
+    }
+
 
     return (
         <div>
+            <input type="text" placeholder="Search" onChange={e => handleSearch(e.target.value)} className="input input-sm rounded-full input-bordered w-full"/>
             {
                 fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
             }
