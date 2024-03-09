@@ -18,6 +18,8 @@ import UserClaimReleaseComponent from './UserAdminDashboard/UserProfile/UserProf
 import CreateMusicPage from './UserAdminDashboard/CreateMusicPage/CreateMusicPage';
 import CreateMusicSecondStep from './UserAdminDashboard/CreateMusicPage/CreateMusicSecondStep';
 import FirstStep from './UserAdminDashboard/CreateMusicPage/FirstStep';
+import ThirdStepDate from './UserAdminDashboard/CreateMusicPage/ThirdStepDate';
+import SuccessPage from './UserAdminDashboard/SuccessPage/SuccessPage';
 
 
 
@@ -91,6 +93,10 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserHomePage/></Suspense>
       },
       {
+        path: '/release',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserHomePage/></Suspense>
+      },
+      {
         path: '/create-music',
         element: <CreateMusicPage/>,
         children: [
@@ -101,6 +107,14 @@ const router = createBrowserRouter([
           {
             path: '/create-music/tracks',
             element: <CreateMusicSecondStep/>
+          },
+          {
+            path: '/create-music/date',
+            element: <ThirdStepDate/>
+          },
+          {
+            path: '/create-music/thenks',
+            element: <SuccessPage link={'/release'} heading={'Successfully Created the Release'} text={'We will review your release very soon. Please Got to the Release page and check your Release Status'}/>
           }
           
         ]

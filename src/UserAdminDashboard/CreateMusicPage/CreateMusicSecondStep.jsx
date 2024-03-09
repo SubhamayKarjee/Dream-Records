@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { Image, Modal } from "antd";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import ArtistList from "./artistListComponent/ArtistList";
 import './CreateMusicPage.css';
@@ -17,7 +17,7 @@ const CreateMusicSecondStep = () => {
 
     console.log(releaseFormData);
 
-    // const navigate = useNavigate('');
+    const navigate = useNavigate('');
     const { artist, setArtist, labels, setLabels } = useContext(AuthContext);
 
     // Modal Function For Artist __________________________________
@@ -72,6 +72,9 @@ const CreateMusicSecondStep = () => {
             setErrorMessageAudio('Audio Required')
             return;
         }
+        if(!releaseFormData){
+            navigate('/create-music')
+        }
 
         const artistId = artist._id;
         const artistName = artist.artistName;
@@ -81,16 +84,14 @@ const CreateMusicSecondStep = () => {
             labelId = labels._id;
             labelName = labels.LabelName;
         }
-        const d = {...data, ...releaseFormData, audioData, artistId, artistName, labelId, labelName}
+        const d = {...data, ...releaseFormData, ...audioData, artistId, artistName, labelId, labelName}
         setReleaseFormData(d)
+        navigate('/create-music/date')
     };
 
     
     const [errorMessage, setErrorMessage] = useState('');
     const [uploadLoading, setUploadLoading] = useState(false)
-    const [audioLink, setAudioLink] = useState();
-    const [audioKey, setAudioKey] = useState();
-    const [audioName, setAudioName] = useState();
     
 
     const releaseAudioUpload = (event) => {
@@ -108,9 +109,6 @@ const CreateMusicSecondStep = () => {
         axios.post('http://localhost:5000/api/v1/release/upload-release-audio', formData)
             .then(res => {
                 if(res.status == 200){
-                    setAudioLink(res.data.data.audioUrl);
-                    setAudioKey(res.data.data.key);
-                    setAudioName(res.data.data.audioName);
                     event.target.value = ''
                     setUploadLoading(false);
                     setAudioData(res.data.data);
@@ -120,7 +118,13 @@ const CreateMusicSecondStep = () => {
     }
     
     const handleDeleteAudio = (e) => {
-        console.log(e);
+        axios.delete(`http://localhost:5000/api/v1/release/delete-release-audio?audioKey=${e}`)
+        .then( res => {
+          if(res.status == 200){
+            setAudioData('')
+          }
+        })
+        .catch(er => console.log(er));
     }
 
 
@@ -129,27 +133,22 @@ const CreateMusicSecondStep = () => {
             <ul style={{width: '100%'}} className="steps">
                 <li data-content="✓" className="step step-info font-bold">Basic</li>
                 <li className="step step-info font-bold">Tracks</li>
-                <li data-content="●" className="step font-bold">Done</li>
+                <li data-content="3" className="step font-bold">Date</li>
             </ul>
             <div className="py-3">
                 <h2 className="text-lg font-semibold text-slate-500 px-2">Tracks</h2>
-                
-                <form onSubmit={handleSubmit(onSubmit)} className="p-3 border mt-2 rounded-lg">
-                    
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Album Name <span className="text-red-500">*</span></p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("albumName", { required: true})}/>
-                    {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>}
 
+                <div className="p-3 border rounded-lg">
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Upload <span className="text-red-500">*</span></p>
                     {
-                        audioName && 
+                        audioData && 
                             <div className="my-3">
                                 <div className="flex justify-between items-center">
                                     <div>
-                                        <p>{audioName}</p>
-                                        <audio controls src={audioLink}></audio>
+                                        <p>{audioData.audioName}</p>
+                                        <audio controls src={audioData.audioUrl}></audio>
                                     </div>
-                                    <button onClick={() => handleDeleteAudio(audioKey)}>Delete</button>
+                                    <button onClick={() => handleDeleteAudio(audioData.key)}><TrashIcon className="w-6 h-6"/></button>
                                 </div>
                             </div>
                     }
@@ -164,8 +163,13 @@ const CreateMusicSecondStep = () => {
                     </div>
                     {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
                     {errorMessageAudio && <p className="font-bold text-red-500">{errorMessageAudio}</p>}
-                    {/*Uploaded Audio Show ___________________________________________________ */}
+                </div>
+                
+                <form onSubmit={handleSubmit(onSubmit)} className="p-3 border mt-2 rounded-lg">
                     
+                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Album Name <span className="text-red-500">*</span></p>
+                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("albumName", { required: true})}/>
+                    {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>}                    
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Featuring</p>
                     {

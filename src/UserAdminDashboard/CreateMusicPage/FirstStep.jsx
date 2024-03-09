@@ -71,7 +71,6 @@ const FirstStep = () => {
         if(uploadedImage){
             const formData = {...data, ...uploadedImage};
             setReleaseFormData(formData)
-            console.log(formData);
             navigate('/create-music/tracks')
         }else{
             setErrorMessage('Please Upload Art Image. Art Image Required');
@@ -84,7 +83,7 @@ const FirstStep = () => {
             <ul style={{width: '100%'}} className="steps">
                 <li className="step step-info font-bold">Basic</li>
                 <li data-content="2" className="step font-bold">Tracks</li>
-                <li data-content="●" className="step font-bold">Done</li>
+                <li data-content="3" className="step font-bold">Date</li>
             </ul>
             <div className="py-3">
                 <h2 className="text-lg font-semibold text-slate-500 px-2">Besic of Track</h2>

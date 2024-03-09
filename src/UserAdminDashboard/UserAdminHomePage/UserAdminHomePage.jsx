@@ -47,8 +47,6 @@ const UserAdminHomePage = () => {
     if(loading){
         return <LoadingComponentsForPage/>
     }
-
-    // console.log('user', user);
     
     let userNameIdRoll = user?.displayName?.split("'__'");
     
@@ -86,7 +84,7 @@ const UserAdminHomePage = () => {
                                 <p className='text-white text-sm'>Sell your music worldwide.</p>
                                 <div className='pt-3'>
                                     <Link to={'/create-music'}>
-                                        <button onClick={()=>document.getElementById('create_user_modal').showModal()} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
+                                        <button style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
                                         + Create
                                         </button>
                                     </Link>
