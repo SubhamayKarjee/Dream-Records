@@ -277,7 +277,7 @@ const CreateMusicSecondStep = () => {
 
                     <div className="my-4 flex justify-end">
                         {/* <button onClick={() => navigate('/create-music')} className="btn btn-sm px-6 btn-neutral rounded-full">Previus</button> */}
-                        <input type="submit" value={'Submit'} className="btn btn-sm px-6 btn-accent rounded-full" />
+                        <input type="submit" value={'Next'} className="btn btn-sm px-6 btn-accent rounded-full" />
                     </div>
                 </form>
             </div>

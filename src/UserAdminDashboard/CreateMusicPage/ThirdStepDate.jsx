@@ -2,11 +2,13 @@ import { DatePicker } from "antd";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import { ReleaseContext } from "./CreateMusicPage";
 
 const ThirdStepDate = () => {
     const [releaseFormDataError, setReleaseFormDataError] = useState('')
     const { releaseFormData } = useContext(ReleaseContext);
+    const { userNameIdRoll } = useContext(AuthContext);
 
     const navigate = useNavigate()
 
@@ -36,7 +38,8 @@ const ThirdStepDate = () => {
             return;
         }
         const status = 'Pending'
-        const data = {...releaseFormData, releaseDate, status }
+        const masterId = userNameIdRoll[1]
+        const data = {...releaseFormData, releaseDate, status, masterId }
         axios.post('http://localhost:5000/api/v1/release/create-release', data)
             .then(res => {
                 if(res.status == 200){
