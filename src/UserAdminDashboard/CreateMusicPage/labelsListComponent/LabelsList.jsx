@@ -58,7 +58,7 @@ const LabelsList = ({handleCancel}) => {
                             fallback={fallbackImage}
                           />
                       <div className="ps-2">
-                        <h2 className="font-bold">{data.artistName}</h2>
+                        <h2 className="font-bold">{data.labelName}</h2>
                         <p className="text-sm text-slate-400">ID: {data._id}</p>
                       </div>
                     </div>

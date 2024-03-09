@@ -1,22 +1,23 @@
 import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { Image, Modal, Select } from "antd";
+import { Image, Modal } from "antd";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import ArtistList from "./artistListComponent/ArtistList";
 import './CreateMusicPage.css';
 import LabelsList from "./labelsListComponent/LabelsList";
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import { ReleaseContext } from "./CreateMusicPage";
+import axios from "axios";
 
 const CreateMusicSecondStep = () => {
 
-    const { releaseFormData } = useContext(ReleaseContext);
+    const { releaseFormData, setReleaseFormData } = useContext(ReleaseContext);
 
     console.log(releaseFormData);
 
-    const navigate = useNavigate('');
+    // const navigate = useNavigate('');
     const { artist, setArtist, labels, setLabels } = useContext(AuthContext);
 
     // Modal Function For Artist __________________________________
@@ -43,14 +44,6 @@ const CreateMusicSecondStep = () => {
         setIsModalOpen1(false);
     };
 
-
-    const [selectValue, setSelectValue] = useState()
-    // Select Function ______________________________________________
-    const handleChange = (value) => {
-        setSelectValue(value)
-        console.log(`selected ${value}`);
-    };
-
     const removeArtist = () => {
         setArtist()
     }
@@ -60,13 +53,75 @@ const CreateMusicSecondStep = () => {
 
 
 
+    const [audioData, setAudioData] = useState();
+    const [errorMessageArtist, setErrorMessageArtist] = useState('');
+    const [errorMessageLabels, setErrorMessageLabels] = useState('');
+    const [errorMessageAudio, setErrorMessageAudio] = useState('');
     // eslint-disable-next-line no-unused-vars
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = (data) => {
-        const d = {...data, labels, artist}
-        console.log(d);
+        if(!artist){
+            setErrorMessageArtist('Artist Required')
+            return;
+        }
+        if(!labels){
+            setErrorMessageLabels('Labels Required')
+            return;
+        }
+        if(!audioData){
+            setErrorMessageAudio('Audio Required')
+            return;
+        }
+
+        const artistId = artist._id;
+        const artistName = artist.artistName;
+        let labelId;
+        let labelName;
+        if(labels){
+            labelId = labels._id;
+            labelName = labels.LabelName;
+        }
+        const d = {...data, ...releaseFormData, audioData, artistId, artistName, labelId, labelName}
+        setReleaseFormData(d)
     };
 
+    
+    const [errorMessage, setErrorMessage] = useState('');
+    const [uploadLoading, setUploadLoading] = useState(false)
+    const [audioLink, setAudioLink] = useState();
+    const [audioKey, setAudioKey] = useState();
+    const [audioName, setAudioName] = useState();
+    
+
+    const releaseAudioUpload = (event) => {
+        if(!event){
+            return;
+        }
+        setErrorMessage('')
+        setUploadLoading(true)
+        const file = event.target.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+  
+        console.log(file);
+  
+        axios.post('http://localhost:5000/api/v1/release/upload-release-audio', formData)
+            .then(res => {
+                if(res.status == 200){
+                    setAudioLink(res.data.data.audioUrl);
+                    setAudioKey(res.data.data.key);
+                    setAudioName(res.data.data.audioName);
+                    event.target.value = ''
+                    setUploadLoading(false);
+                    setAudioData(res.data.data);
+                }
+            })
+            .catch(er => console.log(er))
+    }
+    
+    const handleDeleteAudio = (e) => {
+        console.log(e);
+    }
 
 
     return (
@@ -80,40 +135,65 @@ const CreateMusicSecondStep = () => {
                 <h2 className="text-lg font-semibold text-slate-500 px-2">Tracks</h2>
                 
                 <form onSubmit={handleSubmit(onSubmit)} className="p-3 border mt-2 rounded-lg">
-                    <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Release Type</p>
-                    <Select
-                        defaultValue="Single"
-                        size="large"
-                        className="font-bold mb-2"
-                        style={{
-                            width: '100%',
-                        }}
-                        onChange={handleChange}
-                        options={[
-                            { value: 'Single', label: 'Single',},
-                            { value: 'Album', label: 'Album',},
-                        ]}
-                    />
-
-                    {
-                        selectValue == 'Album' && <>
-                            <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Album Name <span className="text-red-500">*</span></p>
-                            <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("albumName", { required: true})}/>
-                            {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>}
-                        </>
-                    }
+                    
+                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Album Name <span className="text-red-500">*</span></p>
+                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("albumName", { required: true})}/>
+                    {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>}
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Upload <span className="text-red-500">*</span></p>
-                    <div className="mt-1">
-                        <span className="text-xs bg-slate-100 text-slate-500 font-bold mx-2 px-2 py-1 rounded-md">Audio Formate Only Allow WEB</span>
+                    {
+                        audioName && 
+                            <div className="my-3">
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <p>{audioName}</p>
+                                        <audio controls src={audioLink}></audio>
+                                    </div>
+                                    <button onClick={() => handleDeleteAudio(audioKey)}>Delete</button>
+                                </div>
+                            </div>
+                    }
+                    <div className="my-1">
+                        <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2 py-1 rounded-md">Audio Formate Only Allow WEV</span>
                     </div>
-                    <div className="border rounded-full py-2 px-2">
-                        <input type="file" accept=".web"/>
+                    <div className="flex items-center ">
+                        {
+                            uploadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                        }
+                        <input type="file" accept=".wev" id="fileInput" name='audio' onChange={releaseAudioUpload} />                        
                     </div>
-                    {/* {errors.releaseTitle && <span className='text-red-600 pt-2 block'>Release Title Required</span>} */}
+                    {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
+                    {errorMessageAudio && <p className="font-bold text-red-500">{errorMessageAudio}</p>}
+                    {/*Uploaded Audio Show ___________________________________________________ */}
+                    
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Featuring</p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("featuring")}/>
+                    {
+                        artist && 
+                        <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                            <div className="flex items-center">
+                                    <Image
+                                    width={55}
+                                    height={55}
+                                    className="rounded-lg"
+                                    src={artist.imgUrl}
+                                    fallback={fallbackImage}
+                                    />
+                                <div className="ps-2">
+                                <h2 className="font-bold">{artist.artistName}</h2>
+                                <p className="text-sm text-slate-400">ID: {artist._id}</p>
+                                </div>
+                            </div>
+                            <button onClick={removeArtist}><TrashIcon className="w-5 h-5 text-red-500"/></button>
+                        </div>
+                    }
+
+                    <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
+                        <Modal title="Search/Select Artist" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                            <div>
+                                <ArtistList handleCancel={handleCancel}/>
+                            </div>
+                        </Modal>
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Author <span className="text-red-500">*</span></p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("author", { required: true})}/>
@@ -151,6 +231,7 @@ const CreateMusicSecondStep = () => {
                                 <ArtistList handleCancel={handleCancel}/>
                             </div>
                         </Modal>
+                    {errorMessageArtist && <span className='text-red-600 pt-2 block'>{errorMessageArtist}</span>}
                     {/* Label Select Option ______________________________________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label <span className="text-red-500">*</span></p>
                     {
@@ -178,6 +259,7 @@ const CreateMusicSecondStep = () => {
                                 <LabelsList handleCancel1={handleCancel}/>
                             </div>
                         </Modal>
+                    {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Composer <span className="text-red-500">*</span></p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("composer", { required: true})}/>
@@ -189,8 +271,8 @@ const CreateMusicSecondStep = () => {
                         <span className="text-xs bg-slate-100 text-slate-500 font-bold mx-2 px-2 py-1 rounded-md">(if released before ISRC required otherwise optional)</span>
                     </div>
 
-                    <div className="my-4 flex justify-between">
-                        <button onClick={() => navigate('/create-music')} className="btn btn-sm px-6 btn-neutral rounded-full">Previus</button>
+                    <div className="my-4 flex justify-end">
+                        {/* <button onClick={() => navigate('/create-music')} className="btn btn-sm px-6 btn-neutral rounded-full">Previus</button> */}
                         <input type="submit" value={'Submit'} className="btn btn-sm px-6 btn-accent rounded-full" />
                     </div>
                 </form>

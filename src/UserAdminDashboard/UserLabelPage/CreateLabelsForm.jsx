@@ -106,7 +106,7 @@ const CreateLabelsForm = () => {
                                   <form onSubmit={handleSubmit(onSubmit)}>
                                         <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label Name <span className="text-red-500">*</span></p> 
                                         <input type="text" className="input rounded-full input-bordered w-full" {...register("labelName", { required: true})}/>
-                                        {errors.artistName && <span className='text-red-600 pt-2 block'>Label Name Required</span>}
+                                        {errors.labelName && <span className='text-red-600 pt-2 block'>Label Name Required</span>}
 
                                         <div className="border rounded-lg p-2 my-3">
                                             {/* Youtube Channel Link ___________________ */}

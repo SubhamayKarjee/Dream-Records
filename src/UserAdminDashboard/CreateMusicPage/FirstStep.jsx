@@ -1,4 +1,4 @@
-import { Image } from "antd";
+import { Image, Select } from "antd";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -17,6 +17,7 @@ const FirstStep = () => {
     const [uploadedImage, setUploadedImage] = useState('');
     const [uploadedImageLink, setUploadedImageLink] = useState('');
 
+
     const releaseImageUpload = (event) => {
         setErrorMessage('')
         setUploadLoading(true)
@@ -30,6 +31,15 @@ const FirstStep = () => {
             img.onload = function() {
                 if (this.width === 3000 && this.height === 3000) {
                     setErrorMessage('');
+                    axios.post('http://localhost:5000/api/v1/release/upload-release-img', formData)
+                    .then(res => {
+                        if(res.status == 200){
+                            setUploadedImageLink(res.data.data.imgUrl);
+                            setUploadedImage(res.data.data)
+                            setUploadLoading(false)
+                        }
+                    })
+                    .catch(er => console.log(er))
                 } else {
                     setErrorMessage('Please upload an image with dimensions 3000x3000 pixels.');
                     if (event.target) {
@@ -41,24 +51,31 @@ const FirstStep = () => {
             };
             img.src = URL.createObjectURL(file);
         }
-  
-        axios.post('http://localhost:5000/api/v1/release/upload-release-img', formData)
-            .then(res => {
-                if(res.status == 200){
-                    setUploadedImageLink(res.data.data.imgUrl);
-                    setUploadedImage(res.data.data)
-                    setUploadLoading(false)
-                }
-            })
-            .catch(er => console.log(er))
+        
     }
+
+    const [selectValue, setSelectValue] = useState()
+    const [genreError, setGenreError] = useState('')
+    // Select Function ______________________________________________
+    const handleChange = (value) => {
+        setSelectValue(value)
+        console.log(`selected ${value}`);
+    };
 
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = (data) => {
-        const formData = {...data, ...uploadedImage};
-        setReleaseFormData(formData)
-        console.log(formData);
-        navigate('/create-music/tracks')
+        if(!selectValue){
+            setGenreError('Genre Required')
+            return;
+        }
+        if(uploadedImage){
+            const formData = {...data, ...uploadedImage};
+            setReleaseFormData(formData)
+            console.log(formData);
+            navigate('/create-music/tracks')
+        }else{
+            setErrorMessage('Please Upload Art Image. Art Image Required');
+        }
     };
 
 
@@ -97,8 +114,20 @@ const FirstStep = () => {
                     {errors.releaseTitle && <span className='text-red-600 pt-2 block'>Release Title Required</span>}
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Genre <span className="text-red-500">*</span></p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("genre", { required: true})}/>
-                    {errors.genre && <span className='text-red-600 pt-2 block'>Genre Required</span>}
+                    <Select
+                        defaultValue="Select Genre"
+                        size="large"
+                        className="font-bold mb-2"
+                        style={{
+                            width: '100%',
+                        }}
+                        onChange={handleChange}
+                        options={[
+                            { value: 'genre1', label: 'genre1',},
+                            { value: 'genre2', label: 'genre2',},
+                        ]}
+                    />
+                    {genreError && <span className='text-red-600 pt-2 block'>{genreError}</span>}
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">℗ line <span className="text-red-500">*</span></p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("pLine", { required: true})}/>
