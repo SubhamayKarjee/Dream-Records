@@ -16,10 +16,10 @@ import UserEmailUpdateComponent from './UserAdminDashboard/UserProfile/UserProfi
 import UserYoutubeOacRequestComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserYoutubeOacRequestComponent';
 import UserClaimReleaseComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserClaimReleaseComponent';
 import CreateMusicPage from './UserAdminDashboard/CreateMusicPage/CreateMusicPage';
-import CreateMusicSecondStep from './UserAdminDashboard/CreateMusicPage/CreateMusicSecondStep';
 import FirstStep from './UserAdminDashboard/CreateMusicPage/FirstStep';
 import ThirdStepDate from './UserAdminDashboard/CreateMusicPage/ThirdStepDate';
 import SuccessPage from './UserAdminDashboard/SuccessPage/SuccessPage';
+import SecondStepTrack from './UserAdminDashboard/CreateMusicPage/SecondStepTrack';
 
 
 
@@ -106,7 +106,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/create-music/tracks',
-            element: <CreateMusicSecondStep/>
+            element: <SecondStepTrack/>
           },
           {
             path: '/create-music/date',

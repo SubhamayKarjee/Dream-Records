@@ -11,7 +11,7 @@ import fallbackImage from '../../assets/fallbackImage.jpg'
 import { ReleaseContext } from "./CreateMusicPage";
 import axios from "axios";
 
-const CreateMusicSecondStep = () => {
+const SecondStepTrack = () => {
 
     const { releaseFormData, setReleaseFormData } = useContext(ReleaseContext);
 
@@ -285,4 +285,4 @@ const CreateMusicSecondStep = () => {
     );
 };
 
-export default CreateMusicSecondStep;
+export default SecondStepTrack;
