@@ -83,7 +83,7 @@ const UserAdminHomePage = () => {
                                 <h1 className='text-xl font-extrabold text-white'>Dream Records</h1>
                                 <p className='text-white text-sm'>Sell your music worldwide.</p>
                                 <div className='pt-3'>
-                                    <Link to={'/create-music'}>
+                                    <Link to={'/create-release'}>
                                         <button style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
                                         + Create
                                         </button>
@@ -99,7 +99,7 @@ const UserAdminHomePage = () => {
                                     <HomeIcon className="h-7 w-7 pe-2" />
                                     Home
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/'}>
+                                <Link className='text-white flex items-center py-2' to={'/releases'}>
                                     <DocumentCheckIcon className="h-7 w-7 pe-2" />
                                     Releases
                                 </Link>
@@ -177,7 +177,7 @@ const UserAdminHomePage = () => {
                                         <h1 className='text-xl font-extrabold text-white'>Dream Records</h1>
                                         <p className='text-white text-sm'>Sell your music worldwide.</p>
                                         <div className='py-4'>
-                                            <Link to={'/create-music'}>
+                                            <Link to={'/create-release'}>
                                                 <button onClick={onClose} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
                                                     + Create
                                                 </button>
@@ -188,7 +188,7 @@ const UserAdminHomePage = () => {
                                                     <HomeIcon className="h-7 w-7 pe-2" />
                                                     Home
                                                 </Link>
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/all-user'}>
+                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/releases'}>
                                                     <DocumentCheckIcon className="h-7 w-7 pe-2" />
                                                     Releases
                                                 </Link>

@@ -24,6 +24,7 @@ import SecondStepTrack from './UserAdminDashboard/CreateMusicPage/SecondStepTrac
 
 
 
+
 // Commont Routes import_______________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
 const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
@@ -37,6 +38,7 @@ const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdmi
 const UserHomePage = React.lazy(() => import('./UserAdminDashboard/UserHomePage/UserHomePage'));
 const UserArtistPage = React.lazy(() => import('./UserAdminDashboard/UserArtistPage/UserArtistPage'));
 const UserLabelsPage = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/UserLabelsPage'));
+const ReleasesPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/ReleasesPage'));
 
 
 // User Profile Routes________________
@@ -93,27 +95,27 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserHomePage/></Suspense>
       },
       {
-        path: '/release',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserHomePage/></Suspense>
+        path: '/releases',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ReleasesPage/></Suspense>
       },
       {
-        path: '/create-music',
+        path: '/create-release',
         element: <CreateMusicPage/>,
         children: [
           {
-            path: '/create-music',
+            path: '/create-release',
             element: <FirstStep/>
           },
           {
-            path: '/create-music/tracks',
+            path: '/create-release/tracks',
             element: <SecondStepTrack/>
           },
           {
-            path: '/create-music/date',
+            path: '/create-release/date',
             element: <ThirdStepDate/>
           },
           {
-            path: '/create-music/thenks',
+            path: '/create-release/thenks',
             element: <SuccessPage link={'/release'} heading={'Successfully Created the Release'} text={'We will review your release very soon. Please Got to the Release page and check your Release Status'}/>
           }
           
