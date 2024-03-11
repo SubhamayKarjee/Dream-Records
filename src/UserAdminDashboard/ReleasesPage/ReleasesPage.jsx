@@ -23,7 +23,7 @@ const ReleasesPage = () => {
     const [releaseData, setReleaseData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false);
 
-    // Pagination ______________________________________________________________
+    // Get Release List ______________________________________________________________
     useEffect(() => {
         // Calculate Pagination and Fetch__________________________________________________
         setFetchLoading(true)
@@ -44,6 +44,7 @@ const ReleasesPage = () => {
     }
 
     const handleStatus = (e) => {
+        setCurrentPage(1)
         setReleaseStatus(e)
     }
 
@@ -53,7 +54,6 @@ const ReleasesPage = () => {
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-          console.log(currentPage);
           setFetchLoading(true);
           axios.get(`http://localhost:5000/api/v1/release/search/${userNameIdRoll[1]}?status=${releaseStatus}&search=${searchText}`)
             .then( res => {

@@ -20,6 +20,7 @@ const UserLabelsPage = () => {
 
     const [labelsData, setLabelsData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false);
+
     useEffect( () => {
       setFetchLoading(true)
       axios.get(`http://localhost:5000/api/v1/labels/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
@@ -32,30 +33,31 @@ const UserLabelsPage = () => {
           })
           .catch(er => console.log(er));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[refatchLabelsData])
+    },[refatchLabelsData, currentPage, lebelStatus])
 
-    // Pagination ______________________________________________________________
-    useEffect(() => {
-      // Calculate Pagination __________________________________________________
-      setFetchLoading(true)
-      axios.get(`http://localhost:5000/api/v1/labels/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
-          .then( res => {
-            if(res.status == 200){
-              console.log(res.data.data);
-              setFetchLoading(false);
-              setTotalItems(res.data.dataCount);
-              setLabelsData(res.data.data);
-            }
-          })
-          .catch(er => console.log(er));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage, lebelStatus]);
+    // Search Label ______________________________________________________________
+    // useEffect(() => {
+    //   // Calculate Pagination ____________________________________________________
+    //   setFetchLoading(true)
+    //   axios.get(`http://localhost:5000/api/v1/labels/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
+    //       .then( res => {
+    //         if(res.status == 200){
+    //           console.log(res.data.data);
+    //           setFetchLoading(false);
+    //           setTotalItems(res.data.dataCount);
+    //           setLabelsData(res.data.data);
+    //         }
+    //       })
+    //       .catch(er => console.log(er));
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [currentPage, lebelStatus]);
 
     const handlePageChange = (page) => {
       setCurrentPage(page)
     };
 
     const handleStatus = (e) => {
+        setCurrentPage(1)
         setLabelStatus(e)
     }
 
@@ -64,8 +66,7 @@ const UserLabelsPage = () => {
     }
 
     const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-          console.log(currentPage);
+        if (event.key === 'Enter') {          
           setFetchLoading(true);
           axios.get(`http://localhost:5000/api/v1/labels/search/${userNameIdRoll[1]}?status=${lebelStatus}&search=${searchText}`)
             .then( res => {
@@ -87,7 +88,6 @@ const UserLabelsPage = () => {
               const refetch = refatchLabelsData + 1
               setFetchLoading(false)
               setRefatchLabelsData(refetch)
-              console.log(res.data.message);
             }
           })
           .catch(er => console.log(er));
