@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 const SuccessPage = ({link, heading, text}) => {
 
     const navigate = useNavigate('')
-    const handleNavigate = (l) => {
-        navigate(l)
+    const handleNavigate = (e) => {
+        navigate(e)
     }
 
     return (
