@@ -5,6 +5,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
+import ReleaseCardComponent from "./ReleaseCardComponent/ReleaseCardComponent";
 
 const ReleasesPage = () => {
 
@@ -15,9 +16,8 @@ const ReleasesPage = () => {
     // Paginatin and Search State __________________________________________________
     const [releaseStatus, setReleaseStatus] = useState('Pending')
     const [totalItems, setTotalItems] = useState();
-    const [currentPage] = useState(1);
-    // const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemPerPage] = useState(9);
     const [searchText, setSearchText] = useState('');
 
     const [releaseData, setReleaseData] = useState();
@@ -30,7 +30,6 @@ const ReleasesPage = () => {
         axios.get(`http://localhost:5000/api/v1/release/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${releaseStatus}`)
             .then( res => {
               if(res.status == 200){
-                console.log(res.data.data);
                 setFetchLoading(false);
                 setTotalItems(res.data.dataCount);
                 setReleaseData(res.data.data);
@@ -47,6 +46,10 @@ const ReleasesPage = () => {
     const handleStatus = (e) => {
         setReleaseStatus(e)
     }
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page)
+      };
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -101,6 +104,7 @@ const ReleasesPage = () => {
                     {
                         fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
+                    <ReleaseCardComponent releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={currentPage} handlePageChange={handlePageChange}/>
                 </main>
 
             </div>
