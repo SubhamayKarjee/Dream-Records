@@ -71,7 +71,7 @@ const FirstStep = () => {
         if(uploadedImage){
             const formData = {...data, ...uploadedImage};
             setReleaseFormData(formData)
-            navigate('/create-music/tracks')
+            navigate('/create-release/tracks')
         }else{
             setErrorMessage('Please Upload Art Image. Art Image Required');
         }

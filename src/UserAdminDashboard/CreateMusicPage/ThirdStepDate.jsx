@@ -38,13 +38,13 @@ const ThirdStepDate = () => {
             return;
         }
         const status = 'Pending'
-        const masterId = userNameIdRoll[1]
-        const data = {...releaseFormData, releaseDate, status, masterId }
+        const masterUserId = userNameIdRoll[1]
+        const data = {...releaseFormData, releaseDate, status, masterUserId }
         axios.post('http://localhost:5000/api/v1/release/create-release', data)
             .then(res => {
                 if(res.status == 200){
                     setLoading(false);
-                    navigate('/create-music/thenks')
+                    navigate('/create-release/thenks')
                 }
             })
             .catch(er => console.log(er))        

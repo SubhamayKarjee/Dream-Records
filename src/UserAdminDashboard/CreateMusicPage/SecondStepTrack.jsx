@@ -73,7 +73,7 @@ const SecondStepTrack = () => {
             return;
         }
         if(!releaseFormData){
-            navigate('/create-music')
+            navigate('/create-release')
         }
 
         const artistId = artist._id;
@@ -86,7 +86,7 @@ const SecondStepTrack = () => {
         }
         const d = {...data, ...releaseFormData, ...audioData, artistId, artistName, labelId, labelName}
         setReleaseFormData(d)
-        navigate('/create-music/date')
+        navigate('/create-release/date')
     };
 
     
