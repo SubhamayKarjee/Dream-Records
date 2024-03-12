@@ -24,7 +24,6 @@ import SecondStepTrack from './UserAdminDashboard/CreateMusicPage/SecondStepTrac
 
 
 
-
 // Commont Routes import_______________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
 const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
@@ -39,6 +38,7 @@ const UserHomePage = React.lazy(() => import('./UserAdminDashboard/UserHomePage/
 const UserArtistPage = React.lazy(() => import('./UserAdminDashboard/UserArtistPage/UserArtistPage'));
 const UserLabelsPage = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/UserLabelsPage'));
 const ReleasesPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/ReleasesPage'));
+const SingleReleasePage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/SingleReleasePage/SingleReleasePage'));
 
 
 // User Profile Routes________________
@@ -97,6 +97,10 @@ const router = createBrowserRouter([
       {
         path: '/releases',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ReleasesPage/></Suspense>
+      },
+      {
+        path: '/releases/:id',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleReleasePage/></Suspense>
       },
       {
         path: '/create-release',

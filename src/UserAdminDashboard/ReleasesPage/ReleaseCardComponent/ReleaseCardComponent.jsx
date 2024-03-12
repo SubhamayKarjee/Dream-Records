@@ -1,9 +1,17 @@
 import { CheckBadgeIcon, ClockIcon } from "@heroicons/react/24/solid";
 import { Empty, Pagination } from "antd";
+import { useNavigate } from "react-router-dom";
 import './ReleaseCardComponent.css'
 
 // eslint-disable-next-line react/prop-types
 const ReleaseCardComponent = ({releaseData, totalItems, fetchLoading, currentPage, handlePageChange}) => {
+
+    const navigate = useNavigate('')
+
+    const handleNavigate = (e) => {
+        const url = `/releases/${e}`;
+        navigate(url)
+    }
 
 
     return (
@@ -12,7 +20,7 @@ const ReleaseCardComponent = ({releaseData, totalItems, fetchLoading, currentPag
                 {
                     // eslint-disable-next-line react/prop-types
                     releaseData && releaseData.map(d => 
-                        <div key={d._id} style={{cursor: 'pointer'}} className="card_parent_div">
+                        <div key={d._id} style={{cursor: 'pointer'}} onClick={() => handleNavigate(d._id)}  className="card_parent_div">
                             <img src={d.imgUrl} alt="" />
                             <div className="card_child_div">
                                 <div className="card_content">
