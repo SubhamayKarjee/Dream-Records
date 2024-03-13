@@ -2,12 +2,13 @@ import { ChatBubbleBottomCenterTextIcon, ClockIcon, PencilIcon } from "@heroicon
 import { Image } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
 
 const SingleReleasePage = () => {
 
     const {id} = useParams();
+    const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState()
@@ -23,7 +24,12 @@ const SingleReleasePage = () => {
             })
             .catch(er => console.log(er));
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+    }, []);
+
+    const handleNavigate = (id) => {
+        const link = `/releases/edit/first-step/${id}`
+        navigate(link)
+    }
 
 
     return (
@@ -54,7 +60,7 @@ const SingleReleasePage = () => {
                                         <ClockIcon className="h-3 w-3 text-white me-1"/>
                                         <p className="text-xs font-semibold text-white">{data?.status}</p>
                                     </div>
-                                    <div className="flex items-center p-1 mt-2 bg-cyan-500 rounded-md shadow">
+                                    <div style={{cursor: 'pointer'}} onClick={() => handleNavigate(data?._id)} className="flex items-center p-1 mt-2 bg-cyan-500 rounded-md shadow">
                                         <PencilIcon className="h-3 w-3 text-white me-1"/>
                                         <p className="text-xs font-semibold text-white">Edit</p>
                                     </div>
@@ -73,7 +79,7 @@ const SingleReleasePage = () => {
                         <audio controls src={data?.audioUrl}></audio>
                     </div> 
 
-                    <div className="border p-2 rounded-lg my-4">
+                    <div className="border p-2 rounded-lg my-4 shadow">
                         <div className="my-3">
                             <p className="text-xs font-bold border-b">Artist Details</p>
                             <h2 className="font-bold">{data?.artistName}</h2>
@@ -115,7 +121,6 @@ const SingleReleasePage = () => {
                         </div>
                     </div>
                 }
-
             </div>
 
 

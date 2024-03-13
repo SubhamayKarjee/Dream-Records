@@ -54,22 +54,22 @@ const FirstStep = () => {
         
     }
 
-    const [selectValue, setSelectValue] = useState()
+    const [genre, setGenre] = useState()
     const [genreError, setGenreError] = useState('')
     // Select Function ______________________________________________
     const handleChange = (value) => {
-        setSelectValue(value)
+        setGenre(value)
         console.log(`selected ${value}`);
     };
 
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = (data) => {
-        if(!selectValue){
+        if(!genre){
             setGenreError('Genre Required')
             return;
         }
         if(uploadedImage){
-            const formData = {...data, ...uploadedImage};
+            const formData = {...data, ...uploadedImage, genre};
             setReleaseFormData(formData)
             navigate('/create-release/tracks')
         }else{

@@ -20,6 +20,8 @@ import FirstStep from './UserAdminDashboard/CreateMusicPage/FirstStep';
 import ThirdStepDate from './UserAdminDashboard/CreateMusicPage/ThirdStepDate';
 import SuccessPage from './UserAdminDashboard/SuccessPage/SuccessPage';
 import SecondStepTrack from './UserAdminDashboard/CreateMusicPage/SecondStepTrack';
+import EditReleaseFirstStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseFirstStep';
+
 
 
 
@@ -39,6 +41,7 @@ const UserArtistPage = React.lazy(() => import('./UserAdminDashboard/UserArtistP
 const UserLabelsPage = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/UserLabelsPage'));
 const ReleasesPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/ReleasesPage'));
 const SingleReleasePage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/SingleReleasePage/SingleReleasePage'));
+const EditReleaseMainPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseMainPage'));
 
 
 // User Profile Routes________________
@@ -123,6 +126,16 @@ const router = createBrowserRouter([
             element: <SuccessPage link={'/releases'} heading={'Successfully Created the Release'} text={'We will review your release very soon. Please Got to the Release page and check your Release Status'}/>
           }
           
+        ]
+      },
+      {
+        path: '/releases/edit/first-step/:id',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><EditReleaseMainPage/></Suspense>,
+        children: [
+          {
+            path: '/releases/edit/first-step/:id',
+            element: <EditReleaseFirstStep/>,
+          },
         ]
       },
       {
