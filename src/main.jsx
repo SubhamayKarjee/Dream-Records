@@ -21,6 +21,7 @@ import ThirdStepDate from './UserAdminDashboard/CreateMusicPage/ThirdStepDate';
 import SuccessPage from './UserAdminDashboard/SuccessPage/SuccessPage';
 import SecondStepTrack from './UserAdminDashboard/CreateMusicPage/SecondStepTrack';
 import EditReleaseFirstStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseFirstStep';
+import EditReleaseSecondStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseSecondStep';
 
 
 
@@ -106,6 +107,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleReleasePage/></Suspense>
       },
       {
+        // Create Release _________________________________________________________________________________________________
         path: '/create-release',
         element: <CreateMusicPage/>,
         children: [
@@ -129,12 +131,17 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: '/releases/edit/first-step/:id',
+        // Edit Release _________________________________________________________________________________________________
+        path: '/releases/edit/',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><EditReleaseMainPage/></Suspense>,
         children: [
           {
-            path: '/releases/edit/first-step/:id',
+            path: '/releases/edit/:id',
             element: <EditReleaseFirstStep/>,
+          },
+          {
+            path: '/releases/edit/second-step',
+            element: <EditReleaseSecondStep/>,
           },
         ]
       },

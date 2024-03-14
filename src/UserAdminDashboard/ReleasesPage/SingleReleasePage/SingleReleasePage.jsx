@@ -27,7 +27,7 @@ const SingleReleasePage = () => {
     }, []);
 
     const handleNavigate = (id) => {
-        const link = `/releases/edit/first-step/${id}`
+        const link = `/releases/edit/${id}`
         navigate(link)
     }
 

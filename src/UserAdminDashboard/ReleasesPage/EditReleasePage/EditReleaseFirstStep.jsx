@@ -80,7 +80,7 @@ const EditReleaseFirstStep = () => {
             const formData = {...data, ...uploadedImage, genre};
             console.log('formData', formData);
             setReleaseFormData(formData)
-            navigate('/create-release/tracks')
+            navigate('/releases/edit/second-step')
         }else{
             setErrorMessage('Please Upload Art Image. Art Image Required');
         }
