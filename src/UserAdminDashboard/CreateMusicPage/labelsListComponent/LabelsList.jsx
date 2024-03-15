@@ -48,7 +48,7 @@ const LabelsList = ({handleCancel}) => {
             {
               labelsData?.map((data) => 
                 <div onClick={() => handleLabel(data)} key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
-                   <div onClick={handleCancel} className="w-full">
+                   <div style={{cursor: 'pointer'}} onClick={handleCancel} className="w-full">
                     <div className="flex items-center">
                           <Image
                             width={55}

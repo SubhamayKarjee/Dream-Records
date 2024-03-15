@@ -20,7 +20,8 @@ const SecondStepTrack = () => {
     const navigate = useNavigate('');
     const { artist, setArtist, labels, setLabels } = useContext(AuthContext);
 
-    // Modal Function For Artist __________________________________
+
+    // Modal Function For Featuring __________________________________
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
@@ -32,7 +33,8 @@ const SecondStepTrack = () => {
         setIsModalOpen(false);
     };
 
-    // Modal Function For Label __________________________________
+
+    // Modal Function For Artist __________________________________
     const [isModalOpen1, setIsModalOpen1] = useState(false);
     const showModal1 = () => {
         setIsModalOpen1(true);
@@ -44,6 +46,19 @@ const SecondStepTrack = () => {
         setIsModalOpen1(false);
     };
 
+    // Modal Function For Label __________________________________
+    const [isModalOpen2, setIsModalOpen2] = useState(false);
+    const showModal2 = () => {
+        setIsModalOpen2(true);
+    };
+    const handleOk2 = () => {
+        setIsModalOpen2(false);
+    };
+    const handleCancel2 = () => {
+        setIsModalOpen2(false);
+    };
+
+    
     const removeArtist = () => {
         setArtist()
     }
@@ -169,7 +184,10 @@ const SecondStepTrack = () => {
                     
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Album Name <span className="text-red-500">*</span></p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("albumName", { required: true})}/>
-                    {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>}                    
+                    {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>}    
+
+
+
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Featuring</p>
                     {
@@ -199,6 +217,10 @@ const SecondStepTrack = () => {
                             </div>
                         </Modal>
 
+
+
+
+
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Author <span className="text-red-500">*</span></p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("author", { required: true})}/>
                     {errors.author && <span className='text-red-600 pt-2 block'>Author Required</span>}
@@ -206,6 +228,10 @@ const SecondStepTrack = () => {
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Lyrics language <span className="text-red-500">*</span></p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("lyricsLanguage", { required: true})}/>
                     {errors.lyricsLanguage && <span className='text-red-600 pt-2 block'>Lyrics language Required</span>}
+
+
+
+
 
                     {/* Artist Select Option ______________________________________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Artist <span className="text-red-500">*</span></p>
@@ -229,13 +255,18 @@ const SecondStepTrack = () => {
                         </div>
                     }
 
-                    <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
-                        <Modal title="Search/Select Artist" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                    <span onClick={showModal1} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
+                        <Modal title="Search/Select Artist" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
                             <div>
-                                <ArtistList handleCancel={handleCancel}/>
+                                <ArtistList handleCancel={handleCancel1}/>
                             </div>
                         </Modal>
                     {errorMessageArtist && <span className='text-red-600 pt-2 block'>{errorMessageArtist}</span>}
+
+
+
+
+
                     {/* Label Select Option ______________________________________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label <span className="text-red-500">*</span></p>
                     {
@@ -246,24 +277,29 @@ const SecondStepTrack = () => {
                                     width={55}
                                     height={55}
                                     className="rounded-lg"
-                                    src={artist.imgUrl}
+                                    src={labels.imgUrl}
                                     fallback={fallbackImage}
                                     />
                                 <div className="ps-2">
-                                <h2 className="font-bold">{labels.artistName}</h2>
+                                <h2 className="font-bold">{labels.labelName}</h2>
                                 <p className="text-sm text-slate-400">ID: {labels._id}</p>
                                 </div>
                             </div>
                             <button onClick={removeLabels}><TrashIcon className="w-5 h-5 text-red-500"/></button>
                         </div>
                     }
-                    <span onClick={showModal1} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
-                        <Modal title="Search/Select Label" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
+                    <span onClick={showModal2} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
+                        <Modal title="Search/Select Label" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
                             <div>
-                                <LabelsList handleCancel1={handleCancel}/>
+                                <LabelsList handleCancel1={handleCancel2}/>
                             </div>
                         </Modal>
                     {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}
+
+
+
+
+
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Composer <span className="text-red-500">*</span></p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("composer", { required: true})}/>

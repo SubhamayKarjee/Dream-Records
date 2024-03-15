@@ -34,6 +34,7 @@ const EditReleaseSecondStep = () => {
         const audioUrl = preReleaseData?.audioUrl;
         const audioKey = preReleaseData?.audioKey;
         setAudioData({audioName, audioUrl, audioKey})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     console.log(preReleaseData);

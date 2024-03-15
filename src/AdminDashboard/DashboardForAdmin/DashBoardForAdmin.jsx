@@ -4,10 +4,11 @@ import logo from '../../assets/logo/Dream-Records Logo-(Light).png';
 import { 
     HomeIcon, 
     AdjustmentsHorizontalIcon, 
-    UserIcon, CheckCircleIcon, 
-    ExclamationTriangleIcon, 
+    UserIcon,
     ClipboardDocumentListIcon,
     Bars3BottomLeftIcon,
+    UsersIcon,
+    UserGroupIcon,
  } from '@heroicons/react/24/solid'
 import { useState } from 'react';
 import { Drawer } from 'antd';
@@ -64,15 +65,15 @@ const DashBoardForAdmin = () => {
                                 </Link>
                                 <Link className='text-white flex items-center py-2' to={'/'}>
                                     <AdjustmentsHorizontalIcon className="h-7 w-7 pe-2" />
-                                    Pending
+                                    Release
+                                </Link>
+                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/labels'}>
+                                    <UserGroupIcon className="h-7 w-7 pe-2" />    
+                                    Labels
                                 </Link>
                                 <Link className='text-white flex items-center py-2' to={'/'}>
-                                    <CheckCircleIcon className="h-7 w-7 pe-2" />    
-                                    Aproved
-                                </Link>
-                                <Link className='text-white flex items-center py-2' to={'/'}>
-                                    <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
-                                    Correction
+                                    <UsersIcon className="h-7 w-7 pe-2" />
+                                    Artist
                                 </Link>
                                 <Link className='text-white flex items-center py-2' to={'/'}>
                                     <ClipboardDocumentListIcon className="h-7 w-7 pe-2" />
@@ -82,7 +83,7 @@ const DashBoardForAdmin = () => {
                         </div>
                     </div>
                      {/* __________________________________________________________________________________________________________ */}
-                    <div className="bg-white col-span-4 p-2 md:p-4 md:rounded-lg">
+                    <div className="bg-white col-span-4 p-2 md:p-4 md:rounded-lg overflow-y-auto">
                         {/* Admin Profile image right Side ________________________________________________________________________ */}
                         <div style={{marginTop: '-10px'}} className='hidden md:block md:flex justify-end items-center border-b'>
                             <div className="flex-none gap-2">
@@ -136,15 +137,15 @@ const DashBoardForAdmin = () => {
                                             </Link>
                                             <Link onClick={onClose} className='text-white flex items-center py-2' to={'/'}>
                                                 <AdjustmentsHorizontalIcon className="h-7 w-7 pe-2" />
-                                                Pending
+                                                Release
+                                            </Link>
+                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/labels'}>
+                                                <UserGroupIcon className="h-7 w-7 pe-2" />    
+                                                Labels
                                             </Link>
                                             <Link onClick={onClose} className='text-white flex items-center py-2' to={'/'}>
-                                                <CheckCircleIcon className="h-7 w-7 pe-2" />    
-                                                Aproved
-                                            </Link>
-                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/'}>
-                                                <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
-                                                Correction
+                                                <UsersIcon className="h-7 w-7 pe-2" />
+                                                Artist
                                             </Link>
                                             <Link onClick={onClose} className='text-white flex items-center py-2' to={'/'}>
                                                 <ClipboardDocumentListIcon className="h-7 w-7 pe-2" />

@@ -39,8 +39,6 @@ const ArtistList = ({handleCancel}) => {
       setArtistData(searchData);
     }
 
-    
-
 
       
     return (
@@ -52,7 +50,7 @@ const ArtistList = ({handleCancel}) => {
             {
               artistData?.map((data) => 
                 <div style={{cursor: 'pointer'}} onClick={handleCancel} key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
-                    <div  onClick={() => handleData(data)} className="w-full">
+                    <div style={{cursor: 'pointer'}}  onClick={() => handleData(data)} className="w-full">
                         <div className="flex items-center">
                                 <Image
                                 width={55}

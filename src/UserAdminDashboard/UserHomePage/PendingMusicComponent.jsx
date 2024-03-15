@@ -12,6 +12,16 @@ const PendingMusicComponent = () => {
         {id: 4, img: `${demoImage}`, text: 'Demo Text', status: 'pending'},
         {id: 5, img: `${demoImage}`, text: 'Demo Text', status: 'pending'},
     ]
+    const data = [
+        {id: 1, img: `${demoImage}`, text: 'Demo Text', status: 'pending', artist: [{artistId: '1', artistName: 'mehedi', aritstImg: 'demo.jpg', key: 'key' }, {artistId: '2', artistName: 'basar', aritstImg: 'demo.jpg', key: 'key' }] },
+        {id: 2, img: `${demoImage}`, text: 'Demo Text', status: 'pending', artist: [{artistId: '1', artistName: 'mehedi', aritstImg: 'demo.jpg', key: 'key' }, {artistId: '2', artistName: 'new', aritstImg: 'demo.jpg', key: 'key' }] },
+        {id: 3, img: `${demoImage}`, text: 'Demo Text', status: 'pending', artist: [{artistId: '1', artistName: 'shohug', aritstImg: 'demo.jpg', key: 'key' }, {artistId: '2', artistName: 'basar', aritstImg: 'demo.jpg', key: 'key' }] },
+        {id: 4, img: `${demoImage}`, text: 'Demo Text', status: 'pending', artist: [{artistId: '1', artistName: 'shohug', aritstImg: 'demo.jpg', key: 'key' }, {artistId: '2', artistName: 'new', aritstImg: 'demo.jpg', key: 'key' }] },
+        {id: 5, img: `${demoImage}`, text: 'Demo Text', status: 'pending', artist: [{artistId: '1', artistName: 'shohug', aritstImg: 'demo.jpg', key: 'key' }, {artistId: '2', artistName: 'fatema', aritstImg: 'demo.jpg', key: 'key' }] },
+    ]
+
+    const mehediData = data.filter(item => item.artist.some(artist => artist.artistName === 'mehedi'));
+    console.log('mehedi Data =', mehediData)
 
 
     return (

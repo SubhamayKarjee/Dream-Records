@@ -1,4 +1,4 @@
-import { BellIcon, ChevronLeftIcon, ClockIcon, ExclamationCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { BellIcon, CheckBadgeIcon, ChevronLeftIcon, ClockIcon, ExclamationCircleIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -100,24 +100,24 @@ const UserLabelsPage = () => {
                 <div className="mb-4">
                     <button><Link className="px-2 py-1 font-semibold text-sm text-slate-500 flex items-center inline bg-slate-200 rounded-md" to={'/'}><ChevronLeftIcon className="w-4 h-4 me-1 font-bold"/>Back</Link></button>
                 </div>
-                {/* Search and Create Artist Section ______________________________________________________________________________ */}
+                {/* Search and Create Labels Section ______________________________________________________________________________ */}
                 <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg">
                     <div className="my-2">
                         <input type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm rounded-full input-bordered w-full"/>
                     </div>
                     <div className="my-2">
-                        <button onClick={()=>document.getElementById('create_artist_modal').showModal()} className='btn btn-neutral py-1 px-6 rounded-full btn-sm border-none me-2 w-full'>Create Label</button>
+                        <button onClick={()=>document.getElementById('create_labels_modal').showModal()} className='btn btn-neutral py-1 px-6 rounded-full btn-sm border-none me-2 w-full'>Create Label</button>
                     </div>
                 </div>
-                    {/* Create Artist form with Modal Start _______________________________________________________________________ */}
-                    <dialog id="create_artist_modal" className="modal"> 
+                    {/* Create Labels form with Modal Start _______________________________________________________________________ */}
+                    <dialog id="create_labels_modal" className="modal"> 
                         <div className="modal-box">
                             <CreateLabelsForm/>
                         </div>
                     </dialog>
-                    {/* Create Artist form with Modal End _______________________________________________________________________ */}
+                    {/* Create Labels form with Modal End _______________________________________________________________________ */}
 
-                {/* Total Artist Count Section _____________________________________________________________________________________ */}
+                {/* Total Labels Count Section _____________________________________________________________________________________ */}
                 <div className="flex justify-between items-center my-3">
                     <div className="flex items-center">
                         <ExclamationCircleIcon className="w-6 h-6 me-1 text-slate-500"/>
@@ -126,7 +126,7 @@ const UserLabelsPage = () => {
                     <div><span className="text-sm font-bold">{labelsData?.length}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{totalItems}</span> </div>
                 </div>
 
-                {/* Artist List and Relase Title Section _____________________________________________________________________________ */}
+                {/* Labels List and Relase Title Section _____________________________________________________________________________ */}
                 <div className="flex justify-between items-center py-2 rounded-full bg-slate-100 px-4">
                     <h4 className="font-bold text-slate-600">Profile</h4>
                     <h4 className="font-bold text-slate-600">Releases</h4>
@@ -158,8 +158,19 @@ const UserLabelsPage = () => {
                               <p className="text-sm text-slate-400">ID: {data._id}</p>
                             </div>
                           </div>
-                          <div className="flex items-start">
-                            <span className="bg-yellow-500 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {data.status}</span>
+                          <div className="flex items-center">
+                            {
+                              data.status === 'Pending' &&
+                              <span className="bg-yellow-500 my-3 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {data.status}</span>
+                            }
+                            {
+                              data.status === 'Approved' &&
+                              <span className="bg-green-500 my-3 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center"><CheckBadgeIcon className="w-4 h-4 me-1"/> {data.status}</span>
+                            }
+                            {
+                              data.status === 'Rejected' &&
+                              <span className="bg-red-500 my-3 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data.status}</span>
+                            }
                             <button onClick={() => deleteLabels(data._id, data.key)}><TrashIcon className="w-5 h-5 text-red-500"/></button>
                           </div>
                         </div>
