@@ -43,13 +43,12 @@ const UpdateLabelsComponent = () => {
     }
     return (
         <div>
-            <h2 className="font-bold my-3">Update Labels Status</h2>
             {
                 fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
             }
             {
                 labels && 
-                <div className="flex justify-between p-2 my-1 rounded-md border">
+                <div className="flex justify-between p-2 my-3 rounded-md border">
                     <div className="flex">
                         <Image
                         width={120}

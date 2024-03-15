@@ -10,15 +10,14 @@ import LabelsList from "./labelsListComponent/LabelsList";
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import { ReleaseContext } from "./CreateMusicPage";
 import axios from "axios";
+import FeaturingComponent from "./FeaturingComponent/FeaturingComponent";
 
 const SecondStepTrack = () => {
 
     const { releaseFormData, setReleaseFormData } = useContext(ReleaseContext);
 
-    console.log(releaseFormData);
-
     const navigate = useNavigate('');
-    const { artist, setArtist, labels, setLabels } = useContext(AuthContext);
+    const { artist, setArtist, labels, setLabels, featuring } = useContext(AuthContext);
 
 
     // Modal Function For Featuring __________________________________
@@ -58,7 +57,7 @@ const SecondStepTrack = () => {
         setIsModalOpen2(false);
     };
 
-    
+
     const removeArtist = () => {
         setArtist()
     }
@@ -191,19 +190,19 @@ const SecondStepTrack = () => {
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Featuring</p>
                     {
-                        artist && 
+                        featuring && 
                         <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
                             <div className="flex items-center">
                                     <Image
                                     width={55}
                                     height={55}
                                     className="rounded-lg"
-                                    src={artist.imgUrl}
+                                    src={featuring.imgUrl}
                                     fallback={fallbackImage}
                                     />
                                 <div className="ps-2">
-                                <h2 className="font-bold">{artist.artistName}</h2>
-                                <p className="text-sm text-slate-400">ID: {artist._id}</p>
+                                <h2 className="font-bold">{featuring.artistName}</h2>
+                                <p className="text-sm text-slate-400">ID: {featuring._id}</p>
                                 </div>
                             </div>
                             <button onClick={removeArtist}><TrashIcon className="w-5 h-5 text-red-500"/></button>
@@ -213,7 +212,7 @@ const SecondStepTrack = () => {
                     <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
                         <Modal title="Search/Select Artist" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
                             <div>
-                                <ArtistList handleCancel={handleCancel}/>
+                                <FeaturingComponent handleCancel={handleCancel}/>
                             </div>
                         </Modal>
 
@@ -291,7 +290,7 @@ const SecondStepTrack = () => {
                     <span onClick={showModal2} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
                         <Modal title="Search/Select Label" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
                             <div>
-                                <LabelsList handleCancel1={handleCancel2}/>
+                                <LabelsList handleCancel={handleCancel2}/>
                             </div>
                         </Modal>
                     {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}
