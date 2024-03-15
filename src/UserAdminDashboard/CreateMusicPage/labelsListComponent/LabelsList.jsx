@@ -7,7 +7,7 @@ import fallbackImage from '../../../assets/fallbackImage.jpg'
 // eslint-disable-next-line react/prop-types
 const LabelsList = ({handleCancel}) => {
 
-    const { userNameIdRoll , setLabels} = useContext(AuthContext);
+    const { userNameIdRoll , setLabels, labels} = useContext(AuthContext);
 
     const [totalItems, setTotalItems] = useState();
     const [labelsData, setLabelsData] = useState();
@@ -30,7 +30,11 @@ const LabelsList = ({handleCancel}) => {
     },[])
 
     const handleLabel = (data) => {
-        setLabels(data)
+      if(labels){
+        setLabels([...labels, data])
+      }else{
+        setLabels([data])
+      }
     }
 
     const handleSearch = (e) => {

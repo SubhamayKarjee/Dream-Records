@@ -7,7 +7,7 @@ import { Empty, Image } from "antd";
 // eslint-disable-next-line react/prop-types
 const FeaturingComponent = ({handleCancel}) => {
 
-    const { userNameIdRoll, setFeaturing } = useContext(AuthContext);
+    const { userNameIdRoll, setFeaturing, featuring } = useContext(AuthContext);
 
     const [featuringData, setFeaturingData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false);
@@ -28,7 +28,11 @@ const FeaturingComponent = ({handleCancel}) => {
     },[])
 
     const handleData = (data) => {
-        setFeaturing(data)
+        if(featuring){
+            setFeaturing([...featuring, data])
+        }else{
+            setFeaturing([data])
+        }
     }
 
     const handleSearch = (e) => {

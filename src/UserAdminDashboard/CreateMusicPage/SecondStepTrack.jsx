@@ -17,7 +17,7 @@ const SecondStepTrack = () => {
     const { releaseFormData, setReleaseFormData } = useContext(ReleaseContext);
 
     const navigate = useNavigate('');
-    const { artist, setArtist, labels, setLabels, featuring } = useContext(AuthContext);
+    const { artist, setArtist, labels, setLabels, featuring, setFeaturing } = useContext(AuthContext);
 
 
     // Modal Function For Featuring __________________________________
@@ -58,12 +58,20 @@ const SecondStepTrack = () => {
     };
 
 
-    const removeArtist = () => {
-        setArtist()
+    const removeFeaturing = (id) => {
+        const deleteFeaturing = featuring.filter(a => a._id !== id);
+        setFeaturing(deleteFeaturing)
     }
-    const removeLabels = () => {
-        setLabels()
+
+    const removeArtist = (id) => {
+        const deleteArtist = artist.filter(a => a._id !== id);
+        setArtist(deleteArtist)
     }
+    const removeLabels = (id) => {
+        const deleteLabels = labels.filter(l => l._id !== id);
+        setLabels(deleteLabels)
+    }
+    
 
 
 
@@ -190,26 +198,27 @@ const SecondStepTrack = () => {
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Featuring</p>
                     {
-                        featuring && 
-                        <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                            <div className="flex items-center">
-                                    <Image
-                                    width={55}
-                                    height={55}
-                                    className="rounded-lg"
-                                    src={featuring.imgUrl}
-                                    fallback={fallbackImage}
-                                    />
-                                <div className="ps-2">
-                                <h2 className="font-bold">{featuring.artistName}</h2>
-                                <p className="text-sm text-slate-400">ID: {featuring._id}</p>
+                        featuring && featuring.map(data => 
+                            <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                <div className="flex items-center">
+                                        <Image
+                                        width={55}
+                                        height={55}
+                                        className="rounded-lg"
+                                        src={data.imgUrl}
+                                        fallback={fallbackImage}
+                                        />
+                                    <div className="ps-2">
+                                    <h2 className="font-bold">{data.artistName}</h2>
+                                    <p className="text-sm text-slate-400">ID: {data._id}</p>
+                                    </div>
                                 </div>
+                                <span style={{cursor: 'pointer'}} onClick={() => removeFeaturing(data._id)}><TrashIcon className="w-5 h-5 text-red-500"/></span>
                             </div>
-                            <button onClick={removeArtist}><TrashIcon className="w-5 h-5 text-red-500"/></button>
-                        </div>
+                        )
                     }
 
-                    <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
+                    <span onClick={showModal} style={{cursor: 'pointer'}} className="btn btn-sm btn-neutral flex items-center py-2 px-4 mt-2"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/>Add Featuring</span>
                         <Modal title="Search/Select Artist" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
                             <div>
                                 <FeaturingComponent handleCancel={handleCancel}/>
@@ -235,23 +244,24 @@ const SecondStepTrack = () => {
                     {/* Artist Select Option ______________________________________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Artist <span className="text-red-500">*</span></p>
                     {
-                        artist && 
-                        <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                            <div className="flex items-center">
-                                    <Image
-                                    width={55}
-                                    height={55}
-                                    className="rounded-lg"
-                                    src={artist.imgUrl}
-                                    fallback={fallbackImage}
-                                    />
-                                <div className="ps-2">
-                                <h2 className="font-bold">{artist.artistName}</h2>
-                                <p className="text-sm text-slate-400">ID: {artist._id}</p>
+                        artist && artist.map(data => 
+                            <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                <div className="flex items-center">
+                                        <Image
+                                        width={55}
+                                        height={55}
+                                        className="rounded-lg"
+                                        src={data.imgUrl}
+                                        fallback={fallbackImage}
+                                        />
+                                    <div className="ps-2">
+                                    <h2 className="font-bold">{data.artistName}</h2>
+                                    <p className="text-sm text-slate-400">ID: {data._id}</p>
+                                    </div>
                                 </div>
+                                <span style={{cursor: 'pointer'}} onClick={() => removeArtist(data._id)}><TrashIcon className="w-5 h-5 text-red-500"/></span>
                             </div>
-                            <button onClick={removeArtist}><TrashIcon className="w-5 h-5 text-red-500"/></button>
-                        </div>
+                        )
                     }
 
                     <span onClick={showModal1} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
@@ -269,23 +279,24 @@ const SecondStepTrack = () => {
                     {/* Label Select Option ______________________________________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label <span className="text-red-500">*</span></p>
                     {
-                        labels && 
-                        <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                            <div className="flex items-center">
-                                    <Image
-                                    width={55}
-                                    height={55}
-                                    className="rounded-lg"
-                                    src={labels.imgUrl}
-                                    fallback={fallbackImage}
-                                    />
-                                <div className="ps-2">
-                                <h2 className="font-bold">{labels.labelName}</h2>
-                                <p className="text-sm text-slate-400">ID: {labels._id}</p>
+                        labels && labels.map(data => 
+                            <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                <div className="flex items-center">
+                                        <Image
+                                        width={55}
+                                        height={55}
+                                        className="rounded-lg"
+                                        src={data.imgUrl}
+                                        fallback={fallbackImage}
+                                        />
+                                    <div className="ps-2">
+                                    <h2 className="font-bold">{data.labelName}</h2>
+                                    <p className="text-sm text-slate-400">ID: {data._id}</p>
+                                    </div>
                                 </div>
+                                <span style={{cursor: 'pointer'}} onClick={() => removeLabels(data._id)}><TrashIcon className="w-5 h-5 text-red-500"/></span>
                             </div>
-                            <button onClick={removeLabels}><TrashIcon className="w-5 h-5 text-red-500"/></button>
-                        </div>
+                        )
                     }
                     <span onClick={showModal2} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
                         <Modal title="Search/Select Label" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
