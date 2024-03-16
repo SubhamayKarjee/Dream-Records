@@ -48,18 +48,18 @@ const AdminLabelsPage = () => {
     }
   
     const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {          
-          setFetchLoading(true);
-          axios.get(`http://localhost:5000/admin/api/v1/labels/search?status=${lebelStatus}&search=${searchText}`)
-            .then( res => {
-              if(res.status == 200){
-                setFetchLoading(false);
-                setTotalItems(res.data.dataCount);
-                setLabelsData(res.data.data);
-              }
-            })
-            .catch(er => console.log(er));
-        }
+      if (event.key === 'Enter') {          
+        setFetchLoading(true);
+        axios.get(`http://localhost:5000/admin/api/v1/labels/search?status=${lebelStatus}&search=${searchText}`)
+          .then( res => {
+            if(res.status == 200){
+              setFetchLoading(false);
+              setTotalItems(res.data.dataCount);
+              setLabelsData(res.data.data);
+            }
+          })
+          .catch(er => console.log(er));
+      }
     };
 
     const handleUpdate = (id) => {
