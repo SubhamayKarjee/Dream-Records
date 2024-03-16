@@ -1,6 +1,6 @@
 import { Image, Select } from "antd";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
@@ -14,8 +14,16 @@ const FirstStep = () => {
 
     const [errorMessage, setErrorMessage] = useState('');
     const [upLoadLoading, setUploadLoading] = useState(false);
-    const [uploadedImage, setUploadedImage] = useState('');
     const [uploadedImageLink, setUploadedImageLink] = useState('');
+    const [uploadedImage, setUploadedImage] = useState('');
+
+    const [options, setOptions] = useState([]);
+    useEffect( () => {
+        axios.get('http://localhost:5000/admin/api/v1/genre')
+        .then(res => {
+            setOptions(res.data.data);
+        })
+    },[])
 
 
     const releaseImageUpload = (event) => {
@@ -121,10 +129,7 @@ const FirstStep = () => {
                             width: '100%',
                         }}
                         onChange={handleChange}
-                        options={[
-                            { value: 'genre1', label: 'genre1',},
-                            { value: 'genre2', label: 'genre2',},
-                        ]}
+                        options={options.map(option => ({ value: option.genre, label: option.genre }))}
                     />
                     {genreError && <span className='text-red-600 pt-2 block'>{genreError}</span>}
 

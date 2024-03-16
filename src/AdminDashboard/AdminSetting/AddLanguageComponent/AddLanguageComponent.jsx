@@ -1,26 +1,59 @@
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const AddLanguageComponent = () => {
 
-    // const [language, setLanguage] = useState();
-    const [addLoading, setAddLoading] = useState(false)
+    const [language, setLanguage] = useState();
+    const [totalCount, setTotalCount] = useState();
+    const [refe, setRefe] = useState(1);
+    const [loading, setLoading] = useState(false)
+    useEffect( () => {
+        setLoading(true)
+        axios.get('http://localhost:5000/admin/api/v1/language')
+        .then(res => {
+            setLanguage(res.data.data);
+            setTotalCount(res.data.dataCount)
+            setLoading(false)
+        })
+    }, [refe])
 
+
+
+    const [addLoading, setAddLoading] = useState(false)
     const { register, handleSubmit, reset, formState: { errors }} = useForm();
     const onSubmit = (data) => {
         setAddLoading(true)
         axios.post('http://localhost:5000/admin/api/v1/language/add-language', data)
         .then(res => {
             if(res.status == 200){
-              toast.success(res.data.message)
-              setAddLoading(false)
-              reset();                
+                const r = refe + 1
+                setRefe(r)
+                setAddLoading(false)
+                reset();                
+                toast.success(res.data.message)
             }
         })
         .catch(er => console.log(er))
     };
+
+
+    const handleDeleteLanguage = (id) => {
+        axios.delete(`http://localhost:5000/admin/api/v1/language/${id}`)
+        .then(res => {
+            if(res.status == 200){
+                const r = refe + 1
+                setRefe(r)
+                setAddLoading(false)
+                toast.success(res.data.message)
+            }
+        })
+        .catch(er => console.log(er))
+    }
+
+
     return (
         <>
             <h2 className="font-bold text-slate-700">Language</h2>
@@ -37,6 +70,19 @@ const AddLanguageComponent = () => {
                     }
                     <button type="submit" className="btn btn-sm btn-neutral my-1">Add Language</button>
                 </form>
+            </div>
+            <p className="bg-slate-200 text-sm font-bold p-2 mt-2 rounded-md">Total Languages: {totalCount}</p>
+            <div style={{height: '200px'}} className="my-4 p-2 bg-white rounded-md overflow-y-auto">
+                {
+                    loading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-sm me-2"></span></div>
+                }
+                {
+                    language && !loading && language.map(l => 
+                    <div key={l._id} className="flex items-center justify-between py-1 px-2 my-1 bg-slate-100 rounded-md">
+                        <p>{l.language}</p>
+                        <span className="me-2" style={{cursor: 'pointer'}} onClick={() => handleDeleteLanguage(l._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
+                    </div>)
+                }
             </div>
         </>
     );

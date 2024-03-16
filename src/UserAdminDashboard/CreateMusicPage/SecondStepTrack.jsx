@@ -1,6 +1,6 @@
 import { MagnifyingGlassIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Image, Modal, Select } from "antd";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
@@ -19,6 +19,14 @@ const SecondStepTrack = () => {
 
     const navigate = useNavigate('');
     const { artist, setArtist, labels, setLabels, featuring, setFeaturing } = useContext(AuthContext);
+
+    const [options, setOptions] = useState([]);
+    useEffect( () => {
+        axios.get('http://localhost:5000/admin/api/v1/language')
+        .then(res => {
+            setOptions(res.data.data);
+        })
+    },[])
 
 
     // Modal Function For Featuring __________________________________
@@ -213,9 +221,6 @@ const SecondStepTrack = () => {
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("albumName", { required: true})}/>
                     {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>}    
 
-
-
-
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Featuring</p>
                     {
                         featuring && featuring.map(data => 
@@ -237,7 +242,6 @@ const SecondStepTrack = () => {
                             </div>
                         )
                     }
-
                     <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/></span>
                         <Modal title="Search/Select Featuring" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
                             <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
@@ -246,17 +250,11 @@ const SecondStepTrack = () => {
                             </div>
                         </Modal>
 
-
-
-
-
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Author <span className="text-red-500">*</span></p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("author", { required: true})}/>
                     {errors.author && <span className='text-red-600 pt-2 block'>Author Required</span>}
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Lyrics language <span className="text-red-500">*</span></p>
-                    {/* <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("lyricsLanguage", { required: true})}/>
-                    {errors.lyricsLanguage && <span className='text-red-600 pt-2 block'>Lyrics language Required</span>} */}
                     <Select
                         showSearch
                         size="large"
@@ -266,17 +264,9 @@ const SecondStepTrack = () => {
                         onChange={onChange}
                         onSearch={onSearch}
                         filterOption={filterOption}
-                        options={[
-                            { value: 'Bangla', label: 'Bangla',},
-                            { value: 'Hindi', label: 'Hindi',},
-                            { value: 'English', label: 'English',},
-                        ]}
+                        options={options.map(option => ({ value: option.language, label: option.language }))}
                     />
                     {languageErr && <span className='text-red-600 pt-2 block'>{languageErr}</span>}
-
-
-
-
 
                     {/* Artist Select Option ______________________________________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Artist <span className="text-red-500">*</span></p>
@@ -310,10 +300,6 @@ const SecondStepTrack = () => {
                         </Modal>
                     {errorMessageArtist && <span className='text-red-600 pt-2 block'>{errorMessageArtist}</span>}
 
-
-
-
-
                     {/* Label Select Option ______________________________________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label <span className="text-red-500">*</span></p>
                     {
@@ -344,11 +330,6 @@ const SecondStepTrack = () => {
                             </div>
                         </Modal>
                     {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}
-
-
-
-
-
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Composer <span className="text-red-500">*</span></p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("composer", { required: true})}/>
