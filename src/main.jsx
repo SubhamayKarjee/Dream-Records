@@ -145,7 +145,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/create-release/thenks',
-            element: <SuccessPage link={'/releases'} heading={'Successfully Created the Release'} text={'We will review your release very soon. Please Got to the Release page and check your Release Status'}/>
+            element: <SuccessPage link={'/releases'} heading={'Successfully Created the Release'} text={'We will review your release very soon. Please Go to the Release page and check your Release Status'}/>
           }
           
         ]
@@ -166,6 +166,10 @@ const router = createBrowserRouter([
           {
             path: '/releases/edit/third-step',
             element: <EditReleaseThirdStep/>,
+          },
+          {
+            path: '/releases/edit/thanks',
+            element: <SuccessPage link={'/releases'} heading={'Successfully Updated the Release'} text={'We will review your release very soon. Please Go to the Release page and check your Release Status'}/>,
           },
         ]
       },

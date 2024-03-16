@@ -1,7 +1,7 @@
 import { DatePicker, Spin } from "antd";
 import { useContext, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
 import { EditReleaseContext } from "./EditReleaseMainPage";
 
@@ -9,10 +9,10 @@ import { EditReleaseContext } from "./EditReleaseMainPage";
 const EditReleaseThirdStep = () => {
 
     const [releaseFormDataError, setReleaseFormDataError] = useState('')
-    const { releaseFormData } = useContext(EditReleaseContext);
+    const { releaseFormData, releaseId, setReleaseFormData } = useContext(EditReleaseContext);
     const { userNameIdRoll } = useContext(AuthContext);
 
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const [releaseDate, setReleaseDate] = useState(null);
     const [error, setError] = useState('')
@@ -42,15 +42,15 @@ const EditReleaseThirdStep = () => {
         const status = 'Pending'
         const masterUserId = userNameIdRoll[1]
         const data = {...releaseFormData, releaseDate, status, masterUserId }
-        console.log(data);
-        // axios.put('http://localhost:5000/api/v1/release/update-release', data)
-        //     .then(res => {
-        //         if(res.status == 200){
-        //             setLoading(false);
-        //             navigate('/create-release/thenks')
-        //         }
-        //     })
-        //     .catch(er => console.log(er))        
+        axios.put(`http://localhost:5000/api/v1/release/update-release/${releaseId}`, data)
+            .then(res => {
+                if(res.status == 200){
+                    setLoading(false);
+                    setReleaseFormData('')
+                    navigate('/releases/edit/thanks')
+                }
+            })
+            .catch(er => console.log(er))        
     }
 
     return (
