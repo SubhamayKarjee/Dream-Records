@@ -11,6 +11,7 @@ import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingCompo
 import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
 import './UserProfile.css';
 import fallbackImage from '../../../assets/fallbackImage.jpg'
+import toast from "react-hot-toast";
 
 const UpdateProfileInformation = () => {
     // Get And Set Data Using Context API ________________________________________
@@ -135,7 +136,7 @@ const UpdateProfileInformation = () => {
                     setUserData(res.data.data);
                     setMainProfileImage(res.data.data.photoURL)
                     setUpdateLoading(false)
-                    alert('Updated')
+                    toast.success('Successfully Updated Your Profile Information!')
                 }
             })
             .catch(er => console.log(er)) 

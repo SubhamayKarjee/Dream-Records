@@ -98,15 +98,7 @@ const SecondStepTrack = () => {
             navigate('/create-release')
         }
 
-        const artistId = artist._id;
-        const artistName = artist.artistName;
-        let labelId;
-        let labelName;
-        if(labels){
-            labelId = labels._id;
-            labelName = labels.LabelName;
-        }
-        const d = {...data, ...releaseFormData, ...audioData, artistId, artistName, labelId, labelName}
+        const d = {...data, ...releaseFormData, ...audioData, artist, labels, featuring}
         setReleaseFormData(d)
         navigate('/create-release/date')
     };
@@ -175,13 +167,13 @@ const SecondStepTrack = () => {
                             </div>
                     }
                     <div className="my-1">
-                        <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2 py-1 rounded-md">Audio Formate Only Allow WEV</span>
+                        <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2 py-1 rounded-md">Audio Formate Only Allow WAV</span>
                     </div>
                     <div className="flex items-center ">
                         {
                             uploadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                         }
-                        <input type="file" accept=".wev" id="fileInput" name='audio' onChange={releaseAudioUpload} />                        
+                        <input type="file" accept=".wav" id="fileInput" name='audio' onChange={releaseAudioUpload} />                        
                     </div>
                     {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
                     {errorMessageAudio && <p className="font-bold text-red-500">{errorMessageAudio}</p>}
@@ -202,8 +194,8 @@ const SecondStepTrack = () => {
                             <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
                                 <div className="flex items-center">
                                         <Image
-                                        width={55}
-                                        height={55}
+                                        width={40}
+                                        height={40}
                                         className="rounded-lg"
                                         src={data.imgUrl}
                                         fallback={fallbackImage}
@@ -218,8 +210,9 @@ const SecondStepTrack = () => {
                         )
                     }
 
-                    <span onClick={showModal} style={{cursor: 'pointer'}} className="btn btn-sm btn-neutral flex items-center py-2 px-4 mt-2"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/>Add Featuring</span>
-                        <Modal title="Search/Select Artist" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                    <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/></span>
+                        <Modal title="Search/Select Featuring" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                            <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
                             <div>
                                 <FeaturingComponent handleCancel={handleCancel}/>
                             </div>
@@ -248,8 +241,8 @@ const SecondStepTrack = () => {
                             <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
                                 <div className="flex items-center">
                                         <Image
-                                        width={55}
-                                        height={55}
+                                        width={40}
+                                        height={40}
                                         className="rounded-lg"
                                         src={data.imgUrl}
                                         fallback={fallbackImage}
@@ -266,6 +259,7 @@ const SecondStepTrack = () => {
 
                     <span onClick={showModal1} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
                         <Modal title="Search/Select Artist" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
+                            <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Artist</p>
                             <div>
                                 <ArtistList handleCancel={handleCancel1}/>
                             </div>
@@ -283,8 +277,8 @@ const SecondStepTrack = () => {
                             <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
                                 <div className="flex items-center">
                                         <Image
-                                        width={55}
-                                        height={55}
+                                        width={40}
+                                        height={40}
                                         className="rounded-lg"
                                         src={data.imgUrl}
                                         fallback={fallbackImage}
@@ -300,6 +294,7 @@ const SecondStepTrack = () => {
                     }
                     <span onClick={showModal2} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
                         <Modal title="Search/Select Label" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
+                            <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Label</p>
                             <div>
                                 <LabelsList handleCancel={handleCancel2}/>
                             </div>

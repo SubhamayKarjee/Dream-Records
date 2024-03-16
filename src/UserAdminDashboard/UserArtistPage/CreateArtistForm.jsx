@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import fallbackImage from "../../assets/fallbackImage.jpg"
+import toast from "react-hot-toast";
 
 const CreateArtistForm = () => {
 
@@ -52,6 +53,7 @@ const CreateArtistForm = () => {
       axios.post('http://localhost:5000/api/v1/artist/create-artist', formData)
           .then(res => {
               if(res.status == 200){
+                toast.success('Successfully Created Artist!')
                 reset();
                 const forArtistDataRefatch = refatchArtistData + 1;
                 setRefatchArtistData(forArtistDataRefatch);

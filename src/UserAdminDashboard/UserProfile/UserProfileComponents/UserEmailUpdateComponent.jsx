@@ -1,6 +1,7 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useVerifyBeforeUpdateEmail } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import auth from "../../../../firebase.config";
 import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
@@ -15,7 +16,7 @@ const UserEmailUpdateComponent = () => {
         const email = data.email;
         const success = await verifyBeforeUpdateEmail(email)
         if(success){
-            alert('Please Go to your Email inbox and verify your Email')
+            toast.success('Please Go to your Email inbox and verify your Email')
         }
     };
 

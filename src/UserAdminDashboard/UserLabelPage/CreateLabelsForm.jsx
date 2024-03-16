@@ -5,6 +5,7 @@ import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import { useForm } from "react-hook-form";
 import { GlobeAmericasIcon } from "@heroicons/react/24/solid";
+import toast from "react-hot-toast";
 
 const CreateLabelsForm = () => {
 
@@ -52,7 +53,7 @@ const CreateLabelsForm = () => {
       axios.post('http://localhost:5000/api/v1/labels/create-labels', formData)
           .then(res => {
               if(res.status == 200){
-                console.log(res.data.data);
+                toast.success('Successfully Created Labels. We will Review Shortly!')
                 reset();
                 const forLabelsDataRefatch = refatchLabelsData + 1;
                 setRefatchLabelsData(forLabelsDataRefatch);

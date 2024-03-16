@@ -1,6 +1,6 @@
-import { BellIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { BellIcon } from "@heroicons/react/24/solid";
 import { createContext, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import './CreateMusicPage.css';
 
 export const ReleaseContext = createContext();
@@ -21,9 +21,9 @@ const CreateMusicPage = () => {
     return (
         <div className="md:flex md:h-full">
             <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2'>
-                <div>
+                {/* <div>
                     <button><Link className="px-2 py-1 font-semibold text-sm text-slate-500 flex items-center inline bg-slate-200 rounded-md" to={'/'}><ChevronLeftIcon className="w-4 h-4 me-1 font-bold"/>Back</Link></button>
-                </div>
+                </div> */}
                 <ReleaseContext.Provider value={releaseContextValue}>
                     <Outlet/>
                 </ReleaseContext.Provider>

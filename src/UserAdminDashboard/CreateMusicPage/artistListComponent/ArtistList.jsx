@@ -3,6 +3,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
 import fallbackImage from '../../../assets/fallbackImage.jpg'
+import toast from "react-hot-toast";
 
 // eslint-disable-next-line react/prop-types
 const ArtistList = ({handleCancel}) => {
@@ -32,7 +33,12 @@ const ArtistList = ({handleCancel}) => {
 
     const handleData = (data) => {
       if(artist){
-        setArtist([...artist, data])
+        const dubleCheck = artist.some(a => a._id === data._id);
+        if(dubleCheck){
+          toast.error("All ready added this Artist")
+        }else{
+          setArtist([...artist, data])
+        }
       }else{
         setArtist([data])
       }

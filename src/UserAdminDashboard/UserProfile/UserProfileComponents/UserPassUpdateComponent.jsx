@@ -2,6 +2,7 @@ import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { useUpdatePassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import auth from "../../../../firebase.config";
 import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
@@ -18,7 +19,7 @@ const UserPassUpdateComponent = () => {
             const password = data.pass1;
             const success = await updatePassword(password)
             if(success){
-                alert('Password Updated Successfully!')
+                toast.success('Password Updated Successfully!')
             }
         }else{
             setPassMatchErr('Password Not Match');

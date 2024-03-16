@@ -26,8 +26,8 @@ const UpdateLabelsComponent = () => {
             setFetchLoading(false)
         })
     
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[refetch])
-    // console.log(labels);
 
     const handleUpdateStatus = () => {
         setUpdateLoading(true)

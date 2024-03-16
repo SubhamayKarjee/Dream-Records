@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
 import fallbackImage from '../../../assets/fallbackImage.jpg'
 import { Empty, Image } from "antd";
+import toast from "react-hot-toast";
 
 // eslint-disable-next-line react/prop-types
 const FeaturingComponent = ({handleCancel}) => {
@@ -29,7 +30,12 @@ const FeaturingComponent = ({handleCancel}) => {
 
     const handleData = (data) => {
         if(featuring){
-            setFeaturing([...featuring, data])
+            const dubleCheck = featuring.some(a => a._id === data._id);
+            if(dubleCheck){
+              toast.error("All ready added this Featuring")
+            }else{
+              setFeaturing([...featuring, data])
+            }
         }else{
             setFeaturing([data])
         }
