@@ -5,7 +5,7 @@ import { Image, Select } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import fallbackImage from "../../../assets/fallbackImage.jpg"
+import fallbackImage from "../../assets/fallbackImage.jpg"
 
 const UpdateLabelsComponent = () => {
 

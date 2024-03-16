@@ -23,6 +23,8 @@ import SuccessPage from './UserAdminDashboard/SuccessPage/SuccessPage';
 import SecondStepTrack from './UserAdminDashboard/CreateMusicPage/SecondStepTrack';
 import EditReleaseFirstStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseFirstStep';
 import EditReleaseSecondStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseSecondStep';
+// import AdminLabelsPage from './AdminDashboard/AdminLabelsPage/AdminLabelsPage';
+// import UpdateLabelsComponent from './AdminDashboard/AdminLabelsPage/UpdateLabelsComponent';
 
 
 
@@ -36,8 +38,8 @@ const SignUp = React.lazy(() => import('./Authentication/SignUp/SignUp'));
 // Admin Routes import__________________________________________________________________
 const DashBoardForAdmin = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/DashBoardForAdmin'));
 const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/CreateUserForm'));
-const AdminLabelsPage = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/AdminLabelsPage/AdminLabelsPage'));
-const UpdateLabelsComponent = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/AdminLabelsPage/UpdateLabelsComponent'));
+const AdminLabelsPage = React.lazy(() => import('./AdminDashboard/AdminLabelsPage/AdminLabelsPage'));
+const UpdateLabelsComponent = React.lazy(() => import('./AdminDashboard/AdminLabelsPage/UpdateLabelsComponent'));
 
 
 // User Dashboard Routes import_________________________________________________________

@@ -3,7 +3,7 @@ import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import fallbackImage from "../../../assets/fallbackImage.jpg"
+import fallbackImage from "../../assets/fallbackImage.jpg"
 // import UpdateLabelsComponent from "./UpdateLabelsComponent";
 
 const AdminLabelsPage = () => {
@@ -70,7 +70,7 @@ const AdminLabelsPage = () => {
 
     return (
         <div className="md:h-full">
-            <div className='h-full overflow-y-auto md:border-r p-2'>
+            <div className='h-full overflow-y-auto p-2'>
                 {/* Search Lebels Section ______________________________________________________________________________ */}
                 <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg">
                     <div className="my-2">
