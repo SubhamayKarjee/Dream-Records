@@ -64,11 +64,6 @@ const FirstStep = () => {
 
     const [genre, setGenre] = useState()
     const [genreError, setGenreError] = useState('')
-    // Select Function ______________________________________________
-    const handleChange = (value) => {
-        setGenre(value)
-        console.log(`selected ${value}`);
-    };
 
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = (data) => {
@@ -128,7 +123,7 @@ const FirstStep = () => {
                         style={{
                             width: '100%',
                         }}
-                        onChange={handleChange}
+                        onChange={e => setGenre(e)}
                         options={options.map(option => ({ value: option.genre, label: option.genre }))}
                     />
                     {genreError && <span className='text-red-600 pt-2 block'>{genreError}</span>}
