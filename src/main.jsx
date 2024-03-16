@@ -23,6 +23,7 @@ import SuccessPage from './UserAdminDashboard/SuccessPage/SuccessPage';
 import SecondStepTrack from './UserAdminDashboard/CreateMusicPage/SecondStepTrack';
 import EditReleaseFirstStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseFirstStep';
 import EditReleaseSecondStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseSecondStep';
+import EditReleaseThirdStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseThirdStep';
 
 
 
@@ -161,6 +162,10 @@ const router = createBrowserRouter([
           {
             path: '/releases/edit/second-step',
             element: <EditReleaseSecondStep/>,
+          },
+          {
+            path: '/releases/edit/third-step',
+            element: <EditReleaseThirdStep/>,
           },
         ]
       },

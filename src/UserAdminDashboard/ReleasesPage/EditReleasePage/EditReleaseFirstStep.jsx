@@ -82,14 +82,11 @@ const EditReleaseFirstStep = () => {
         }
         if(uploadedImage){
             const formData = {...data, ...uploadedImage, genre};
-            console.log('formData', formData);
             setReleaseFormData(formData)
             navigate('/releases/edit/second-step')
         }else{
             setErrorMessage('Please Upload Art Image. Art Image Required');
         }
-        const formData = {...data, ...uploadedImage, genre};
-        console.log('formData', formData);
     };
 
 

@@ -198,8 +198,7 @@ const EditReleaseSecondStep = () => {
 
         const d = {...data, ...releaseFormData, ...audioData, lyricsLanguage, artist, labels, featuring, composer, authors}
         setReleaseFormData(d)
-        console.log(d);
-        // navigate('/create-release/date')
+        navigate('/releases/edit/third-step')
     };
 
     
