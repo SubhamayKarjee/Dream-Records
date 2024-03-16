@@ -1,12 +1,25 @@
+import axios from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const AddLanguageComponent = () => {
 
     // const [language, setLanguage] = useState();
+    const [addLoading, setAddLoading] = useState(false)
 
-    const { register, handleSubmit, formState: { errors }} = useForm();
+    const { register, handleSubmit, reset, formState: { errors }} = useForm();
     const onSubmit = (data) => {
-        console.log(data);
+        setAddLoading(true)
+        axios.post('http://localhost:5000/admin/api/v1/language/add-language', data)
+        .then(res => {
+            if(res.status == 200){
+              toast.success(res.data.message)
+              setAddLoading(false)
+              reset();                
+            }
+        })
+        .catch(er => console.log(er))
     };
     return (
         <>
@@ -18,6 +31,10 @@ const AddLanguageComponent = () => {
                         <input type="text" placeholder="Type here" className="input input-bordered input-sm w-full my-1" {...register("language", { required: true})}/>
                         {errors.language && <span className='text-red-600 pt-2 block text-sm'>You have to fill Language</span>}
                     </div>
+                    {
+                        addLoading &&
+                        <span className="loading loading-spinner loading-sm me-2"></span>
+                    }
                     <button type="submit" className="btn btn-sm btn-neutral my-1">Add Language</button>
                 </form>
             </div>
