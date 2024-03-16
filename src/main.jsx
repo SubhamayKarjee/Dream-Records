@@ -23,8 +23,6 @@ import SuccessPage from './UserAdminDashboard/SuccessPage/SuccessPage';
 import SecondStepTrack from './UserAdminDashboard/CreateMusicPage/SecondStepTrack';
 import EditReleaseFirstStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseFirstStep';
 import EditReleaseSecondStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseSecondStep';
-// import AdminLabelsPage from './AdminDashboard/AdminLabelsPage/AdminLabelsPage';
-// import UpdateLabelsComponent from './AdminDashboard/AdminLabelsPage/UpdateLabelsComponent';
 
 
 
@@ -40,6 +38,8 @@ const DashBoardForAdmin = React.lazy(() => import('./AdminDashboard/DashboardFor
 const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/CreateUserForm'));
 const AdminLabelsPage = React.lazy(() => import('./AdminDashboard/AdminLabelsPage/AdminLabelsPage'));
 const UpdateLabelsComponent = React.lazy(() => import('./AdminDashboard/AdminLabelsPage/UpdateLabelsComponent'));
+
+const AdminSetting = React.lazy(() => import('./AdminDashboard/AdminSetting/AdminSetting'));
 
 
 // User Dashboard Routes import_________________________________________________________
@@ -100,6 +100,10 @@ const router = createBrowserRouter([
       {
         path: '/admin-dashboard/labels/:id',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UpdateLabelsComponent/></Suspense>,
+      },
+      {
+        path: '/admin-dashboard/settings',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminSetting/></Suspense>,
       },
     ]
   },

@@ -9,6 +9,7 @@ import {
     Bars3BottomLeftIcon,
     UsersIcon,
     UserGroupIcon,
+    Cog6ToothIcon,
  } from '@heroicons/react/24/solid'
 import { useState } from 'react';
 import { Drawer } from 'antd';
@@ -78,6 +79,10 @@ const DashBoardForAdmin = () => {
                                 <Link className='text-white flex items-center py-2' to={'/'}>
                                     <ClipboardDocumentListIcon className="h-7 w-7 pe-2" />
                                     Blog Post
+                                </Link>
+                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/settings'}>
+                                    <Cog6ToothIcon className="h-7 w-7 pe-2" />
+                                    Settings
                                 </Link>
                             </div>
                         </div>
@@ -150,6 +155,10 @@ const DashBoardForAdmin = () => {
                                             <Link onClick={onClose} className='text-white flex items-center py-2' to={'/'}>
                                                 <ClipboardDocumentListIcon className="h-7 w-7 pe-2" />
                                                 Blog Post
+                                            </Link>
+                                            <Link className='text-white flex items-center py-2' to={'/admin-dashboard/settings'}>
+                                                <Cog6ToothIcon className="h-7 w-7 pe-2" />
+                                                Settings
                                             </Link>
                                         </div>
                                     </div>
