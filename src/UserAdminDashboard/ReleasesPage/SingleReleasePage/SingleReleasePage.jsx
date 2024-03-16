@@ -18,11 +18,10 @@ const SingleReleasePage = () => {
         setLoading(true)
         axios.get(`http://localhost:5000/api/v1/release/single/${id}`)
             .then( res => {
-              if(res.status == 200){
-                console.log(res.data.data[0]);
-                setLoading(false);
-                setData(res.data.data[0]);
-              }
+                if(res.status == 200){
+                    setLoading(false);
+                    setData(res.data.data[0]);
+                }
             })
             .catch(er => console.log(er));
       // eslint-disable-next-line react-hooks/exhaustive-deps
