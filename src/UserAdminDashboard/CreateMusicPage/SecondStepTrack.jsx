@@ -20,6 +20,7 @@ const SecondStepTrack = () => {
     const navigate = useNavigate('');
     const { artist, setArtist, labels, setLabels, featuring, setFeaturing } = useContext(AuthContext);
 
+    // Get Language select Option Form API__________________________
     const [options, setOptions] = useState([]);
     useEffect( () => {
         axios.get('http://localhost:5000/admin/api/v1/language')
@@ -27,7 +28,6 @@ const SecondStepTrack = () => {
             setOptions(res.data.data);
         })
     },[])
-
 
     // Modal Function For Featuring __________________________________
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,8 +41,13 @@ const SecondStepTrack = () => {
         setIsModalOpen(false);
     };
 
+    const removeFeaturing = (id) => {
+        const deleteFeaturing = featuring.filter(a => a._id !== id);
+        setFeaturing(deleteFeaturing)
+    }
 
     // Modal Function For Artist __________________________________
+    const [errorMessageArtist, setErrorMessageArtist] = useState('');
     const [isModalOpen1, setIsModalOpen1] = useState(false);
     const showModal1 = () => {
         setIsModalOpen1(true);
@@ -54,7 +59,13 @@ const SecondStepTrack = () => {
         setIsModalOpen1(false);
     };
 
+    const removeArtist = (id) => {
+        const deleteArtist = artist.filter(a => a._id !== id);
+        setArtist(deleteArtist)
+    }
+
     // Modal Function For Label __________________________________
+    const [errorMessageLabels, setErrorMessageLabels] = useState('');
     const [isModalOpen2, setIsModalOpen2] = useState(false);
     const showModal2 = () => {
         setIsModalOpen2(true);
@@ -66,50 +77,75 @@ const SecondStepTrack = () => {
         setIsModalOpen2(false);
     };
 
-
-    const removeFeaturing = (id) => {
-        const deleteFeaturing = featuring.filter(a => a._id !== id);
-        setFeaturing(deleteFeaturing)
-    }
-
-    const removeArtist = (id) => {
-        const deleteArtist = artist.filter(a => a._id !== id);
-        setArtist(deleteArtist)
-    }
     const removeLabels = (id) => {
         const deleteLabels = labels.filter(l => l._id !== id);
         setLabels(deleteLabels)
     }
     
-
-
+    // Handle Lyrics Language Select Input _________________________
     const [lyricsLanguage, setLyricsLanguage] = useState();
     const [languageErr, setLanguageErr] = useState('')
-
     const onChange = (value) => {
         setLyricsLanguage(value)
-        console.log(`selected ${value}`);
     };
-    const onSearch = (value) => {
-        console.log('search:', value);
-    };
-
     // Filter `option.label` match the user type `input`
     const filterOption = (input, option) =>(option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
+    // Handle Author Input Value______________________________________
+    const [authorValue, setAuthorValue] = useState();
+    const [authors, setAuthors] = useState();
+    const [authorsErr, setAuthorsErr] = useState();
+    const handleAuthorValue = () => {
+        if(authors){
+            const addNew = [...authors, authorValue]
+            setAuthors(addNew)
+            document.getElementById('author').value = ''
+        }else{
+            const data = [authorValue]
+            setAuthors(data)
+            document.getElementById('author').value = ''
+        }
+    }
+    const handleDeleteAuthor = (name) => {
+        const removeName = authors.filter(item => item !== name);
+        setAuthors(removeName)
+    }
 
+    // Handle Composer Input Value________________________________________
+    const [composerValue, setComposerValue] = useState();
+    const [composer, setComposer] = useState();
+    const [composerErr, setComposerErr] = useState();
+    const handleComposerValue = () => {
+        if(composer){
+            const addNew = [...composer, composerValue]
+            setComposer(addNew)
+            document.getElementById('composer').value = ''
+        }else{
+            const data = [composerValue]
+            setComposer(data)
+            document.getElementById('composer').value = ''
+        }
+    }
+    const handleDeleteComposer = (name) => {
+        const removeName = composer.filter(item => item !== name);
+        setComposer(removeName)
+    }
+
+
+    // Handle Audio State _______________________________________
     const [audioData, setAudioData] = useState();
-    const [errorMessageArtist, setErrorMessageArtist] = useState('');
-    const [errorMessageLabels, setErrorMessageLabels] = useState('');
     const [errorMessageAudio, setErrorMessageAudio] = useState('');
 
+    // FROM SUBMIT FUNCTION_______________________________________
     // eslint-disable-next-line no-unused-vars
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = (data) => {
-        setErrorMessageArtist('')
-        setErrorMessageLabels('')
-        setErrorMessageAudio('')
+        setErrorMessageArtist('');
+        setErrorMessageLabels('');
+        setErrorMessageAudio('');
         setLanguageErr('');
+        setComposerErr('');
+        setAuthorsErr('');
 
         if(!artist){
             setErrorMessageArtist('Artist Required')
@@ -127,22 +163,27 @@ const SecondStepTrack = () => {
             setLanguageErr('Language Required')
             return;
         }
-        // const d = {...data, ...releaseFormData, ...audioData, lyricsLanguage, artist, labels, featuring}
+        if(!composer){
+            setComposerErr('Composer Name Required')
+        }
+        if(!authors){
+            setAuthorsErr('Author Name Required')
+        }
         if(!releaseFormData){
             navigate('/create-release')
             toast.error('You have to feel First Step after that you can Go Next Step')
             return;
         }
 
-        const d = {...data, ...releaseFormData, ...audioData, lyricsLanguage, artist, labels, featuring}
+        const d = {...data, ...releaseFormData, ...audioData, lyricsLanguage, artist, labels, featuring, composer, authors}
         setReleaseFormData(d)
         navigate('/create-release/date')
     };
 
     
+    // Handle Audio Upload AWS______________________________________________________
     const [errorMessage, setErrorMessage] = useState('');
     const [uploadLoading, setUploadLoading] = useState(false)
-    
 
     const releaseAudioUpload = (event) => {
         if(!event){
@@ -165,7 +206,7 @@ const SecondStepTrack = () => {
             })
             .catch(er => console.log(er))
     }
-    
+    // Delete Audio AWS____________________________________________________________
     const handleDeleteAudio = (e) => {
         axios.delete(`http://localhost:5000/api/v1/release/delete-release-audio?audioKey=${e}`)
         .then( res => {
@@ -187,7 +228,7 @@ const SecondStepTrack = () => {
             </ul>
             <div className="py-3">
                 <h2 className="text-lg font-semibold text-slate-500 px-2">Tracks</h2>
-
+                {/* Audio Upload ____________________ */}
                 <div className="p-3 border rounded-lg">
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Upload <span className="text-red-500">*</span></p>
                     {
@@ -216,11 +257,10 @@ const SecondStepTrack = () => {
                 </div>
                 
                 <form onSubmit={handleSubmit(onSubmit)} className="p-3 border mt-2 rounded-lg">
-                    
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Album Name <span className="text-red-500">*</span></p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("albumName", { required: true})}/>
-                    {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>}    
-
+                    {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>} 
+                    {/* Select Featuring ___________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Featuring</p>
                     {
                         featuring && featuring.map(data => 
@@ -249,11 +289,28 @@ const SecondStepTrack = () => {
                                 <FeaturingComponent handleCancel={handleCancel}/>
                             </div>
                         </Modal>
+                    {/* Author Input ___________________________________ */}
+                    <div className="p-3 border rounded-md mt-3">
+                        <p className="text-sm font-semibold text-slate-500 ms-2">Author <span className="text-red-500">*</span></p>
+                        <div className="my-2">
+                            {
+                                authors && authors.map((a, index) => <div key={index} className="flex items-center justify-between my-1 mx-1 py-1 px-3 bg-slate-200 rounded-md">
+                                    <span>{a}</span>
+                                    <span className="me-2" style={{cursor: 'pointer'}} onClick={() => handleDeleteAuthor(a)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
+                                    </div>
+                                )
+                            }
+                        </div>
+                        <div className="flex">
+                            <div className="md:grow me-2">
+                                <input type="text" placeholder="Type Author Name" id="author" onChange={e => setAuthorValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
+                            </div>
+                            <span onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1">Add Composer</span>
+                        </div>
+                    </div>
 
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Author <span className="text-red-500">*</span></p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("author", { required: true})}/>
-                    {errors.author && <span className='text-red-600 pt-2 block'>Author Required</span>}
-
+                    {/* Select Language ____________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Lyrics language <span className="text-red-500">*</span></p>
                     <Select
                         showSearch
@@ -262,7 +319,6 @@ const SecondStepTrack = () => {
                         placeholder="Select Language"
                         optionFilterProp="children"
                         onChange={onChange}
-                        onSearch={onSearch}
                         filterOption={filterOption}
                         options={options.map(option => ({ value: option.language, label: option.language }))}
                     />
@@ -331,9 +387,26 @@ const SecondStepTrack = () => {
                         </Modal>
                     {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}
 
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Composer <span className="text-red-500">*</span></p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("composer", { required: true})}/>
-                    {errors.composer && <span className='text-red-600 pt-2 block'>Composer Required</span>}
+                    {/* Add Composer Input ____________________ */}
+                    <div className="p-3 border rounded-md mt-3">
+                        <p className="text-sm font-semibold text-slate-500 ms-2">Composer <span className="text-red-500">*</span></p>
+                        <div className="my-2">
+                            {
+                                composer && composer.map((c, index) => <div key={index} className="flex items-center justify-between my-1 mx-1 py-1 px-3 bg-slate-200 rounded-md">
+                                    <span>{c}</span>
+                                    <span className="me-2" style={{cursor: 'pointer'}} onClick={() => handleDeleteComposer(c)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
+                                    </div>
+                                )
+                            }
+                        </div>
+                        <div className="flex">
+                            <div className="md:grow me-2">
+                                <input type="text" placeholder="Type Composer Name" id="composer" onChange={e => setComposerValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
+                            </div>
+                            <span onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1">Add Composer</span>
+                        </div>
+                    </div>
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">ISRC</p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("ISRC")}/>

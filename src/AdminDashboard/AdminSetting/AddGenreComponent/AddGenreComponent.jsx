@@ -69,7 +69,7 @@ const AddGenreComponent = () => {
                     <button type="submit" className="btn btn-sm btn-neutral my-1">Add Genre</button>
                 </form>
             </div>
-            <p className="bg-slate-200 text-sm font-bold p-2 mt-2 rounded-md">Total Languages: {totalCount}</p>
+            <p className="bg-slate-200 text-sm font-bold p-2 mt-2 rounded-md">Total Genre: {totalCount}</p>
             <div style={{height: '200px'}} className="my-4 p-2 bg-white overflow-y-auto rounded-md">
                 {
                     loading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-sm me-2"></span></div>
