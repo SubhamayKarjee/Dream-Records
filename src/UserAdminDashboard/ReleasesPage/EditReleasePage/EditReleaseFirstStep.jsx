@@ -1,6 +1,6 @@
 import { Image, Select } from "antd";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { EditReleaseContext } from "./EditReleaseMainPage";
@@ -56,11 +56,14 @@ const EditReleaseFirstStep = () => {
 
     const [genre, setGenre] = useState()
     const [genreError, setGenreError] = useState('')
-    // Select Function ______________________________________________
-    const handleChange = (value) => {
-        setGenre(value)
-        console.log(`selected ${value}`);
-    };
+    const [options, setOptions] = useState([]);
+    useEffect( () => {
+        axios.get('http://localhost:5000/admin/api/v1/genre')
+        .then(res => {
+            setOptions(res.data.data);
+            setGenre(preReleaseData.genre)
+        })
+    },[])
     
     const { register, handleSubmit, formState: { errors }} = useForm({
         defaultValues: {
@@ -85,7 +88,7 @@ const EditReleaseFirstStep = () => {
             setErrorMessage('Please Upload Art Image. Art Image Required');
         }
         const formData = {...data, ...uploadedImage, genre};
-            console.log('formData', formData);
+        console.log('formData', formData);
     };
 
 
@@ -126,17 +129,14 @@ const EditReleaseFirstStep = () => {
 
                         <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Genre <span className="text-red-500">*</span></p>
                         <Select
-                            defaultValue={preReleaseData?.genre}
+                            defaultValue={preReleaseData.genre}
                             size="large"
                             className="font-bold mb-2"
                             style={{
                                 width: '100%',
                             }}
-                            onChange={handleChange}
-                            options={[
-                                { value: 'genre1', label: 'genre1',},
-                                { value: 'genre2', label: 'genre2',},
-                            ]}
+                            onChange={e => setGenre(e)}
+                            options={options?.map(option => ({ value: option.genre, label: option.genre }))}
                         />
                         {genreError && <span className='text-red-600 pt-2 block'>{genreError}</span>}
 
