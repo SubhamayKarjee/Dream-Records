@@ -63,6 +63,7 @@ const EditReleaseFirstStep = () => {
             setOptions(res.data.data);
             setGenre(preReleaseData.genre)
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     
     const { register, handleSubmit, formState: { errors }} = useForm({

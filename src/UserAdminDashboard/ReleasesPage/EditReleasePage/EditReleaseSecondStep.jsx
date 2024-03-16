@@ -1,5 +1,5 @@
-import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { Image, Modal } from "antd";
+import { MagnifyingGlassIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Image, Modal, Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,8 @@ import ArtistList from "../../CreateMusicPage/artistListComponent/ArtistList";
 import LabelsList from "../../CreateMusicPage/labelsListComponent/LabelsList";
 import fallbackImage from '../../../assets/fallbackImage.jpg'
 import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
+import toast from "react-hot-toast";
+import FeaturingComponent from "../../CreateMusicPage/FeaturingComponent/FeaturingComponent";
 
 
 const EditReleaseSecondStep = () => {
@@ -16,32 +18,38 @@ const EditReleaseSecondStep = () => {
 
     const navigate = useNavigate('');
     const { releaseFormData, setReleaseFormData, preReleaseData } = useContext(EditReleaseContext);
-    const { artist, setArtist, labels, setLabels } = useContext(AuthContext);
+    const { artist, setArtist, labels, setLabels, featuring, setFeaturing } = useContext(AuthContext);
+
     const [audioData, setAudioData] = useState();
+    const [lyricsLanguage, setLyricsLanguage] = useState();
+    const [authors, setAuthors] = useState();
+    const [composer, setComposer] = useState();
 
     useEffect(() => {
-        const artistName = preReleaseData?.artistName;
-        const artistId = preReleaseData?.artistId
-        const artistImgUrl = preReleaseData?.artistImg;
-        const artistImgKey = preReleaseData?.artistImgKey;
-        setArtist({artistName, artistId, artistImgUrl, artistImgKey});
-        const labelName = preReleaseData?.labelName;
-        const labelId = preReleaseData?.labelId
-        const labelImgUrl = preReleaseData?.labelImg;
-        const labelImgKey = preReleaseData?.labelImgKey;
-        setLabels({labelName, labelId, labelImgUrl, labelImgKey});
         const audioName = preReleaseData?.audioName;
         const audioUrl = preReleaseData?.audioUrl;
         const audioKey = preReleaseData?.audioKey;
-        setAudioData({audioName, audioUrl, audioKey})
+        setAudioData({audioName, audioUrl, audioKey});
+        setArtist(preReleaseData.artist);
+        setLabels(preReleaseData.labels);
+        setFeaturing(preReleaseData.featuring)
+        setLyricsLanguage(preReleaseData.lyricsLanguage)
+        setAuthors(preReleaseData.authors)
+        setComposer(preReleaseData.composer)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
-
-    console.log(preReleaseData);
-
+    },[]);
     
 
-    // Modal Function For Artist __________________________________
+    // Get Language select Option Form API__________________________
+    const [options, setOptions] = useState([]);
+    useEffect( () => {
+        axios.get('http://localhost:5000/admin/api/v1/language')
+        .then(res => {
+            setOptions(res.data.data);
+        })
+    },[])
+
+    // Modal Function For Featuring __________________________________
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
@@ -53,7 +61,13 @@ const EditReleaseSecondStep = () => {
         setIsModalOpen(false);
     };
 
-    // Modal Function For Label __________________________________
+    const removeFeaturing = (id) => {
+        const deleteFeaturing = featuring.filter(a => a._id !== id);
+        setFeaturing(deleteFeaturing)
+    }
+
+    // Modal Function For Artist __________________________________
+    const [errorMessageArtist, setErrorMessageArtist] = useState('');
     const [isModalOpen1, setIsModalOpen1] = useState(false);
     const showModal1 = () => {
         setIsModalOpen1(true);
@@ -65,28 +79,95 @@ const EditReleaseSecondStep = () => {
         setIsModalOpen1(false);
     };
 
-    const removeArtist = () => {
-        setArtist()
-    }
-    const removeLabels = () => {
-        setLabels()
+    const removeArtist = (id) => {
+        const deleteArtist = artist.filter(a => a._id !== id);
+        setArtist(deleteArtist)
     }
 
-
-    const [errorMessageArtist, setErrorMessageArtist] = useState('');
+    // Modal Function For Label __________________________________
     const [errorMessageLabels, setErrorMessageLabels] = useState('');
+    const [isModalOpen2, setIsModalOpen2] = useState(false);
+    const showModal2 = () => {
+        setIsModalOpen2(true);
+    };
+    const handleOk2 = () => {
+        setIsModalOpen2(false);
+    };
+    const handleCancel2 = () => {
+        setIsModalOpen2(false);
+    };
+
+    const removeLabels = (id) => {
+        const deleteLabels = labels.filter(l => l._id !== id);
+        setLabels(deleteLabels)
+    }
+    
+    // Handle Lyrics Language Select Input _________________________
+    const [languageErr, setLanguageErr] = useState('')
+    const onChange = (value) => {
+        setLyricsLanguage(value)
+    };
+    // Filter `option.label` match the user type `input`
+    const filterOption = (input, option) =>(option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
+    // Handle Author Input Value______________________________________
+    const [authorValue, setAuthorValue] = useState();
+    const [authorsErr, setAuthorsErr] = useState();
+    const handleAuthorValue = () => {
+        if(authors){
+            const addNew = [...authors, authorValue]
+            setAuthors(addNew)
+            document.getElementById('author').value = ''
+        }else{
+            const data = [authorValue]
+            setAuthors(data)
+            document.getElementById('author').value = ''
+        }
+    }
+    const handleDeleteAuthor = (name) => {
+        const removeName = authors.filter(item => item !== name);
+        setAuthors(removeName)
+    }
+
+    // Handle Composer Input Value________________________________________
+    const [composerValue, setComposerValue] = useState();
+    const [composerErr, setComposerErr] = useState();
+    const handleComposerValue = () => {
+        if(composer){
+            const addNew = [...composer, composerValue]
+            setComposer(addNew)
+            document.getElementById('composer').value = ''
+        }else{
+            const data = [composerValue]
+            setComposer(data)
+            document.getElementById('composer').value = ''
+        }
+    }
+    const handleDeleteComposer = (name) => {
+        const removeName = composer.filter(item => item !== name);
+        setComposer(removeName)
+    }
+
+
+    // Handle Audio State _______________________________________
     const [errorMessageAudio, setErrorMessageAudio] = useState('');
+
+
     // eslint-disable-next-line no-unused-vars
     const { register, handleSubmit, formState: { errors }} = useForm({
         defaultValues: {
             albumName: preReleaseData?.albumName,
-            author: preReleaseData?.author,
-            lyricsLanguage: preReleaseData?.lyricsLanguage,
-            composer: preReleaseData?.composer,
             ISRC: preReleaseData?.ISRC,
         }
     });
     const onSubmit = (data) => {
+        setErrorMessageArtist('');
+        setErrorMessageLabels('');
+        setErrorMessageAudio('');
+        setLanguageErr('');
+        setComposerErr('');
+        setAuthorsErr('');
+
         if(!artist){
             setErrorMessageArtist('Artist Required')
             return;
@@ -99,25 +180,23 @@ const EditReleaseSecondStep = () => {
             setErrorMessageAudio('Audio Required')
             return;
         }
+        if(!lyricsLanguage){
+            setLanguageErr('Language Required')
+            return;
+        }
+        if(!composer){
+            setComposerErr('Composer Name Required')
+        }
+        if(!authors){
+            setAuthorsErr('Author Name Required')
+        }
         if(!releaseFormData){
             navigate('/create-release')
+            toast.error('You have to feel First Step after that you can Go Next Step')
+            return;
         }
 
-        const artistId = artist._id;
-        const artistName = artist.artistName;
-        const artistImgUrl = artist.imgUrl;
-        const artistImgKey = artist.key;
-        let labelId;
-        let labelName;
-        let labelImgUrl;
-        let labelImgKey;
-        if(labels){
-            labelId = labels._id;
-            labelName = labels.LabelName;
-            labelImgUrl = labels.imgUrl;
-            labelImgKey = labels.key;
-        }
-        const d = {...data, ...releaseFormData, ...audioData, artistId, artistName, labelId, labelName, artistImgUrl, artistImgKey, labelImgUrl, labelImgKey}
+        const d = {...data, ...releaseFormData, ...audioData, lyricsLanguage, artist, labels, featuring, composer, authors}
         setReleaseFormData(d)
         console.log(d);
         // navigate('/create-release/date')
@@ -138,7 +217,15 @@ const EditReleaseSecondStep = () => {
         const formData = new FormData();
         formData.append('file', file);
   
-        console.log(file);
+        if(audioData.audioKey){
+            axios.delete(`http://localhost:5000/api/v1/release/delete-release-audio?audioKey=${audioData.audioKey}`)
+            .then( res => {
+            if(res.status == 200){
+                setAudioData('')
+            }
+            })
+            .catch(er => console.log(er));
+        }
   
         axios.post('http://localhost:5000/api/v1/release/upload-release-audio', formData)
             .then(res => {
@@ -202,107 +289,157 @@ const EditReleaseSecondStep = () => {
                 
                 <form onSubmit={handleSubmit(onSubmit)} className="p-3 border mt-2 rounded-lg">
                     
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Album Name <span className="text-red-500">*</span></p>
+                <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Album Name <span className="text-red-500">*</span></p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("albumName", { required: true})}/>
-                    {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>}                    
-
+                    {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>} 
+                    {/* Select Featuring ___________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Featuring</p>
-                    {/* {
-                        artist && 
-                        <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                            <div className="flex items-center">
-                                    <Image
-                                    width={55}
-                                    height={55}
-                                    className="rounded-lg"
-                                    src={artist.imgUrl}
-                                    fallback={fallbackImage}
-                                    />
-                                <div className="ps-2">
-                                <h2 className="font-bold">{artist.artistName}</h2>
-                                <p className="text-sm text-slate-400">ID: {artist._id}</p>
+                    {
+                        featuring && featuring.map(data => 
+                            <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                <div className="flex items-center">
+                                        <Image
+                                        width={35}
+                                        height={35}
+                                        className="rounded-lg"
+                                        src={data.imgUrl}
+                                        fallback={fallbackImage}
+                                        />
+                                    <div className="ps-2">
+                                    <h2 className="font-bold text-sm">{data.artistName}</h2>
+                                    <p className="text-xs text-slate-400">ID: {data._id}</p>
+                                    </div>
                                 </div>
+                                <span className="me-2" style={{cursor: 'pointer'}} onClick={() => removeFeaturing(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                             </div>
-                            <button onClick={removeArtist}><TrashIcon className="w-5 h-5 text-red-500"/></button>
-                        </div>
-                    } */}
-
-                    {/* <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
-                        <Modal title="Search/Select Artist" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                        )
+                    }
+                    <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/></span>
+                        <Modal title="Search/Select Featuring" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                            <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
                             <div>
-                                <ArtistList handleCancel={handleCancel}/>
+                                <FeaturingComponent handleCancel={handleCancel}/>
                             </div>
-                        </Modal> */}
+                        </Modal>
+                    {/* Author Input ___________________________________ */}
+                    <div className="p-3 border rounded-md mt-3">
+                        <p className="text-sm font-semibold text-slate-500 ms-2">Author <span className="text-red-500">*</span></p>
+                        <div className="my-2">
+                            {
+                                authors && authors.map((a, index) => <div key={index} className="flex items-center justify-between my-1 mx-1 py-1 px-3 bg-slate-200 rounded-md">
+                                    <span>{a}</span>
+                                    <span className="me-2" style={{cursor: 'pointer'}} onClick={() => handleDeleteAuthor(a)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
+                                    </div>
+                                )
+                            }
+                        </div>
+                        <div className="flex">
+                            <div className="md:grow me-2">
+                                <input type="text" placeholder="Type Author Name" id="author" onChange={e => setAuthorValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
+                            </div>
+                            <span onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1">Add Composer</span>
+                        </div>
+                    </div>
 
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Author <span className="text-red-500">*</span></p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("author", { required: true})}/>
-                    {errors.author && <span className='text-red-600 pt-2 block'>Author Required</span>}
-
+                    {/* Select Language ____________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Lyrics language <span className="text-red-500">*</span></p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("lyricsLanguage", { required: true})}/>
-                    {errors.lyricsLanguage && <span className='text-red-600 pt-2 block'>Lyrics language Required</span>}
+                    <Select
+                        showSearch
+                        size="large"
+                        className="w-full rounded-full"
+                        value={lyricsLanguage}
+                        placeholder="Select Language"
+                        optionFilterProp="children"
+                        onChange={onChange}
+                        filterOption={filterOption}
+                        options={options.map(option => ({ value: option.language, label: option.language }))}
+                    />
+                    {languageErr && <span className='text-red-600 pt-2 block'>{languageErr}</span>}
 
                     {/* Artist Select Option ______________________________________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Artist <span className="text-red-500">*</span></p>
                     {
-                        artist && 
-                        <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                            <div className="flex items-center">
-                                    <Image
-                                    width={55}
-                                    height={55}
-                                    className="rounded-lg"
-                                    src={artist.imgUrl}
-                                    fallback={fallbackImage}
-                                    />
-                                <div className="ps-2">
-                                <h2 className="font-bold">{artist.artistName}</h2>
-                                <p className="text-sm text-slate-400">ID: {artist._id}</p>
+                        artist && artist.map(data => 
+                            <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                <div className="flex items-center">
+                                        <Image
+                                        width={35}
+                                        height={35}
+                                        className="rounded-lg"
+                                        src={data.imgUrl}
+                                        fallback={fallbackImage}
+                                        />
+                                    <div className="ps-2">
+                                    <h2 className="font-bold text-sm">{data.artistName}</h2>
+                                    <p className="text-xs text-slate-400">ID: {data._id}</p>
+                                    </div>
                                 </div>
+                                <span style={{cursor: 'pointer'}} onClick={() => removeArtist(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                             </div>
-                            <button onClick={removeArtist}><TrashIcon className="w-5 h-5 text-red-500"/></button>
-                        </div>
+                        )
                     }
 
-                    <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
-                        <Modal title="Search/Select Artist" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                    <span onClick={showModal1} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
+                        <Modal title="Search/Select Artist" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
+                            <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Artist</p>
                             <div>
-                                <ArtistList handleCancel={handleCancel}/>
+                                <ArtistList handleCancel={handleCancel1}/>
                             </div>
                         </Modal>
                     {errorMessageArtist && <span className='text-red-600 pt-2 block'>{errorMessageArtist}</span>}
+
                     {/* Label Select Option ______________________________________________________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label <span className="text-red-500">*</span></p>
                     {
-                        labels && 
-                        <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                            <div className="flex items-center">
-                                    <Image
-                                    width={55}
-                                    height={55}
-                                    className="rounded-lg"
-                                    src={labels.imgUrl}
-                                    fallback={fallbackImage}
-                                    />
-                                <div className="ps-2">
-                                <h2 className="font-bold">{labels.labelName}</h2>
-                                <p className="text-sm text-slate-400">ID: {labels._id}</p>
+                        labels && labels.map(data => 
+                            <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                <div className="flex items-center">
+                                        <Image
+                                        width={35}
+                                        height={35}
+                                        className="rounded-lg"
+                                        src={data.imgUrl}
+                                        fallback={fallbackImage}
+                                        />
+                                    <div className="ps-2">
+                                    <h2 className="font-bold text-sm">{data.labelName}</h2>
+                                    <p className="text-xs text-slate-400">ID: {data._id}</p>
+                                    </div>
                                 </div>
+                                <span style={{cursor: 'pointer'}} onClick={() => removeLabels(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                             </div>
-                            <button onClick={removeLabels}><TrashIcon className="w-5 h-5 text-red-500"/></button>
-                        </div>
+                        )
                     }
-                    <span onClick={showModal1} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
-                        <Modal title="Search/Select Label" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
+                    <span onClick={showModal2} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
+                        <Modal title="Search/Select Label" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
+                            <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Label</p>
                             <div>
-                                <LabelsList handleCancel1={handleCancel}/>
+                                <LabelsList handleCancel={handleCancel2}/>
                             </div>
                         </Modal>
                     {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}
 
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Composer <span className="text-red-500">*</span></p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("composer", { required: true})}/>
-                    {errors.composer && <span className='text-red-600 pt-2 block'>Composer Required</span>}
+                    {/* Add Composer Input ____________________ */}
+                    <div className="p-3 border rounded-md mt-3">
+                        <p className="text-sm font-semibold text-slate-500 ms-2">Composer <span className="text-red-500">*</span></p>
+                        <div className="my-2">
+                            {
+                                composer && composer.map((c, index) => <div key={index} className="flex items-center justify-between my-1 mx-1 py-1 px-3 bg-slate-200 rounded-md">
+                                    <span>{c}</span>
+                                    <span className="me-2" style={{cursor: 'pointer'}} onClick={() => handleDeleteComposer(c)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
+                                    </div>
+                                )
+                            }
+                        </div>
+                        <div className="flex">
+                            <div className="md:grow me-2">
+                                <input type="text" placeholder="Type Composer Name" id="composer" onChange={e => setComposerValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
+                            </div>
+                            <span onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1">Add Composer</span>
+                        </div>
+                    </div>
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">ISRC</p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("ISRC")}/>
