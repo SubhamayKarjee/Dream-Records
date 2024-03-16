@@ -1,5 +1,5 @@
-import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { Image, Modal } from "antd";
+import { MagnifyingGlassIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Image, Modal, Select } from "antd";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import fallbackImage from '../../assets/fallbackImage.jpg'
 import { ReleaseContext } from "./CreateMusicPage";
 import axios from "axios";
 import FeaturingComponent from "./FeaturingComponent/FeaturingComponent";
+import toast from "react-hot-toast";
 
 const SecondStepTrack = () => {
 
@@ -74,14 +75,34 @@ const SecondStepTrack = () => {
     
 
 
+    const [lyricsLanguage, setLyricsLanguage] = useState();
+    const [languageErr, setLanguageErr] = useState('')
+
+    const onChange = (value) => {
+        setLyricsLanguage(value)
+        console.log(`selected ${value}`);
+    };
+    const onSearch = (value) => {
+        console.log('search:', value);
+    };
+
+    // Filter `option.label` match the user type `input`
+    const filterOption = (input, option) =>(option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
 
     const [audioData, setAudioData] = useState();
     const [errorMessageArtist, setErrorMessageArtist] = useState('');
     const [errorMessageLabels, setErrorMessageLabels] = useState('');
     const [errorMessageAudio, setErrorMessageAudio] = useState('');
+
     // eslint-disable-next-line no-unused-vars
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = (data) => {
+        setErrorMessageArtist('')
+        setErrorMessageLabels('')
+        setErrorMessageAudio('')
+        setLanguageErr('');
+
         if(!artist){
             setErrorMessageArtist('Artist Required')
             return;
@@ -94,11 +115,18 @@ const SecondStepTrack = () => {
             setErrorMessageAudio('Audio Required')
             return;
         }
+        if(!lyricsLanguage){
+            setLanguageErr('Language Required')
+            return;
+        }
+        // const d = {...data, ...releaseFormData, ...audioData, lyricsLanguage, artist, labels, featuring}
         if(!releaseFormData){
             navigate('/create-release')
+            toast.error('You have to feel First Step after that you can Go Next Step')
+            return;
         }
 
-        const d = {...data, ...releaseFormData, ...audioData, artist, labels, featuring}
+        const d = {...data, ...releaseFormData, ...audioData, lyricsLanguage, artist, labels, featuring}
         setReleaseFormData(d)
         navigate('/create-release/date')
     };
@@ -117,15 +145,14 @@ const SecondStepTrack = () => {
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
-  
-        console.log(file);
-  
+    
         axios.post('http://localhost:5000/api/v1/release/upload-release-audio', formData)
             .then(res => {
                 if(res.status == 200){
                     event.target.value = ''
                     setUploadLoading(false);
                     setAudioData(res.data.data);
+                    toast.success('Uploaded Audio')
                 }
             })
             .catch(er => console.log(er))
@@ -136,6 +163,7 @@ const SecondStepTrack = () => {
         .then( res => {
           if(res.status == 200){
             setAudioData('')
+            toast.success('Deleted Audio!')
           }
         })
         .catch(er => console.log(er));
@@ -194,18 +222,18 @@ const SecondStepTrack = () => {
                             <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
                                 <div className="flex items-center">
                                         <Image
-                                        width={40}
-                                        height={40}
+                                        width={35}
+                                        height={35}
                                         className="rounded-lg"
                                         src={data.imgUrl}
                                         fallback={fallbackImage}
                                         />
                                     <div className="ps-2">
-                                    <h2 className="font-bold">{data.artistName}</h2>
-                                    <p className="text-sm text-slate-400">ID: {data._id}</p>
+                                    <h2 className="font-bold text-sm">{data.artistName}</h2>
+                                    <p className="text-xs text-slate-400">ID: {data._id}</p>
                                     </div>
                                 </div>
-                                <span style={{cursor: 'pointer'}} onClick={() => removeFeaturing(data._id)}><TrashIcon className="w-5 h-5 text-red-500"/></span>
+                                <span className="me-2" style={{cursor: 'pointer'}} onClick={() => removeFeaturing(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                             </div>
                         )
                     }
@@ -227,8 +255,24 @@ const SecondStepTrack = () => {
                     {errors.author && <span className='text-red-600 pt-2 block'>Author Required</span>}
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Lyrics language <span className="text-red-500">*</span></p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("lyricsLanguage", { required: true})}/>
-                    {errors.lyricsLanguage && <span className='text-red-600 pt-2 block'>Lyrics language Required</span>}
+                    {/* <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("lyricsLanguage", { required: true})}/>
+                    {errors.lyricsLanguage && <span className='text-red-600 pt-2 block'>Lyrics language Required</span>} */}
+                    <Select
+                        showSearch
+                        size="large"
+                        className="w-full rounded-full"
+                        placeholder="Select Language"
+                        optionFilterProp="children"
+                        onChange={onChange}
+                        onSearch={onSearch}
+                        filterOption={filterOption}
+                        options={[
+                            { value: 'Bangla', label: 'Bangla',},
+                            { value: 'Hindi', label: 'Hindi',},
+                            { value: 'English', label: 'English',},
+                        ]}
+                    />
+                    {languageErr && <span className='text-red-600 pt-2 block'>{languageErr}</span>}
 
 
 
@@ -241,18 +285,18 @@ const SecondStepTrack = () => {
                             <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
                                 <div className="flex items-center">
                                         <Image
-                                        width={40}
-                                        height={40}
+                                        width={35}
+                                        height={35}
                                         className="rounded-lg"
                                         src={data.imgUrl}
                                         fallback={fallbackImage}
                                         />
                                     <div className="ps-2">
-                                    <h2 className="font-bold">{data.artistName}</h2>
-                                    <p className="text-sm text-slate-400">ID: {data._id}</p>
+                                    <h2 className="font-bold text-sm">{data.artistName}</h2>
+                                    <p className="text-xs text-slate-400">ID: {data._id}</p>
                                     </div>
                                 </div>
-                                <span style={{cursor: 'pointer'}} onClick={() => removeArtist(data._id)}><TrashIcon className="w-5 h-5 text-red-500"/></span>
+                                <span style={{cursor: 'pointer'}} onClick={() => removeArtist(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                             </div>
                         )
                     }
@@ -277,18 +321,18 @@ const SecondStepTrack = () => {
                             <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
                                 <div className="flex items-center">
                                         <Image
-                                        width={40}
-                                        height={40}
+                                        width={35}
+                                        height={35}
                                         className="rounded-lg"
                                         src={data.imgUrl}
                                         fallback={fallbackImage}
                                         />
                                     <div className="ps-2">
-                                    <h2 className="font-bold">{data.labelName}</h2>
-                                    <p className="text-sm text-slate-400">ID: {data._id}</p>
+                                    <h2 className="font-bold text-sm">{data.labelName}</h2>
+                                    <p className="text-xs text-slate-400">ID: {data._id}</p>
                                     </div>
                                 </div>
-                                <span style={{cursor: 'pointer'}} onClick={() => removeLabels(data._id)}><TrashIcon className="w-5 h-5 text-red-500"/></span>
+                                <span style={{cursor: 'pointer'}} onClick={() => removeLabels(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                             </div>
                         )
                     }
