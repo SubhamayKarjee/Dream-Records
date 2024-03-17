@@ -9,9 +9,35 @@ const CreateMusicPage = () => {
 
 
     const [releaseFormData, setReleaseFormData] = useState()
+
+    const [firstStep, setFirstStep] = useState();
+    const [secondStep, setSecondStep] = useState();
+    const [artist, setArtist] = useState();
+    const [labels, setLabels] = useState();
+    const [audioData, setAudioData] = useState();
+    const [lyricsLanguage, setLyricsLanguage] = useState();
+    const [composer, setComposer] = useState();
+    const [authors, setAuthors] = useState();
+    const [featuring, setFeaturing] = useState();
+    const [genre, setGenre] = useState();
+    const [uploadedImageLink, setUploadedImageLink] = useState('');
+    const [uploadedImage, setUploadedImage] = useState();
+    
+    
     const releaseContextValue = {
-        releaseFormData,
-        setReleaseFormData
+        releaseFormData, setReleaseFormData,
+        firstStep, setFirstStep,
+        secondStep, setSecondStep,
+        artist, setArtist,
+        labels, setLabels,
+        audioData, setAudioData,
+        lyricsLanguage, setLyricsLanguage,
+        composer, setComposer,
+        authors, setAuthors,
+        featuring, setFeaturing,
+        genre, setGenre,
+        uploadedImageLink, setUploadedImageLink,
+        uploadedImage, setUploadedImage
     }
 
    

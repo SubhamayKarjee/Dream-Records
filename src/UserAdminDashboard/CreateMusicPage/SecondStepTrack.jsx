@@ -3,7 +3,7 @@ import { Image, Modal, Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
+// import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import ArtistList from "./artistListComponent/ArtistList";
 import './CreateMusicPage.css';
 import LabelsList from "./labelsListComponent/LabelsList";
@@ -15,10 +15,19 @@ import toast from "react-hot-toast";
 
 const SecondStepTrack = () => {
 
-    const { releaseFormData, setReleaseFormData } = useContext(ReleaseContext);
+    const { 
+        releaseFormData, setReleaseFormData,
+        // secondStep, setSecondStep,
+        artist, setArtist,
+        labels, setLabels,
+        audioData, setAudioData,
+        lyricsLanguage, setLyricsLanguage,
+        composer, setComposer,
+        authors, setAuthors,
+        featuring, setFeaturing
+    } = useContext(ReleaseContext);
 
     const navigate = useNavigate('');
-    const { artist, setArtist, labels, setLabels, featuring, setFeaturing } = useContext(AuthContext);
 
     // Get Language select Option Form API__________________________
     const [options, setOptions] = useState([]);
@@ -83,7 +92,7 @@ const SecondStepTrack = () => {
     }
     
     // Handle Lyrics Language Select Input _________________________
-    const [lyricsLanguage, setLyricsLanguage] = useState();
+    // const [lyricsLanguage, setLyricsLanguage] = useState();
     const [languageErr, setLanguageErr] = useState('')
     const onChange = (value) => {
         setLyricsLanguage(value)
@@ -93,7 +102,7 @@ const SecondStepTrack = () => {
 
     // Handle Author Input Value______________________________________
     const [authorValue, setAuthorValue] = useState();
-    const [authors, setAuthors] = useState();
+    // const [authors, setAuthors] = useState();
     const [authorsErr, setAuthorsErr] = useState();
     const handleAuthorValue = () => {
         if(authors){
@@ -113,7 +122,7 @@ const SecondStepTrack = () => {
 
     // Handle Composer Input Value________________________________________
     const [composerValue, setComposerValue] = useState();
-    const [composer, setComposer] = useState();
+    // const [composer, setComposer] = useState();
     const [composerErr, setComposerErr] = useState();
     const handleComposerValue = () => {
         if(composer){
@@ -133,7 +142,7 @@ const SecondStepTrack = () => {
 
 
     // Handle Audio State _______________________________________
-    const [audioData, setAudioData] = useState();
+    // const [audioData, setAudioData] = useState();
     const [errorMessageAudio, setErrorMessageAudio] = useState('');
 
     // FROM SUBMIT FUNCTION_______________________________________
@@ -415,7 +424,7 @@ const SecondStepTrack = () => {
                     </div>
 
                     <div className="my-4 flex justify-end">
-                        {/* <button onClick={() => navigate('/create-music')} className="btn btn-sm px-6 btn-neutral rounded-full">Previus</button> */}
+                        <button onClick={() => navigate('/create-release')} className="btn btn-sm px-6 btn-neutral rounded-full">Previus</button>
                         <input type="submit" value={'Next'} className="btn btn-sm px-6 btn-accent rounded-full" />
                     </div>
                 </form>

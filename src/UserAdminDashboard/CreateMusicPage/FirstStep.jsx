@@ -8,14 +8,13 @@ import { ReleaseContext } from "./CreateMusicPage";
 
 const FirstStep = () => {
 
-    const { setReleaseFormData } = useContext(ReleaseContext);
+    const { setReleaseFormData, firstStep, setFirstStep, genre, setGenre, uploadedImageLink, setUploadedImageLink, uploadedImage, setUploadedImage } = useContext(ReleaseContext);
 
-    const navigate = useNavigate('')
+    const navigate = useNavigate('');
+    
 
     const [errorMessage, setErrorMessage] = useState('');
     const [upLoadLoading, setUploadLoading] = useState(false);
-    const [uploadedImageLink, setUploadedImageLink] = useState('');
-    const [uploadedImage, setUploadedImage] = useState('');
 
     const [options, setOptions] = useState([]);
     useEffect( () => {
@@ -62,10 +61,11 @@ const FirstStep = () => {
         
     }
 
-    const [genre, setGenre] = useState()
     const [genreError, setGenreError] = useState('')
 
-    const { register, handleSubmit, formState: { errors }} = useForm();
+    const { register, handleSubmit, formState: { errors }} = useForm({
+        defaultValues: firstStep
+    });
     const onSubmit = (data) => {
         if(!genre){
             setGenreError('Genre Required')
@@ -73,7 +73,8 @@ const FirstStep = () => {
         }
         if(uploadedImage){
             const formData = {...data, ...uploadedImage, genre};
-            setReleaseFormData(formData)
+            setReleaseFormData(formData);
+            setFirstStep(data);
             navigate('/create-release/tracks')
         }else{
             setErrorMessage('Please Upload Art Image. Art Image Required');
@@ -117,7 +118,7 @@ const FirstStep = () => {
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Genre <span className="text-red-500">*</span></p>
                     <Select
-                        defaultValue="Select Genre"
+                        defaultValue={genre ? genre : 'Select Genre'}
                         size="large"
                         className="font-bold mb-2"
                         style={{
