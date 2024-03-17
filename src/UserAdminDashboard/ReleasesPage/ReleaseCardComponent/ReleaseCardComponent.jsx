@@ -63,7 +63,7 @@ const ReleaseCardComponent = ({releaseData, totalItems, fetchLoading, currentPag
             </div>
             <div className="pt-6">
                 {
-                    !totalItems && !fetchLoading && <Empty className="pt-12" />
+                    !totalItems && !fetchLoading && <Empty className="pt-8" />
                 }
                 {
                     totalItems > 1 && !fetchLoading && <div className="flex justify-center items-center my-4">

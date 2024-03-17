@@ -119,8 +119,8 @@ const DetailsSingleArtist = () => {
                 }
                 {
                     artist && 
-                    <div className="md:flex justify-between p-2 my-3 rounded-md border">
-                        <div className="flex">
+                    <div className="md:flex justify-between my-3 rounded-md border">
+                        <div className="flex p-2">
                             <Image
                             width={100}
                             height={100}
@@ -155,7 +155,7 @@ const DetailsSingleArtist = () => {
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        <div className="p-2">
                             <div className="bg-slate-100 rounded-md p-3">
                                 <p className="font-bold text-sm text-slate-600">Youtube Channel ID : <span>{artist?.youtubeChannelId}</span></p>
                                 <p className="font-bold text-sm text-slate-600">youtube OAC : <span>{artist?.youtubeOac}</span></p>
@@ -173,11 +173,11 @@ const DetailsSingleArtist = () => {
                     </div>
                     <p className="font-bold text-slate-500 border-b">Releases under this Artist</p>
                     <div className="my-3">
-                        <button onClick={() => handleStatus('All')} className="btn btn-sm btn-neutral mx-1">All</button>
-                        <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral mx-1">Pending</button>
-                        <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral mx-1">Approved</button>
-                        <button onClick={() => handleStatus('Action Required')} className="btn btn-sm btn-neutral mx-1">Action Required</button>
-                        <button onClick={() => handleStatus('Rejected')} className="btn btn-sm btn-neutral mx-1">Rejected</button>
+                        <button onClick={() => handleStatus('All')} className="btn btn-sm btn-neutral m-1">All</button>
+                        <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral m-1">Pending</button>
+                        <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral m-1">Approved</button>
+                        <button onClick={() => handleStatus('Action Required')} className="btn btn-sm btn-neutral m-1">Action Required</button>
+                        <button onClick={() => handleStatus('Rejected')} className="btn btn-sm btn-neutral m-1">Rejected</button>
                     </div>
                     {
                         fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
