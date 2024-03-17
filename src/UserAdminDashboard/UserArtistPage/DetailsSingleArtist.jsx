@@ -8,12 +8,14 @@ import spotifyImg from '../../assets/social-icon/spotify.png';
 import facebookImg from '../../assets/social-icon/facebook.png';
 import youtubeImg from '../../assets/social-icon/youtube.png';
 import ReleaseCardComponent from "../ReleasesPage/ReleaseCardComponent/ReleaseCardComponent";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ClipboardDocumentListIcon } from "@heroicons/react/24/solid";
+import toast from "react-hot-toast";
 
 const DetailsSingleArtist = () => {
 
     const {id} = useParams();
+    const navigate = useNavigate();
 
     const [artist, setArtist] = useState();
     const [artistFetchLoading, setArtistFetchLoading] = useState(false);
@@ -84,14 +86,13 @@ const DetailsSingleArtist = () => {
         }
     };
 
-
+    // Delete Artist________________________
     const deleteArtist = (id, imgKey) => {
-        setFetchLoading(true)
         axios.delete(`http://localhost:5000/api/v1/artist/delete-artist/${id}?imgKey=${imgKey}`)
           .then( res => {
             if(res.status == 200){
-              setFetchLoading(false)
-              console.log(res.data.message);
+              toast.success('Deleted the Artist');
+              navigate('/artist')
             }
           })
           .catch(er => console.log(er));
@@ -103,7 +104,7 @@ const DetailsSingleArtist = () => {
                 {
                     artistFetchLoading == true && 
                     <Skeleton
-                        className="py-9"
+                        className="py-4"
                         avatar
                         paragraph={{
                         rows: 2,
@@ -121,8 +122,8 @@ const DetailsSingleArtist = () => {
                     <div className="md:flex justify-between p-2 my-3 rounded-md border">
                         <div className="flex">
                             <Image
-                            width={120}
-                            height={120}
+                            width={100}
+                            height={100}
                             className="rounded-lg"
                             src={artist.imgUrl}
                             fallback={fallbackImage}
@@ -184,7 +185,6 @@ const DetailsSingleArtist = () => {
                     <ReleaseCardComponent releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={currentPage} handlePageChange={handlePageChange}/>
                 </main>
             </div>
-
 
             {/* Sideber Div  _______________________________*/}
             <div className="md:basis-1/4">
