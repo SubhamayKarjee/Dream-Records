@@ -12,7 +12,7 @@ const UserLabelsPage = () => {
     const { userNameIdRoll, refatchLabelsData, setRefatchLabelsData } = useContext(AuthContext);
 
     // Paginatin and Search State __________________________________________________
-    const [lebelStatus, setLabelStatus] = useState('Pending')
+    const [lebelStatus, setLabelStatus] = useState('All')
     const [totalItems, setTotalItems] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage] = useState(10);
@@ -35,22 +35,6 @@ const UserLabelsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[refatchLabelsData, currentPage, lebelStatus])
 
-    // Search Label ______________________________________________________________
-    // useEffect(() => {
-    //   // Calculate Pagination ____________________________________________________
-    //   setFetchLoading(true)
-    //   axios.get(`http://localhost:5000/api/v1/labels/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
-    //       .then( res => {
-    //         if(res.status == 200){
-    //           console.log(res.data.data);
-    //           setFetchLoading(false);
-    //           setTotalItems(res.data.dataCount);
-    //           setLabelsData(res.data.data);
-    //         }
-    //       })
-    //       .catch(er => console.log(er));
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [currentPage, lebelStatus]);
 
     const handlePageChange = (page) => {
       setCurrentPage(page)
@@ -135,6 +119,7 @@ const UserLabelsPage = () => {
                 {/* Main Div ______________________________________________Labels list */}
                 <main className="my-2 p-2">
                     <div>
+                        <button onClick={() => handleStatus('All')} className="btn btn-sm btn-neutral mx-1">All</button>
                         <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral mx-1">Pending</button>
                         <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral mx-1">Approved</button>
                         <button onClick={() => handleStatus('Rejected')} className="btn btn-sm btn-neutral mx-1">Rejected</button>
@@ -143,7 +128,7 @@ const UserLabelsPage = () => {
                       fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
                     {
-                      labelsData?.map((data) => 
+                      !fetchLoading && labelsData?.map((data) => 
                         <div key={data._id} className="flex justify-between p-1 my-1 rounded-md">
                           <div className="flex items-center">
                                 <Image
@@ -161,17 +146,20 @@ const UserLabelsPage = () => {
                           <div className="flex items-center">
                             {
                               data.status === 'Pending' &&
-                              <span className="bg-yellow-500 my-3 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {data.status}</span>
+                              <span style={{width: '100px'}} className="flex justify-center bg-yellow-500 my-3 py-1 rounded-md text-xs me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {data.status}</span>
                             }
                             {
                               data.status === 'Approved' &&
-                              <span className="bg-green-500 my-3 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center"><CheckBadgeIcon className="w-4 h-4 me-1"/> {data.status}</span>
+                              <span style={{width: '100px'}} className="flex justify-center bg-green-500 my-3 py-1 rounded-md text-xs me-2 font-bold flex items-center"><CheckBadgeIcon className="w-4 h-4 me-1"/> {data.status}</span>
                             }
                             {
                               data.status === 'Rejected' &&
-                              <span className="bg-red-500 my-3 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data.status}</span>
+                              <span style={{width: '100px'}} className="flex justify-center bg-red-500 my-3 py-1 rounded-md text-xs me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data.status}</span>
                             }
-                            <button onClick={() => deleteLabels(data._id, data.key)}><TrashIcon className="w-5 h-5 text-red-500"/></button>
+                            {
+                              data.status === 'Rejected' &&
+                              <button onClick={() => deleteLabels(data._id, data.key)}><TrashIcon className="w-5 h-5 text-red-500"/></button>
+                            }
                           </div>
                         </div>
                       )
