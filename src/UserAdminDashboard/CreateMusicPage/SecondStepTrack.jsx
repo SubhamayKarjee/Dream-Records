@@ -92,7 +92,6 @@ const SecondStepTrack = () => {
     }
     
     // Handle Lyrics Language Select Input _________________________
-    // const [lyricsLanguage, setLyricsLanguage] = useState();
     const [languageErr, setLanguageErr] = useState('')
     const onChange = (value) => {
         setLyricsLanguage(value)
@@ -102,7 +101,6 @@ const SecondStepTrack = () => {
 
     // Handle Author Input Value______________________________________
     const [authorValue, setAuthorValue] = useState();
-    // const [authors, setAuthors] = useState();
     const [authorsErr, setAuthorsErr] = useState();
     const handleAuthorValue = () => {
         if(authors){

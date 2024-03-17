@@ -7,8 +7,17 @@ import { ReleaseContext } from "./CreateMusicPage";
 
 const ThirdStepDate = () => {
     const [releaseFormDataError, setReleaseFormDataError] = useState('')
-    const { releaseFormData } = useContext(ReleaseContext);
-    const { userNameIdRoll } = useContext(AuthContext);
+    const { 
+        releaseFormData,
+        setReleaseFormData,
+        setFirstStep,
+        setSecondStep,
+        setAudioData,
+        setLyricsLanguage,
+        setComposer,
+        setAuthors,
+    } = useContext(ReleaseContext);
+    const { userNameIdRoll, setArtist, setLabels, setFeaturing } = useContext(AuthContext);
 
     const navigate = useNavigate()
 
@@ -25,6 +34,17 @@ const ThirdStepDate = () => {
 
     const [loading, setLoading] = useState(false)
     const handleSubmit = () => {
+        setArtist();
+        setLabels();
+        setFeaturing(); 
+        setReleaseFormData();
+        setFirstStep();
+        setSecondStep();
+        setAudioData();
+        setLyricsLanguage();
+        setComposer();
+        setAuthors();
+
         setLoading(true)
         setError('')
         if(!releaseDate){
