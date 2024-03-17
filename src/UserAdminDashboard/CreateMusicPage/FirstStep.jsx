@@ -8,7 +8,13 @@ import { ReleaseContext } from "./CreateMusicPage";
 
 const FirstStep = () => {
 
-    const { setReleaseFormData, firstStep, setFirstStep, genre, setGenre, uploadedImageLink, setUploadedImageLink, uploadedImage, setUploadedImage } = useContext(ReleaseContext);
+    const { 
+        setReleaseFormData, 
+        firstStep, setFirstStep, 
+        genre, setGenre,
+        uploadedImageLink, setUploadedImageLink, 
+        uploadedImage, setUploadedImage 
+    } = useContext(ReleaseContext);
 
     const navigate = useNavigate('');
     

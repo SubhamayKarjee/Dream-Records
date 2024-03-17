@@ -68,11 +68,14 @@ const ThirdStepDate = () => {
                     releaseFormDataError && <p className="text-red-500">{releaseFormDataError}</p>
                 }
                 <div className="flex items-center my-3">
+                    <button onClick={() => navigate('/create-release/tracks')} className="btn btn-sm px-6 btn-neutral rounded-full me-2">Previus</button> 
+                    <div className="flex items-center justify-end">
                         {
                             loading && <span className="block loading loading-spinner loading-md me-2"></span>
                         }
                         <button className="btn btn-sm btn-info rounded-full px-4" onClick={handleSubmit}>Submit</button>                       
-                    </div>
+                    </div>   
+                </div>
             </div>
         </div>
     );

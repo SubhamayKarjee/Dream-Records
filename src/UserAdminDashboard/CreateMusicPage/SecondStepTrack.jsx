@@ -3,7 +3,7 @@ import { Image, Modal, Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-// import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
+import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import ArtistList from "./artistListComponent/ArtistList";
 import './CreateMusicPage.css';
 import LabelsList from "./labelsListComponent/LabelsList";
@@ -17,15 +17,15 @@ const SecondStepTrack = () => {
 
     const { 
         releaseFormData, setReleaseFormData,
-        // secondStep, setSecondStep,
-        artist, setArtist,
-        labels, setLabels,
+        secondStep, setSecondStep,
         audioData, setAudioData,
         lyricsLanguage, setLyricsLanguage,
         composer, setComposer,
         authors, setAuthors,
-        featuring, setFeaturing
     } = useContext(ReleaseContext);
+
+    const { artist, setArtist, labels, setLabels, featuring, setFeaturing } = useContext(AuthContext);
+
 
     const navigate = useNavigate('');
 
@@ -147,7 +147,9 @@ const SecondStepTrack = () => {
 
     // FROM SUBMIT FUNCTION_______________________________________
     // eslint-disable-next-line no-unused-vars
-    const { register, handleSubmit, formState: { errors }} = useForm();
+    const { register, handleSubmit, formState: { errors }} = useForm({
+        defaultValues: secondStep
+    });
     const onSubmit = (data) => {
         setErrorMessageArtist('');
         setErrorMessageLabels('');
@@ -185,6 +187,7 @@ const SecondStepTrack = () => {
         }
 
         const d = {...data, ...releaseFormData, ...audioData, lyricsLanguage, artist, labels, featuring, composer, authors}
+        setSecondStep(data)
         setReleaseFormData(d)
         navigate('/create-release/date')
     };
@@ -325,7 +328,7 @@ const SecondStepTrack = () => {
                         showSearch
                         size="large"
                         className="w-full rounded-full"
-                        placeholder="Select Language"
+                        defaultValue={lyricsLanguage}
                         optionFilterProp="children"
                         onChange={onChange}
                         filterOption={filterOption}
@@ -423,7 +426,7 @@ const SecondStepTrack = () => {
                         <span className="text-xs bg-slate-100 text-slate-500 font-bold mx-2 px-2 py-1 rounded-md">(if released before ISRC required otherwise optional)</span>
                     </div>
 
-                    <div className="my-4 flex justify-end">
+                    <div className="my-4 flex justify-between">
                         <button onClick={() => navigate('/create-release')} className="btn btn-sm px-6 btn-neutral rounded-full">Previus</button>
                         <input type="submit" value={'Next'} className="btn btn-sm px-6 btn-accent rounded-full" />
                     </div>
