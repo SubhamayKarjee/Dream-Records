@@ -69,10 +69,16 @@ const SingleReleasePage = () => {
                                         data?.status === 'Rejected' &&
                                         <span className="bg-red-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data?.status}</span>
                                     }
-                                    <div style={{cursor: 'pointer'}} onClick={() => handleNavigate(data?._id)} className="flex items-center p-1 mt-2 bg-cyan-500 rounded-md shadow">
-                                        <PencilIcon className="h-3 w-3 text-white me-1"/>
-                                        <p className="text-xs font-semibold text-white">Edit</p>
-                                    </div>
+                                    {
+                                        data?.status === 'Action Required' && 
+                                        <div>
+                                            <span className="bg-red-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data?.status}</span>
+                                            <div style={{cursor: 'pointer'}} onClick={() => handleNavigate(data?._id)} className="flex items-center p-1 mt-2 bg-cyan-500 rounded-md shadow">
+                                                <PencilIcon className="h-3 w-3 text-white me-1"/>
+                                                <p className="text-xs font-semibold text-white">Edit</p>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>                                 

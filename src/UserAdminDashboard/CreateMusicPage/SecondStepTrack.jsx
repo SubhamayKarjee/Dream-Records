@@ -306,7 +306,7 @@ const SecondStepTrack = () => {
                                 <input type="text" placeholder="Type Author Name" id="author" onChange={e => setAuthorValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
                                 {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
                             </div>
-                            <span onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1">Add Composer</span>
+                            <span onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1">Add Author</span>
                         </div>
                     </div>
 
