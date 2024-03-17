@@ -105,7 +105,7 @@ const DetailsSingleLabels = () => {
                     />
                 }
                 {
-                    labels?.status === 'Rejected' &&
+                    !labelsFetchLoading && labels?.status === 'Rejected' &&
                     <div className="flex justify-end mt-2">
                         <span onClick={() => deleteLabels(labels._id, labels.imgKey)} className="btn btn-xs bg-red-400 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center">Delete Label</span>
                     </div>

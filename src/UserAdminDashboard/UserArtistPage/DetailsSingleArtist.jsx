@@ -39,7 +39,8 @@ const DetailsSingleArtist = () => {
 
     const [releaseData, setReleaseData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false);
-    const [totalReleaseCount, setTotalReleaseCount] = useState()
+    const [totalReleaseCount, setTotalReleaseCount] = useState(0);
+    const [hideDeleteButton, setHideDeleteButton] = useState('none')
 
     // Get Release List ______________________________________________________________
     useEffect(() => {
@@ -50,7 +51,10 @@ const DetailsSingleArtist = () => {
               if(res.status == 200){
                 setFetchLoading(false);
                 setTotalItems(res.data.dataCount);
-                setTotalReleaseCount(res.data.totalCount)
+                setTotalReleaseCount(res.data.totalCount);
+                if(!res.data.totalCount){
+                    setHideDeleteButton('block')
+                }
                 setReleaseData(res.data.data);
               }
             })
@@ -112,9 +116,11 @@ const DetailsSingleArtist = () => {
                     />
                 }
                 {
-                    artist && !totalReleaseCount &&
-                    <div className="mt-1 flex justify-end">
-                        <button className="btn btn-sm flex items-center font-bold text-sm bg-red-400" onClick={() => deleteArtist(artist._id, artist.key)}>Delete Artist</button>
+                    !totalReleaseCount &&
+                    <div style={{display: `${hideDeleteButton}`}} className="mt-1 flex justify-end">
+                        <div className="mt-1 flex justify-end">
+                            <button className="btn btn-sm flex items-center font-bold text-sm bg-red-400" onClick={() => deleteArtist(artist._id, artist.key)}>Delete Artist</button>
+                        </div>
                     </div>
                 }
                 {
