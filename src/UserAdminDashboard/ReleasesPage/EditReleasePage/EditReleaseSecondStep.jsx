@@ -3,6 +3,7 @@ import { Image, Modal, Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import { EditReleaseContext } from "./EditReleaseMainPage";
 import ArtistList from "../../CreateMusicPage/artistListComponent/ArtistList";
@@ -17,6 +18,12 @@ const EditReleaseSecondStep = () => {
 
 
     const navigate = useNavigate('');
+    const history = useHistory();
+
+    const handleGoBack = () => {
+        history.goBack(); // Go back one step in the browser history
+    };
+
     const { releaseFormData, setReleaseFormData, preReleaseData } = useContext(EditReleaseContext);
     const { artist, setArtist, labels, setLabels, featuring, setFeaturing } = useContext(AuthContext);
 
@@ -446,8 +453,8 @@ const EditReleaseSecondStep = () => {
                         <span className="text-xs bg-slate-100 text-slate-500 font-bold mx-2 px-2 py-1 rounded-md">(if released before ISRC required otherwise optional)</span>
                     </div>
 
-                    <div className="my-4 flex justify-end">
-                        {/* <button onClick={() => navigate('/create-music')} className="btn btn-sm px-6 btn-neutral rounded-full">Previus</button> */}
+                    <div className="my-4 flex justify-between items-center">
+                        <button onClick={handleGoBack} className="btn btn-sm px-6 btn-neutral rounded-full">Previus</button>
                         <input type="submit" value={'Next'} className="btn btn-sm px-6 btn-accent rounded-full" />
                     </div>
                 </form>

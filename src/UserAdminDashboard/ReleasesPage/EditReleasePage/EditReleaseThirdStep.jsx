@@ -70,12 +70,15 @@ const EditReleaseThirdStep = () => {
                 {
                     releaseFormDataError && <p className="text-red-500">{releaseFormDataError}</p>
                 }
-                <div className="flex items-center my-3">
+                <div className="flex items-center my-3 justify-between">
+                    <button onClick={() => navigate('/releases/edit/second-step')} className="btn btn-sm px-6 btn-neutral rounded-full me-2">Previus</button> 
+                    <div>
                         {
                             loading && <Spin size="small" className="me-2"/>
                         }
                         <button className="btn btn-sm btn-info rounded-full px-4" onClick={handleSubmit}>Submit</button>                       
                     </div>
+                </div>
             </div>
         </div>
     );
