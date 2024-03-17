@@ -1,15 +1,17 @@
-import { BellIcon, CheckBadgeIcon, ChevronLeftIcon, ClockIcon, ExclamationCircleIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { BellIcon, CheckBadgeIcon, ChevronLeftIcon, ClockIcon, ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import CreateLabelsForm from "./CreateLabelsForm";
 import fallbackImage from "../../assets/fallbackImage.jpg"
 
 const UserLabelsPage = () => {
+
+    const navigate = useNavigate('')
     // Get Data From Context API
-    const { userNameIdRoll, refatchLabelsData, setRefatchLabelsData } = useContext(AuthContext);
+    const { userNameIdRoll, refatchLabelsData } = useContext(AuthContext);
 
     // Paginatin and Search State __________________________________________________
     const [lebelStatus, setLabelStatus] = useState('All')
@@ -64,18 +66,18 @@ const UserLabelsPage = () => {
         }
     };
 
-    const deleteLabels = (id, imgKey) => {
-        setFetchLoading(true)
-        axios.delete(`http://localhost:5000/api/v1/labels/delete-labels/${id}?imgKey=${imgKey}`)
-          .then( res => {
-            if(res.status == 200){
-              const refetch = refatchLabelsData + 1
-              setFetchLoading(false)
-              setRefatchLabelsData(refetch)
-            }
-          })
-          .catch(er => console.log(er));
-      }
+    // const deleteLabels = (id, imgKey) => {
+    //     setFetchLoading(true)
+    //     axios.delete(`http://localhost:5000/api/v1/labels/delete-labels/${id}?imgKey=${imgKey}`)
+    //       .then( res => {
+    //         if(res.status == 200){
+    //           const refetch = refatchLabelsData + 1
+    //           setFetchLoading(false)
+    //           setRefatchLabelsData(refetch)
+    //         }
+    //       })
+    //       .catch(er => console.log(er));
+    //   }
 
 
     return (
@@ -129,7 +131,7 @@ const UserLabelsPage = () => {
                     }
                     {
                       !fetchLoading && labelsData?.map((data) => 
-                        <div key={data._id} className="flex justify-between p-1 my-1 rounded-md">
+                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/labels/${data._id}`)} key={data._id} className="flex justify-between p-1 my-1 rounded-md">
                           <div className="flex items-center">
                                 <Image
                                   width={55}
@@ -156,10 +158,10 @@ const UserLabelsPage = () => {
                               data.status === 'Rejected' &&
                               <span style={{width: '100px'}} className="flex justify-center bg-red-500 my-3 py-1 rounded-md text-xs me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data.status}</span>
                             }
-                            {
+                            {/* {
                               data.status === 'Rejected' &&
                               <button onClick={() => deleteLabels(data._id, data.key)}><TrashIcon className="w-5 h-5 text-red-500"/></button>
-                            }
+                            } */}
                           </div>
                         </div>
                       )

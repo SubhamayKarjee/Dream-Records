@@ -11,7 +11,7 @@ const AdminLabelsPage = () => {
     const navigate = useNavigate()
 
     // Paginatin and Search State __________________________________________________
-    const [lebelStatus, setLabelStatus] = useState('Pending')
+    const [lebelStatus, setLabelStatus] = useState('All')
     const [totalItems, setTotalItems] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage] = useState(10);
@@ -96,6 +96,7 @@ const AdminLabelsPage = () => {
                 {/* Main Div ______________________________________________Labels list */}
                 <main className="my-2 p-2">
                     <div className="mb-3">
+                        <button onClick={() => handleStatus('All')} className="btn btn-sm btn-neutral mx-1">All</button>
                         <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral mx-1">Pending</button>
                         <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral mx-1">Approved</button>
                         <button onClick={() => handleStatus('Rejected')} className="btn btn-sm btn-neutral mx-1">Rejected</button>
@@ -104,7 +105,7 @@ const AdminLabelsPage = () => {
                       fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
                     {
-                      labelsData?.map((data) => 
+                      !fetchLoading && labelsData?.map((data) => 
                         <div style={{cursor: 'pointer'}} onClick={() => handleUpdate(data._id)} key={data._id} className="flex justify-between p-1 my-1 rounded-md border">
                           <div className="flex items-center">
                                 <Image
@@ -122,15 +123,15 @@ const AdminLabelsPage = () => {
                           <div className="flex gap-1 items-center">
                             {
                                 data.status === 'Pending' &&
-                                <span className="bg-yellow-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {data.status}</span>
+                                <span style={{width: '110px'}} className="flex justify-center bg-yellow-500 my-3 py-1 rounded-md text-sm me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {data.status}</span>
                             }
                             {
                                 data.status === 'Approved' &&
-                                <span className="bg-green-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><CheckBadgeIcon className="w-4 h-4 me-1"/> {data.status}</span>
+                                <span style={{width: '110px'}} className="flex justify-center bg-green-500 my-3 py-1 rounded-md text-sm me-2 font-bold flex items-center"><CheckBadgeIcon className="w-4 h-4 me-1"/> {data.status}</span>
                             }
                             {
                                 data.status === 'Rejected' &&
-                                <span className="bg-red-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data.status}</span>
+                                <span style={{width: '110px'}} className="flex justify-center bg-red-500 my-3 py-1 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data.status}</span>
                             }
                             {/* <span onClick={() => handleUpdate(data._id)} className="btn btn-xs btn-neutral py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center">Update Status</span> */}
                           </div>

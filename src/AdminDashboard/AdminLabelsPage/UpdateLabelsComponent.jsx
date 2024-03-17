@@ -41,14 +41,21 @@ const UpdateLabelsComponent = () => {
             }
         })
     }
+
+    const handleDelete = (id) => {
+        console.log(id);
+    }
     return (
         <div>
+            <div className="flex justify-end mt-2">
+                <span onClick={() => handleDelete(labels._id)} className="btn btn-xs bg-red-400 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center">Delete Label</span>
+            </div>
             {
                 fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
             }
             {
                 labels && 
-                <div className="flex justify-between p-2 my-3 rounded-md border">
+                <div className="md:flex justify-between p-2 my-3 rounded-md border">
                     <div className="flex">
                         <Image
                         width={120}

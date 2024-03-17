@@ -28,8 +28,6 @@ import EditReleaseThirdStep from './UserAdminDashboard/ReleasesPage/EditReleaseP
 
 
 
-
-
 // Commont Routes import_______________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
 const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
@@ -48,6 +46,7 @@ const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdmi
 const UserHomePage = React.lazy(() => import('./UserAdminDashboard/UserHomePage/UserHomePage'));
 const UserArtistPage = React.lazy(() => import('./UserAdminDashboard/UserArtistPage/UserArtistPage'));
 const UserLabelsPage = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/UserLabelsPage'));
+const DetailsSingleLabels = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/DetailsSingleLabels'));
 const ReleasesPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/ReleasesPage'));
 const SingleReleasePage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/SingleReleasePage/SingleReleasePage'));
 const EditReleaseMainPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseMainPage'));
@@ -178,8 +177,16 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserArtistPage/></Suspense>
       },
       {
+        path: '/artist/:id',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}>artist</Suspense>
+      },
+      {
         path: '/labels',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserLabelsPage/></Suspense>
+      },
+      {
+        path: '/labels/:id',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><DetailsSingleLabels/></Suspense>
       },
       //User Account Page _________________________________________________________________________________________
       {
