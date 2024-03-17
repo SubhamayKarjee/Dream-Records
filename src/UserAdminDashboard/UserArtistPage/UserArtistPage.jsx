@@ -1,8 +1,8 @@
-import { BellIcon, ChevronLeftIcon, ExclamationCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { BellIcon, ChevronLeftIcon, ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import CreateArtistForm from "./CreateArtistForm";
 import './UserArtistPage.css'
@@ -10,7 +10,8 @@ import fallbackImage from '../../assets/fallbackImage.jpg'
 
 const UserArtistPage = () => {
 
-    const { userNameIdRoll, refatchArtistData, setRefatchArtistData } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const { userNameIdRoll, refatchArtistData } = useContext(AuthContext);
 
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
@@ -76,21 +77,6 @@ const UserArtistPage = () => {
       }
     };
 
-    const deleteArtist = (id, imgKey) => {
-      setFetchLoading(true)
-      axios.delete(`http://localhost:5000/api/v1/artist/delete-artist/${id}?imgKey=${imgKey}`)
-        .then( res => {
-          if(res.status == 200){
-            const refetch = refatchArtistData + 1
-            setFetchLoading(false)
-            setRefatchArtistData(refetch)
-            console.log(res.data.message);
-          }
-        })
-        .catch(er => console.log(er));
-    }
-
-
 
     return (
         <div className="md:flex md:h-full">
@@ -137,7 +123,7 @@ const UserArtistPage = () => {
                     }
                     {
                       !fetchLoading && artistData?.map((data) => 
-                        <div key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
+                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/artist/${data._id}`)} key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
                           <div className="flex items-center">
                                 <Image
                                   width={55}
@@ -150,9 +136,6 @@ const UserArtistPage = () => {
                               <h2 className="font-bold">{data.artistName}</h2>
                               <p className="text-sm text-slate-400">ID: {data._id}</p>
                             </div>
-                          </div>
-                          <div>
-                            <button onClick={() => deleteArtist(data._id, data.key)}><TrashIcon className="w-5 h-5 text-red-500"/></button>
                           </div>
                         </div>
                       )

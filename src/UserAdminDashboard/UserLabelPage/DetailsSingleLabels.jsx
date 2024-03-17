@@ -20,6 +20,7 @@ const DetailsSingleLabels = () => {
             console.log(res.data.data[0]);
             setFetchLoading(false)
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

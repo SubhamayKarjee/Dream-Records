@@ -24,6 +24,7 @@ import SecondStepTrack from './UserAdminDashboard/CreateMusicPage/SecondStepTrac
 import EditReleaseFirstStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseFirstStep';
 import EditReleaseSecondStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseSecondStep';
 import EditReleaseThirdStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseThirdStep';
+import DetailsSingleArtist from './UserAdminDashboard/UserArtistPage/DetailsSingleArtist';
 
 
 
@@ -178,7 +179,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/artist/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}>artist</Suspense>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><DetailsSingleArtist/></Suspense>
       },
       {
         path: '/labels',
