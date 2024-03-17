@@ -3,7 +3,6 @@ import { Image, Modal, Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import { EditReleaseContext } from "./EditReleaseMainPage";
 import ArtistList from "../../CreateMusicPage/artistListComponent/ArtistList";
@@ -18,10 +17,9 @@ const EditReleaseSecondStep = () => {
 
 
     const navigate = useNavigate('');
-    const history = useHistory();
 
     const handleGoBack = () => {
-        history.goBack(); // Go back one step in the browser history
+        navigate(-1)
     };
 
     const { releaseFormData, setReleaseFormData, preReleaseData } = useContext(EditReleaseContext);

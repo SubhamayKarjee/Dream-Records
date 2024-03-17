@@ -127,7 +127,7 @@ const UserArtistPage = () => {
                   {/* Artist List and Relase Title Section _____________________________________________________________________________ */}
                   <div className="flex justify-between items-center py-2 rounded-full bg-slate-100 px-4">
                       <h4 className="font-bold text-slate-600">Profile</h4>
-                      <h4 className="font-bold text-slate-600">Releases</h4>
+                      {/* <h4 className="font-bold text-slate-600">Releases</h4> */}
                   </div>
                 
                 {/* Show All Artist Data __________________________________________________________________________________________________ */}
@@ -136,7 +136,7 @@ const UserArtistPage = () => {
                       fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
                     {
-                      artistData?.map((data) => 
+                      !fetchLoading && artistData?.map((data) => 
                         <div key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
                           <div className="flex items-center">
                                 <Image
