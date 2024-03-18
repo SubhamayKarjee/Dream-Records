@@ -1,21 +1,24 @@
-/* eslint-disable react/prop-types */
-
 import { CheckBadgeIcon, ClockIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import { Image, Select } from "antd";
+import { Image, Modal, Select } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
 import fallbackImage from "../../assets/fallbackImage.jpg"
+import youtubeImg from '../../assets/social-icon/youtube.png';
+import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
 
 const UpdateLabelsComponent = () => {
 
     const {id} = useParams();
+    const navigate = useNavigate('')
 
     const [labels, setLabels] = useState();
     const [labelsStatus, setLabesStatus] = useState();
     const [fetchLoading, setFetchLoading] = useState(false)
     const [updateLoading, setUpdateLoading] = useState(true);
     const [refetch, setRefetch] = useState(1)
+
 
     useEffect( () => {
         setFetchLoading(true)
@@ -36,27 +39,80 @@ const UpdateLabelsComponent = () => {
         .then(res => {
             if(res.status == 200){
                 const count = refetch + 1;
-                setRefetch(count)
-                setUpdateLoading(false)
+                setRefetch(count);
+                setUpdateLoading(false);
+                toast.success('Labels Status Updated!');
             }
         })
     }
 
-    const handleDelete = (id) => {
-        console.log(id);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const [actionRequird, setActionRequird] = useState();
+    const [reasonFieldErr, setReasonFieldErr] = useState();
+    const handleRejectedStatus = () =>{
+        setReasonFieldErr('')
+        if(actionRequird){
+            setUpdateLoading(true)
+            const data = {...labels, status: labelsStatus, actionRequird };
+            axios.put(`http://localhost:5000/admin/api/v1/labels/update/${id}`, data)
+            .then(res => {
+                if(res.status == 200){
+                    const count = refetch + 1;
+                    setRefetch(count);
+                    setUpdateLoading(false);
+                    toast.success('Labels Status Updated!');
+                    setIsModalOpen(false);
+                }
+            })
+        }else{
+            setReasonFieldErr('Please discribe the reasons!')
+        }
     }
+
+    // Delete Labels
+    const [deleteLoading, setDeleteLoading] = useState(false)
+    const handleDelete = (id, imgKey) => {
+        setDeleteLoading(true)
+        axios.delete(`http://localhost:5000/api/v1/labels/delete-labels/${id}?imgKey=${imgKey}`)
+          .then( res => {
+            if(res.status == 200){
+                setDeleteLoading(false)
+                navigate('/admin-dashboard/labels');
+                toast.success('Deleted the Labels');
+            }
+          })
+          .catch(er => console.log(er));
+    }
+
+    if(deleteLoading){
+        return <LoadingComponentsForPage/>
+    }
+
+
+
+
     return (
         <div>
             <div className="flex justify-end mt-2">
-                <span onClick={() => handleDelete(labels._id)} className="btn btn-xs bg-red-400 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center">Delete Label</span>
+                <span onClick={() => handleDelete(labels._id, labels.key)} className="btn btn-xs bg-red-400 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center">Delete Label</span>
             </div>
             {
                 fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
             }
             {
                 labels && 
-                <div className="md:flex justify-between p-2 my-3 rounded-md border">
-                    <div className="flex">
+                <div className="md:flex gap-2 justify-between my-3 rounded-md border">
+                    <div className="flex p-2">
                         <Image
                         width={120}
                         height={120}
@@ -67,6 +123,12 @@ const UpdateLabelsComponent = () => {
                         <div className="ps-2">
                             <h2 className="font-bold">{labels.labelName}</h2>
                             <p className="text-sm text-slate-400">ID: {labels._id}</p>
+                            {
+                                labels?.youtubeChannelLink && <a href={labels.youtubeChannelLink} target="_blank" className="flex items-center">
+                                    <img className="me-2" src={youtubeImg} alt={youtubeImg} />
+                                    {labels.youtubeChannelLink}
+                                </a>
+                            }
                             {
                                 labels.status === 'Pending' &&
                                 <span className="bg-yellow-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {labels.status}</span>
@@ -83,7 +145,15 @@ const UpdateLabelsComponent = () => {
                         </div>
                     </div>
 
-                    <div className="flex gap-1 flex-col">
+                    <div className="p-2">
+                        <p className="text-sm font-bold border-b text-slate-500">Labels Description</p>
+                        {
+                            labels?.description &&
+                            <p className="text-sm text-slate-600">{labels.description}</p>
+                        }
+                    </div>
+
+                    <div className="flex gap-1 flex-col p-2">
                         <div className="mt-2">
                             <p className="font-bold mb-2">Select & Update Status</p>
                             <Select
@@ -100,7 +170,31 @@ const UpdateLabelsComponent = () => {
                                 {
                                     updateLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                                 }
-                                <button onClick={handleUpdateStatus} className="btn btn-sm btn-neutral w-full mt-2">Update</button>
+                                {
+                                    labelsStatus === 'Pending' &&
+                                    <button onClick={handleUpdateStatus} className="btn btn-sm btn-neutral w-full mt-2">Update</button>
+                                }
+                                {
+                                    labelsStatus === 'Approved' &&
+                                    <button onClick={handleUpdateStatus} className="btn btn-sm btn-neutral w-full mt-2">Update</button>
+                                }
+                                {
+                                    labelsStatus === 'Rejected' && 
+                                    <button onClick={showModal} className="btn btn-sm btn-neutral w-full mt-2">Update</button>
+                                }
+                                <Modal 
+                                    title="Rejection Reasons!" 
+                                    open={isModalOpen} 
+                                    onOk={handleOk} 
+                                    onCancel={handleCancel}
+                                    footer={[]}
+                                    >
+                                        <textarea onChange={(e) => setActionRequird(e.target.value)} className="textarea textarea-bordered w-full h-24" placeholder="Reason"></textarea>
+                                        {
+                                            reasonFieldErr && <p className="text-red-500">{reasonFieldErr}</p>
+                                        }
+                                        <button onClick={handleRejectedStatus} className="btn btn-sm btn-neutral w-full mt-2">Update</button>
+                                </Modal>
                             </div>
                         </div>
                     </div>

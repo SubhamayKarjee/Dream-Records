@@ -3,12 +3,15 @@ import { Image, Skeleton } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import fallbackImage from "../../assets/fallbackImage.jpg"
 import ReleaseCardComponent from "../ReleasesPage/ReleaseCardComponent/ReleaseCardComponent";
 import youtubeImg from '../../assets/social-icon/youtube.png';
+import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
 
 const DetailsSingleLabels = () => {
+
+    const navigate = useNavigate('')
 
     const {id} = useParams();
 
@@ -79,17 +82,23 @@ const DetailsSingleLabels = () => {
         }
     };
     // Delete Labels
+    const [deleteLoading, setDeleteLoading] = useState(false)
     const deleteLabels = (id, imgKey) => {
-        setFetchLoading(true)
+        setDeleteLoading(true)
         axios.delete(`http://localhost:5000/api/v1/labels/delete-labels/${id}?imgKey=${imgKey}`)
           .then( res => {
             if(res.status == 200){
-                Navigate('/labels');
+                setDeleteLoading(false)
+                navigate('/labels');
                 toast.success('Deleted the Labels')
             }
           })
           .catch(er => console.log(er));
-      }
+    }
+
+    if(deleteLoading){
+        return <LoadingComponentsForPage/>
+    }
 
     return (
         <div className="md:flex md:h-full">

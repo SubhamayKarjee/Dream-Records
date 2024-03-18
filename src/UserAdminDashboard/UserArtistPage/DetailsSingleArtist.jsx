@@ -11,6 +11,7 @@ import ReleaseCardComponent from "../ReleasesPage/ReleaseCardComponent/ReleaseCa
 import { useNavigate, useParams } from "react-router-dom";
 import { ClipboardDocumentListIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
+import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
 
 const DetailsSingleArtist = () => {
 
@@ -91,16 +92,23 @@ const DetailsSingleArtist = () => {
     };
 
     // Delete Artist________________________
+    const [deleteLoading, setDeleteLoading] = useState(false)
     const deleteArtist = (id, imgKey) => {
+        setDeleteLoading(true)
         axios.delete(`http://localhost:5000/api/v1/artist/delete-artist/${id}?imgKey=${imgKey}`)
-          .then( res => {
+        .then( res => {
             if(res.status == 200){
-              toast.success('Deleted the Artist');
-              navigate('/artist')
+                setDeleteLoading(false)
+                toast.success('Deleted the Artist');
+                navigate('/artist')
             }
-          })
-          .catch(er => console.log(er));
-      }
+        })
+        .catch(er => console.log(er));
+    }
+
+    if(deleteLoading){
+        return <LoadingComponentsForPage/>
+    }
 
     return (
         <div className="md:flex md:h-full">
