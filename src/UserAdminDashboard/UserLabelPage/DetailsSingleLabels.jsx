@@ -15,7 +15,7 @@ const DetailsSingleLabels = () => {
     const [labels, setLabels] = useState();
     const [labelsFetchLoading, setLabelsFetchLoading] = useState(false);
     useEffect( () => {
-        setFetchLoading(true)
+        setLabelsFetchLoading(true)
         axios.get(`http://localhost:5000/api/v1/labels/single-labels/${id}`)
         .then(res => {
             setLabels(res.data.data[0]);

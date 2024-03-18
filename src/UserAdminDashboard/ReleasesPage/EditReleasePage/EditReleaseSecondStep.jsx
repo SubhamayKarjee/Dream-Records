@@ -268,8 +268,8 @@ const EditReleaseSecondStep = () => {
         const formData = new FormData();
         formData.append('file', file);
   
-        if(audioData.audioKey){
-            axios.delete(`http://localhost:5000/api/v1/release/delete-release-audio?audioKey=${audioData.audioKey}`)
+        if(audioData?.audioKey){
+            axios.delete(`http://localhost:5000/api/v1/release/delete-file?key=${audioData.audioKey}`)
             .then( res => {
             if(res.status == 200){
                 setAudioData('')
@@ -284,22 +284,22 @@ const EditReleaseSecondStep = () => {
                     event.target.value = ''
                     setUploadLoading(false);
                     setAudioData(res.data.data);
+                    toast.success('Successfully Audio Uploaded')
                 }
             })
             .catch(er => console.log(er))
     }
     
     const handleDeleteAudio = (e) => {
-        axios.delete(`http://localhost:5000/api/v1/release/delete-release-audio?audioKey=${e}`)
+        axios.delete(`http://localhost:5000/api/v1/release/delete-file?key=${e}`)
         .then( res => {
           if(res.status == 200){
             setAudioData('')
+            toast.success('Successfully Audio Deleted')
           }
         })
         .catch(er => console.log(er));
     }
-
-
 
     return (
         <div>

@@ -2,6 +2,7 @@ import { Image, Select } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { EditReleaseContext } from "./EditReleaseMainPage";
 
@@ -22,6 +23,16 @@ const EditReleaseFirstStep = () => {
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
+
+        if(uploadedImage?.key){
+            axios.delete(`http://localhost:5000/api/v1/release/delete-file?key=${uploadedImage.key}`)
+            .then( res => {
+            if(res.status == 200){
+                console.log('delete');
+            }
+            })
+            .catch(er => console.log(er));
+        }
   
         // Check image size ___________________________________
         if (file) {
@@ -33,8 +44,9 @@ const EditReleaseFirstStep = () => {
                     .then(res => {
                         if(res.status == 200){
                             setUploadedImageLink(res.data.data.imgUrl);
-                            setUploadedImage(res.data.data)
-                            setUploadLoading(false)
+                            setUploadedImage(res.data.data);
+                            setUploadLoading(false);
+                            toast.success('Successfully Image Uploded')
                         }
                     })
                     .catch(er => console.log(er))

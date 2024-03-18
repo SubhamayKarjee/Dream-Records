@@ -251,6 +251,16 @@ const SecondStepTrack = () => {
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
+
+        if(audioData?.audioKey){
+            axios.delete(`http://localhost:5000/api/v1/release/delete-file?key=${audioData.audioKey}`)
+            .then( res => {
+            if(res.status == 200){
+                setAudioData()
+            }
+            })
+            .catch(er => console.log(er));
+        }
     
         axios.post('http://localhost:5000/api/v1/release/upload-release-audio', formData)
             .then(res => {
@@ -265,7 +275,7 @@ const SecondStepTrack = () => {
     }
     // Delete Audio AWS____________________________________________________________
     const handleDeleteAudio = (e) => {
-        axios.delete(`http://localhost:5000/api/v1/release/delete-release-audio?audioKey=${e}`)
+        axios.delete(`http://localhost:5000/api/v1/release/delete-file?key=${e}`)
         .then( res => {
           if(res.status == 200){
             setAudioData('')

@@ -30,13 +30,23 @@ const CreateLabelsForm = () => {
         return;
       }
 
+      if(uploadedImage?.key){
+        axios.delete(`http://localhost:5000/api/v1/release/delete-file?key=${uploadedImage.key}`)
+        .then( res => {
+        if(res.status == 200){
+            setUploadedImage()
+        }
+        })
+        .catch(er => console.log(er));
+    }
+
       axios.post('http://localhost:5000/api/v1/labels/upload-labels-img', formData)
           .then(res => {
               if(res.status == 200){
                 setUploadedImageLink(res.data.data.imgUrl);
-                setUploadedImage(res.data.data)
-                setUploadLoading(false)
-                console.log(res.data);
+                setUploadedImage(res.data.data);
+                setUploadLoading(false);
+                toast.success('Successfully Label image Uploaded');
               }
           })
           .catch(er => console.log(er))
