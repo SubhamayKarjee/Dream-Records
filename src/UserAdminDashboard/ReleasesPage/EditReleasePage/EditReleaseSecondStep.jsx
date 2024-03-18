@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon, PlusIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Image, Modal, Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -116,17 +116,40 @@ const EditReleaseSecondStep = () => {
     const filterOption = (input, option) =>(option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
     // Handle Author Input Value______________________________________
-    const [authorValue, setAuthorValue] = useState();
-    const [authorsErr, setAuthorsErr] = useState();
+    const [authorFirstNameValue, setAuthorFirstNameValue] = useState();
+    const [authorLastNameValue, setAuthorLastNameValue] = useState();
+    const [authorFirstNameErr, setAuthorFirstNameErr] = useState();
+    const [authorLastNameErr, setAuthorLastNameErr] = useState();
+    const [authorsErr, setAuthorsErr] = useState('')
+
     const handleAuthorValue = () => {
+
+        setAuthorFirstNameErr('');
+        setAuthorLastNameErr('')
+        if(!authorFirstNameValue){
+            setAuthorFirstNameErr('First Name Required')
+            return;
+        }
+        if(!authorLastNameValue){
+            setAuthorLastNameErr('Last Name Required')
+            return;
+        }
         if(authors){
-            const addNew = [...authors, authorValue]
+            const name = `${authorFirstNameValue} ${authorLastNameValue}`;
+            const addNew = [...authors, name]
             setAuthors(addNew)
-            document.getElementById('author').value = ''
+            document.getElementById('authorFirstName').value = '';
+            document.getElementById('authorLastName').value = '';
+            setAuthorFirstNameValue('');
+            setAuthorLastNameValue('');
         }else{
-            const data = [authorValue]
+            const name = `${authorFirstNameValue} ${authorLastNameValue}`;
+            const data = [name]
             setAuthors(data)
-            document.getElementById('author').value = ''
+            document.getElementById('authorFirstName').value = '';
+            document.getElementById('authorLastName').value = '';
+            setAuthorFirstNameValue('');
+            setAuthorLastNameValue('');
         }
     }
     const handleDeleteAuthor = (name) => {
@@ -135,19 +158,43 @@ const EditReleaseSecondStep = () => {
     }
 
     // Handle Composer Input Value________________________________________
-    const [composerValue, setComposerValue] = useState();
+    const [composerFirstNameValue, setComposerFirstNameValue] = useState();
+    const [composerLastNameValue, setComposerLastNameValue] = useState();
+    const [composerFirstNameErr, setComposerFirstNameErr] = useState();
+    const [composerLastNameErr, setComposerLastNameErr] = useState();
     const [composerErr, setComposerErr] = useState();
+
     const handleComposerValue = () => {
+
+        setComposerFirstNameErr('');
+        setComposerLastNameErr('')
+        if(!composerFirstNameValue){
+            setComposerFirstNameErr('First Name Required')
+            return;
+        }
+        if(!composerLastNameValue){
+            setComposerLastNameErr('Last Name Required')
+            return;
+        }
         if(composer){
-            const addNew = [...composer, composerValue]
+            const name = `${composerFirstNameValue} ${composerLastNameValue}`;
+            const addNew = [...composer, name]
             setComposer(addNew)
-            document.getElementById('composer').value = ''
+            document.getElementById('composerFirstName').value = '';
+            document.getElementById('composerLastName').value = '';
+            setComposerFirstNameValue('');
+            setComposerLastNameValue('');
         }else{
-            const data = [composerValue]
+            const name = `${composerFirstNameValue} ${composerLastNameValue}`;
+            const data = [name]
             setComposer(data)
-            document.getElementById('composer').value = ''
+            document.getElementById('composerFirstName').value = '';
+            document.getElementById('composerLastName').value = '';
+            setComposerFirstNameValue('');
+            setComposerLastNameValue('');
         }
     }
+
     const handleDeleteComposer = (name) => {
         const removeName = composer.filter(item => item !== name);
         setComposer(removeName)
@@ -318,13 +365,14 @@ const EditReleaseSecondStep = () => {
                             </div>
                         )
                     }
-                    <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/></span>
+                    <span onClick={showModal} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/>Add Featuring</span>
                         <Modal title="Search/Select Featuring" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
                             <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
                             <div>
                                 <FeaturingComponent handleCancel={handleCancel}/>
                             </div>
                         </Modal>
+
                     {/* Author Input ___________________________________ */}
                     <div className="p-3 border rounded-md mt-3">
                         <p className="text-sm font-semibold text-slate-500 ms-2">Author <span className="text-red-500">*</span></p>
@@ -337,12 +385,19 @@ const EditReleaseSecondStep = () => {
                                 )
                             }
                         </div>
-                        <div className="flex">
-                            <div className="md:grow me-2">
-                                <input type="text" placeholder="Type Author Name" id="author" onChange={e => setAuthorValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
-                                {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
+                        <div className="md:flex">
+                            <div className="md:grow me-2 md:flex itmems-center gap-2">
+                                <div className="md:flex-1">
+                                    <input type="text" placeholder="First Name" id="authorFirstName" onChange={e => setAuthorFirstNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                    {authorFirstNameErr && <span className='text-red-600 pt-2 block text-sm'>{authorFirstNameErr}</span>}
+                                </div>
+                                <div className="md:flex-1">
+                                    <input type="text" placeholder="Last Name" id="authorLastName" onChange={e => setAuthorLastNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                    {authorLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{authorLastNameErr}</span>}
+                                </div>
                             </div>
-                            <span onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1">Add Composer</span>
+                            {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
+                            <span style={{width: '150px'}} onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1"><PlusIcon className="w-4 h-4 text-white font-bold"/> Add Author</span>
                         </div>
                     </div>
 
@@ -384,7 +439,7 @@ const EditReleaseSecondStep = () => {
                         )
                     }
 
-                    <span onClick={showModal1} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
+                    <span onClick={showModal1} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Artist</span>
                         <Modal title="Search/Select Artist" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
                             <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Artist</p>
                             <div>
@@ -415,7 +470,7 @@ const EditReleaseSecondStep = () => {
                             </div>
                         )
                     }
-                    <span onClick={showModal2} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
+                    <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Labels</span>
                         <Modal title="Search/Select Label" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
                             <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Label</p>
                             <div>
@@ -436,12 +491,19 @@ const EditReleaseSecondStep = () => {
                                 )
                             }
                         </div>
-                        <div className="flex">
-                            <div className="md:grow me-2">
-                                <input type="text" placeholder="Type Composer Name" id="composer" onChange={e => setComposerValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
-                                {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
+                        <div className="md:flex">
+                            <div className="md:grow me-2 md:flex itmems-center gap-2">
+                                <div className="md:flex-1">
+                                    <input type="text" placeholder="First Name" id="composerFirstName" onChange={e => setComposerFirstNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                    {composerFirstNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerFirstNameErr}</span>}
+                                </div>
+                                <div className="md:flex-1">
+                                    <input type="text" placeholder="Last Name" id="composerLastName" onChange={e => setComposerLastNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                    {composerLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerLastNameErr}</span>}
+                                </div>
                             </div>
-                            <span onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1">Add Composer</span>
+                            {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
+                            <span style={{width: '150px'}} onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1"><PlusIcon className="w-4 h-4 text-white font-bold"/> Add Composer</span>
                         </div>
                     </div>
 

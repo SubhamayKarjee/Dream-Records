@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon, PlusIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Image, Modal, Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -110,7 +110,6 @@ const SecondStepTrack = () => {
 
         setAuthorFirstNameErr('');
         setAuthorLastNameErr('')
-
         if(!authorFirstNameValue){
             setAuthorFirstNameErr('First Name Required')
             return;
@@ -119,7 +118,6 @@ const SecondStepTrack = () => {
             setAuthorLastNameErr('Last Name Required')
             return;
         }
-
         if(authors){
             const name = `${authorFirstNameValue} ${authorLastNameValue}`;
             const addNew = [...authors, name]
@@ -165,7 +163,6 @@ const SecondStepTrack = () => {
             setComposerLastNameErr('Last Name Required')
             return;
         }
-
         if(composer){
             const name = `${composerFirstNameValue} ${composerLastNameValue}`;
             const addNew = [...composer, name]
@@ -375,7 +372,7 @@ const SecondStepTrack = () => {
                                 </div>
                             </div>
                             {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
-                            <span style={{width: '150px'}} onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1">Add Author</span>
+                            <span style={{width: '150px'}} onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1"><PlusIcon className="w-4 h-4 text-white font-bold"/> Add Author</span>
                         </div>
                     </div>
 
@@ -473,7 +470,6 @@ const SecondStepTrack = () => {
                                 )
                             }
                         </div>
-
                         <div className="md:flex">
                             <div className="md:grow me-2 md:flex itmems-center gap-2">
                                 <div className="md:flex-1">
@@ -486,17 +482,8 @@ const SecondStepTrack = () => {
                                 </div>
                             </div>
                             {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
-                            <span style={{width: '150px'}} onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1">Add Composer</span>
+                            <span style={{width: '150px'}} onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1"><PlusIcon className="w-4 h-4 text-white font-bold"/> Add Composer</span>
                         </div>
-
-
-                        {/* <div className="flex">
-                            <div className="md:grow me-2">
-                                <input type="text" placeholder="Type Composer Name" id="composer" onChange={e => setComposerValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
-                                {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
-                            </div>
-                            <span onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1">Add Composer</span>
-                        </div> */}
                     </div>
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">ISRC</p>
