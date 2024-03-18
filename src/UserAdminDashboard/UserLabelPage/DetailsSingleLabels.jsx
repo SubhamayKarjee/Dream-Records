@@ -103,6 +103,7 @@ const DetailsSingleLabels = () => {
     return (
         <div className="md:flex md:h-full">
             <div className="h-full md:basis-3/4 overflow-y-auto md:border-r p-2">
+                
                 {
                     labelsFetchLoading && 
                     <Skeleton
@@ -113,15 +114,18 @@ const DetailsSingleLabels = () => {
                         }}
                     />
                 }
+                
                 {
-                    !labelsFetchLoading && labels?.status === 'Rejected' &&
-                    <div className="flex justify-end mt-2">
-                        <span onClick={() => deleteLabels(labels._id, labels.imgKey)} className="btn btn-xs bg-red-400 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center">Delete Label</span>
-                    </div>
+                    labels?.actionRequird && 
+                    <p className="p-2 bg-red-200 rounded-md text-sm font-semibold">{labels.actionRequird}</p>
                 }
                 {
                     labels && 
-                    <div className="md:flex justify-between my-3 rounded-md border">
+                    <div className="md:flex justify-between my-3 rounded-md border relative">
+                        {
+                            !labelsFetchLoading && labels?.status === 'Rejected' &&
+                            <span onClick={() => deleteLabels(labels._id, labels.imgKey)} className="absolute top-1 right-2 btn btn-xs bg-red-500 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center">Delete Label</span>
+                        }
                         <div className="flex p-2">
                             <Image
                             width={100}
@@ -135,17 +139,16 @@ const DetailsSingleLabels = () => {
                                 <p className="text-sm text-slate-400">ID: {labels._id}</p>
                                 {
                                     labels.status === 'Pending' &&
-                                    <span className="bg-yellow-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {labels.status}</span>
+                                    <span className="bg-yellow-500 my-1 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {labels.status}</span>
                                 }
                                 {
                                     labels.status === 'Approved' &&
-                                    <span className="bg-green-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><CheckBadgeIcon className="w-4 h-4 me-1"/> {labels.status}</span>
+                                    <span className="bg-green-500 my-1 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><CheckBadgeIcon className="w-4 h-4 me-1"/> {labels.status}</span>
                                 }
                                 {
                                     labels.status === 'Rejected' &&
-                                    <span className="bg-red-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {labels.status}</span>
+                                    <span className="bg-red-400 my-1 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {labels.status}</span>
                                 }
-
                             </div>
                         </div>
                         <div className="p-2">
@@ -177,7 +180,6 @@ const DetailsSingleLabels = () => {
                         <button onClick={() => handleStatus('All')} className="btn btn-sm btn-neutral m-1">All</button>
                         <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral m-1">Pending</button>
                         <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral m-1">Approved</button>
-                        <button onClick={() => handleStatus('Action Required')} className="btn btn-sm btn-neutral m-1">Action Required</button>
                         <button onClick={() => handleStatus('Rejected')} className="btn btn-sm btn-neutral m-1">Rejected</button>
                     </div>
                     {
