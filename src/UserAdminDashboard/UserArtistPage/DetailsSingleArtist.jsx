@@ -119,7 +119,7 @@ const DetailsSingleArtist = () => {
                     !totalReleaseCount &&
                     <div style={{display: `${hideDeleteButton}`}} className="mt-1 flex justify-end">
                         <div className="mt-1 flex justify-end">
-                            <button className="btn btn-sm flex items-center font-bold text-sm bg-red-400" onClick={() => deleteArtist(artist._id, artist.key)}>Delete Artist</button>
+                            <button className="btn btn-xs flex items-center font-bold text-sm bg-red-400" onClick={() => deleteArtist(artist._id, artist.key)}>Delete Artist</button>
                         </div>
                     </div>
                 }

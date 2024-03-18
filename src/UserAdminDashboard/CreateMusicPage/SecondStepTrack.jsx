@@ -100,47 +100,97 @@ const SecondStepTrack = () => {
     const filterOption = (input, option) =>(option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
     // Handle Author Input Value______________________________________
-    const [authorValue, setAuthorValue] = useState();
-    const [authorsErr, setAuthorsErr] = useState();
+    const [authorFirstNameValue, setAuthorFirstNameValue] = useState();
+    const [authorLastNameValue, setAuthorLastNameValue] = useState();
+    const [authorFirstNameErr, setAuthorFirstNameErr] = useState();
+    const [authorLastNameErr, setAuthorLastNameErr] = useState();
+    const [authorsErr, setAuthorsErr] = useState('')
+
     const handleAuthorValue = () => {
+
+        setAuthorFirstNameErr('');
+        setAuthorLastNameErr('')
+
+        if(!authorFirstNameValue){
+            setAuthorFirstNameErr('First Name Required')
+            return;
+        }
+        if(!authorLastNameValue){
+            setAuthorLastNameErr('Last Name Required')
+            return;
+        }
+
         if(authors){
-            const addNew = [...authors, authorValue]
+            const name = `${authorFirstNameValue} ${authorLastNameValue}`;
+            const addNew = [...authors, name]
             setAuthors(addNew)
-            document.getElementById('author').value = ''
+            document.getElementById('authorFirstName').value = '';
+            document.getElementById('authorLastName').value = '';
+            setAuthorFirstNameValue('');
+            setAuthorLastNameValue('');
         }else{
-            const data = [authorValue]
+            const name = `${authorFirstNameValue} ${authorLastNameValue}`;
+            const data = [name]
             setAuthors(data)
-            document.getElementById('author').value = ''
+            document.getElementById('authorFirstName').value = '';
+            document.getElementById('authorLastName').value = '';
+            setAuthorFirstNameValue('');
+            setAuthorLastNameValue('');
         }
     }
+
+
     const handleDeleteAuthor = (name) => {
         const removeName = authors.filter(item => item !== name);
+        console.log(removeName);
         setAuthors(removeName)
     }
 
     // Handle Composer Input Value________________________________________
-    const [composerValue, setComposerValue] = useState();
-    // const [composer, setComposer] = useState();
+    const [composerFirstNameValue, setComposerFirstNameValue] = useState();
+    const [composerLastNameValue, setComposerLastNameValue] = useState();
+    const [composerFirstNameErr, setComposerFirstNameErr] = useState();
+    const [composerLastNameErr, setComposerLastNameErr] = useState();
     const [composerErr, setComposerErr] = useState();
+
     const handleComposerValue = () => {
+
+        setComposerFirstNameErr('');
+        setComposerLastNameErr('')
+        if(!composerFirstNameValue){
+            setComposerFirstNameErr('First Name Required')
+            return;
+        }
+        if(!composerLastNameValue){
+            setComposerLastNameErr('Last Name Required')
+            return;
+        }
+
         if(composer){
-            const addNew = [...composer, composerValue]
+            const name = `${composerFirstNameValue} ${composerLastNameValue}`;
+            const addNew = [...composer, name]
             setComposer(addNew)
-            document.getElementById('composer').value = ''
+            document.getElementById('composerFirstName').value = '';
+            document.getElementById('composerLastName').value = '';
+            setComposerFirstNameValue('');
+            setComposerLastNameValue('');
         }else{
-            const data = [composerValue]
+            const name = `${composerFirstNameValue} ${composerLastNameValue}`;
+            const data = [name]
             setComposer(data)
-            document.getElementById('composer').value = ''
+            document.getElementById('composerFirstName').value = '';
+            document.getElementById('composerLastName').value = '';
+            setComposerFirstNameValue('');
+            setComposerLastNameValue('');
         }
     }
+
     const handleDeleteComposer = (name) => {
         const removeName = composer.filter(item => item !== name);
         setComposer(removeName)
     }
 
-
     // Handle Audio State _______________________________________
-    // const [audioData, setAudioData] = useState();
     const [errorMessageAudio, setErrorMessageAudio] = useState('');
 
     // FROM SUBMIT FUNCTION_______________________________________
@@ -271,34 +321,36 @@ const SecondStepTrack = () => {
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("albumName", { required: true})}/>
                     {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>} 
                     {/* Select Featuring ___________________________________ */}
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Featuring</p>
-                    {
-                        featuring && featuring.map(data => 
-                            <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                                <div className="flex items-center">
-                                        <Image
-                                        width={35}
-                                        height={35}
-                                        className="rounded-lg"
-                                        src={data.imgUrl}
-                                        fallback={fallbackImage}
-                                        />
-                                    <div className="ps-2">
-                                    <h2 className="font-bold text-sm">{data.artistName}</h2>
-                                    <p className="text-xs text-slate-400">ID: {data._id}</p>
+                    <div className="p-2 border rounded-md mt-3">
+                        <p className="text-sm font-semibold text-slate-500 ms-2">Featuring</p>
+                        {
+                            featuring && featuring.map(data => 
+                                <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                    <div className="flex items-center">
+                                            <Image
+                                            width={35}
+                                            height={35}
+                                            className="rounded-lg"
+                                            src={data.imgUrl}
+                                            fallback={fallbackImage}
+                                            />
+                                        <div className="ps-2">
+                                        <h2 className="font-bold text-sm">{data.artistName}</h2>
+                                        <p className="text-xs text-slate-400">ID: {data._id}</p>
+                                        </div>
                                     </div>
+                                    <span className="me-2" style={{cursor: 'pointer'}} onClick={() => removeFeaturing(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                                 </div>
-                                <span className="me-2" style={{cursor: 'pointer'}} onClick={() => removeFeaturing(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
-                            </div>
-                        )
-                    }
-                    <span onClick={showModal} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/></span>
-                        <Modal title="Search/Select Featuring" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
-                            <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
-                            <div>
-                                <FeaturingComponent handleCancel={handleCancel}/>
-                            </div>
-                        </Modal>
+                            )
+                        }
+                        <span onClick={showModal} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/>Add Featuring</span>
+                            <Modal title="Search/Select Featuring" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                                <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
+                                <div>
+                                    <FeaturingComponent handleCancel={handleCancel}/>
+                                </div>
+                            </Modal>
+                    </div>
                     {/* Author Input ___________________________________ */}
                     <div className="p-3 border rounded-md mt-3">
                         <p className="text-sm font-semibold text-slate-500 ms-2">Author <span className="text-red-500">*</span></p>
@@ -311,12 +363,19 @@ const SecondStepTrack = () => {
                                 )
                             }
                         </div>
-                        <div className="flex">
-                            <div className="md:grow me-2">
-                                <input type="text" placeholder="Type Author Name" id="author" onChange={e => setAuthorValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
-                                {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
+                        <div className="md:flex">
+                            <div className="md:grow me-2 md:flex itmems-center gap-2">
+                                <div className="md:flex-1">
+                                    <input type="text" placeholder="First Name" id="authorFirstName" onChange={e => setAuthorFirstNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                    {authorFirstNameErr && <span className='text-red-600 pt-2 block text-sm'>{authorFirstNameErr}</span>}
+                                </div>
+                                <div className="md:flex-1">
+                                    <input type="text" placeholder="Last Name" id="authorLastName" onChange={e => setAuthorLastNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                    {authorLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{authorLastNameErr}</span>}
+                                </div>
                             </div>
-                            <span onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1">Add Author</span>
+                            {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
+                            <span style={{width: '150px'}} onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1">Add Author</span>
                         </div>
                     </div>
 
@@ -326,6 +385,7 @@ const SecondStepTrack = () => {
                         showSearch
                         size="large"
                         className="w-full rounded-full"
+                        placeholder="Select Language"
                         defaultValue={lyricsLanguage}
                         optionFilterProp="children"
                         onChange={onChange}
@@ -335,67 +395,71 @@ const SecondStepTrack = () => {
                     {languageErr && <span className='text-red-600 pt-2 block'>{languageErr}</span>}
 
                     {/* Artist Select Option ______________________________________________________________ */}
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Artist <span className="text-red-500">*</span></p>
-                    {
-                        artist && artist.map(data => 
-                            <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                                <div className="flex items-center">
-                                        <Image
-                                        width={35}
-                                        height={35}
-                                        className="rounded-lg"
-                                        src={data.imgUrl}
-                                        fallback={fallbackImage}
-                                        />
-                                    <div className="ps-2">
-                                    <h2 className="font-bold text-sm">{data.artistName}</h2>
-                                    <p className="text-xs text-slate-400">ID: {data._id}</p>
+                    <div className="p-2 border rounded-md mt-3">
+                        <p className="text-sm font-semibold text-slate-500 ms-2">Artist <span className="text-red-500">*</span></p>
+                        {
+                            artist && artist.map(data => 
+                                <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                    <div className="flex items-center">
+                                            <Image
+                                            width={35}
+                                            height={35}
+                                            className="rounded-lg"
+                                            src={data.imgUrl}
+                                            fallback={fallbackImage}
+                                            />
+                                        <div className="ps-2">
+                                        <h2 className="font-bold text-sm">{data.artistName}</h2>
+                                        <p className="text-xs text-slate-400">ID: {data._id}</p>
+                                        </div>
                                     </div>
+                                    <span style={{cursor: 'pointer'}} onClick={() => removeArtist(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                                 </div>
-                                <span style={{cursor: 'pointer'}} onClick={() => removeArtist(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
-                            </div>
-                        )
-                    }
+                            )
+                        }
 
-                    <span onClick={showModal1} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
-                        <Modal title="Search/Select Artist" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
-                            <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Artist</p>
-                            <div>
-                                <ArtistList handleCancel={handleCancel1}/>
-                            </div>
-                        </Modal>
-                    {errorMessageArtist && <span className='text-red-600 pt-2 block'>{errorMessageArtist}</span>}
+                        <span onClick={showModal1} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Artist</span>
+                            <Modal title="Search/Select Artist" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
+                                <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Artist</p>
+                                <div>
+                                    <ArtistList handleCancel={handleCancel1}/>
+                                </div>
+                            </Modal>
+                        {errorMessageArtist && <span className='text-red-600 pt-2 block'>{errorMessageArtist}</span>}
+                    </div>
 
                     {/* Label Select Option ______________________________________________________________ */}
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label <span className="text-red-500">*</span></p>
-                    {
-                        labels && labels.map(data => 
-                            <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                                <div className="flex items-center">
-                                        <Image
-                                        width={35}
-                                        height={35}
-                                        className="rounded-lg"
-                                        src={data.imgUrl}
-                                        fallback={fallbackImage}
-                                        />
-                                    <div className="ps-2">
-                                    <h2 className="font-bold text-sm">{data.labelName}</h2>
-                                    <p className="text-xs text-slate-400">ID: {data._id}</p>
+                    <div className="p-2 border rounded-md mt-3">
+                        <p className="text-sm font-semibold text-slate-500 ms-2">Label <span className="text-red-500">*</span></p>
+                        {
+                            labels && labels.map(data => 
+                                <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                    <div className="flex items-center">
+                                            <Image
+                                            width={35}
+                                            height={35}
+                                            className="rounded-lg"
+                                            src={data.imgUrl}
+                                            fallback={fallbackImage}
+                                            />
+                                        <div className="ps-2">
+                                        <h2 className="font-bold text-sm">{data.labelName}</h2>
+                                        <p className="text-xs text-slate-400">ID: {data._id}</p>
+                                        </div>
                                     </div>
+                                    <span style={{cursor: 'pointer'}} onClick={() => removeLabels(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                                 </div>
-                                <span style={{cursor: 'pointer'}} onClick={() => removeLabels(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
-                            </div>
-                        )
-                    }
-                    <span onClick={showModal2} style={{cursor: 'pointer'}} className="block py-3 px-4 border rounded-full"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/></span>
-                        <Modal title="Search/Select Label" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
-                            <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Label</p>
-                            <div>
-                                <LabelsList handleCancel={handleCancel2}/>
-                            </div>
-                        </Modal>
-                    {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}
+                            )
+                        }
+                        <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Labels</span>
+                            <Modal title="Search/Select Label" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
+                                <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Label</p>
+                                <div>
+                                    <LabelsList handleCancel={handleCancel2}/>
+                                </div>
+                            </Modal>
+                        {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}
+                    </div>
 
                     {/* Add Composer Input ____________________ */}
                     <div className="p-3 border rounded-md mt-3">
@@ -409,13 +473,30 @@ const SecondStepTrack = () => {
                                 )
                             }
                         </div>
-                        <div className="flex">
+
+                        <div className="md:flex">
+                            <div className="md:grow me-2 md:flex itmems-center gap-2">
+                                <div className="md:flex-1">
+                                    <input type="text" placeholder="First Name" id="composerFirstName" onChange={e => setComposerFirstNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                    {composerFirstNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerFirstNameErr}</span>}
+                                </div>
+                                <div className="md:flex-1">
+                                    <input type="text" placeholder="Last Name" id="composerLastName" onChange={e => setComposerLastNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                    {composerLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerLastNameErr}</span>}
+                                </div>
+                            </div>
+                            {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
+                            <span style={{width: '150px'}} onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1">Add Composer</span>
+                        </div>
+
+
+                        {/* <div className="flex">
                             <div className="md:grow me-2">
                                 <input type="text" placeholder="Type Composer Name" id="composer" onChange={e => setComposerValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
                                 {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
                             </div>
                             <span onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1">Add Composer</span>
-                        </div>
+                        </div> */}
                     </div>
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">ISRC</p>

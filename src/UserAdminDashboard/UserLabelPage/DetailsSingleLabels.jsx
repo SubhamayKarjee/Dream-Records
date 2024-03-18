@@ -95,7 +95,7 @@ const DetailsSingleLabels = () => {
         <div className="md:flex md:h-full">
             <div className="h-full md:basis-3/4 overflow-y-auto md:border-r p-2">
                 {
-                    labelsFetchLoading == true && 
+                    labelsFetchLoading && 
                     <Skeleton
                         className="py-4"
                         avatar
