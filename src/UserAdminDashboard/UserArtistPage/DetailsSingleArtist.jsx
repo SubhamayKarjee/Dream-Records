@@ -11,6 +11,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ClipboardDocumentListIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
+import UpdateArtistForm from "./UpdateArtistForm";
+import { createContext } from 'react';
+
+export const UpdateRefetch = createContext();
 
 const DetailsSingleArtist = () => {
 
@@ -19,6 +23,12 @@ const DetailsSingleArtist = () => {
 
     const [artist, setArtist] = useState();
     const [artistFetchLoading, setArtistFetchLoading] = useState(false);
+    const [artistDataRefatch, setArtistDataRefatch] = useState(1)
+
+    const contextValue = {
+        artistDataRefatch,
+        setArtistDataRefatch
+    }
     useEffect( () => {
         setArtistFetchLoading(true)
         axios.get(`http://localhost:5000/api/v1/artist/single-artist/${id}`)
@@ -28,7 +38,7 @@ const DetailsSingleArtist = () => {
             setArtistFetchLoading(false)
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [artistDataRefatch])
 
     // Paginatin and Search State __________________________________________________
     const [releaseStatus, setReleaseStatus] = useState('All')
@@ -109,6 +119,7 @@ const DetailsSingleArtist = () => {
         return <LoadingComponentsForPage/>
     }
 
+
     return (
         <div className="md:flex md:h-full">
             <div className="h-full md:basis-3/4 overflow-y-auto md:border-r p-2">
@@ -160,7 +171,7 @@ const DetailsSingleArtist = () => {
                         <div className="p-2">
                                 {
                                     totalReleaseCount > 0 &&
-                                    <button  className="btn btn-xs btn-info flex text-slate-700 px-3 items-center font-bold text-sm mb-2 w-full md:w-[120px]"><PencilSquareIcon className="w-4 h-4 text-slate-700"/>Edit</button>
+                                    <button onClick={()=>document.getElementById('artistUpdate').showModal()} className="btn btn-xs btn-info flex text-slate-700 px-3 items-center font-bold text-sm mb-2 w-full md:w-[120px]"><PencilSquareIcon className="w-4 h-4 text-slate-700"/>Edit</button>
 
                                 }
                                 {
@@ -168,10 +179,21 @@ const DetailsSingleArtist = () => {
                                     <div style={{display: `${hideDeleteButton}`}}>
                                         
                                         <button  className="btn btn-xs bg-red-400 flex text-slate-700 px-3 items-center font-bold text-sm w-full md:w-[120px] mb-2" onClick={() => deleteArtist(artist._id, artist.key)}>Delete Artist</button>
-                                        <button  className="btn btn-xs btn-info flex text-slate-700 px-3 items-center font-bold text-sm mb-2 w-full md:w-[120px]"><PencilSquareIcon className="w-4 h-4 text-slate-700"/>Edit</button>
+                                        <button onClick={()=>document.getElementById('artistUpdate').showModal()}  className="btn btn-xs btn-info flex text-slate-700 px-3 items-center font-bold text-sm mb-2 w-full md:w-[120px]"><PencilSquareIcon className="w-4 h-4 text-slate-700"/>Edit</button>
                                     </div>
 
                                 }
+                                <dialog id="artistUpdate" className="modal">
+                                    <div className="modal-box">
+                                        <form method="dialog">
+                                        {/* if there is a button in form, it will close the modal */}
+                                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                        </form>
+                                        <UpdateRefetch.Provider value={contextValue}>
+                                            <UpdateArtistForm artist={artist} imgUrl={artist?.imgUrl} imgKey={artist?.key } artistDataRefatch={artistDataRefatch} forArtistDataRefatch={setArtistDataRefatch}/>
+                                        </UpdateRefetch.Provider>
+                                    </div>
+                                </dialog>
                         </div>
                     </div>
                 }

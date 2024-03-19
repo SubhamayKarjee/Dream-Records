@@ -86,80 +86,77 @@ const CreateArtistForm = () => {
     return (
         <>
             {/* Modal Close Right top Side Icon ___________________________________________________ */}
-                        <form onClick={handleModalCondition} method="dialog">
-                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                        </form>
-                        {
-                          modalBoxChange == false && 
-                          <div>
-                              {/* Modal Body and Form for create Artist______________________________________________ */}
-                              <div>
-                                  <h4 className="font-bold text-slate-500">Create New Artist</h4>
-                                  <div className="border rounded-lg p-2">
-
-                                  <p className="my-1 text-sm font-semibold text-slate-500">Upload Artist Image</p>
-                                  <Image
-                                        width={105}
-                                        height={105}
-                                        className="rounded-lg"
-                                        src={uploadedImageLink}
-                                        fallback={fallbackImage}
-                                        preview={false}
-                                        alt="artist-image"
-                                    />
-                                  <div className="flex items-center ">
-                                      {
-                                          upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
-                                      }
-                                      <input type="file" accept="image/*" id="fileInput" name='image' onChange={e => artistImageUpload(e.target.files)} />
-                                  </div>
-                                  {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
-
-                              </div>
-                                  {/* _________________________________ */}
-                                  <form onSubmit={handleSubmit(onSubmit)}>
-                                      <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Artist Name <span className="text-red-500">*</span></p> 
-                                      <input type="text" className="input rounded-full input-bordered w-full" {...register("artistName", { required: true})}/>
-                                      {errors.artistName && <span className='text-red-600 pt-2 block'>Artist Name Required</span>}
-
-                                      <div className="border rounded-lg p-2 my-2">
-                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Instagram ID</p> 
-                                        <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("instagramId")}/>
-                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Spotify ID</p> 
-                                        <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("spotifyId")}/>
-                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Apple ID</p> 
-                                        <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("appleId")}/>
-                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Facebook URL</p> 
-                                        <label className="input input-bordered rounded-full input-sm flex items-center gap-2">
-                                          <GlobeAmericasIcon className="w-4 h-4 text-slate-500"/>
-                                          <input type="text" className="grow" {...register("facebook")}/>
-                                        </label>
-                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Youtube ID</p> 
-                                        <p><span className="text-xs px-3 bg-slate-300 rounded-md py-1 mb-1">(YouTube OAC Request)</span></p>
-                                        <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("youtube")}/>
-                                      </div>
-
-                                      <div className="flex items-center ">
-                                        {
-                                            submitLoading && <span className="block loading loading-spinner loading-md me-2"></span>
-                                        }
-                                        <input type="submit" className="btn btn-sm rounded-full btn-neutral" value="Create" />
-                                      </div>
-                                  </form>
-                              </div>
+            <form onClick={handleModalCondition} method="dialog">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            {
+              modalBoxChange == false && 
+              <div>
+                  {/* Modal Body and Form for create Artist______________________________________________ */}
+                  <div>
+                      <h4 className="font-bold text-slate-500">Create New Artist</h4>
+                      <div className="border rounded-lg p-2">
+                      <p className="my-1 text-sm font-semibold text-slate-500">Upload Artist Image</p>
+                      <Image
+                            width={105}
+                            height={105}
+                            className="rounded-lg"
+                            src={uploadedImageLink}
+                            fallback={fallbackImage}
+                            preview={false}
+                            alt="artist-image"
+                        />
+                      <div className="flex items-center ">
+                          {
+                              upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                          }
+                          <input type="file" accept="image/*" id="fileInput" name='image' onChange={e => artistImageUpload(e.target.files)} />
+                      </div>
+                      {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
+                  </div>
+                      {/* _________________________________ */}
+                      <form onSubmit={handleSubmit(onSubmit)}>
+                          <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Artist Name <span className="text-red-500">*</span></p> 
+                          <input type="text" className="input rounded-full input-bordered w-full" {...register("artistName", { required: true})}/>
+                          {errors.artistName && <span className='text-red-600 pt-2 block'>Artist Name Required</span>}
+                          <div className="border rounded-lg p-2 my-2">
+                            <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Instagram ID</p> 
+                            <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("instagramId")}/>
+                            <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Spotify ID</p> 
+                            <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("spotifyId")}/>
+                            <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Apple ID</p> 
+                            <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("appleId")}/>
+                            <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Facebook URL</p> 
+                            <label className="input input-bordered rounded-full input-sm flex items-center gap-2">
+                              <GlobeAmericasIcon className="w-4 h-4 text-slate-500"/>
+                              <input type="text" className="grow" {...register("facebook")}/>
+                            </label>
+                            <div className="flex items-center mt-3">
+                            <p className="text-sm font-semibold text-slate-500 mx-2">Youtube ID</p> <span className="text-xs">(YouTube OAC Request)</span>
                           </div>
-                        }
-                        {
-                          modalBoxChange == true && 
-                          <div>
-                              <Result
-                                status="success"
-                                title="Successfully Created Artist"
-                                subTitle="Please Back to Artist Page and See your Artist"
-                                extra={[]}
-                              />
+                            <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("youtube")}/>
                           </div>
-                        }
+                          <div className="flex items-center ">
+                            {
+                                submitLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                            }
+                            <input type="submit" className="btn btn-sm rounded-full btn-neutral" value="Create" />
+                          </div>
+                      </form>
+                  </div>
+              </div>
+            }
+            {
+              modalBoxChange == true && 
+              <div>
+                  <Result
+                    status="success"
+                    title="Successfully Created Artist"
+                    subTitle="Please Back to Artist Page and See your Artist"
+                    extra={[]}
+                  />
+              </div>
+            }
         </>
     );
 };
