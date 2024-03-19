@@ -6,10 +6,9 @@ import appleImg from '../../assets/social-icon/apple.png';
 import instagramImg from '../../assets/social-icon/instagram.png';
 import spotifyImg from '../../assets/social-icon/spotify.png';
 import facebookImg from '../../assets/social-icon/facebook.png';
-import youtubeImg from '../../assets/social-icon/youtube.png';
 import ReleaseCardComponent from "../ReleasesPage/ReleaseCardComponent/ReleaseCardComponent";
 import { useNavigate, useParams } from "react-router-dom";
-import { ClipboardDocumentListIcon } from "@heroicons/react/24/solid";
+import { ClipboardDocumentListIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
 
@@ -124,14 +123,6 @@ const DetailsSingleArtist = () => {
                     />
                 }
                 {
-                    !totalReleaseCount &&
-                    <div style={{display: `${hideDeleteButton}`}} className="mt-1 flex justify-end">
-                        <div className="mt-1 flex justify-end">
-                            <button className="btn btn-xs flex items-center font-bold text-sm bg-red-400" onClick={() => deleteArtist(artist._id, artist.key)}>Delete Artist</button>
-                        </div>
-                    </div>
-                }
-                {
                     artist && 
                     <div className="md:flex justify-between my-3 rounded-md border">
                         <div className="flex p-2">
@@ -145,6 +136,7 @@ const DetailsSingleArtist = () => {
                             <div className="ps-2">
                                 <h2 className="font-bold">{artist.artistName}</h2>
                                 <p className="text-sm text-slate-400">ID: {artist._id}</p>
+                                <p className="font-bold text-sm text-slate-600">Youtube ID : <span>{artist?.youtubeChannelId}</span></p>
                                 <div className="flex items-center gap-3 my-2">
                                     {
                                         artist?.appleId &&
@@ -162,18 +154,24 @@ const DetailsSingleArtist = () => {
                                         artist?.facebook &&
                                         <a target='_blank' href={artist.facebook}><img src={facebookImg} alt={facebookImg} /></a>
                                     }
-                                    {
-                                        artist?.youtube &&
-                                        <a target='_blank' href={artist.youtube}><img src={youtubeImg} alt={youtubeImg} /></a>
-                                    }
                                 </div>
                             </div>
                         </div>
                         <div className="p-2">
-                            <div className="bg-slate-100 rounded-md p-3">
-                                <p className="font-bold text-sm text-slate-600">Youtube Channel ID : <span>{artist?.youtubeChannelId}</span></p>
-                                <p className="font-bold text-sm text-slate-600">youtube OAC : <span>{artist?.youtubeOac}</span></p>
-                            </div>
+                                {
+                                    totalReleaseCount > 0 &&
+                                    <button  className="btn btn-xs btn-info flex text-slate-700 px-3 items-center font-bold text-sm mb-2 w-full md:w-[120px]"><PencilSquareIcon className="w-4 h-4 text-slate-700"/>Edit</button>
+
+                                }
+                                {
+                                    totalReleaseCount < 1 &&
+                                    <div style={{display: `${hideDeleteButton}`}}>
+                                        
+                                        <button  className="btn btn-xs bg-red-400 flex text-slate-700 px-3 items-center font-bold text-sm w-full md:w-[120px] mb-2" onClick={() => deleteArtist(artist._id, artist.key)}>Delete Artist</button>
+                                        <button  className="btn btn-xs btn-info flex text-slate-700 px-3 items-center font-bold text-sm mb-2 w-full md:w-[120px]"><PencilSquareIcon className="w-4 h-4 text-slate-700"/>Edit</button>
+                                    </div>
+
+                                }
                         </div>
                     </div>
                 }
@@ -191,7 +189,6 @@ const DetailsSingleArtist = () => {
                         <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral m-1">Pending</button>
                         <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral m-1">Approved</button>
                         <button onClick={() => handleStatus('Action Required')} className="btn btn-sm btn-neutral m-1">Action Required</button>
-                        <button onClick={() => handleStatus('Rejected')} className="btn btn-sm btn-neutral m-1">Rejected</button>
                     </div>
                     {
                         fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>

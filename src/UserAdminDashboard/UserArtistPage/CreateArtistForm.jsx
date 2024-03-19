@@ -134,12 +134,9 @@ const CreateArtistForm = () => {
                                           <GlobeAmericasIcon className="w-4 h-4 text-slate-500"/>
                                           <input type="text" className="grow" {...register("facebook")}/>
                                         </label>
-                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Youtube</p> 
+                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Youtube ID</p> 
+                                        <p><span className="text-xs px-3 bg-slate-300 rounded-md py-1 mb-1">(YouTube OAC Request)</span></p>
                                         <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("youtube")}/>
-                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Channel ID</p> 
-                                        <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("youtubeChannelId")}/>
-                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">(YouTube OAC Request)</p> 
-                                        <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("youtubeOac")}/>
                                       </div>
 
                                       <div className="flex items-center ">

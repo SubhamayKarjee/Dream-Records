@@ -1,8 +1,8 @@
-import { BellIcon, CheckBadgeIcon, ChevronLeftIcon, ClockIcon, ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { BellIcon, CheckBadgeIcon, ClockIcon, ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import CreateLabelsForm from "./CreateLabelsForm";
 import fallbackImage from "../../assets/fallbackImage.jpg"
@@ -83,9 +83,6 @@ const UserLabelsPage = () => {
     return (
         <div className="md:flex md:h-full">
             <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2'>
-                <div className="mb-4">
-                    <button><Link className="px-2 py-1 font-semibold text-sm text-slate-500 flex items-center inline bg-slate-200 rounded-md" to={'/'}><ChevronLeftIcon className="w-4 h-4 me-1 font-bold"/>Back</Link></button>
-                </div>
                 {/* Search and Create Labels Section ______________________________________________________________________________ */}
                 <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg">
                     <div className="my-2">

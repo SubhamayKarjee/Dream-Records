@@ -1,8 +1,8 @@
-import { BellIcon, ChevronLeftIcon, ExclamationCircleIcon } from "@heroicons/react/24/solid";
+import { BellIcon, ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import CreateArtistForm from "./CreateArtistForm";
 import './UserArtistPage.css'
@@ -81,11 +81,8 @@ const UserArtistPage = () => {
     return (
         <div className="md:flex md:h-full">
             <div className='h-full md:basis-3/4 overflow-y-auto md:border-r'>
-                  <div className="mb-3 mt-2">
-                      <button><Link className="px-2 py-1 font-semibold text-sm text-slate-500 flex items-center inline bg-slate-200 rounded-md" to={'/'}><ChevronLeftIcon className="w-4 h-4 me-1 font-bold"/>Back</Link></button>
-                  </div>
                   {/* Search and Create Artist Section ______________________________________________________________________________ */}
-                  <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg">
+                  <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg mt-2">
                       <div className="my-2">
                           <input type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm rounded-full input-bordered w-full"/>
                       </div>
