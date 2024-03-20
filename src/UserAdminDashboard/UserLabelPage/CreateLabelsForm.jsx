@@ -19,6 +19,7 @@ const CreateLabelsForm = () => {
     const [uploadedImageLink, setUploadedImageLink] = useState('');
 
     const labelsImageUpload = (e) => {
+      setErrorMessage('');
       setUploadLoading(true)
       const file = e[0];
       const formData = new FormData();

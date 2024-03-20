@@ -19,6 +19,7 @@ const CreateArtistForm = () => {
     const [uploadedImageLink, setUploadedImageLink] = useState('');
 
     const artistImageUpload = (e) => {
+      setErrorMessage('');
       setUploadLoading(true)
       const file = e[0];
       const formData = new FormData();

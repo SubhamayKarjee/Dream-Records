@@ -1,20 +1,25 @@
-import { CheckBadgeIcon, ClipboardDocumentListIcon, ClockIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { ChatBubbleBottomCenterTextIcon, CheckBadgeIcon, ClockIcon, PencilSquareIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { Image, Skeleton } from "antd";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import fallbackImage from "../../assets/fallbackImage.jpg"
 import ReleaseCardComponent from "../ReleasesPage/ReleaseCardComponent/ReleaseCardComponent";
 import youtubeImg from '../../assets/social-icon/youtube.png';
 import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
+import UpdateLabels from "./UpdateLabels";
+import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 
 const DetailsSingleLabels = () => {
 
     const navigate = useNavigate('')
+    const { refatchLabelsData } = useContext(AuthContext);
 
     const {id} = useParams();
 
+    const [imgUrl, setImgUrl] = useState('');
+    const [imgKey, setImgKey] = useState('');
     const [labels, setLabels] = useState();
     const [labelsFetchLoading, setLabelsFetchLoading] = useState(false);
     useEffect( () => {
@@ -24,9 +29,12 @@ const DetailsSingleLabels = () => {
             setLabels(res.data.data[0]);
             console.log(res.data.data[0]);
             setLabelsFetchLoading(false)
+            setImgUrl(res.data.data[0]?.imgUrl);
+            setImgKey(res.data.data[0]?.key);
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [refatchLabelsData])
+
 
     // Paginatin and Search State __________________________________________________
     const [releaseStatus, setReleaseStatus] = useState('All')
@@ -114,19 +122,32 @@ const DetailsSingleLabels = () => {
                         }}
                     />
                 }
-                
-                {
-                    labels?.actionRequird && 
-                    <p className="p-2 bg-red-200 rounded-md text-sm font-semibold">{labels.actionRequird}</p>
-                }
                 {
                     labels && 
                     <div className="md:flex justify-between my-3 rounded-md border relative">
                         {
                             !labelsFetchLoading && labels?.status === 'Rejected' &&
-                            <span onClick={() => deleteLabels(labels._id, labels.imgKey)} className="absolute top-1 right-2 btn btn-xs bg-red-500 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center">Delete Label</span>
+                            <div className="absolute top-1 right-2 flex items-center gap-2 bg-white py-1 px-2 rounded-md">
+                                <PencilSquareIcon onClick={()=>document.getElementById('labelsUpdate').showModal()} style={{cursor: 'pointer'}} className="w-5 h-5 text-salate-500"/>
+                                <TrashIcon style={{cursor: 'pointer'}} onClick={() => deleteLabels(labels._id, labels.imgKey)} className="w-5 h-5 text-red-500"/>
+                            </div>
                         }
-                        <div className="flex p-2">
+                        {
+                            !labelsFetchLoading && labels?.status === 'Approved' &&
+                            <div className="absolute top-1 right-2 flex items-center gap-2 bg-white py-1 px-2 rounded-md">
+                                <PencilSquareIcon onClick={()=>document.getElementById('labelsUpdate').showModal()} style={{cursor: 'pointer'}} className="w-5 h-5 text-salate-500"/>
+                            </div>
+                        }
+                            <dialog id="labelsUpdate" className="modal">
+                                <div className="modal-box">
+                                    <form method="dialog">
+                                    {/* if there is a button in form, it will close the modal */}
+                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                    </form>
+                                    <UpdateLabels imgUrl={imgUrl} imgKey={imgKey} labels={labels}/>
+                                </div>
+                            </dialog>
+                        <div className="md:flex-1 flex p-2">
                             <Image
                             width={100}
                             height={100}
@@ -151,7 +172,7 @@ const DetailsSingleLabels = () => {
                                 }
                             </div>
                         </div>
-                        <div className="p-2">
+                        <div className="md:flex-1 p-2">
                             <p className="text-sm font-bold border-b text-slate-500">Labels Other Detais</p>
                             {
                                 labels?.youtubeChannelLink && <a href={labels.youtubeChannelLink} target="_blank" className="flex items-center">
@@ -164,7 +185,6 @@ const DetailsSingleLabels = () => {
                                 <p className="text-sm text-slate-600">{labels.description}</p>
                             }
                         </div>
-                        
                     </div>
                 }
                 {/* Release Card _______________________________________________________________ */}
@@ -180,7 +200,7 @@ const DetailsSingleLabels = () => {
                         <button onClick={() => handleStatus('All')} className="btn btn-sm btn-neutral m-1">All</button>
                         <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral m-1">Pending</button>
                         <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral m-1">Approved</button>
-                        <button onClick={() => handleStatus('Rejected')} className="btn btn-sm btn-neutral m-1">Rejected</button>
+                        <button onClick={() => handleStatus('Action Required')} className="btn btn-sm btn-neutral mx-1">Action Required</button>
                     </div>
                     {
                         fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
@@ -190,10 +210,22 @@ const DetailsSingleLabels = () => {
             </div>
 
             {/* Sideber Div  _______________________________*/}
-            <div className="md:basis-1/4">
+            <div className="md:basis-1/4 p-2">
                 <div className='p-2 border-b'>
-                    <h4 className='flex items-center font-bold text-slate-500'> <ClipboardDocumentListIcon className='w-5 h-5 me-2 text-slate-500'/>Notification</h4>
+                    <h4 className='flex items-center font-bold text-slate-500'> <ChatBubbleBottomCenterTextIcon className='w-5 h-5 me-2 text-slate-500'/>Notice</h4>
                 </div>
+                {
+                    labels?.actionRequird && 
+                    <div className="p-2 bg-red-200 rounded-md">
+                        <p className="text-sm font-semibold">{labels.actionRequird}</p>
+                    </div>
+                }
+                {
+                    !labels?.actionRequird && 
+                    <div className="p-2 bg-slate-200 rounded-md">
+                        <p className="px-2 py-4 text-slate-600 rounded-md font-semibold">No Notice Yet</p>
+                    </div>
+                }
             </div>
         </div>
     );

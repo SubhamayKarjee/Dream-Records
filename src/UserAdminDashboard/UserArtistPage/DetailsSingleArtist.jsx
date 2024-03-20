@@ -8,7 +8,7 @@ import spotifyImg from '../../assets/social-icon/spotify.png';
 import facebookImg from '../../assets/social-icon/facebook.png';
 import ReleaseCardComponent from "../ReleasesPage/ReleaseCardComponent/ReleaseCardComponent";
 import { useNavigate, useParams } from "react-router-dom";
-import { ClipboardDocumentListIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
+import { ChatBubbleBottomCenterTextIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
 import UpdateArtistForm from "./UpdateArtistForm";
@@ -34,7 +34,6 @@ const DetailsSingleArtist = () => {
         axios.get(`http://localhost:5000/api/v1/artist/single-artist/${id}`)
         .then(res => {
             setArtist(res.data.data[0]);
-            console.log(res.data.data[0]);
             setArtistFetchLoading(false)
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -222,7 +221,7 @@ const DetailsSingleArtist = () => {
             {/* Sideber Div  _______________________________*/}
             <div className="md:basis-1/4">
                 <div className='p-2 border-b'>
-                    <h4 className='flex items-center font-bold text-slate-500'> <ClipboardDocumentListIcon className='w-5 h-5 me-2 text-slate-500'/>Notification</h4>
+                    <h4 className='flex items-center font-bold text-slate-500'> <ChatBubbleBottomCenterTextIcon className='w-5 h-5 me-2 text-slate-500'/>Notice</h4>
                 </div>
             </div>
         </div>
