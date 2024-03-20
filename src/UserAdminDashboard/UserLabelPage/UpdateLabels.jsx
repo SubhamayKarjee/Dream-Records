@@ -18,7 +18,7 @@ const UpdateLabels = ({labels, imgUrl, imgKey}) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [upLoadLoading, setUploadLoading] = useState(false);
     const [submitLoading, setSubmitLoading] = useState(false);
-    const [uploadedImage, setUploadedImage] = useState({imgUrl, key});
+    const [uploadedImage, setUploadedImage] = useState();
     const [uploadedImageLink, setUploadedImageLink] = useState(imgUrl);
 
     const labelsImageUpload = (e) => {
@@ -38,7 +38,7 @@ const UpdateLabels = ({labels, imgUrl, imgKey}) => {
             axios.delete(`http://localhost:5000/api/v1/release/delete-file?key=${uploadedImage.key}`)
             .then( res => {
             if(res.status == 200){
-                setUploadedImage()
+                setUploadedImage({})
             }
             })
             .catch(er => console.log(er));
@@ -49,6 +49,7 @@ const UpdateLabels = ({labels, imgUrl, imgKey}) => {
             if(res.status == 200){
               setUploadedImageLink(res.data.data.imgUrl);
               setUploadedImage(res.data.data);
+              console.log(res.data.data);
               setUploadLoading(false);
               toast.success('Successfully Label image Uploaded');
             }
@@ -61,12 +62,19 @@ const UpdateLabels = ({labels, imgUrl, imgKey}) => {
         defaultValues: labels
     });
 
-    const onSubmit = async (data) => {
+    const onSubmit = (data) => {
         setSubmitLoading(true)
         const status = 'Pending';
         const actionRequird = '';
-        const formData = {...data, ...uploadedImage, status, actionRequird};
-        console.log(formData);
+        if(!uploadedImage){
+            setUploadedImage({imgUrl, key})
+        }
+        let formData;
+        if(labels.status === 'Approved'){
+            formData = {...data, ...uploadedImage};
+        }else{
+            formData = {...data, ...uploadedImage, status, actionRequird};
+        }
         axios.put(`http://localhost:5000/api/v1/labels/update-labels/${labels._id}`, formData)
         .then(res => {
             if(res.status == 200){

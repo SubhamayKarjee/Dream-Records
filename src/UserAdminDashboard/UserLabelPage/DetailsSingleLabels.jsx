@@ -27,7 +27,6 @@ const DetailsSingleLabels = () => {
         axios.get(`http://localhost:5000/api/v1/labels/single-labels/${id}`)
         .then(res => {
             setLabels(res.data.data[0]);
-            console.log(res.data.data[0]);
             setLabelsFetchLoading(false)
             setImgUrl(res.data.data[0]?.imgUrl);
             setImgKey(res.data.data[0]?.key);
