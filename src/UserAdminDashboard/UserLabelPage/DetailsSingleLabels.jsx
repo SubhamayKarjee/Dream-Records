@@ -39,7 +39,7 @@ const DetailsSingleLabels = () => {
     const [releaseStatus, setReleaseStatus] = useState('All')
     const [totalItems, setTotalItems] = useState();
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage] = useState(9);
+    const [itemPerPage, setItemPerPage] = useState(9);
     const [searchText, setSearchText] = useState('');
 
     const [releaseData, setReleaseData] = useState();
@@ -47,6 +47,7 @@ const DetailsSingleLabels = () => {
 
     // Get Release List ______________________________________________________________
     useEffect(() => {
+        setItemPerPage(9)
         // Calculate Pagination and Fetch__________________________________________________
         setFetchLoading(true)
         axios.get(`http://localhost:5000/api/v1/release/labels/${id}?page=${currentPage}&limit=${itemPerPage}&status=${releaseStatus}`)
@@ -59,7 +60,7 @@ const DetailsSingleLabels = () => {
             })
             .catch(er => console.log(er));
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [currentPage, releaseStatus]);
+    }, [currentPage, releaseStatus]);
 
     const handleSearch = (e) => {
         setSearchText(e)
@@ -72,9 +73,10 @@ const DetailsSingleLabels = () => {
 
     const handlePageChange = (page) => {
         setCurrentPage(page)
-      };
+    };
 
     const handleKeyPress = (event) => {
+        setItemPerPage(50)
         if (event.key === 'Enter') {
           setFetchLoading(true);
           axios.get(`http://localhost:5000/api/v1/release/labels/search/${id}?status=${releaseStatus}&search=${searchText}`)
@@ -204,7 +206,7 @@ const DetailsSingleLabels = () => {
                     {
                         fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
-                    <ReleaseCardComponent releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={currentPage} handlePageChange={handlePageChange}/>
+                    <ReleaseCardComponent itemPerPage={itemPerPage} releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={currentPage} handlePageChange={handlePageChange}/>
                 </main>
             </div>
 

@@ -17,7 +17,7 @@ const ReleasesPage = () => {
     const [releaseStatus, setReleaseStatus] = useState('All')
     const [totalItems, setTotalItems] = useState();
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage] = useState(9);
+    const [itemPerPage, setItemPerPage] = useState(9);
     const [searchText, setSearchText] = useState('');
 
     const [releaseData, setReleaseData] = useState();
@@ -25,6 +25,7 @@ const ReleasesPage = () => {
 
     // Get Release List ______________________________________________________________
     useEffect(() => {
+        setItemPerPage(9)
         // Calculate Pagination and Fetch__________________________________________________
         setFetchLoading(true)
         axios.get(`http://localhost:5000/api/v1/release/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${releaseStatus}`)
@@ -53,6 +54,7 @@ const ReleasesPage = () => {
       };
 
     const handleKeyPress = (event) => {
+        setItemPerPage(50)
         if (event.key === 'Enter') {
           setFetchLoading(true);
           axios.get(`http://localhost:5000/api/v1/release/search/${userNameIdRoll[1]}?status=${releaseStatus}&search=${searchText}`)
@@ -101,7 +103,7 @@ const ReleasesPage = () => {
                     {
                         fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
-                    <ReleaseCardComponent releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={currentPage} handlePageChange={handlePageChange}/>
+                    <ReleaseCardComponent releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={currentPage} itemPerPage={itemPerPage} handlePageChange={handlePageChange}/>
                 </main>
 
             </div>
