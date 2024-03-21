@@ -4,7 +4,6 @@ import BlogComponents from '../BlogPostPage/BlogComponents';
 import { AuthContext } from '../UserAdminHomePage/UserAdminHomePage';
 import UserArtistComponentForHomePage from '../UserArtistPage/UserArtistComponentForHomePage';
 import LatestApprovedRelease from './LatestApprovedRelease';
-import PendingMusicComponent from './PendingMusicComponent';
 import './UserHomePage.css';
 
 const UserHomePage = () => {
@@ -32,7 +31,6 @@ const UserHomePage = () => {
                 </div>
                 <UserArtistComponentForHomePage/>
                 <LatestApprovedRelease/>
-                <PendingMusicComponent/>
                 {/* Blog Post Component Start ________________________________________________________________ */}
                 <div className="flex items-center py-3">
                     <DocumentMagnifyingGlassIcon className="h-5 w-5 text-slate-500 me-2"/>
