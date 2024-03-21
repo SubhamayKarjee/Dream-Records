@@ -16,13 +16,14 @@ const UserArtistPage = () => {
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage] = useState(10);
+    const [itemPerPage, setItemPerPage] = useState(10);
 
     const [searchText, setSearchText] = useState('');
 
     const [artistData, setArtistData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false)
     useEffect( () => {
+      setItemPerPage(10)
       setFetchLoading(true)
       axios.get(`http://localhost:5000/api/v1/artist/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}`)
           .then( res => {
@@ -34,23 +35,23 @@ const UserArtistPage = () => {
           })
           .catch(er => console.log(er));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[refatchArtistData])
+    },[refatchArtistData, currentPage])
 
-    // Pagination ______________________________________________________________
-    useEffect(() => {
-      // Calculate Pagination __________________________________________________
-      setFetchLoading(true)
-      axios.get(`http://localhost:5000/api/v1/artist/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}`)
-          .then( res => {
-            if(res.status == 200){
-              setFetchLoading(false);
-              setTotalItems(res.data.dataCount);
-              setArtistData(res.data.data);
-            }
-          })
-          .catch(er => console.log(er));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage]);
+    // // Pagination ______________________________________________________________
+    // useEffect(() => {
+    //   // Calculate Pagination __________________________________________________
+    //   setFetchLoading(true)
+    //   axios.get(`http://localhost:5000/api/v1/artist/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}`)
+    //       .then( res => {
+    //         if(res.status == 200){
+    //           setFetchLoading(false);
+    //           setTotalItems(res.data.dataCount);
+    //           setArtistData(res.data.data);
+    //         }
+    //       })
+    //       .catch(er => console.log(er));
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [currentPage]);
 
 
     const handlePageChange = (page) => {
@@ -62,6 +63,7 @@ const UserArtistPage = () => {
     }
 
     const handleKeyPress = (event) => {
+      setItemPerPage(50)
       if (event.key === 'Enter') {
         console.log(currentPage);
         setFetchLoading(true);
@@ -146,6 +148,7 @@ const UserArtistPage = () => {
                         <Pagination 
                           defaultCurrent={currentPage} 
                           total={totalItems}
+                          pageSize={itemPerPage}
                           onChange={handlePageChange}
                         /> 
                     </div>

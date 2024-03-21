@@ -18,13 +18,14 @@ const UserLabelsPage = () => {
     const [lebelStatus, setLabelStatus] = useState('All')
     const [totalItems, setTotalItems] = useState();
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage] = useState(10);
+    const [itemPerPage, setItemPerPage] = useState(10);
     const [searchText, setSearchText] = useState('');
 
     const [labelsData, setLabelsData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false);
 
     useEffect( () => {
+      setItemPerPage(10)
       setFetchLoading(true)
       axios.get(`http://localhost:5000/api/v1/labels/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
           .then( res => {
@@ -53,6 +54,7 @@ const UserLabelsPage = () => {
     }
 
     const handleKeyPress = (event) => {
+        setItemPerPage(50)
         if (event.key === 'Enter') {          
           setFetchLoading(true);
           axios.get(`http://localhost:5000/api/v1/labels/search/${userNameIdRoll[1]}?status=${lebelStatus}&search=${searchText}`)
@@ -66,19 +68,6 @@ const UserLabelsPage = () => {
             .catch(er => console.log(er));
         }
     };
-
-    // const deleteLabels = (id, imgKey) => {
-    //     setFetchLoading(true)
-    //     axios.delete(`http://localhost:5000/api/v1/labels/delete-labels/${id}?imgKey=${imgKey}`)
-    //       .then( res => {
-    //         if(res.status == 200){
-    //           const refetch = refatchLabelsData + 1
-    //           setFetchLoading(false)
-    //           setRefatchLabelsData(refetch)
-    //         }
-    //       })
-    //       .catch(er => console.log(er));
-    //   }
 
 
     return (
@@ -171,7 +160,8 @@ const UserLabelsPage = () => {
                     {
                         totalItems > 1 && !fetchLoading && <div className="flex justify-center items-center my-4">
                             <Pagination 
-                            defaultCurrent={currentPage} 
+                            defaultCurrent={currentPage}
+                            pageSize={itemPerPage} 
                             total={totalItems}
                             onChange={handlePageChange}
                             /> 

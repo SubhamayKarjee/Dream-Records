@@ -14,13 +14,14 @@ const AdminLabelsPage = () => {
     const [lebelStatus, setLabelStatus] = useState('All')
     const [totalItems, setTotalItems] = useState();
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage] = useState(10);
+    const [itemPerPage, setItemPerPage] = useState(10);
     const [searchText, setSearchText] = useState('');
 
     const [labelsData, setLabelsData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false);
 
     useEffect( () => {
+        setItemPerPage(10)
         setFetchLoading(true)
         axios.get(`http://localhost:5000/admin/api/v1/labels?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
             .then( res => {
@@ -48,6 +49,7 @@ const AdminLabelsPage = () => {
     }
   
     const handleKeyPress = (event) => {
+      setItemPerPage(50)
       if (event.key === 'Enter') {          
         setFetchLoading(true);
         axios.get(`http://localhost:5000/admin/api/v1/labels/search?status=${lebelStatus}&search=${searchText}`)
@@ -147,6 +149,7 @@ const AdminLabelsPage = () => {
                             <Pagination 
                             defaultCurrent={currentPage} 
                             total={totalItems}
+                            pageSize={itemPerPage}
                             onChange={handlePageChange}
                             /> 
                       </div>
