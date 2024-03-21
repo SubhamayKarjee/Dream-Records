@@ -1,4 +1,4 @@
-import { CheckBadgeIcon, ClockIcon } from "@heroicons/react/24/solid";
+import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { Empty, Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 import './AdminRleaseCardComponent.css'
@@ -30,28 +30,21 @@ const AdminReleaseCardComponent = ({releaseData, totalItems, fetchLoading, curre
                                 {
                                     d.status === 'Pending' &&
                                     <div className="flex items-center p-1 music_status bg-[#ffae00] rounded-md shadow">
-                                        <CheckBadgeIcon className="h-3 w-3 text-white me-1"/>
+                                        <ClockIcon className="h-3 w-3 text-white me-1"/>
                                         <p className="text-xs font-semibold text-white">{d.status}</p>
                                     </div>
                                 }
                                 {
                                     d.status === 'Approved' &&
-                                    <div className="flex items-center p-1 music_status bg-[#3dff0d] rounded-md shadow">
+                                    <div className="flex items-center p-1 music_status bg-[#00c90d] rounded-md shadow">
                                         <CheckBadgeIcon className="h-3 w-3 text-white me-1"/>
                                         <p className="text-xs font-semibold text-white">{d.status}</p>
                                     </div>
                                 }
                                 {
                                     d.status === 'Action Required' &&
-                                    <div className="flex items-center p-1 music_status bg-[#00eaff] rounded-md shadow">
-                                        <ClockIcon className="h-3 w-3 text-white me-1"/>
-                                        <p className="text-xs font-semibold text-white">{d.status}</p>
-                                    </div>
-                                }
-                                {
-                                    d.status === 'Rejected' &&
-                                    <div className="flex items-center p-1 music_status bg-[#ff2a00] rounded-md shadow">
-                                        <ClockIcon className="h-3 w-3 text-white me-1"/>
+                                    <div className="flex items-center p-1 music_status bg-red-700 rounded-md shadow">
+                                        <ExclamationTriangleIcon className="h-3 w-3 text-white me-1"/>
                                         <p className="text-xs font-semibold text-white">{d.status}</p>
                                     </div>
                                 }

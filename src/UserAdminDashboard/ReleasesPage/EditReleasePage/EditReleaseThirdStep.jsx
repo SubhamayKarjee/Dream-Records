@@ -2,7 +2,6 @@ import { DatePicker, Spin } from "antd";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
 import { EditReleaseContext } from "./EditReleaseMainPage";
 
 
@@ -10,7 +9,6 @@ const EditReleaseThirdStep = () => {
 
     const [releaseFormDataError, setReleaseFormDataError] = useState('')
     const { releaseFormData, releaseId, setReleaseFormData } = useContext(EditReleaseContext);
-    const { userNameIdRoll } = useContext(AuthContext);
 
     const navigate = useNavigate()
 
@@ -40,8 +38,7 @@ const EditReleaseThirdStep = () => {
             return;
         }
         const status = 'Pending'
-        const masterUserId = userNameIdRoll[1]
-        const data = {...releaseFormData, releaseDate, status, masterUserId }
+        const data = {...releaseFormData, releaseDate, status }
         axios.put(`http://localhost:5000/api/v1/release/update-release/${releaseId}`, data)
             .then(res => {
                 if(res.status == 200){
