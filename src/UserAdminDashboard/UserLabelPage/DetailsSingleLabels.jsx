@@ -216,15 +216,15 @@ const DetailsSingleLabels = () => {
                     <h4 className='flex items-center font-bold text-slate-500'> <ChatBubbleBottomCenterTextIcon className='w-5 h-5 me-2 text-slate-500'/>Notice</h4>
                 </div>
                 {
-                    labels?.actionRequird && 
+                    labels?.actionRequired && 
                     <div className="p-2 bg-red-200 rounded-md">
-                        <p className="text-sm font-semibold">{labels.actionRequird}</p>
+                        <p className="text-sm font-semibold">{labels.actionRequired}</p>
                     </div>
                 }
                 {
-                    !labels?.actionRequird && 
+                    !labels?.actionRequired && 
                     <div className="p-2 bg-slate-200 rounded-md">
-                        <p className="px-2 py-4 text-slate-600 rounded-md font-semibold">No Notice Yet</p>
+                        <p className="px-2 py-4 text-slate-600 rounded-md">No Notice Yet</p>
                     </div>
                 }
             </div>

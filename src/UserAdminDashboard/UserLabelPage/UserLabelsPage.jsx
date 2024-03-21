@@ -1,4 +1,4 @@
-import { BellIcon, CheckBadgeIcon, ClockIcon, ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { BellAlertIcon, CheckBadgeIcon, ClockIcon, ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -176,7 +176,7 @@ const UserLabelsPage = () => {
             {/* Blog Post Div  _______________________________*/}
             <div className="md:basis-1/4 overflow-y-auto">
                 <div className='p-2'>
-                    <h4 className='flex items-center font-bold text-md text-slate-500'> <BellIcon className='w-5 h-5 me-2 text-slate-500'/> Notification</h4>
+                    <h4 className='flex items-center font-bold text-md text-slate-500'> <BellAlertIcon className='w-5 h-5 me-2 text-slate-500'/> Notification</h4>
                 </div>
                 <ActionRequiredLabels/>
             </div>

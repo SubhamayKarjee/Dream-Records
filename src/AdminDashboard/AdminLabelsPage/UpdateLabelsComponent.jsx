@@ -57,13 +57,13 @@ const UpdateLabelsComponent = () => {
         setIsModalOpen(false);
     };
 
-    const [actionRequird, setActionRequird] = useState();
+    const [actionRequired, setActionRequired] = useState();
     const [reasonFieldErr, setReasonFieldErr] = useState();
     const handleRejectedStatus = () =>{
         setReasonFieldErr('')
-        if(actionRequird){
+        if(actionRequired){
             setUpdateLoading(true)
-            const data = {...labels, status: labelsStatus, actionRequird };
+            const data = {...labels, status: labelsStatus, actionRequired };
             axios.put(`http://localhost:5000/admin/api/v1/labels/update/${id}`, data)
             .then(res => {
                 if(res.status == 200){
@@ -254,7 +254,7 @@ const UpdateLabelsComponent = () => {
                                     onCancel={handleCancel}
                                     footer={[]}
                                     >
-                                        <textarea onChange={(e) => setActionRequird(e.target.value)} className="textarea textarea-bordered w-full h-24" placeholder="Reason"></textarea>
+                                        <textarea onChange={(e) => setActionRequired(e.target.value)} className="textarea textarea-bordered w-full h-24" placeholder="Reason"></textarea>
                                         {
                                             reasonFieldErr && <p className="text-red-500">{reasonFieldErr}</p>
                                         }

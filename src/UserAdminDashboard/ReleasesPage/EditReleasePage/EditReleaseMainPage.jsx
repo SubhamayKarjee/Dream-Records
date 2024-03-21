@@ -3,6 +3,7 @@ import { Result } from "antd";
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
+import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
 
 export const EditReleaseContext = createContext();
 
@@ -27,11 +28,13 @@ const EditReleaseMainPage = () => {
         setUploadedImage,
         releaseId
     }
-
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
+        setLoading(true)
         axios.get(`http://localhost:5000/api/v1/release/single/${id}`)
             .then( res => {
               if(res.status == 200){
+                setLoading(false)
                 setPreReleaseData(res.data.data[0]);
                 setUploadedImageLink(res.data.data[0].imgUrl)
                 const imgUrl = res.data.data[0].imgUrl;
@@ -43,7 +46,9 @@ const EditReleaseMainPage = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-
+    if(loading){
+        return <LoadingComponentsInsidePage/>
+    }
     
 
     return (

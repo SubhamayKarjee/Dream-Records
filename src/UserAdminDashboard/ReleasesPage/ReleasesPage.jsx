@@ -1,10 +1,11 @@
 // import React from 'react';
 
-import { ClipboardDocumentListIcon, ExclamationCircleIcon } from "@heroicons/react/24/solid";
+import { BellAlertIcon, ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
+import ActionRequiredRelease from "./ActionRequiredRelease";
 import ReleaseCardComponent from "./ReleaseCardComponent/ReleaseCardComponent";
 
 const ReleasesPage = () => {
@@ -110,10 +111,11 @@ const ReleasesPage = () => {
 
 
             {/* Sideber Div  _______________________________*/}
-            <div className="md:basis-1/4">
-                <div className='p-2 border-b'>
-                    <h4 className='flex items-center font-bold text-slate-500'> <ClipboardDocumentListIcon className='w-5 h-5 me-2 text-slate-500'/>Notification</h4>
+            <div className="md:basis-1/4 overflow-y-auto">
+                <div className='p-2'>
+                    <h4 className='flex items-center font-bold text-md text-slate-500'> <BellAlertIcon className='w-5 h-5 me-2 text-slate-500'/> Notification</h4>
                 </div>
+                <ActionRequiredRelease/>
             </div>
         </div>
     );
