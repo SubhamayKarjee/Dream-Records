@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import CreateLabelsForm from "./CreateLabelsForm";
 import fallbackImage from "../../assets/fallbackImage.jpg"
+import ActionRequiredLabels from "./ActionRequiredLabels";
 
 const UserLabelsPage = () => {
 
@@ -174,9 +175,10 @@ const UserLabelsPage = () => {
 
             {/* Blog Post Div  _______________________________*/}
             <div className="md:basis-1/4">
-                <div className='p-2 border-b'>
-                    <h4 className='flex items-center font-bold text-lg text-slate-500'> <BellIcon className='w-6 h-6 me-2 text-slate-500'/> Notification</h4>
+                <div className='p-2'>
+                    <h4 className='flex items-center font-bold text-md text-slate-500'> <BellIcon className='w-5 h-5 me-2 text-slate-500'/> Notification</h4>
                 </div>
+                <ActionRequiredLabels/>
             </div>
         </div>
     );
