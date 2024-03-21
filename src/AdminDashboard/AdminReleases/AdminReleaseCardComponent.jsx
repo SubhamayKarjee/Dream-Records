@@ -8,7 +8,7 @@ const AdminReleaseCardComponent = ({releaseData, totalItems, fetchLoading, curre
 
     const navigate = useNavigate('')
     const handleNavigate = (e) => {
-        const url = `/releases/${e}`;
+        const url = `/admin-dashboard/release/${e}`;
         navigate(url)
     }
 

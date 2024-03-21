@@ -29,6 +29,7 @@ import DetailsSingleArtist from './UserAdminDashboard/UserArtistPage/DetailsSing
 
 
 
+
 // Commont Routes import_______________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
 const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
@@ -37,6 +38,7 @@ const SignUp = React.lazy(() => import('./Authentication/SignUp/SignUp'));
 const DashBoardForAdmin = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/DashBoardForAdmin'));
 const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/CreateUserForm'));
 const AdminReleasePage = React.lazy(() => import('./AdminDashboard/AdminReleases/AdminReleasePage'));
+const AdminSingleReleasePage = React.lazy(() => import('./AdminDashboard/AdminReleases/AdminSingleReleasePage'));
 const AdminLabelsPage = React.lazy(() => import('./AdminDashboard/AdminLabelsPage/AdminLabelsPage'));
 const UpdateLabelsComponent = React.lazy(() => import('./AdminDashboard/AdminLabelsPage/UpdateLabelsComponent'));
 
@@ -98,6 +100,10 @@ const router = createBrowserRouter([
       {
         path: '/admin-dashboard/release',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminReleasePage/></Suspense>
+      },
+      {
+        path: '/admin-dashboard/release/:id',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminSingleReleasePage/></Suspense>
       },
       {
         path: '/admin-dashboard/labels',

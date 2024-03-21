@@ -1,13 +1,14 @@
-import { ChatBubbleBottomCenterTextIcon, CheckBadgeIcon, ClockIcon, PencilIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import { Image } from "antd";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
+import { Image, Modal, Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
-import fallbackImage from "../../../assets/fallbackImage.jpg"
+import { useEffect, useState } from "react";
+import axios from "axios";
+import fallbackImage from "../../assets/fallbackImage.jpg"
+import { ArrowPathIcon, CheckBadgeIcon, ClockIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 
-const SingleReleasePage = () => {
+const AdminSingleReleasePage = () => {
 
     const {id} = useParams();
     const navigate = useNavigate()
@@ -28,20 +29,37 @@ const SingleReleasePage = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleNavigate = (id) => {
-        const link = `/releases/edit/${id}`
-        navigate(link)
-    }
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+
+    const [releaseStatus, setReleaseStatus] = useState(data?.status);
+
+    const { register, handleSubmit, formState: { errors }} = useForm();
+    const onSubmit = (data) => {
+        console.log(releaseStatus);
+        console.log(data);
+    };
+
 
     const [deleteLoading, setDeleteLoading] = useState(false)
     const handleDeleteRelease = () => {
         setDeleteLoading(true)
-        axios.delete(`http://localhost:5000/api/v1/release//delete-release/${id}?imgKey=${data.key}`)
+        axios.delete(`http://localhost:5000/api/v1/release//delete-release/${id}?imgKey=${data.key}&audioKey=${data.audioKey}`)
         .then(res => {
             if(res.status == 200){
                 setDeleteLoading(false)
                 toast.success('Release Deleted')
-                navigate('/releases')
+                navigate('/admin-dashboard/release')
             }
         })
     }
@@ -50,9 +68,10 @@ const SingleReleasePage = () => {
     }
 
 
+
     return (
-        <div className="md:flex md:h-full">
-            <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2'>
+        <div className="">
+            <div className='p-2'>
                 {
                   loading ? <LoadingComponentsInsidePage/> :
                   <div>
@@ -86,17 +105,34 @@ const SingleReleasePage = () => {
                                         data?.status === 'Rejected' &&
                                         <span className="bg-red-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data?.status}</span>
                                     }
-                                    {
-                                        data?.status === 'Action Required' && 
-                                        <div>
-                                            <span className="bg-red-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data?.status}</span>
-                                            <div style={{cursor: 'pointer'}} onClick={() => handleNavigate(data?._id)} className="flex items-center p-1 mt-2 bg-cyan-500 rounded-md shadow">
-                                                <PencilIcon className="h-3 w-3 text-white me-1"/>
-                                                <p className="text-xs font-semibold text-white">Edit</p>
-                                            </div>
-                                            <span onClick={handleDeleteRelease} className="bg-red-400 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><TrashIcon className="w-4 h-4 me-1"/> Delete</span>
-                                        </div>
-                                    }
+                                    <span onClick={showModal} style={{cursor: 'pointer'}} className="bg-cyan-400 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><ArrowPathIcon className="w-4 h-4 me-1"/> Update Status</span>
+                                    <Modal title="Update Release Status!" footer={[]} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                                        <form onSubmit={handleSubmit(onSubmit)}>
+                                            <Select
+                                                defaultValue={data?.status}
+                                                style={{ width: '100%' }}
+                                                onChange={(value) => setReleaseStatus(value)}
+                                                options={[
+                                                    { value: 'Pending', label: 'Pending' },
+                                                    { value: 'Approved', label: 'Approved' },
+                                                    { value: 'Action Required', label: 'Action Required' },
+                                                ]}
+                                            />
+                                            {
+                                                releaseStatus === 'Action Required' &&
+                                                <div>
+                                                    <textarea {...register("actionReuired", { required: true})} className="textarea mt-2 textarea-bordered w-full" placeholder="Release Action Required Details"></textarea>
+                                                    {errors.actionReuired && <span className='text-red-600 block'>You have to Explain</span>}
+                                                </div>
+                                            }
+                                            <input type="submit" className="btn btn-sm btn-neutral mt-3" value="Update Status" />
+                                        </form>
+                                    </Modal>
+                                    
+
+
+
+                                    <span style={{cursor: 'pointer'}} onClick={handleDeleteRelease} className="bg-red-400 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><TrashIcon className="w-4 h-4 me-1"/> Delete</span>
                                 </div>
                             </div>
                         </div>                                 
@@ -235,16 +271,8 @@ const SingleReleasePage = () => {
                     </div>
                 }
             </div>
-
-
-            {/* Sideber Div  _______________________________*/}
-            <div className="md:basis-1/4">
-                <div className='p-2 border-b'>
-                    <h4 className='flex items-center font-bold text-slate-500'> <ChatBubbleBottomCenterTextIcon className='w-5 h-5 me-2 text-slate-500'/>Notice</h4>
-                </div>
-            </div>
         </div>
     );
 };
 
-export default SingleReleasePage;
+export default AdminSingleReleasePage;
