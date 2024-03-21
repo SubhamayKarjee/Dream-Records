@@ -64,7 +64,7 @@ const DashBoardForAdmin = () => {
                                     <UserIcon className="h-7 w-7 pe-2" />
                                     All User
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/'}>
+                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/release'}>
                                     <AdjustmentsHorizontalIcon className="h-7 w-7 pe-2" />
                                     Release
                                 </Link>
@@ -140,7 +140,7 @@ const DashBoardForAdmin = () => {
                                                 <UserIcon className="h-7 w-7 pe-2" />
                                                 All User
                                             </Link>
-                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/'}>
+                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/release'}>
                                                 <AdjustmentsHorizontalIcon className="h-7 w-7 pe-2" />
                                                 Release
                                             </Link>

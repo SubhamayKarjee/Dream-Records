@@ -36,6 +36,7 @@ const SignUp = React.lazy(() => import('./Authentication/SignUp/SignUp'));
 // Admin Routes import__________________________________________________________________
 const DashBoardForAdmin = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/DashBoardForAdmin'));
 const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/CreateUserForm'));
+const AdminReleasePage = React.lazy(() => import('./AdminDashboard/AdminReleases/AdminReleasePage'));
 const AdminLabelsPage = React.lazy(() => import('./AdminDashboard/AdminLabelsPage/AdminLabelsPage'));
 const UpdateLabelsComponent = React.lazy(() => import('./AdminDashboard/AdminLabelsPage/UpdateLabelsComponent'));
 
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: '/admin-dashboard/all-user',
         element: <div>All User</div>
+      },
+      {
+        path: '/admin-dashboard/release',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminReleasePage/></Suspense>
       },
       {
         path: '/admin-dashboard/labels',
