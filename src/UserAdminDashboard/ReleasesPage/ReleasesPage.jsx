@@ -38,8 +38,8 @@ const ReleasesPage = () => {
               }
             })
             .catch(er => console.log(er));
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [currentPage, releaseStatus]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage, releaseStatus]);
 
     const handleSearch = (e) => {
         setSearchText(e)

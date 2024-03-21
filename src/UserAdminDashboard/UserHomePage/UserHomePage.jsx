@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import BlogComponents from '../BlogPostPage/BlogComponents';
 import { AuthContext } from '../UserAdminHomePage/UserAdminHomePage';
 import UserArtistComponentForHomePage from '../UserArtistPage/UserArtistComponentForHomePage';
+import LatestApprovedRelease from './LatestApprovedRelease';
 import PendingMusicComponent from './PendingMusicComponent';
 import './UserHomePage.css';
 
@@ -30,6 +31,7 @@ const UserHomePage = () => {
                     </div>
                 </div>
                 <UserArtistComponentForHomePage/>
+                <LatestApprovedRelease/>
                 <PendingMusicComponent/>
                 {/* Blog Post Component Start ________________________________________________________________ */}
                 <div className="flex items-center py-3">
