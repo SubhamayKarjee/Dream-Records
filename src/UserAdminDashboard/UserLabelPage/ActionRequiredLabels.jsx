@@ -28,7 +28,9 @@ const ActionRequiredLabels = () => {
                     <div className="m-2" key={l._id}>
                         <Link to={`/labels/${l._id}`}>
                             <div className="p-2 bg-slate-200 rounded-md relative">
-                                <img className="rounded-lg" style={{width: '100%', height: 'auto'}} src={l.imgUrl} alt={l.imgUrl} />
+                                <div style={{width: '100%', height: '100px'}} className='overflow-hidden rounded-md'>
+                                    <img className="" src={l.imgUrl} alt={l.imgUrl} />
+                                </div>
                                 <p className="bg-red-500 text-sm rounded-md px-2 font-bold absolute top-4 right-4">{l.status}</p>
                             </div>
                         </Link>
