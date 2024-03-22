@@ -1,8 +1,9 @@
-import { Image, Skeleton } from "antd";
+import { Image, Skeleton, Tabs } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import AdminLabelsPage from "../AdminLabelsPage/AdminLabelsPage";
 
 const SingleUserPage = () => {
     const {id} = useParams();
@@ -18,6 +19,27 @@ const SingleUserPage = () => {
             setUserLoading(false)
         })
     },[])
+
+    const onChange = (key) => {
+        console.log(key);
+    };
+    const items = [
+        {
+          key: '1',
+          label: 'Artist',
+          children: 'Artist Content',
+        },
+        {
+          key: '2',
+          label: 'Labels',
+          children: <AdminLabelsPage/>,
+        },
+        {
+          key: '3',
+          label: 'Payments',
+          children: 'Payments Content',
+        },
+    ];
 
 
     return (
@@ -43,7 +65,7 @@ const SingleUserPage = () => {
                         />
                     </div>
                     <div>
-                        <h2 className="font-bold text-slate-600">{userData?.nick_name ? userData.nick_name : userData?.first_name}</h2>
+                        <h2 className="font-bold text-slate-600">{userData?.nick_name ? userData.nick_name : userData?.name}</h2>
                         <p className="text-sm text-slate-700">Address: {userData?.address}</p>
                         <p className="text-sm text-slate-700">ID: {userData?._id}</p>
                         <p className="text-sm text-slate-700 font-semibold pt-2">{userData?.email}</p>
@@ -52,6 +74,9 @@ const SingleUserPage = () => {
                     </div>
                 </div>
             }
+            <main>
+                <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+            </main>
         </div>
     );
 };

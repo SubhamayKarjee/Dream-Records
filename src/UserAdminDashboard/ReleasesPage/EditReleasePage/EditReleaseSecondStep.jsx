@@ -208,8 +208,8 @@ const EditReleaseSecondStep = () => {
     // eslint-disable-next-line no-unused-vars
     const { register, handleSubmit, formState: { errors }} = useForm({
         defaultValues: {
-            albumName: preReleaseData?.albumName,
-            ISRC: preReleaseData?.ISRC,
+            albumName: releaseFormData?.albumName ? releaseFormData.albumName : preReleaseData?.albumName,
+            ISRC: releaseFormData?.ISRC ? releaseFormData.ISRC : preReleaseData?.ISRC,
         }
     });
     const onSubmit = (data) => {
@@ -326,7 +326,7 @@ const EditReleaseSecondStep = () => {
                             </div>
                     }
                     <div className="my-1">
-                        <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2 py-1 rounded-md">Audio Formate Only Allow WEV</span>
+                        <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2 py-1 rounded-md">Audio Format Only Allow WAV</span>
                     </div>
                     <div className="flex items-center ">
                         {

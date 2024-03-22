@@ -37,8 +37,9 @@ const EditReleaseThirdStep = () => {
             setLoading(false)
             return;
         }
+        const actionRequired = '';
         const status = 'Pending'
-        const data = {...releaseFormData, releaseDate, status }
+        const data = {...releaseFormData, releaseDate, status, actionRequired }
         axios.put(`http://localhost:5000/api/v1/release/update-release/${releaseId}`, data)
             .then(res => {
                 if(res.status == 200){

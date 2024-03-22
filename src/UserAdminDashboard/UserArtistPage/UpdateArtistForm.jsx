@@ -132,7 +132,7 @@ const UpdateArtistForm = ({artist, imgUrl, imgKey}) => {
                             <input type="text" className="grow" {...register("facebook")}/>
                             </label>
                             <div className="flex items-center mt-3">
-                            <p className="text-sm font-semibold text-slate-500 mx-2">Youtube ID</p> <span className="text-xs">(YouTube OAC Request)</span>
+                            <p className="text-sm font-semibold text-slate-500 mx-2">Youtube Channel ID</p> <span className="text-xs">(YouTube OAC Request)</span>
                             </div>
                             <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("youtube")}/>
                         </div>

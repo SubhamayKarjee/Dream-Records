@@ -129,7 +129,6 @@ const DetailsSingleLabels = () => {
                         {
                             !labelsFetchLoading && labels?.status === 'Rejected' &&
                             <div className="absolute top-1 right-2 flex items-center gap-2 bg-white py-1 px-2 rounded-md">
-                                <PencilSquareIcon onClick={()=>document.getElementById('labelsUpdate').showModal()} style={{cursor: 'pointer'}} className="w-5 h-5 text-salate-500"/>
                                 <TrashIcon style={{cursor: 'pointer'}} onClick={() => deleteLabels(labels._id, labels.imgKey)} className="w-5 h-5 text-red-500"/>
                             </div>
                         }
