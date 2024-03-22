@@ -52,11 +52,27 @@ const AdminReleasePage = () => {
         setCurrentPage(page)
     };
 
-    const handleKeyPress = (event) => {
+    const searchByTitle = (event) => {
         setItemPerPage(50)
         if (event.key === 'Enter') {
           setFetchLoading(true);
-          axios.get(`http://localhost:5000/api/v1/release/labels/search?status=${releaseStatus}&search=${searchText}`)
+          axios.get(`http://localhost:5000/admin/api/v1/release/search-by-title?status=${releaseStatus}&search=${searchText}`)
+            .then( res => {
+              if(res.status == 200){
+                setFetchLoading(false);
+                setTotalItems(res.data.dataCount);
+                setReleaseData(res.data.data);
+              }
+            })
+            .catch(er => console.log(er));
+        }
+    };
+
+    const searchByUpc = (event) => {
+        setItemPerPage(50)
+        if (event.key === 'Enter') {
+          setFetchLoading(true);
+          axios.get(`http://localhost:5000/admin/api/v1/release/search-by-upc?status=${releaseStatus}&search=${searchText}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -75,11 +91,11 @@ const AdminReleasePage = () => {
                 {/* Search and Create Release Section ______________________________________________________________________________ */}
                 <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg">
                     <div className="my-2">
-                        <input type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm rounded-full input-bordered w-full"/>
+                        <input type="text" onKeyPress={searchByTitle} onChange={e => handleSearch(e.target.value)} placeholder="Type Title & Enter to Search" className="input input-sm rounded-full input-bordered w-full"/>
                     </div>
-                    {/* <div className="my-2">
-                        <button onClick={()=>navigate('/create-release')} className='btn btn-neutral py-1 px-6 rounded-full btn-sm border-none me-2 w-full'>Create Release</button>
-                    </div> */}
+                    <div className="my-2">
+                        <input type="text" onKeyPress={searchByUpc} onChange={e => handleSearch(e.target.value)} placeholder="Type UPC & Enter to Search" className="input input-sm rounded-full input-bordered w-full"/>
+                    </div>
                 </div>
 
                 {/* Total Release Count Section _____________________________________________________________________________________ */}
