@@ -108,7 +108,7 @@ const AdminLabelsPage = () => {
                     }
                     {
                       !fetchLoading && labelsData?.map((data) => 
-                        <div style={{cursor: 'pointer'}} onClick={() => handleUpdate(data._id)} key={data._id} className="flex justify-between p-1 my-1 rounded-md border">
+                        <div style={{cursor: 'pointer'}} onClick={() => handleUpdate(data._id)} key={data._id} className="md:flex justify-between p-1 my-1 rounded-md border">
                           <div className="flex items-center">
                                 <Image
                                   width={55}

@@ -119,7 +119,7 @@ const UserLabelsPage = () => {
                     }
                     {
                       !fetchLoading && labelsData?.map((data) => 
-                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/labels/${data._id}`)} key={data._id} className="flex justify-between p-1 my-1 rounded-md">
+                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/labels/${data._id}`)} key={data._id} className="md:flex justify-between p-1 my-1 rounded-md">
                           <div className="flex items-center">
                                 <Image
                                   width={55}
