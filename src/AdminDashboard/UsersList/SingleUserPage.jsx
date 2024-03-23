@@ -3,7 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
-import AdminLabelsPage from "../AdminLabelsPage/AdminLabelsPage";
+import UserArtistPageForAdmin from "../AdminArtistPage/UserArtistPageForAdmin";
+import UserLabelsPage from "../AdminLabelsPage/UserLabelsPage";
 
 const SingleUserPage = () => {
     const {id} = useParams();
@@ -18,6 +19,7 @@ const SingleUserPage = () => {
             console.log(res.data.data)
             setUserLoading(false)
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const onChange = (key) => {
@@ -27,12 +29,12 @@ const SingleUserPage = () => {
         {
           key: '1',
           label: 'Artist',
-          children: 'Artist Content',
+          children: <UserArtistPageForAdmin userId={id}/>,
         },
         {
           key: '2',
           label: 'Labels',
-          children: <AdminLabelsPage/>,
+          children: <UserLabelsPage userId={id}/>,
         },
         {
           key: '3',

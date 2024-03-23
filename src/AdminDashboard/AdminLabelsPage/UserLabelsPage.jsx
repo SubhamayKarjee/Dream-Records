@@ -4,9 +4,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fallbackImage from "../../assets/fallbackImage.jpg"
-// import UpdateLabelsComponent from "./UpdateLabelsComponent";
 
-const AdminLabelsPage = () => {
+
+// eslint-disable-next-line react/prop-types
+const UserLabelsPage = ({userId}) => {
 
     const navigate = useNavigate()
 
@@ -23,7 +24,7 @@ const AdminLabelsPage = () => {
     useEffect( () => {
         setItemPerPage(10)
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/admin/api/v1/labels?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
+        axios.get(`http://localhost:5000/api/v1/labels/${userId}?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -52,7 +53,7 @@ const AdminLabelsPage = () => {
       setItemPerPage(50)
       if (event.key === 'Enter') {          
         setFetchLoading(true);
-        axios.get(`http://localhost:5000/admin/api/v1/labels/search?status=${lebelStatus}&search=${searchText}`)
+        axios.get(`http://localhost:5000/api/v1/labels/search/${userId}?status=${lebelStatus}&search=${searchText}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);
@@ -68,7 +69,6 @@ const AdminLabelsPage = () => {
       const link = `/admin-dashboard/labels/${id}`
       navigate(link)
     };
-
 
     return (
         <div className="md:h-full">
@@ -162,4 +162,4 @@ const AdminLabelsPage = () => {
     );
 };
 
-export default AdminLabelsPage;
+export default UserLabelsPage;

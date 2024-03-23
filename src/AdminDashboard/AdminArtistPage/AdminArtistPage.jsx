@@ -1,17 +1,13 @@
-import { BellIcon, ExclamationCircleIcon } from "@heroicons/react/24/solid";
+import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
-import CreateArtistForm from "./CreateArtistForm";
-import './UserArtistPage.css'
 import fallbackImage from '../../assets/fallbackImage.jpg'
 
-const UserArtistPage = () => {
+const AdminArtistPage = () => {
 
     const navigate = useNavigate();
-    const { userNameIdRoll, refatchArtistData } = useContext(AuthContext);
 
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
@@ -25,7 +21,7 @@ const UserArtistPage = () => {
     useEffect( () => {
       setItemPerPage(10)
       setFetchLoading(true)
-      axios.get(`http://localhost:5000/api/v1/artist/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}`)
+      axios.get(`http://localhost:5000/admin/api/v1/artist?page=${currentPage}&limit=${itemPerPage}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);
@@ -35,7 +31,7 @@ const UserArtistPage = () => {
           })
           .catch(er => console.log(er));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[refatchArtistData, currentPage])
+    },[currentPage])
 
 
     const handlePageChange = (page) => {
@@ -47,42 +43,34 @@ const UserArtistPage = () => {
     }
 
     const handleKeyPress = (event) => {
-      setItemPerPage(50)
-      if (event.key === 'Enter') {
-        console.log(currentPage);
-        setFetchLoading(true);
-        axios.get(`http://localhost:5000/api/v1/artist/search/${userNameIdRoll[1]}?search=${searchText}`)
-          .then( res => {
-            if(res.status == 200){
-              setFetchLoading(false);
-              setTotalItems(res.data.dataCount);
-              setArtistData(res.data.data);
-            }
-          })
-          .catch(er => console.log(er));
-      }
+        console.log(searchText);
+        console.log(event);
+        setItemPerPage(50)
+        if (event.key === 'Enter') {
+            console.log(currentPage);
+            setFetchLoading(true);
+            axios.get(`http://localhost:5000/admin/api/v1/artist/search-artist?search=${searchText}`)
+            .then( res => {
+                if(res.status == 200){
+                  setFetchLoading(false);
+                  setTotalItems(res.data.dataCount);
+                  setArtistData(res.data.data);
+                }
+            })
+            .catch(er => console.log(er));
+        }
     };
 
 
     return (
-        <div className="md:flex md:h-full">
-            <div className='h-full md:basis-3/4 overflow-y-auto md:border-r'>
+        <div className='p-2'>
+            <div>
                   {/* Search and Create Artist Section ______________________________________________________________________________ */}
                   <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg mt-2">
                       <div className="my-2">
                           <input type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm rounded-full input-bordered w-full"/>
                       </div>
-                      <div className="my-2">
-                          <button onClick={()=>document.getElementById('create_artist_modal').showModal()} className='btn btn-neutral py-1 px-6 rounded-full btn-sm border-none me-2 w-full'>Create Artist</button>
-                      </div>
                   </div>
-                      {/* Create Artist form with Modal Start _______________________________________________________________________ */}
-                      <dialog id="create_artist_modal" className="modal"> 
-                          <div className="modal-box">
-                            <CreateArtistForm/>
-                          </div>
-                      </dialog>
-                      {/* Create Artist form with Modal End _______________________________________________________________________ */}
 
                   {/* Total Artist Count Section _____________________________________________________________________________________ */}
                   <div className="flex justify-between items-center my-3">
@@ -106,7 +94,7 @@ const UserArtistPage = () => {
                     }
                     {
                       !fetchLoading && artistData?.map((data) => 
-                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/artist/${data._id}`)} key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
+                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/admin-dashboard/artist/${data._id}`)} key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
                           <div className="flex items-center">
                                 <Image
                                   width={55}
@@ -128,7 +116,7 @@ const UserArtistPage = () => {
                       !totalItems && !fetchLoading && <Empty className="pt-12" />
                     }
                     {
-                      totalItems > 1 && !fetchLoading && <div className="flex justify-center items-center my-4">
+                      totalItems > 10 && !fetchLoading && <div className="flex justify-center items-center my-4">
                         <Pagination 
                           defaultCurrent={currentPage} 
                           total={totalItems}
@@ -141,16 +129,8 @@ const UserArtistPage = () => {
                 </main>
             {/* _________ */}
             </div>
-
-
-            {/* Blog Post Div  _______________________________*/}
-            <div className="md:basis-1/4">
-                <div className='p-2 border-b'>
-                    <h4 className='flex items-center font-bold text-lg text-slate-500'> <BellIcon className='w-6 h-6 me-2 text-slate-500'/> Notification</h4>
-                </div>
-            </div>
         </div>
     );
 };
 
-export default UserArtistPage;
+export default AdminArtistPage;
