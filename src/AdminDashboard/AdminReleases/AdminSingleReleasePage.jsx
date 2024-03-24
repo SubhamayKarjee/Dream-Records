@@ -4,9 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import fallbackImage from "../../assets/fallbackImage.jpg"
-import { ArrowPathIcon, CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { ArrowPathIcon, CheckBadgeIcon, ClockIcon, DocumentDuplicateIcon, ExclamationTriangleIcon, TrashIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import './AdminSingleReleasePage.css'
 
 const AdminSingleReleasePage = () => {
 
@@ -73,6 +74,15 @@ const AdminSingleReleasePage = () => {
             }
         })
     }
+
+    const handleCopyText = (index) => {
+        const inputElement = document.getElementById(index);
+        inputElement.select();
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+        toast.success('Coppied')
+    };
+
     if(deleteLoading){
         return <LoadingComponentsInsidePage/>
     }
@@ -175,8 +185,8 @@ const AdminSingleReleasePage = () => {
                             <p className="text-xs font-bold">Artist Details</p>
                             <div className=" p-2 bg-slate-100 rounded-md">
                                 {
-                                    releaseData?.artist.map(a => 
-                                        <div key={a._id} className="flex my-2">
+                                    releaseData?.artist.map((a, index) => 
+                                        <div key={a._id} onClick={()=>document.getElementById(`${index}`).showModal()} style={{cursor: 'pointer'}} className="flex my-2">
                                             <div>
                                                 <Image
                                                     width={35}
@@ -192,6 +202,66 @@ const AdminSingleReleasePage = () => {
                                                 <h2 className="font-bold">{a?.artistName}</h2>
                                                 <p className="text-xs">ID: {a?._id}</p>
                                             </div>
+                                            <dialog id={index} className="modal">
+                                                <div className="modal-box">
+                                                    <form method="dialog">
+                                                        {/* if there is a button in form, it will close the modal */}
+                                                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                    </form>
+                                                    <Image
+                                                        width={100}
+                                                        height={100}
+                                                        className="rounded-md"
+                                                        src={a?.imgUrl}
+                                                        preview={true}
+                                                        fallback={fallbackImage}
+                                                        alt={a.artistName}
+                                                    />
+                                                    <h3 className="font-bold text-lg">{a?.artistName}</h3>
+                                                    <p className="text-sm text-slate-500">ID: {a?._id}</p>
+                                                    {
+                                                        a?.instagramId &&
+                                                        <div className="my-2 p-2 border rounded-md">
+                                                            <p className="text-xs font-bold text-slate-500">Instagram ID</p>
+                                                            <div className="flex justify-between items-center">
+                                                                <input className="admin_release_page_input grow" id='artist_instagram' value={`https://www.instagram.com/${a.instagramId}`} type="text" />
+                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('artist_instagram')} className="w-5 h-5 text-slate-500"/>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                    {
+                                                        a?.appleId &&
+                                                        <div className="my-2 p-2 border rounded-md">
+                                                            <p className="text-xs font-bold text-slate-500">Apple ID</p>
+                                                            <div className="flex justify-between items-center">
+                                                                <input className="admin_release_page_input grow" id='artist_apple' value={`https://music.apple.com/profile/${a.appleId}`} type="text" />
+                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('artist_apple')} className="w-5 h-5 text-slate-500"/>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    {
+                                                        a?.spotifyId &&
+                                                        <div className="my-2 p-2 border rounded-md">
+                                                            <p className="text-xs font-bold text-slate-500">Spotify ID</p>
+                                                            <div className="flex justify-between items-center">
+                                                                <input className="admin_release_page_input grow" id='artist_spotify' value={`https://open.spotify.com/user/${a.spotifyId}`} type="text" />
+                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('artist_spotify')} className="w-5 h-5 text-slate-500"/>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    {
+                                                        a?.facebook &&
+                                                        <div className="my-2 p-2 border rounded-md">
+                                                            <p className="text-xs font-bold text-slate-500">Facebook URL</p>
+                                                            <div className="flex justify-between items-center">
+                                                                <input className="admin_release_page_input grow" id='artist_facebook' value={a.facebook} type="text" />
+                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('artist_facebook')} className="w-5 h-5 text-slate-500"/>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </dialog>
                                         </div>
                                     )
                                 }
@@ -201,23 +271,54 @@ const AdminSingleReleasePage = () => {
                             <p className="text-xs font-bold">Labels Details</p>
                             <div className=" p-2 bg-slate-100 rounded-md">
                                 {
-                                    releaseData?.labels.map(l => 
-                                        <div key={l._id} className="flex my-2">
-                                            <div>
-                                                <Image
-                                                    width={35}
-                                                    height={35}
-                                                    className="rounded-md"
-                                                    src={l?.imgUrl}
-                                                    preview={true}
-                                                    fallback={fallbackImage}
-                                                    alt={l.labelName}
-                                                />
+                                    releaseData?.labels.map((l, index) => 
+                                        <div key={l._id} onClick={()=>document.getElementById(`${l._id}`).showModal()} style={{cursor: 'pointer'}}>
+                                            <div className="flex my-2">
+                                                <div>
+                                                    <Image
+                                                        width={35}
+                                                        height={35}
+                                                        className="rounded-md"
+                                                        src={l?.imgUrl}
+                                                        preview={true}
+                                                        fallback={fallbackImage}
+                                                        alt={l.labelName}
+                                                    />
+                                                </div>
+                                                <div className="ms-2">
+                                                    <h2 className="font-bold">{l?.labelName}</h2>
+                                                    <p className="text-xs">ID: {l?._id}</p>
+                                                </div>
                                             </div>
-                                            <div className="ms-2">
-                                                <h2 className="font-bold">{l?.labelName}</h2>
-                                                <p className="text-xs">ID: {l?._id}</p>
-                                            </div>
+                                            <dialog id={l._id} className="modal">
+                                                <div className="modal-box">
+                                                    <form method="dialog">
+                                                        {/* if there is a button in form, it will close the modal */}
+                                                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                    </form>
+                                                    <Image
+                                                        width={100}
+                                                        height={100}
+                                                        className="rounded-md"
+                                                        src={l?.imgUrl}
+                                                        preview={true}
+                                                        fallback={fallbackImage}
+                                                        alt={l.labelName}
+                                                    />
+                                                    <h3 className="font-bold text-lg">{l?.labelName}</h3>
+                                                    <p className="text-sm text-slate-500">ID: {l?._id}</p>
+                                                    {
+                                                        l?.youtubeChannelLink &&
+                                                        <div className="my-2 p-2 border rounded-md">
+                                                            <p className="text-xs font-bold text-slate-500">Youtube Channel Link</p>
+                                                            <div className="flex justify-between items-center">
+                                                                <input className="admin_release_page_input" id={index} value={l?.youtubeChannelLink} type="text" />
+                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText(index)} className="w-5 h-5 text-slate-500"/>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </dialog>
                                         </div>
                                     )
                                 }
@@ -228,8 +329,8 @@ const AdminSingleReleasePage = () => {
                             <p className="text-xs font-bold">Featuring Details</p>
                             <div className=" p-2 bg-slate-100 rounded-md">
                                 {
-                                    releaseData?.featuring?.map(f => 
-                                        <div key={f._id} className="flex my-2">
+                                    releaseData?.featuring?.map((f) => 
+                                        <div key={f._id} className="flex my-2" onClick={()=>document.getElementById(`${f._id}`).showModal()} style={{cursor: 'pointer'}}>
                                             <div>
                                                 <Image
                                                     width={35}
@@ -245,6 +346,66 @@ const AdminSingleReleasePage = () => {
                                                 <h2 className="font-bold">{f?.artistName}</h2>
                                                 <p className="text-xs">ID: {f?._id}</p>
                                             </div>
+                                            <dialog id={f._id} className="modal">
+                                                <div className="modal-box">
+                                                    <form method="dialog">
+                                                        {/* if there is a button in form, it will close the modal */}
+                                                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                    </form>
+                                                    <Image
+                                                        width={100}
+                                                        height={100}
+                                                        className="rounded-md"
+                                                        src={f?.imgUrl}
+                                                        preview={true}
+                                                        fallback={fallbackImage}
+                                                        alt={f.artistName}
+                                                    />
+                                                    <h3 className="font-bold text-lg">{f?.artistName}</h3>
+                                                    <p className="text-sm text-slate-500">ID: {f?._id}</p>
+                                                    {
+                                                        f?.instagramId &&
+                                                        <div className="my-2 p-2 border rounded-md">
+                                                            <p className="text-xs font-bold text-slate-500">Instagram ID</p>
+                                                            <div className="flex justify-between items-center">
+                                                                <input className="admin_release_page_input grow" id='featuring_artist_instagram' value={`https://www.instagram.com/${f.instagramId}`} type="text" />
+                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('featuring_artist_instagram')} className="w-5 h-5 text-slate-500"/>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                    {
+                                                        f?.appleId &&
+                                                        <div className="my-2 p-2 border rounded-md">
+                                                            <p className="text-xs font-bold text-slate-500">Apple ID</p>
+                                                            <div className="flex justify-between items-center">
+                                                                <input className="admin_release_page_input grow" id='featuring_artist_apple' value={`https://music.apple.com/profile/${f.appleId}`} type="text" />
+                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('featuring_artist_apple')} className="w-5 h-5 text-slate-500"/>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    {
+                                                        f?.spotifyId &&
+                                                        <div className="my-2 p-2 border rounded-md">
+                                                            <p className="text-xs font-bold text-slate-500">Spotify ID</p>
+                                                            <div className="flex justify-between items-center">
+                                                                <input className="admin_release_page_input grow" id='featuring_artist_spotify' value={`https://open.spotify.com/user/${f.spotifyId}`} type="text" />
+                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('featuring_artist_spotify')} className="w-5 h-5 text-slate-500"/>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    {
+                                                        f?.facebook &&
+                                                        <div className="my-2 p-2 border rounded-md">
+                                                            <p className="text-xs font-bold text-slate-500">Facebook URL</p>
+                                                            <div className="flex justify-between items-center">
+                                                                <input className="admin_release_page_input grow" id='featuring_artist_facebook' value={f.facebook} type="text" />
+                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('featuring_artist_facebook')} className="w-5 h-5 text-slate-500"/>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </dialog>
                                         </div>
                                     )
                                 }

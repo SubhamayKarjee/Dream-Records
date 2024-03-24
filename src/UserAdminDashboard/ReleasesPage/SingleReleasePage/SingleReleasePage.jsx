@@ -45,6 +45,8 @@ const SingleReleasePage = () => {
             }
         })
     }
+
+
     if(deleteLoading){
         return <LoadingComponentsInsidePage/>
     }
@@ -138,22 +140,24 @@ const SingleReleasePage = () => {
                             <p className="text-xs font-bold">Labels Details</p>
                             <div className=" p-2 bg-slate-100 rounded-md">
                                 {
-                                    data?.labels.map(l => 
-                                        <div key={l._id} className="flex my-2">
-                                            <div>
-                                                <Image
-                                                    width={35}
-                                                    height={35}
-                                                    className="rounded-md"
-                                                    src={l?.imgUrl}
-                                                    preview={true}
-                                                    fallback={fallbackImage}
-                                                    alt={l.labelName}
-                                                />
-                                            </div>
-                                            <div className="ms-2">
-                                                <h2 className="font-bold">{l?.labelName}</h2>
-                                                <p className="text-xs">ID: {l?._id}</p>
+                                    data?.labels.map((l) => 
+                                        <div key={l._id}>
+                                            <div className="flex my-2">
+                                                <div>
+                                                    <Image
+                                                        width={35}
+                                                        height={35}
+                                                        className="rounded-md"
+                                                        src={l?.imgUrl}
+                                                        preview={true}
+                                                        fallback={fallbackImage}
+                                                        alt={l.labelName}
+                                                    />
+                                                </div>
+                                                <div className="ms-2">
+                                                    <h2 className="font-bold">{l?.labelName}</h2>
+                                                    <p className="text-xs">ID: {l?._id}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     )

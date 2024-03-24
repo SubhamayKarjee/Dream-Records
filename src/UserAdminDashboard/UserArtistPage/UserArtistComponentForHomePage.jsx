@@ -12,11 +12,14 @@ const UserArtistComponentForHomePage = () => {
     const { userNameIdRoll } = useContext(AuthContext);
 
     const [artistData, setArtistData] = useState();
+    const [loading, setLoading] = useState(false)
     useEffect( () => {
+        setLoading(true)
         axios.get(`http://localhost:5000/api/v1/artist/${userNameIdRoll[1]}?page=1&limit=5`)
             .then( res => {
               if(res.status == 200){
                 setArtistData(res.data.data);
+                setLoading(false)
               }
             })
             .catch(er => console.log(er));
@@ -30,7 +33,9 @@ const UserArtistComponentForHomePage = () => {
             </div>
             <div className="flex gap-4 flex-wrap py-3">
                 <Link to={'/artist'} className="w-12 h-12 outline-dashed outline-1 outline-slate-500 rounded-full flex items-center justify-center"><PlusIcon className="w-6 h-6 text-slate-500"/></Link>
-
+                {
+                    loading && <div className="w-12 h-12 rounded-full bg-gray-300 animate-pulse"></div>
+                }
                 {
                     artistData && artistData.map((image) =>
                         <div key={image._id} className="avatar">
@@ -43,11 +48,9 @@ const UserArtistComponentForHomePage = () => {
                                   fallback={fallbackImage}
                                 />
                             </div>
-                        </div>
-                    )
-                }
-
-                
+                        </div> 
+                    ) 
+                }                
             </div>
         </div>
     );
