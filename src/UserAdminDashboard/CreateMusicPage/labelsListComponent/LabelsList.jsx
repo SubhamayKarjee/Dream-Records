@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 // eslint-disable-next-line react/prop-types
 const LabelsList = ({handleCancel}) => {
 
-    const { userNameIdRoll , setLabels, labels} = useContext(AuthContext);
+    const { userNameIdRoll , setLabels,} = useContext(AuthContext);
 
     const [totalItems, setTotalItems] = useState();
     const [labelsData, setLabelsData] = useState();
@@ -31,16 +31,8 @@ const LabelsList = ({handleCancel}) => {
     },[])
 
     const handleLabel = (data) => {
-      if(labels){
-        const dubleCheck = labels.some(a => a._id === data._id);
-        if(dubleCheck){
-          toast.error("All ready added this Labels")
-        }else{
-          setLabels([...labels, data])
-        }
-      }else{
-        setLabels([data])
-      }
+        setLabels([data]);
+        toast.success('Labels Added')
     }
 
     const handleSearch = (e) => {

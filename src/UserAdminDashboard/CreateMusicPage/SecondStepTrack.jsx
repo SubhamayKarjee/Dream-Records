@@ -460,7 +460,7 @@ const SecondStepTrack = () => {
                         }
                         <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Labels</span>
                             <Modal title="Search/Select Label" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
-                                <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Label</p>
+                                <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">Select Label</p>
                                 <div>
                                     <LabelsList handleCancel={handleCancel2}/>
                                 </div>

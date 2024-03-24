@@ -1,6 +1,5 @@
-import { ClipboardDocumentListIcon, DocumentMagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { ClipboardDocumentListIcon } from '@heroicons/react/24/solid';
 import { useContext } from 'react';
-import BlogComponents from '../BlogPostPage/BlogComponents';
 import { AuthContext } from '../UserAdminHomePage/UserAdminHomePage';
 import UserArtistComponentForHomePage from '../UserArtistPage/UserArtistComponentForHomePage';
 import LatestApprovedRelease from './LatestApprovedRelease';
@@ -31,13 +30,6 @@ const UserHomePage = () => {
                 </div>
                 <UserArtistComponentForHomePage/>
                 <LatestApprovedRelease/>
-                {/* Blog Post Component Start ________________________________________________________________ */}
-                <div className="flex items-center py-3">
-                    <DocumentMagnifyingGlassIcon className="h-5 w-5 text-slate-500 me-2"/>
-                    <p className="text-sm font-semibold text-slate-500">Blog Post</p>
-                </div>
-                <BlogComponents/>
-                {/* Blog Post Component End ________________________________________________________________ */}
             </div>
 
             {/* Blog Post Div  _______________________________*/}
