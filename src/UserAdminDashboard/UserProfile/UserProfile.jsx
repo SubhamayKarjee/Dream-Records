@@ -12,7 +12,7 @@ const UserProfile = () => {
     return (
         <div className="md:flex md:h-full">
             <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2'>
-                <div className='flex p-2 rounded-md bg-gradient-to-r from-[#EF4136] to-[#fff]'>
+                <div className='flex p-2 rounded-md bg-[#EF4136]'>
                     <div className="avatar me-2">
                         <div className="w-16 rounded-md">
                             {
@@ -23,6 +23,7 @@ const UserProfile = () => {
                     </div>
                     <div>
                         <h1 className="text-lg font-bold text-white">{userNameIdRoll[0]}</h1>
+                        <p className="text-sm text-white">ID: {userNameIdRoll[1]}</p>
                         <p className="text-sm text-white">{user.email}</p>
                     </div>
                 </div>

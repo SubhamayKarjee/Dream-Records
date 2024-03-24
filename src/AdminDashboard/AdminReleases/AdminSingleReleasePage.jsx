@@ -175,8 +175,8 @@ const AdminSingleReleasePage = () => {
                         </div>                                 
                   </div>
 
-                    <div className="p-2 bg-gradient-to-r from-[#EF4136] to-[#fff] rounded-md my-2 shadow">
-                        <p className="text-sm pb-2 font-bold">Audio</p>
+                    <div className="p-2 bg-[#EF4136] rounded-md my-2 shadow">
+                        <p className="text-sm pb-2 font-bold text-white">Audio</p>
                         <audio controls src={releaseData?.audioUrl}></audio>
                     </div> 
 
