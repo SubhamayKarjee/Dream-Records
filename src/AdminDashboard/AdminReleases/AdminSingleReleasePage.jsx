@@ -271,7 +271,7 @@ const AdminSingleReleasePage = () => {
                             <p className="text-xs font-bold">Labels Details</p>
                             <div className=" p-2 bg-slate-100 rounded-md">
                                 {
-                                    releaseData?.labels.map((l, index) => 
+                                    releaseData?.labels.map((l) => 
                                         <div key={l._id} onClick={()=>document.getElementById(`${l._id}`).showModal()} style={{cursor: 'pointer'}}>
                                             <div className="flex my-2">
                                                 <div>
@@ -312,8 +312,8 @@ const AdminSingleReleasePage = () => {
                                                         <div className="my-2 p-2 border rounded-md">
                                                             <p className="text-xs font-bold text-slate-500">Youtube Channel Link</p>
                                                             <div className="flex justify-between items-center">
-                                                                <input className="admin_release_page_input" id={index} value={l?.youtubeChannelLink} type="text" />
-                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText(index)} className="w-5 h-5 text-slate-500"/>
+                                                                <input className="admin_release_page_input" id='labels_channel_link' value={l?.youtubeChannelLink} type="text" />
+                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('labels_channel_link')} className="w-5 h-5 text-slate-500"/>
                                                             </div>
                                                         </div>
                                                     }
