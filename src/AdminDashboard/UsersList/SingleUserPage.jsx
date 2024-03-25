@@ -44,6 +44,11 @@ const SingleUserPage = () => {
         },
         {
           key: '4',
+          label: 'Withdrowal',
+          children: 'Analytics',
+        },
+        {
+          key: '5',
           label: 'Analytics',
           children: 'Analytics',
         },

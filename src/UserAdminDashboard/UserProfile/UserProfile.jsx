@@ -7,7 +7,6 @@ const UserProfile = () => {
 
     const {user, userNameIdRoll, mainProfileImage} = useContext(AuthContext)
 
-    // const userName = user.displayName.split("'__'")[0]
 
     return (
         <div className="md:flex md:h-full">

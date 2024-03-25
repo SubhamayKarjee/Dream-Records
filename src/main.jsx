@@ -25,6 +25,7 @@ import EditReleaseFirstStep from './UserAdminDashboard/ReleasesPage/EditReleaseP
 import EditReleaseSecondStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseSecondStep';
 import EditReleaseThirdStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseThirdStep';
 import DetailsSingleArtist from './UserAdminDashboard/UserArtistPage/DetailsSingleArtist';
+import WalletPage from './UserAdminDashboard/WalletPage/WalletPage';
 
 
 
@@ -227,7 +228,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/wallet',
-        element: 'Wallet'
+        element: <WalletPage/>
       },
       {
         path: '/support',

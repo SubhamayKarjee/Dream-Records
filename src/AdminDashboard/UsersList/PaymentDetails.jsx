@@ -1,3 +1,4 @@
+import { CurrencyRupeeIcon } from "@heroicons/react/24/solid";
 import { DatePicker, Empty, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -48,9 +49,9 @@ const PaymentDetails = ({id, text}) => {
 
     return (
         <div className="my-5">
-            <div className="p-2 border my-2">
+            <div className="p-2 border my-2 bg-slate-100 mb-4">
                 <p className="text-sm font-bold text-slate-500">Filter by YEAR</p>
-                <DatePicker onChange={onChange} picker="year" />
+                <DatePicker className="payment_details" onChange={onChange} picker="year" />
             </div>
             <div>
                 {fetchLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-md"></span></div>}
@@ -60,7 +61,7 @@ const PaymentDetails = ({id, text}) => {
                             <p className="text-green-500">{text} ll <span className="font-bold text-slate-600">{data?.date}/{data?.month}/{data?.year} ll {data?.time}</span></p>
                             <div className="flex items-center justify-between">
                                 <p>ID: {data._id}</p>
-                                <p className="font-bold text-lg md:pe-3">{data.ammount}</p>
+                                <p className="font-bold text-lg md:pe-3 flex items-center"><CurrencyRupeeIcon className="w-5 h-5"/> {data.ammount}</p>
                             </div>
                         </div>
                     )
