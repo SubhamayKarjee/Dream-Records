@@ -9,7 +9,8 @@ import {
     UsersIcon,
     ChartPieIcon,
     UserCircleIcon,
-    ClipboardDocumentListIcon,
+    CurrencyDollarIcon,
+    RectangleGroupIcon,
  } from '@heroicons/react/24/solid'
 import { useState } from 'react';
 import { Drawer } from 'antd';
@@ -114,13 +115,17 @@ const UserAdminHomePage = () => {
                                     <UserGroupIcon className="h-7 w-7 pe-2" />    
                                     Labels
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/'}>
+                                <Link className='text-white flex items-center py-2' to={'/analytics'}>
                                     <ChartPieIcon className="h-7 w-7 pe-2" />
-                                    Statistics
+                                    Analytics
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/'}>
-                                    <ClipboardDocumentListIcon className="h-7 w-7 pe-2" />
-                                    Blog
+                                <Link className='text-white flex items-center py-2' to={'/wallet'}>
+                                    <CurrencyDollarIcon className="h-7 w-7 pe-2" />
+                                    Wallet
+                                </Link>
+                                <Link className='text-white flex items-center py-2' to={'/support'}>
+                                    <RectangleGroupIcon className="h-7 w-7 pe-2" />
+                                    Support
                                 </Link>
                                 <Link className='text-white flex items-center py-2' to={'/account'}>
                                     <UserCircleIcon className="h-7 w-7 pe-2" />
@@ -203,13 +208,17 @@ const UserAdminHomePage = () => {
                                                     <UserGroupIcon className="h-7 w-7 pe-2" />    
                                                     Labels
                                                 </Link>
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/'}>
+                                                <Link className='text-white flex items-center py-2' to={'/analytics'}>
                                                     <ChartPieIcon className="h-7 w-7 pe-2" />
-                                                    Statistics
+                                                    Analytics
                                                 </Link>
-                                                <Link className='text-white flex items-center py-2' to={'/blog'}>
-                                                    <ClipboardDocumentListIcon className="h-7 w-7 pe-2" />
-                                                    Blog
+                                                <Link className='text-white flex items-center py-2' to={'/wallet'}>
+                                                    <CurrencyDollarIcon className="h-7 w-7 pe-2" />
+                                                    Wallet
+                                                </Link>
+                                                <Link className='text-white flex items-center py-2' to={'/support'}>
+                                                    <RectangleGroupIcon className="h-7 w-7 pe-2" />
+                                                    Support
                                                 </Link>
                                                 <Link onClick={onClose} className='text-white flex items-center py-2' to={'/account'}>
                                                     <UserCircleIcon className="h-7 w-7 pe-2" />

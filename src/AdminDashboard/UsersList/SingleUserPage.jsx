@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import UserArtistPageForAdmin from "../AdminArtistPage/UserArtistPageForAdmin";
 import UserLabelsPage from "../AdminLabelsPage/UserLabelsPage";
+import PaymentDetails from "./PaymentDetails";
 
 const SingleUserPage = () => {
     const {id} = useParams();
@@ -39,7 +40,12 @@ const SingleUserPage = () => {
         {
           key: '3',
           label: 'Payments',
-          children: 'Payments Content',
+          children: <PaymentDetails id={id}/>
+        },
+        {
+          key: '4',
+          label: 'Analytics',
+          children: 'Analytics',
         },
     ];
 

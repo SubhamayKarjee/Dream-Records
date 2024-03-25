@@ -221,6 +221,18 @@ const router = createBrowserRouter([
         path: '/labels/:id',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><DetailsSingleLabels/></Suspense>
       },
+      {
+        path: '/analytics',
+        element: 'Analytics'
+      },
+      {
+        path: '/wallet',
+        element: 'Wallet'
+      },
+      {
+        path: '/support',
+        element: 'Support'
+      },
       //User Account Page _________________________________________________________________________________________
       {
         path: '/account',
