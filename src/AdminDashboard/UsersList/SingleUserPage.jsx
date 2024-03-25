@@ -40,7 +40,7 @@ const SingleUserPage = () => {
         {
           key: '3',
           label: 'Payments',
-          children: <PaymentDetails id={id}/>
+          children: <PaymentDetails id={id} text='Send Payment Successfully from Dream Records' />
         },
         {
           key: '4',
