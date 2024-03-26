@@ -1,7 +1,6 @@
 import { Result } from "antd";
 import axios from "axios";
 import { useState } from "react";
-import toast from "react-hot-toast";
 
 // eslint-disable-next-line react/prop-types
 const SendPaymentsFormDreamRecord = ({id}) => {
@@ -38,8 +37,6 @@ const SendPaymentsFormDreamRecord = ({id}) => {
                 axios.post(`http://localhost:5000/common/api/v1/payment`, formData)
                 .then(res => {
                   if(res.status === 200){
-                    toast.success('Successfully paid')
-                    console.log(res.data.data);
                     setPayLoading(false)
                     setSuccessHandle(true)
                   }
@@ -55,8 +52,6 @@ const SendPaymentsFormDreamRecord = ({id}) => {
                 axios.post(`http://localhost:5000/common/api/v1/payment`, formData)
                 .then(res => {
                   if(res.status === 200){
-                    toast.success('Successfully paid')
-                    console.log(res.data.data);
                     setPayLoading(false)
                     setSuccessHandle(true)
                   }

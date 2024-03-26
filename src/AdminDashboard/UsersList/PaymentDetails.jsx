@@ -19,7 +19,6 @@ const PaymentDetails = ({id, text}) => {
         axios.get(`http://localhost:5000/common/api/v1/payment/${id}?page=${currentPage}&limit=${itemPerPage}`)
         .then(res => {
             setPaymentData(res.data.data);
-            console.log(res.data.data);
             setTotalItems(res.data.dataCount)
             setFetchLoading(false)
         })
