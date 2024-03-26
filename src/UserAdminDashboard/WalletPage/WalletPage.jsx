@@ -1,9 +1,9 @@
-import { CurrencyRupeeIcon } from "@heroicons/react/24/solid";
-import { Tabs } from "antd";
+import { ArrowTopRightOnSquareIcon, CurrencyRupeeIcon } from "@heroicons/react/24/solid";
+import { Modal, Tabs } from "antd";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-// import { useForm } from "react-hook-form";
 import PaymentDetails from "../../AdminDashboard/UsersList/PaymentDetails";
+import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import BankAccountCreateForm from "./BankAccountCreateForm";
 import WithdrawalForm from "./WithdrawalForm";
@@ -14,17 +14,19 @@ const WalletPage = () => {
 
     const {userNameIdRoll} = useContext(AuthContext);
 
+    const [userData, setUserData] = useState();
+    const [bankData, setBankData] = useState([])
+
     const [reFetchBankInfo, setReFetchBankInfo] = useState(1);
     const [withdrawalReFetch, setWithdrawalReFetch] = useState(1);
     const contextValue = {
         userNameIdRoll,
-        reFetchBankInfo,
-        setReFetchBankInfo,
-        withdrawalReFetch,
-        setWithdrawalReFetch
+        reFetchBankInfo, setReFetchBankInfo,
+        withdrawalReFetch, setWithdrawalReFetch,
+        userData, 
+        bankData, 
     }
     
-    const [userData, setUserData] = useState()
     useEffect(() => {
         axios.get(`http://localhost:5000/api/v1/users/${userNameIdRoll[1]}`)
             .then(res => {
@@ -36,21 +38,33 @@ const WalletPage = () => {
     }, [userNameIdRoll, withdrawalReFetch, reFetchBankInfo]);
     // Get Bank INFO
 
-    const [bankData, setBankData] = useState([])
+    const [bankInfoLoading, setBankInfoLoading] = useState(false)
     useEffect(() => {
+        setBankInfoLoading(ArrowTopRightOnSquareIcon)
         axios.get(`http://localhost:5000/api/v1/bank-info/${userNameIdRoll[1]}`)
             .then(res => {
                 if(res.status == 200){
                     setBankData(res.data.data);
+                    setBankInfoLoading(false)
                 }
             })
             .catch(er => console.log(er)) 
     }, [reFetchBankInfo, userNameIdRoll]);
-    
 
-    const onChange = (key) => {
-        console.log(key);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = () => {
+        setIsModalOpen(true);
     };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    if(bankInfoLoading){
+        return <LoadingComponentsInsidePage/>
+    }
 
     const items = [
         {
@@ -73,7 +87,7 @@ const WalletPage = () => {
                 <p className="font-bold text-lg py-1 px-3 border rounded-md flex items-center"><CurrencyRupeeIcon className="w-5 h-5"/>{userData?.balance?.ammount ? userData.balance.ammount : 0}</p>
                 {
                     userData?.balance?.ammount > 50 && bankData != 0 && 
-                    <button onClick={()=>document.getElementById('withdrawal_form').showModal()} className="btn btn-sm btn-neutral my-2">Withdrawal</button>
+                    <button onClick={showModal} className="btn btn-sm btn-neutral my-2">Withdrawal</button>
                 }
                 {
                     userData?.balance?.ammount > 50 && bankData == 0 && 
@@ -96,15 +110,9 @@ const WalletPage = () => {
                         <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
                     </div>
                 }
-                <dialog id="withdrawal_form" className="modal">
-                    <div className="modal-box">
-                        <form method="dialog">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                        </form>
-                        <WithdrawalForm/>
-                    </div>
-                </dialog>
+                <Modal title="Withdrawal Payments" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                    <WithdrawalForm/>
+                </Modal>
             </div>
             <div>
                 <div className="mt-3">
@@ -124,6 +132,7 @@ const WalletPage = () => {
                                     <p className="text-sm font-bold text-slate-600">Account Holder: {d.account_holder_name}</p>
                                     <p className="text-sm font-bold text-slate-600">Account Number: {d.account_number}</p>
                                     <p className="text-sm font-bold text-slate-600">Branch Name: {d.branch_name}</p>
+                                    <p className="text-sm font-bold text-slate-600">IFSC: {d.IFSC}</p>
                                     <p className="text-sm font-bold text-slate-600">Swift Code: {d.swift_code}</p>
                                 </div>
                             </div>
@@ -142,7 +151,7 @@ const WalletPage = () => {
                 </dialog>
             </div>
             <div>
-                <Tabs className="mt-3" defaultActiveKey="1" items={items} onChange={onChange} />                
+                <Tabs className="mt-3" defaultActiveKey="1" items={items} />                
             </div>
         </div>
         </WalletPageContext.Provider>
