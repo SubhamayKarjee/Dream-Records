@@ -32,6 +32,7 @@ import WalletPage from './UserAdminDashboard/WalletPage/WalletPage';
 
 
 
+
 // Commont Routes import_______________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
 const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
@@ -47,6 +48,7 @@ const AdminLabelsPage = React.lazy(() => import('./AdminDashboard/AdminLabelsPag
 const UpdateLabelsComponent = React.lazy(() => import('./AdminDashboard/AdminLabelsPage/UpdateLabelsComponent'));
 const AdminArtistPage = React.lazy(() => import('./AdminDashboard/AdminArtistPage/AdminArtistPage'));
 const SingleArtistForAdmin = React.lazy(() => import('./AdminDashboard/AdminArtistPage/SingleArtistForAdmin'));
+const AdminWithdrawalPage = React.lazy(() => import('./AdminDashboard/AdminWithdrawalPage/AdminWithdrawalPage'));
 
 const AdminSetting = React.lazy(() => import('./AdminDashboard/AdminSetting/AdminSetting'));
 
@@ -136,13 +138,22 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleArtistForAdmin/></Suspense>,
       },
       {
+        path: '/admin-dashboard/withdrawal-request/',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminWithdrawalPage/></Suspense>,
+      },
+      {
+        path: '/admin-dashboard/withdrawal-request/:id',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><p>Single Withdrawal</p></Suspense>,
+      },
+      {
         path: '/admin-dashboard/settings',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminSetting/></Suspense>,
       },
     ]
   },
 
-  // User Dashboard________________________________________________________________________
+  // User Dashboard_____________________________________________________________________________________________________
+  //____________________________________________________________________________________________________________________
   {
     path: "/",
     element: <Suspense fallback={<LoadingComponentsForPage/>}><UserAdminHomePage/></Suspense>,

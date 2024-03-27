@@ -1,11 +1,14 @@
 /* eslint-disable react/prop-types */
 import { CheckBadgeIcon, ClockIcon, CurrencyRupeeIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import { DatePicker, Empty, Pagination } from "antd";
+import { Empty, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
-const WithdrawalList = ({id, text}) => {
+const AdminWithdrawalPage = () => {
+
+    const navigate = useNavigate();
 
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
@@ -13,56 +16,65 @@ const WithdrawalList = ({id, text}) => {
     const [itemPerPage, setItemPerPage] = useState(14);
     const [fetchLoading, setFetchLoading] = useState(false)
     
+    const [withdrawalStatus, setWithdrawalStatus] = useState('All')
     const [withdrawalData, setWithdrawalData] = useState();
-    const [reload, setReload] = useState(1)
     useEffect( () => {
         setItemPerPage(14)
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/payment/withdrawal/${id}?page=${currentPage}&limit=${itemPerPage}`)
+        axios.get(`http://localhost:5000/common/api/v1/payment/admin/withdrawal/req-list?page=${currentPage}&limit=${itemPerPage}&status=${withdrawalStatus}`)
         .then(res => {
             setWithdrawalData(res.data.data);
             setTotalItems(res.data.dataCount)
             setFetchLoading(false)
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage, reload])
+    }, [currentPage, withdrawalStatus])
 
     const handlePageChange = (page) => {
         setCurrentPage(page)
     };
 
-    const onChange = (date, dateString) => {
-        console.log(dateString);
-        if(!dateString){
-            const load = reload + 1 
-            setReload(load)
-        }else{
-            setItemPerPage(20)
-            setFetchLoading(true)
-            axios.get(`http://localhost:5000/common/api/v1/payment/withdrawal/search/${id}?page=${currentPage}&limit=${itemPerPage}&search=${dateString}`)
-            .then(res => {
-                setWithdrawalData(res.data.data);
-                setTotalItems(res.data.dataCount)
-                setFetchLoading(false)
-            })
-        }
+    const [searchText, setSearchText] = useState('')
+    const handleStatus = (e) => {
+        setCurrentPage(1)
+        setWithdrawalStatus(e)
+    }
+  
+    const handleSearch = (e) => {
+        setSearchText(e)
+    }
+
+    const handleKeyPress = () => {
+        setFetchLoading(true)
+        axios.get(`http://localhost:5000/common/api/v1/payment/admin/withdrawal/search-req-list?search=${searchText}&status=${withdrawalStatus}`)
+        .then(res => {
+            setWithdrawalData(res.data.data);
+            setTotalItems(res.data.dataCount)
+            setFetchLoading(false)
+        })
     };
 
 
     return (
         <div className="my-5">
             <div className="p-2 border my-2 bg-slate-100 mb-4">
-                <p className="text-sm font-bold text-slate-500">Filter by YEAR</p>
-                <DatePicker className="payment_details" onChange={onChange} picker="year" />
+                <p className="text-sm font-bold text-slate-500">Filter by ID</p>
+                <input type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type ID & Enter to Search" className="input input-sm rounded-full input-bordered w-full"/>
+            </div>
+            <div className="mb-3">
+                <button onClick={() => handleStatus('All')} className="btn btn-sm btn-neutral mx-1">All</button>
+                <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral mx-1">Pending</button>
+                <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral mx-1">Approved</button>
+                <button onClick={() => handleStatus('Rejected')} className="btn btn-sm btn-neutral mx-1">Rejected</button>
             </div>
             <div>
                 {fetchLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-md"></span></div>}
                 {
                     !fetchLoading && withdrawalData?.map(data => 
-                        <div className="p-3 rounded-lg my-1 border" key={data._id}>
+                        <div style={{cursor: 'pointer'}} className="p-3 rounded-lg my-1 border" onClick={() => navigate(`/admin-dashboard/withdrawal-request/${data.id}`)} key={data._id}>
                             <div className="md:flex justify-between">
                                 <div>
-                                    <p className="text-green-500"> {text} || <span className="font-bold text-slate-600">{data?.withdrawalDate}/{data?.withdrawalMonth}/{data?.withdrawalYear} || {data?.withdrawalTime}</span> </p>
+                                    <p className="text-green-500"> Withdrawal Request Form {data?.nick_name ? data.nick_name : data?.name} || <span className="font-bold text-slate-600">{data?.withdrawalDate}/{data?.withdrawalMonth}/{data?.withdrawalYear} || {data?.withdrawalTime}</span> </p>
                                     <p>ID: {data?._id}</p>
                                     {
                                         data?.status === 'Approved' && <p>Your payment on {data.processdDate} has been processed</p> 
@@ -119,4 +131,4 @@ const WithdrawalList = ({id, text}) => {
     );
 };
 
-export default WithdrawalList;
+export default AdminWithdrawalPage;

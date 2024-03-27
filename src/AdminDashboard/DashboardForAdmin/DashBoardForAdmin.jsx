@@ -5,11 +5,11 @@ import {
     HomeIcon, 
     AdjustmentsHorizontalIcon, 
     UserIcon,
-    ClipboardDocumentListIcon,
     Bars3BottomLeftIcon,
     UsersIcon,
     UserGroupIcon,
     Cog6ToothIcon,
+    CurrencyDollarIcon,
  } from '@heroicons/react/24/solid'
 import { useState } from 'react';
 import { Drawer } from 'antd';
@@ -76,9 +76,9 @@ const DashBoardForAdmin = () => {
                                     <UsersIcon className="h-7 w-7 pe-2" />
                                     Artist
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/'}>
-                                    <ClipboardDocumentListIcon className="h-7 w-7 pe-2" />
-                                    Blog Post
+                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/withdrawal-request'}>
+                                    <CurrencyDollarIcon className="h-7 w-7 pe-2" />
+                                    Withdrawal
                                 </Link>
                                 <Link className='text-white flex items-center py-2' to={'/admin-dashboard/settings'}>
                                     <Cog6ToothIcon className="h-7 w-7 pe-2" />
@@ -152,9 +152,9 @@ const DashBoardForAdmin = () => {
                                                 <UsersIcon className="h-7 w-7 pe-2" />
                                                 Artist
                                             </Link>
-                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/'}>
-                                                <ClipboardDocumentListIcon className="h-7 w-7 pe-2" />
-                                                Blog Post
+                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/withdrawal-request'}>
+                                                <CurrencyDollarIcon className="h-7 w-7 pe-2" />
+                                                Withdrawal
                                             </Link>
                                             <Link className='text-white flex items-center py-2' to={'/admin-dashboard/settings'}>
                                                 <Cog6ToothIcon className="h-7 w-7 pe-2" />
