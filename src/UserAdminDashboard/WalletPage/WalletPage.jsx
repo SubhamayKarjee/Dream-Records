@@ -20,12 +20,14 @@ const WalletPage = () => {
 
     const [reFetchBankInfo, setReFetchBankInfo] = useState(1);
     const [withdrawalReFetch, setWithdrawalReFetch] = useState(1);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const contextValue = {
         userNameIdRoll,
         reFetchBankInfo, setReFetchBankInfo,
         withdrawalReFetch, setWithdrawalReFetch,
         userData, 
         bankData, 
+        setIsModalOpen
     }
     
     useEffect(() => {
@@ -68,8 +70,7 @@ const WalletPage = () => {
         .catch(er => console.log(er));
     }
 
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    // Modal Open and Close function __________________
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -79,10 +80,6 @@ const WalletPage = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-    if(bankInfoLoading){
-        return <LoadingComponentsInsidePage/>
-    }
 
     const items = [
         {
@@ -102,7 +99,7 @@ const WalletPage = () => {
         <div className="overflow-y-auto h-full p-2">
             <h2 className="font-bold mt-2 text-slate-600">Available Balance</h2>
             <div className="md:flex justify-between items-center p-2 border rounded-md">
-                <p className="font-bold text-lg py-1 px-3 border rounded-md flex items-center"><CurrencyRupeeIcon className="w-5 h-5"/>{userData?.balance?.ammount ? userData.balance.ammount : 0}</p>
+                <p className="font-bold text-lg py-1 px-3 border rounded-md flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/>{userData?.balance?.ammount ? userData.balance.ammount : 0}</p>
                 {
                     userData?.balance?.ammount > 50 && bankData != 0 && 
                     <button onClick={showModal} className="btn btn-sm btn-neutral my-2">Withdrawal</button>
@@ -134,6 +131,9 @@ const WalletPage = () => {
             </div>
             <div>
                 <div className="mt-3">
+                    {
+                        bankInfoLoading && <LoadingComponentsInsidePage/>
+                    }
                     {
                         bankData.length === 0 &&
                         <div className="bg-slate-100 rounded-md p-3">
