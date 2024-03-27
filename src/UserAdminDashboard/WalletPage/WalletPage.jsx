@@ -1,7 +1,8 @@
-import { ArrowTopRightOnSquareIcon, CurrencyRupeeIcon } from "@heroicons/react/24/solid";
-import { Modal, Tabs } from "antd";
+import { ArrowTopRightOnSquareIcon, CurrencyRupeeIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { Modal, Tabs, Tooltip } from "antd";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import PaymentDetails from "../../AdminDashboard/UsersList/PaymentDetails";
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
@@ -38,7 +39,8 @@ const WalletPage = () => {
     }, [userNameIdRoll, withdrawalReFetch, reFetchBankInfo]);
     // Get Bank INFO
 
-    const [bankInfoLoading, setBankInfoLoading] = useState(false)
+    const [bankInfoLoading, setBankInfoLoading] = useState(false);
+    const [deleteFetch, setDeleteFetch] = useState(1)
     useEffect(() => {
         setBankInfoLoading(ArrowTopRightOnSquareIcon)
         axios.get(`http://localhost:5000/api/v1/bank-info/${userNameIdRoll[1]}`)
@@ -49,7 +51,23 @@ const WalletPage = () => {
                 }
             })
             .catch(er => console.log(er)) 
-    }, [reFetchBankInfo, userNameIdRoll]);
+    }, [reFetchBankInfo, userNameIdRoll, deleteFetch]);
+
+    const [deleteLoading, setDeleteLoading] = useState(false);
+    const deleteBankInfo = (id) => {
+        setDeleteLoading(true)
+        axios.delete(`http://localhost:5000/api/v1/bank-info/${id}`)
+        .then( res => {
+            if(res.status == 200){
+                const f = deleteFetch + 1;
+                setDeleteFetch(f)
+                setDeleteLoading(false)
+                toast.success('Deleted the BankInfo');
+            }
+        })
+        .catch(er => console.log(er));
+    }
+
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
@@ -126,7 +144,7 @@ const WalletPage = () => {
                     }
                     {
                         bankData && bankData.map(d => 
-                            <div key={d._id} className="rounded-md border p-2">
+                            <div key={d._id} className="rounded-md border p-2 relative">
                                 <h2 className="font-bold mt-3 text-slate-600">{d.bank_name}</h2>
                                 <div className="border rounded-md p-2 bg-slate-50">
                                     <p className="text-sm font-bold text-slate-600">Account Holder: {d.account_holder_name}</p>
@@ -134,6 +152,14 @@ const WalletPage = () => {
                                     <p className="text-sm font-bold text-slate-600">Branch Name: {d.branch_name}</p>
                                     <p className="text-sm font-bold text-slate-600">IFSC: {d.IFSC}</p>
                                     <p className="text-sm font-bold text-slate-600">Swift Code: {d.swift_code}</p>
+                                </div>
+                                <div className="absolute top-2 right-2 flex items-center">
+                                    {
+                                        deleteLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                                    }
+                                    <Tooltip placement="left" title="Delete Bank Account">
+                                        <TrashIcon onClick={() => deleteBankInfo(d._id)} style={{cursor: 'pointer'}} className="w-5 h-5 font-bold text-red-600"/>
+                                    </Tooltip>
                                 </div>
                             </div>
                         )

@@ -8,11 +8,11 @@ import './WalletCommonCss.css'
 const WithdrawalForm = () => {
 
     const {userData, bankData} = useContext(WalletPageContext);
-    console.log(userData, 'bankData', bankData);
 
     const confirm = () => {
+        const status = "Pending"
         const bankInfo = bankData[0]
-        const data = {...userData, bankInfo}
+        const data = {...userData, bankInfo, status}
         console.log(data);
     };
     const cancel = () => {
