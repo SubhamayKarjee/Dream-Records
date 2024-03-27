@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import WithdrawalList from "../../UserAdminDashboard/WalletPage/WithdrawalList";
 import UserArtistPageForAdmin from "../AdminArtistPage/UserArtistPageForAdmin";
 import UserLabelsPage from "../AdminLabelsPage/UserLabelsPage";
 import PaymentDetails from "./PaymentDetails";
@@ -17,7 +18,6 @@ const SingleUserPage = () => {
         axios.get(`http://localhost:5000/admin/api/v1/users/${id}`)
         .then(res => {
             setUserData(res.data.data)
-            console.log(res.data.data)
             setUserLoading(false)
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,7 +45,7 @@ const SingleUserPage = () => {
         {
           key: '4',
           label: 'Withdrowal',
-          children: 'Analytics',
+          children: <WithdrawalList id={id} text={`Withdrawal Request From ${userData?.nick_name ? userData.nick_name : userData?.name}`}/>
         },
         {
           key: '5',

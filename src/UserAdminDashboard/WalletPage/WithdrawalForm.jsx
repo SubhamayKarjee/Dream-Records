@@ -1,4 +1,3 @@
-
 import { CurrencyRupeeIcon } from "@heroicons/react/24/solid";
 import { Popconfirm } from "antd";
 import { useContext, useState } from "react";
@@ -16,29 +15,30 @@ const WithdrawalForm = () => {
         setWithdrawalLoading(true)
         const status = "Pending"
         const bankInfo = bankData[0]
-        const updateUserBalance = {...userData, balance: {...userData.balance, ammount: 0}}
+        const updateUserBalance = {...userData, balance: {...userData.balance, amount: 0}}
 
         axios.put(`http://localhost:5000/api/v1/users/${userData._id}`, updateUserBalance)
         .then(res => {
-          if(res.status === 200){
-            const now = new Date();
-            const withdrawalDate = now.getDate().toLocaleString();
-            const withdrawalMonth = now.toLocaleString('default', { month: 'long' });
-            const withdrawalYear = now.getFullYear();
-            const withdrawalTime = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
-            const data = {...userData,  masterUserId: userData._id, bankInfo, status, withdrawalMonth, withdrawalYear, withdrawalTime, withdrawalDate};
-            axios.post(`http://localhost:5000/common/api/v1/payment/withdrawal`, data)
-            .then(res => {
-              if(res.status === 200){
-                const reloadAPI = withdrawalReFetch + 1;
-                setWithdrawalReFetch(reloadAPI);
-                setWithdrawalLoading(false);
-                setIsModalOpen(false);
-                console.log(res.data.data);
-                toast.success('Withdrawal Request Submited. We will review shortly!');
-              }
-            })
-          }
+            if(res.status === 200){
+                const now = new Date();
+                const withdrawalDate = now.getDate().toLocaleString();
+                const withdrawalMonth = now.toLocaleString('default', { month: 'long' });
+                const withdrawalYear = now.getFullYear();
+                const withdrawalTime = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
+                const withdrawalAmount = userData.balance.ammount;
+                const data = {...userData,  masterUserId: userData._id, bankInfo, status, withdrawalMonth, withdrawalYear, withdrawalTime, withdrawalDate, withdrawalAmount};
+                axios.post(`http://localhost:5000/common/api/v1/payment/withdrawal`, data)
+                .then(res => {
+                if(res.status === 200){
+                    const reloadAPI = withdrawalReFetch + 1;
+                    setWithdrawalReFetch(reloadAPI);
+                    setWithdrawalLoading(false);
+                    setIsModalOpen(false);
+                    console.log(res.data.data);
+                    toast.success('Withdrawal Request Submited. We will review shortly!');
+                }
+                })
+            }
         })
     };
 
@@ -63,7 +63,7 @@ const WithdrawalForm = () => {
                 }
             </div>
             <div className="mt-3 p-2 border rounded-md md:flex items-center justify-between">
-                <p className="text-slate-500 flex items-center">Ammount: <span className="px-2 py-1 font-bold text-black border rounded-md flex items-center ms-2"><CurrencyRupeeIcon className="w-5 h-5 me-1"/> {userData?.balance?.ammount}</span></p>
+                <p className="text-slate-500 flex items-center">Ammount: <span className="px-2 py-1 font-bold text-black border rounded-md flex items-center ms-2"><CurrencyRupeeIcon className="w-5 h-5 me-1"/> {userData?.balance?.amount}</span></p>
                 <div className="flex items-center">
                     {
                         withdrawalLoading && <span className="block loading loading-spinner loading-md me-2"></span>

@@ -57,10 +57,10 @@ const PaymentDetails = ({id, text}) => {
                 {
                     !fetchLoading && paymentData?.map(data => 
                         <div className="p-2 rounded-lg my-1 border" key={data._id}>
-                            <p className="text-green-500">{text} ll <span className="font-bold text-slate-600">{data?.date}/{data?.month}/{data?.year} ll {data?.time}</span></p>
+                            <p className="text-green-500">{text} || <span className="font-bold text-slate-600">{data?.date}/{data?.month}/{data?.year} || {data?.time}</span></p>
                             <div className="flex items-center justify-between">
                                 <p>ID: {data._id}</p>
-                                <p className="font-bold text-lg md:pe-3 flex items-center"><CurrencyRupeeIcon className="w-5 h-5"/> {data.ammount}</p>
+                                <p className="font-bold text-lg md:pe-3 flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/> {data?.amount}</p>
                             </div>
                         </div>
                     )

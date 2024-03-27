@@ -6,14 +6,14 @@ import { useState } from "react";
 const SendPaymentsFormDreamRecord = ({id}) => {
 
     const [successHandle, setSuccessHandle] = useState(false)
-    const [payAmmount, setPayAmmount] = useState(0);
-    const [payAmmountError, setPayAmmountError] = useState();
+    const [payAmount, setPayAmount] = useState(0);
+    const [payAmountError, setPayAmountError] = useState();
     const [payLoading, setPayLoading] = useState(false)
     const paymentSend = (id) => {
-      setPayAmmountError('');
+      setPayAmountError('');
       setPayLoading(true)
-      if(!payAmmount){
-        setPayAmmountError('Please Add Ammount');
+      if(!payAmount){
+        setPayAmountError('Please Add Ammount');
         return
       }
       const now = new Date();
@@ -27,13 +27,13 @@ const SendPaymentsFormDreamRecord = ({id}) => {
         if(res.status === 200){
           const preData = res.data.data;
           if(preData.balance){
-            const preAmmount = preData.balance.ammount;
-            const newAmmount = parseInt(preAmmount) + parseInt(payAmmount);
-            const newData = {...preData, balance:{ammount: newAmmount, year: year, month: month, time: time, date: date,}}
+            const preAmount = preData.balance.ammount;
+            const newAmount = parseInt(preAmount) + parseInt(payAmount);
+            const newData = {...preData, balance:{amount: newAmount, year: year, month: month, time: time, date: date,}}
             axios.put(`http://localhost:5000/api/v1/users/${id}`, newData)
             .then(res => {
               if(res.status === 200){
-                const formData = {ammount: payAmmount, date, time, month, year, masterUserId: id }
+                const formData = {amount: payAmount, date, time, month, year, masterUserId: id }
                 axios.post(`http://localhost:5000/common/api/v1/payment`, formData)
                 .then(res => {
                   if(res.status === 200){
@@ -44,11 +44,11 @@ const SendPaymentsFormDreamRecord = ({id}) => {
               }
             })
           }else{
-            const newData = {...preData, balance:{ammount: payAmmount, year: year, month: month, time: time, date: date,}}
+            const newData = {...preData, balance:{amount: payAmount, year: year, month: month, time: time, date: date,}}
             axios.put(`http://localhost:5000/api/v1/users/${id}`, newData)
             .then(res => {
               if(res.status === 200){
-                const formData = {ammount: payAmmount, date, time, month, year, masterUserId: id }
+                const formData = {amount: payAmount, date, time, month, year, masterUserId: id }
                 axios.post(`http://localhost:5000/common/api/v1/payment`, formData)
                 .then(res => {
                   if(res.status === 200){
@@ -72,8 +72,8 @@ const SendPaymentsFormDreamRecord = ({id}) => {
                         <p className="text-sm font-semibold ms-2 text-slate-500">Ammount</p>
                         <div className="flex justify-between items-center">
                             <div>
-                            <input onChange={(e) => setPayAmmount(e.target.value)} type="number" className="border rounded-lg py-1 px-2"/>
-                            {payAmmountError && <span className='text-red-600 pt-2 block'>{payAmmountError}</span>}
+                            <input onChange={(e) => setPayAmount(e.target.value)} type="number" className="border rounded-lg py-1 px-2"/>
+                            {payAmountError && <span className='text-red-600 pt-2 block'>{payAmountError}</span>}
                             </div>
                             <div className="flex items-center">
                             {

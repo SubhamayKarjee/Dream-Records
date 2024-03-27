@@ -8,6 +8,7 @@ import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponen
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import BankAccountCreateForm from "./BankAccountCreateForm";
 import WithdrawalForm from "./WithdrawalForm";
+import WithdrawalList from "./WithdrawalList";
 
 export const WalletPageContext = createContext();
 
@@ -90,7 +91,7 @@ const WalletPage = () => {
         {
           key: '2',
           label: 'Withdrawal History',
-          children: 'Withdrawal History',
+          children: <WithdrawalList id={userNameIdRoll[1]} text='Withdrawal Requested'/>
         },
     ];
 
@@ -99,27 +100,27 @@ const WalletPage = () => {
         <div className="overflow-y-auto h-full p-2">
             <h2 className="font-bold mt-2 text-slate-600">Available Balance</h2>
             <div className="md:flex justify-between items-center p-2 border rounded-md">
-                <p className="font-bold text-lg py-1 px-3 border rounded-md flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/>{userData?.balance?.ammount ? userData.balance.ammount : 0}</p>
+                <p className="font-bold text-lg py-1 px-3 border rounded-md flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/>{userData?.balance?.amount ? userData.balance.amount : 0}</p>
                 {
-                    userData?.balance?.ammount > 50 && bankData != 0 && 
+                    userData?.balance?.amount > 50 && bankData != 0 && 
                     <button onClick={showModal} className="btn btn-sm btn-neutral my-2">Withdrawal</button>
                 }
                 {
-                    userData?.balance?.ammount > 50 && bankData == 0 && 
+                    userData?.balance?.amount > 50 && bankData == 0 && 
                     <div className="md:flex items-center">
                         <p className="text-xs m-2 text-slate-600">Please add bank account then withdrawal button visible</p>
                         <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
                     </div>
                 }
                 {
-                    userData?.balance?.ammount < 50 && bankData != 0 &&
+                    userData?.balance?.amount < 50 && bankData != 0 &&
                     <div className="md:flex items-center">
                         <p className="text-xs m-2 text-slate-600">Have to Balance more than <span className="font-bold">5000</span> Rupee</p>
                         <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
                     </div>
                 }
                 {
-                    userData?.balance?.ammount < 50 && bankData == 0 &&
+                    userData?.balance?.amount < 50 && bankData == 0 &&
                     <div className="md:flex items-center">
                         <p className="text-xs m-2 text-slate-600">Have to Balance more than <span className="font-bold">5000</span> Rupee</p>
                         <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
