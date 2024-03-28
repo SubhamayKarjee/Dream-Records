@@ -37,16 +37,6 @@ const UpdateArtistForm = ({artist, imgUrl, imgKey}) => {
           return;
         }
   
-        if(uploadedImage?.key){
-          axios.delete(`http://localhost:5000/api/v1/release/delete-file?key=${uploadedImage.key}`)
-          .then( res => {
-          if(res.status == 200){
-              setUploadedImage()
-          }
-          })
-          .catch(er => console.log(er));
-        }
-  
         axios.post('http://localhost:5000/api/v1/artist/upload-artist-img', formData)
         .then(res => {
             if(res.status == 200){

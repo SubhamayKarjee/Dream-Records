@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import SendPaymentsFormDreamRecord from "./SendPaymentsFormDreamRecord";
+import SendReporsFormDreamRecord from "./SendReporsFormDreamRecord";
 
 const UsersList = () => {
 
@@ -112,9 +113,7 @@ const UsersList = () => {
                               {/* if there is a button in form, it will close the modal */}
                               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                             </form>
-                            <h3 className="font-bold text-lg">Reports!</h3>
-                            <p className="py-4">Update Reports</p>
-                            <p className="py-4">{data._id}</p>
+                            <SendReporsFormDreamRecord id={data._id}/>
                           </div>
                         </dialog>
                       </div>
