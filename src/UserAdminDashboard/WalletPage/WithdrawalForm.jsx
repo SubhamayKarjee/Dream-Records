@@ -25,7 +25,7 @@ const WithdrawalForm = () => {
                 const withdrawalMonth = now.toLocaleString('default', { month: 'long' });
                 const withdrawalYear = now.getFullYear();
                 const withdrawalTime = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
-                const withdrawalAmount = userData.balance.ammount;
+                const withdrawalAmount = userData.balance.amount;
                 const data = {...userData,  masterUserId: userData._id, bankInfo, status, withdrawalMonth, withdrawalYear, withdrawalTime, withdrawalDate, withdrawalAmount};
                 axios.post(`http://localhost:5000/common/api/v1/payment/withdrawal`, data)
                 .then(res => {

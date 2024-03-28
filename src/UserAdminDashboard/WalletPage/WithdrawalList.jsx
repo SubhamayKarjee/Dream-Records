@@ -65,7 +65,7 @@ const WithdrawalList = ({id, text}) => {
                                     <p className="text-green-500"> {text} || <span className="font-bold text-slate-600">{data?.withdrawalDate}/{data?.withdrawalMonth}/{data?.withdrawalYear} || {data?.withdrawalTime}</span> </p>
                                     <p>ID: {data?._id}</p>
                                     {
-                                        data?.status === 'Approved' && <p>Your payment on {data.processdDate} has been processed</p> 
+                                        data?.status === 'Approved' && <p className="text-sm font-bold text-slate-500">Your payment on {data.updatedDate} has been processed</p> 
                                     }
                                 </div>
                                 <div className="">
@@ -94,7 +94,7 @@ const WithdrawalList = ({id, text}) => {
                                 </div>
                             </div>
                             {
-                                data?.rejectResoan && <p className="p-2 bg-red-100 font-bold rounded-md">{data.rejectResoan}</p>
+                                data?.rejectResoan && <p className="p-2 text-sm mt-2 bg-red-100 font-bold rounded-md">{data.rejectResoan}</p>
                             }
                         </div>
                     )

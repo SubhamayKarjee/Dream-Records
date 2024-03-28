@@ -27,7 +27,7 @@ const SendPaymentsFormDreamRecord = ({id}) => {
         if(res.status === 200){
           const preData = res.data.data;
           if(preData.balance){
-            const preAmount = preData.balance.ammount;
+            const preAmount = preData.balance.amount;
             const newAmount = parseInt(preAmount) + parseInt(payAmount);
             const newData = {...preData, balance:{amount: newAmount, year: year, month: month, time: time, date: date,}}
             axios.put(`http://localhost:5000/api/v1/users/${id}`, newData)

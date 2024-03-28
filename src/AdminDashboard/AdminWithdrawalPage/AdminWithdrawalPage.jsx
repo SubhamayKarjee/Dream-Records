@@ -54,6 +54,11 @@ const AdminWithdrawalPage = () => {
         })
     };
 
+    const handleNavigate = (id) => {
+        const link = `/admin-dashboard/withdrawal-request/${id}`
+        navigate(link)
+    }
+
 
     return (
         <div className="my-5">
@@ -71,13 +76,13 @@ const AdminWithdrawalPage = () => {
                 {fetchLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-md"></span></div>}
                 {
                     !fetchLoading && withdrawalData?.map(data => 
-                        <div style={{cursor: 'pointer'}} className="p-3 rounded-lg my-1 border" onClick={() => navigate(`/admin-dashboard/withdrawal-request/${data.id}`)} key={data._id}>
+                        <div style={{cursor: 'pointer'}} className="p-3 rounded-lg my-1 border" onClick={() => handleNavigate(data._id)} key={data._id}>
                             <div className="md:flex justify-between">
                                 <div>
                                     <p className="text-green-500"> Withdrawal Request Form {data?.nick_name ? data.nick_name : data?.name} || <span className="font-bold text-slate-600">{data?.withdrawalDate}/{data?.withdrawalMonth}/{data?.withdrawalYear} || {data?.withdrawalTime}</span> </p>
                                     <p>ID: {data?._id}</p>
                                     {
-                                        data?.status === 'Approved' && <p>Your payment on {data.processdDate} has been processed</p> 
+                                        data?.status === 'Approved' && <p className="text-sm font-bold text-slate-500">Payment on {data.updatedDate} has been processed</p> 
                                     }
                                 </div>
                                 <div className="">
@@ -106,7 +111,7 @@ const AdminWithdrawalPage = () => {
                                 </div>
                             </div>
                             {
-                                data?.rejectResoan && <p className="p-2 bg-red-100 font-bold rounded-md">{data.rejectResoan}</p>
+                                data?.rejectResoan && <p className="p-2 mt-2 text-sm bg-red-100 font-bold rounded-md">{data.rejectResoan}</p>
                             }
                         </div>
                     )

@@ -33,6 +33,7 @@ import WalletPage from './UserAdminDashboard/WalletPage/WalletPage';
 
 
 
+
 // Commont Routes import_______________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
 const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
@@ -49,6 +50,7 @@ const UpdateLabelsComponent = React.lazy(() => import('./AdminDashboard/AdminLab
 const AdminArtistPage = React.lazy(() => import('./AdminDashboard/AdminArtistPage/AdminArtistPage'));
 const SingleArtistForAdmin = React.lazy(() => import('./AdminDashboard/AdminArtistPage/SingleArtistForAdmin'));
 const AdminWithdrawalPage = React.lazy(() => import('./AdminDashboard/AdminWithdrawalPage/AdminWithdrawalPage'));
+const SingleWithdrawalDetails = React.lazy(() => import('./AdminDashboard/AdminWithdrawalPage/SingleWithdrawalDetails'));
 
 const AdminSetting = React.lazy(() => import('./AdminDashboard/AdminSetting/AdminSetting'));
 
@@ -143,7 +145,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin-dashboard/withdrawal-request/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><p>Single Withdrawal</p></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleWithdrawalDetails/></Suspense>,
       },
       {
         path: '/admin-dashboard/settings',
