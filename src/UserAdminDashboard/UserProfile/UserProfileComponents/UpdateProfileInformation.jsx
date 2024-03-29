@@ -31,11 +31,9 @@ const UpdateProfileInformation = () => {
                 setFirstNameHandle(res.data.data.first_name)
                 setLastNameHandle(res.data.data.last_name)
                 setAddressHandle(res.data.data.address)
-
                 setUserData(res.data.data)
                 setUploadedProfileImg(user.photoURL)
                 setGetUserDataLoading(false)
-                console.log(res.data.data);
             })
             .catch(er => console.log(er));
     // eslint-disable-next-line react-hooks/exhaustive-deps

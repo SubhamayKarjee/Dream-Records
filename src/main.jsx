@@ -10,29 +10,14 @@ import { Suspense } from 'react';
 import LoadingComponentsForPage from './LoadingComponents/LoadingComponentsForPage';
 import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsInsidePage';
 import axios from 'axios';
-import UserProfile from './UserAdminDashboard/UserProfile/UserProfile';
-import UpdateProfileInformation from './UserAdminDashboard/UserProfile/UserProfileComponents/UpdateProfileInformation';
-import UserPassUpdateComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserPassUpdateComponent';
-import UserEmailUpdateComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserEmailUpdateComponent';
-import UserYoutubeOacRequestComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserYoutubeOacRequestComponent';
-import UserClaimReleaseComponent from './UserAdminDashboard/UserProfile/UserProfileComponents/UserClaimReleaseComponent';
-import CreateMusicPage from './UserAdminDashboard/CreateMusicPage/CreateMusicPage';
-import FirstStep from './UserAdminDashboard/CreateMusicPage/FirstStep';
-import ThirdStepDate from './UserAdminDashboard/CreateMusicPage/ThirdStepDate';
-import SuccessPage from './UserAdminDashboard/SuccessPage/SuccessPage';
-import SecondStepTrack from './UserAdminDashboard/CreateMusicPage/SecondStepTrack';
-import EditReleaseFirstStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseFirstStep';
-import EditReleaseSecondStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseSecondStep';
-import EditReleaseThirdStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseThirdStep';
-
-
-
 
 // Commont Routes import_______________________________________________________________
+// ____________________________________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
 const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
 const SignUp = React.lazy(() => import('./Authentication/SignUp/SignUp'));
 // Admin Routes import__________________________________________________________________
+// _____________________________________________________________________________________
 const DashBoardForAdmin = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/DashBoardForAdmin'));
 const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/CreateUserForm'));
 const UsersList = React.lazy(() => import('./AdminDashboard/UsersList/UsersList'));
@@ -45,36 +30,50 @@ const AdminArtistPage = React.lazy(() => import('./AdminDashboard/AdminArtistPag
 const SingleArtistForAdmin = React.lazy(() => import('./AdminDashboard/AdminArtistPage/SingleArtistForAdmin'));
 const AdminWithdrawalPage = React.lazy(() => import('./AdminDashboard/AdminWithdrawalPage/AdminWithdrawalPage'));
 const SingleWithdrawalDetails = React.lazy(() => import('./AdminDashboard/AdminWithdrawalPage/SingleWithdrawalDetails'));
-
+// Admin Setting Route__________________________________________________________________
 const AdminSetting = React.lazy(() => import('./AdminDashboard/AdminSetting/AdminSetting'));
-
-
 // User Dashboard Routes import_________________________________________________________
+// _____________________________________________________________________________________
 const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdminHomePage/UserAdminHomePage'));
 const UserHomePage = React.lazy(() => import('./UserAdminDashboard/UserHomePage/UserHomePage'));
+// User Profile Route___________________________________________________________________
+const ProfileHomeComponents = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/ProfileHomeComponents'));
+const UserProfile = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfile'));
+const UpdateProfileInformation = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/UpdateProfileInformation'));
+const UserPassUpdateComponent = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/UserPassUpdateComponent'));
+const UserEmailUpdateComponent = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/UserEmailUpdateComponent'));
+const UserYoutubeOacRequestComponent = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/UserYoutubeOacRequestComponent'));
+const UserClaimReleaseComponent = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/UserClaimReleaseComponent'));
+// Release Route________________________________________________________________________
+const ReleasesPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/ReleasesPage'));
+const CreateMusicPage = React.lazy(() => import('./UserAdminDashboard/CreateMusicPage/CreateMusicPage'));
+const FirstStep = React.lazy(() => import('./UserAdminDashboard/CreateMusicPage/FirstStep'));
+const SecondStepTrack = React.lazy(() => import('./UserAdminDashboard/CreateMusicPage/SecondStepTrack'));
+const ThirdStepDate = React.lazy(() => import('./UserAdminDashboard/CreateMusicPage/ThirdStepDate'));
+const EditReleaseMainPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseMainPage'));
+const EditReleaseFirstStep = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseFirstStep'));
+const EditReleaseSecondStep = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseSecondStep'));
+const EditReleaseThirdStep = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseThirdStep'));
+const SingleReleasePage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/SingleReleasePage/SingleReleasePage'));
+// Artist Route_________________________________________________________________________
 const UserArtistPage = React.lazy(() => import('./UserAdminDashboard/UserArtistPage/UserArtistPage'));
 const DetailsSingleArtist = React.lazy(() => import('./UserAdminDashboard/UserArtistPage/DetailsSingleArtist'));
+// Labels Route_________________________________________________________________________
 const UserLabelsPage = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/UserLabelsPage'));
 const DetailsSingleLabels = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/DetailsSingleLabels'));
-const ReleasesPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/ReleasesPage'));
-const SingleReleasePage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/SingleReleasePage/SingleReleasePage'));
-const EditReleaseMainPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseMainPage'));
+// Wallet Route_________________________________________________________________________
 const WalletPage = React.lazy(() => import('./UserAdminDashboard/WalletPage/WalletPage'));
+// Analytics Route______________________________________________________________________
 const AnalyticsPage = React.lazy(() => import('./UserAdminDashboard/AnalyticsPage/AnalyticsPage'));
+// Support Route________________________________________________________________________
+const SupportPage = React.lazy(() => import('./UserAdminDashboard/SupportPage/SupportPage'));
+// Success Route________________________________________________________________________
+const SuccessPage = React.lazy(() => import('./UserAdminDashboard/SuccessPage/SuccessPage'));
 
 
-
-// User Profile Routes________________
-const ProfileHomeComponents = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/ProfileHomeComponents'));
-
-
-
-// Route Start ________________________________
+// Route Start _________________________________________________________________________
+//______________________________________________________________________________________
 const router = createBrowserRouter([
-  // {
-  //   path: "/",
-  //   element: <Suspense fallback={<LoadingComponentsForPage/>}><LogIn/></Suspense>,
-  // },
   {
     path: "/log-in",
     element: <Suspense fallback={<LoadingComponentsForPage/>}><LogIn/></Suspense>,
@@ -89,6 +88,7 @@ const router = createBrowserRouter([
     element: <Suspense fallback={<LoadingComponentsForPage/>}><SignUp/></Suspense>,
   },
   // Admin Dashboard________________________________________________________________________
+  //________________________________________________________________________________________
   {
     path: "/admin-dashboard",
     element: <Suspense fallback={<LoadingComponentsForPage/>}><DashBoardForAdmin/></Suspense>,
@@ -173,23 +173,23 @@ const router = createBrowserRouter([
       {
         // Create Release _________________________________________________________________________________________________
         path: '/create-release',
-        element: <CreateMusicPage/>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><CreateMusicPage/></Suspense>,
         children: [
           {
             path: '/create-release',
-            element: <FirstStep/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><FirstStep/></Suspense>,
           },
           {
             path: '/create-release/tracks',
-            element: <SecondStepTrack/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SecondStepTrack/></Suspense>,
           },
           {
             path: '/create-release/date',
-            element: <ThirdStepDate/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ThirdStepDate/></Suspense>,
           },
           {
             path: '/create-release/thenks',
-            element: <SuccessPage link={'/releases'} heading={'Successfully Created the Release'} text={'We will review your release very soon. Please Go to the Release page and check your Release Status'}/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SuccessPage link={'/releases'} heading={'Successfully Created the Release'} text={'We will review your release very soon. Please Go to the Release page and check your Release Status'}/></Suspense>,
           }
           
         ]
@@ -201,19 +201,19 @@ const router = createBrowserRouter([
         children: [
           {
             path: '/releases/edit/:id',
-            element: <EditReleaseFirstStep/>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><EditReleaseFirstStep/></Suspense>,
           },
           {
             path: '/releases/edit/second-step',
-            element: <EditReleaseSecondStep/>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><EditReleaseSecondStep/></Suspense>,
           },
           {
             path: '/releases/edit/third-step',
-            element: <EditReleaseThirdStep/>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><EditReleaseThirdStep/></Suspense>,
           },
           {
             path: '/releases/edit/thanks',
-            element: <SuccessPage link={'/releases'} heading={'Successfully Updated the Release'} text={'We will review your release very soon. Please Go to the Release page and check your Release Status'}/>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SuccessPage link={'/releases'} heading={'Successfully Updated the Release'} text={'We will review your release very soon. Please Go to the Release page and check your Release Status'}/></Suspense>,
           },
         ]
       },
@@ -243,7 +243,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/support',
-        element: 'Support'
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SupportPage/></Suspense>,
       },
       //User Account Page _________________________________________________________________________________________
       {
@@ -256,23 +256,23 @@ const router = createBrowserRouter([
           },
           {
             path: '/account/update-profile-information',
-            element: <UpdateProfileInformation/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UpdateProfileInformation/></Suspense>,
           },
           {
             path: '/account/change-password',
-            element: <UserPassUpdateComponent/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserPassUpdateComponent/></Suspense>,
           },
           {
             path: '/account/change-email',
-            element: <UserEmailUpdateComponent/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserEmailUpdateComponent/></Suspense>,
           },
           {
             path: '/account/youtube-oac-request',
-            element: <UserYoutubeOacRequestComponent/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserYoutubeOacRequestComponent/></Suspense>,
           },
           {
             path: '/account/youtube-claim-release',
-            element: <UserClaimReleaseComponent/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserClaimReleaseComponent/></Suspense>,
           },
         ]
       },
