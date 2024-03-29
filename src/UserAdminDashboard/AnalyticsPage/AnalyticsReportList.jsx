@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid";
 import { DatePicker, Empty, Pagination } from "antd";
 import axios from "axios";
@@ -22,7 +23,6 @@ const AnalyticsReportList = ({id, text}) => {
             if(res.status === 200){
                 setReportList(res.data.data);
                 setTotalItems(res.data.dataCount)
-                console.log(res.data.data);
                 setFetchLoading(false)
             }
         })

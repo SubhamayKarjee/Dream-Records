@@ -59,7 +59,7 @@ const PaymentDetails = ({id, text}) => {
                         <div className="p-2 rounded-lg my-1 border" key={data._id}>
                             <p className="text-green-500">{text} || <span className="font-bold text-slate-600">{data?.date}/{data?.month}/{data?.year} || {data?.time}</span></p>
                             <div className="flex items-center justify-between">
-                                <p>ID: {data._id}</p>
+                                <p className="flex items-center">Payment made based on <span className="font-bold text-slate-600 ms-2">{data.paymentReportDate}</span></p>
                                 <p className="font-bold text-lg md:pe-3 flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/> {data?.amount}</p>
                             </div>
                         </div>

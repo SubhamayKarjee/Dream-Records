@@ -34,7 +34,6 @@ const WithdrawalForm = () => {
                     setWithdrawalReFetch(reloadAPI);
                     setWithdrawalLoading(false);
                     setIsModalOpen(false);
-                    console.log(res.data.data);
                     toast.success('Withdrawal Request Submited. We will review shortly!');
                 }
                 })

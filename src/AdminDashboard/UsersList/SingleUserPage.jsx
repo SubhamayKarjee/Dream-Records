@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import AnalyticsReportList from "../../UserAdminDashboard/AnalyticsPage/AnalyticsReportList";
 import WithdrawalList from "../../UserAdminDashboard/WalletPage/WithdrawalList";
 import UserArtistPageForAdmin from "../AdminArtistPage/UserArtistPageForAdmin";
 import UserLabelsPage from "../AdminLabelsPage/UserLabelsPage";
@@ -50,7 +51,7 @@ const SingleUserPage = () => {
         {
           key: '5',
           label: 'Analytics',
-          children: 'Analytics',
+          children: <AnalyticsReportList id={id} text={"Successsfully send Analytics Reports form Dream Record!"}/>
         },
     ];
 

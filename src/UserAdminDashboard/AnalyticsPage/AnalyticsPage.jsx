@@ -6,11 +6,6 @@ import AnalyticsReportList from "./AnalyticsReportList";
 const AnalyticsPage = () => {
 
     const { userNameIdRoll } = useContext(AuthContext);
-
-    
-
-
-    
     const text = 'Get Analytics Reports From Dream Record!'
 
     return (
