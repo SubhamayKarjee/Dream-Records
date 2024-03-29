@@ -24,12 +24,6 @@ import SecondStepTrack from './UserAdminDashboard/CreateMusicPage/SecondStepTrac
 import EditReleaseFirstStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseFirstStep';
 import EditReleaseSecondStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseSecondStep';
 import EditReleaseThirdStep from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseThirdStep';
-import DetailsSingleArtist from './UserAdminDashboard/UserArtistPage/DetailsSingleArtist';
-import WalletPage from './UserAdminDashboard/WalletPage/WalletPage';
-
-
-
-
 
 
 
@@ -59,11 +53,15 @@ const AdminSetting = React.lazy(() => import('./AdminDashboard/AdminSetting/Admi
 const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdminHomePage/UserAdminHomePage'));
 const UserHomePage = React.lazy(() => import('./UserAdminDashboard/UserHomePage/UserHomePage'));
 const UserArtistPage = React.lazy(() => import('./UserAdminDashboard/UserArtistPage/UserArtistPage'));
+const DetailsSingleArtist = React.lazy(() => import('./UserAdminDashboard/UserArtistPage/DetailsSingleArtist'));
 const UserLabelsPage = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/UserLabelsPage'));
 const DetailsSingleLabels = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/DetailsSingleLabels'));
 const ReleasesPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/ReleasesPage'));
 const SingleReleasePage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/SingleReleasePage/SingleReleasePage'));
 const EditReleaseMainPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseMainPage'));
+const WalletPage = React.lazy(() => import('./UserAdminDashboard/WalletPage/WalletPage'));
+const AnalyticsPage = React.lazy(() => import('./UserAdminDashboard/AnalyticsPage/AnalyticsPage'));
+
 
 
 // User Profile Routes________________
@@ -237,11 +235,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/analytics',
-        element: 'Analytics'
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AnalyticsPage/></Suspense>,
       },
       {
         path: '/wallet',
-        element: <WalletPage/>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><WalletPage/></Suspense>,
       },
       {
         path: '/support',
