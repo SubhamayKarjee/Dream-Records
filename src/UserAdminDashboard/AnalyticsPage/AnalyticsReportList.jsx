@@ -79,7 +79,7 @@ const AnalyticsReportList = ({id, text}) => {
                     !totalItems && !fetchLoading && <Empty className="pt-12" />
                 }
                 {
-                    totalItems > 9 && !fetchLoading && <div className="flex justify-center items-center my-4">
+                    totalItems > 12 && !fetchLoading && <div className="flex justify-center items-center my-4">
                         <Pagination 
                         defaultCurrent={currentPage} 
                         total={totalItems}
