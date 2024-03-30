@@ -61,6 +61,7 @@ const SupportPage = () => {
                 setTotalItems(res.data.dataCount)
             }
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[currentPage, supportStatus, userNameIdRoll[1]])
 
     const handlePageChange = (page) => {

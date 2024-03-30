@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
@@ -10,8 +11,6 @@ import { Suspense } from 'react';
 import LoadingComponentsForPage from './LoadingComponents/LoadingComponentsForPage';
 import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsInsidePage';
 import axios from 'axios';
-import AdminSupportPage from './AdminDashboard/AdminSupportPage/AdminSupportPage';
-import SupportAnsPage from './AdminDashboard/AdminSupportPage/SupportAnsPage';
 
 // Commont Routes import_______________________________________________________________
 // ____________________________________________________________________________________
@@ -32,6 +31,8 @@ const AdminArtistPage = React.lazy(() => import('./AdminDashboard/AdminArtistPag
 const SingleArtistForAdmin = React.lazy(() => import('./AdminDashboard/AdminArtistPage/SingleArtistForAdmin'));
 const AdminWithdrawalPage = React.lazy(() => import('./AdminDashboard/AdminWithdrawalPage/AdminWithdrawalPage'));
 const SingleWithdrawalDetails = React.lazy(() => import('./AdminDashboard/AdminWithdrawalPage/SingleWithdrawalDetails'));
+const AdminSupportPage = React.lazy(() => import('./AdminDashboard/AdminSupportPage/AdminSupportPage'));
+const SupportAnsPage = React.lazy(() => import('./AdminDashboard/AdminSupportPage/SupportAnsPage'));
 // Admin Setting Route__________________________________________________________________
 const AdminSetting = React.lazy(() => import('./AdminDashboard/AdminSetting/AdminSetting'));
 // User Dashboard Routes import_________________________________________________________
