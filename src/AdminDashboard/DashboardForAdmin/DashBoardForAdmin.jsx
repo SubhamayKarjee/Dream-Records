@@ -10,6 +10,7 @@ import {
     UserGroupIcon,
     Cog6ToothIcon,
     CurrencyDollarIcon,
+    RectangleGroupIcon,
  } from '@heroicons/react/24/solid'
 import { useState } from 'react';
 import { Drawer } from 'antd';
@@ -79,6 +80,10 @@ const DashBoardForAdmin = () => {
                                 <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/withdrawal-request'}>
                                     <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                     Withdrawal
+                                </Link>
+                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/support'}>
+                                    <RectangleGroupIcon className="h-7 w-7 pe-2" />
+                                    Support
                                 </Link>
                                 <Link className='text-white flex items-center py-2' to={'/admin-dashboard/settings'}>
                                     <Cog6ToothIcon className="h-7 w-7 pe-2" />
@@ -155,6 +160,10 @@ const DashBoardForAdmin = () => {
                                             <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/withdrawal-request'}>
                                                 <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                                 Withdrawal
+                                            </Link>
+                                            <Link className='text-white flex items-center py-2' to={'/admin-dashboard/support'}>
+                                                <RectangleGroupIcon className="h-7 w-7 pe-2" />
+                                                Support
                                             </Link>
                                             <Link className='text-white flex items-center py-2' to={'/admin-dashboard/settings'}>
                                                 <Cog6ToothIcon className="h-7 w-7 pe-2" />

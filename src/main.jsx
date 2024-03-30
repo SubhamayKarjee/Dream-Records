@@ -10,6 +10,8 @@ import { Suspense } from 'react';
 import LoadingComponentsForPage from './LoadingComponents/LoadingComponentsForPage';
 import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsInsidePage';
 import axios from 'axios';
+import AdminSupportPage from './AdminDashboard/AdminSupportPage/AdminSupportPage';
+import SupportAnsPage from './AdminDashboard/AdminSupportPage/SupportAnsPage';
 
 // Commont Routes import_______________________________________________________________
 // ____________________________________________________________________________________
@@ -67,6 +69,7 @@ const WalletPage = React.lazy(() => import('./UserAdminDashboard/WalletPage/Wall
 const AnalyticsPage = React.lazy(() => import('./UserAdminDashboard/AnalyticsPage/AnalyticsPage'));
 // Support Route________________________________________________________________________
 const SupportPage = React.lazy(() => import('./UserAdminDashboard/SupportPage/SupportPage'));
+const SingleSupportPage = React.lazy(() => import('./UserAdminDashboard/SupportPage/SingleSupportPage'));
 // Success Route________________________________________________________________________
 const SuccessPage = React.lazy(() => import('./UserAdminDashboard/SuccessPage/SuccessPage'));
 
@@ -144,6 +147,14 @@ const router = createBrowserRouter([
       {
         path: '/admin-dashboard/withdrawal-request/:id',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleWithdrawalDetails/></Suspense>,
+      },
+      {
+        path: '/admin-dashboard/support',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminSupportPage/></Suspense>,
+      },
+      {
+        path: '/admin-dashboard/support/:id',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SupportAnsPage/></Suspense>,
       },
       {
         path: '/admin-dashboard/settings',
@@ -247,7 +258,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/support/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}>Single Support</Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleSupportPage/></Suspense>,
       },
       //User Account Page _________________________________________________________________________________________
       {
