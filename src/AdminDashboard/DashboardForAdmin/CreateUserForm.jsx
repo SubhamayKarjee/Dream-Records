@@ -48,7 +48,9 @@ const CreateUserForm = () => {
             </div>
             {
                 formHidden == false ? <form onSubmit={handleSubmit(onSubmit)}>
-                        <input type="email" placeholder="Enter User Email" className="input input-bordered w-full" {...register("email", { required: true})}/>
+                        <input type="text" placeholder="Enter User name" className="input input-bordered rounded-full w-full" {...register("userName", { required: true})}/>
+                        {errors.userName && <span className='text-red-600 pt-2 block'>Please Fill User Name</span>}
+                        <input type="email" placeholder="Enter User Email" className="input input-bordered rounded-full mt-2 w-full" {...register("email", { required: true})}/>
                         {errors.email && <span className='text-red-600 pt-2 block'>Please Fill Email</span>}
                         {
                             loading && <LoadingComponentsInsidePage/>

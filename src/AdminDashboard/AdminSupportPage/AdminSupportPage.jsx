@@ -58,21 +58,21 @@ const AdminSupportPage = () => {
                 }
                 {
                     supportData && supportData.map(data => 
-                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/admin-dashboard/support/${data._id}`)} className='p-2 rounded-md border md:flex justify-between items-center' key={data._id}>
+                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/admin-dashboard/support/${data._id}`)} className='p-2 my-1 rounded-md border md:flex justify-between items-center' key={data._id}>
                             <div>
                                 <p>Submited Request From <span className="font-bold text-green-500 me-2">{data.userName}</span>|| <span className="font-bold text-slate-500">{data.date} {data.month} {data.year} || {data.time}</span></p>
                                 <p className='text-sm text-slate-500'>{data?.supportText.split(' ').slice(0, 18).join(' ')} ...</p>
                             </div>
                             {
                                 data.status === 'Pending' &&
-                                <div className="flex items-center p-1 music_status bg-[#ffae00] rounded-md shadow">
+                                <div className="flex items-center p-1 bg-[#ffae00] rounded-md shadow">
                                     <ClockIcon className="h-3 w-3 text-white me-1"/>
                                     <p className="text-xs font-semibold text-white">{data.status}</p>
                                 </div>
                             }
                             {
                                 data.status === 'Solved' &&
-                                <div className="flex items-center p-1 music_status bg-[#00c90d] rounded-md shadow">
+                                <div className="flex items-center p-1 bg-[#00c90d] rounded-md shadow">
                                     <CheckBadgeIcon className="h-3 w-3 text-white me-1"/>
                                     <p className="text-xs font-semibold text-white">{data.status}</p>
                                 </div>
