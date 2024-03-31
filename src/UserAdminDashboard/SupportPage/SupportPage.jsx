@@ -141,7 +141,7 @@ const SupportPage = () => {
             <div className='my-3 p-3 md:p-4 border rounded-lg md:flex justify-between'>
                 <div className='flex-1 m-2'>
                     <p className='font-bold text-sm text-slate-500 mb-2'>Support Box</p>
-                    <textarea id='text_box' onChange={e => setSupportText(e.target.value)} className="textarea textarea-bordered w-full" placeholder="If you have a complaint or opinion about something. Please write here!"></textarea>
+                    <textarea id='text_box' onChange={e => setSupportText(e.target.value)} className="textarea textarea-bordered w-full md:h-52" placeholder="If you have a complaint or opinion about something. Please write here!"></textarea>
                     {
                         supportTextErr && <p className='text-sm text-red-500 mb-2'>{supportTextErr}</p>
                     }
