@@ -52,7 +52,7 @@ const SupportPage = () => {
     const items = [
         {
           key: '1',
-          label: 'Chart Support',
+          label: 'Chat Support',
           children: <ChartSupport id={userNameIdRoll[1]}/>,
         },
         {
