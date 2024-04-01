@@ -59,14 +59,14 @@ const ChartSupport = ({id}) => {
                         </div>
                         {
                             data.status === 'Pending' &&
-                            <div className="flex items-center p-1 music_status bg-[#ffae00] rounded-md shadow">
+                            <div className="flex items-center p-1 bg-[#ffae00] rounded-md shadow">
                                 <ClockIcon className="h-3 w-3 text-white me-1"/>
                                 <p className="text-xs font-semibold text-white">{data.status}</p>
                             </div>
                         }
                         {
                             data.status === 'Solved' &&
-                            <div className="flex items-center p-1 music_status bg-[#00c90d] rounded-md shadow">
+                            <div className="flex items-center p-1 bg-[#00c90d] rounded-md shadow">
                                 <CheckBadgeIcon className="h-3 w-3 text-white me-1"/>
                                 <p className="text-xs font-semibold text-white">{data.status}</p>
                             </div>
