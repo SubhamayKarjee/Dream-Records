@@ -1,5 +1,5 @@
 import './DashBoardForAdmin.css'
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo/Dream-Records Logo-(Light).png';
 import { 
     HomeIcon, 
@@ -16,7 +16,18 @@ import { useState } from 'react';
 import { Drawer } from 'antd';
 import CreateUserForm from './CreateUserForm';
 
+import { createContext } from 'react';
+import LoadingComponentsForPage from '../../LoadingComponents/LoadingComponentsForPage';
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.config';
+
+export const AdminAuthContext = createContext();
+
 const DashBoardForAdmin = () => {
+
+    const [signOut] = useSignOut(auth);
+    const navigate = useNavigate()
+
     // Mobile Navigation Humbergo ______________________
     const [open, setOpen] = useState(false);
     const showDrawer = () => {
@@ -26,9 +37,28 @@ const DashBoardForAdmin = () => {
         setOpen(false);
     };
 
+    // const [signOut, error1] = useSignOut(auth);
+    const [user, loading] = useAuthState(auth);
+
+    if(loading){
+        return <LoadingComponentsForPage/>
+    }
+    
+    let adminNameIdRoll = user?.displayName?.split("'__'");
+
+    const contextValue = {
+        adminNameIdRoll
+    }
+
+    const logOutHandle = () => {
+        signOut();
+        navigate('/admin')
+    }
+
 
     return (
         <section className='md:h-screen bg-slate-950'>
+            <AdminAuthContext.Provider value={contextValue}>
             <div className='xl:max-w-[1300px] lg:max-w-[96%] md:max-w-[96%] sm:max-w-[100%] w-[100%] mx-auto'>
                 <div className="md:grid md:gap-4 grid-cols-5 md:py-4 md:h-screen">
                     <div className="pt-4 hidden md:block relative">
@@ -96,20 +126,7 @@ const DashBoardForAdmin = () => {
                     <div className="bg-white col-span-4 p-2 md:p-4 md:rounded-lg overflow-y-auto">
                         {/* Admin Profile image right Side ________________________________________________________________________ */}
                         <div style={{marginTop: '-10px'}} className='hidden md:block md:flex justify-end items-center border-b'>
-                            <div className="flex-none gap-2">
-                                <div className="dropdown dropdown-end">
-                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                    <div className="w-12 rounded-full">
-                                    <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                                    </div>
-                                </div>
-                                <ul tabIndex={0} className="border mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                    <h3 className='text-lg font-bold px-2 border-b'>Demo Name</h3>
-                                    <li><Link className='font-bold py-2 my-2' to={'/'}>Account</Link></li>
-                                    <li><Link className='btn btn-sm btn-error' to={'/'}>Logout</Link></li>
-                                </ul>
-                                </div>
-                            </div>
+                            <button onClick={logOutHandle} className='btn btn-sm bg-red-300'>Log Out</button>
                         </div>
                         {/* ______________________________________________________________________________________________________________ */}
                         {/* Mobile Menu Start !!!!!!!!!_______________________________________________________________________________________!!!!!!!!!! */}
@@ -176,20 +193,7 @@ const DashBoardForAdmin = () => {
                             {/* __________________________________________________________________________________________________________ */}
                             {/* Right Admin Profile ______________________________________________________________________________________ */}
                             <div className='flex justify-end items-center border-b'>
-                                <div className="flex-none gap-2">
-                                    <div className="dropdown dropdown-end">
-                                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                        <div className="w-12 rounded-full">
-                                        <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                                        </div>
-                                    </div>
-                                    <ul tabIndex={0} className="border mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                        <h3 className='text-lg font-bold px-2 border-b'>Demo Name</h3>
-                                        <li><Link className='font-bold py-2 my-2' to={'/'}>Account</Link></li>
-                                        <li><Link className='btn btn-sm btn-error' to={'/'}>Logout</Link></li>
-                                    </ul>
-                                    </div>
-                                </div>
+                                <button onClick={logOutHandle} className='btn btn-sm bg-red-300'>Log Out</button>
                             </div>
                         </div>
                         {/* __________________________________________________________________________________________________________ */}
@@ -200,6 +204,7 @@ const DashBoardForAdmin = () => {
                     </div>
                 </div>
             </div>
+            </AdminAuthContext.Provider>
         </section>
     );
 };

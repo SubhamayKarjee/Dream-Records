@@ -1,5 +1,5 @@
 import './UserAdminHomePage.css'
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo/Dream-Records Logo-(Light).png';
 import { 
     HomeIcon, 
@@ -22,6 +22,10 @@ import { createContext } from 'react';
 export const AuthContext = createContext();
 
 const UserAdminHomePage = () => {
+
+    const navigate = useNavigate()
+
+
     const [signOut, error1] = useSignOut(auth);
     const [user, loading] = useAuthState(auth);
     const [uploadedProfileImg, setUploadedProfileImg] = useState(user?.photoURL);
@@ -72,6 +76,10 @@ const UserAdminHomePage = () => {
         setFeaturing
     }
 
+    const signOutHandle = () => {
+        signOut();
+        navigate('/log-in')
+    }
     return (
         <section className='md:h-screen bg-slate-950'>
             <div className='xl:max-w-[1300px] lg:max-w-[96%] md:max-w-[96%] sm:max-w-[100%] w-[100%] mx-auto'>
@@ -154,14 +162,7 @@ const UserAdminHomePage = () => {
                                            userNameIdRoll?  <h3 className='text-lg font-bold px-2 border-b'>{userNameIdRoll[0]}</h3> : ''
                                         }
                                         <li><Link className='font-bold py-2 my-2' to={'/account'}>Account</Link></li>
-                                        <li><button onClick={async () => { const success = await signOut();
-                                                                                if (success) {
-                                                                                    alert('You are sign out');
-                                                                                }
-                                                                                if(error1){
-                                                                                    alert(error1.message)
-                                                                                }
-                                                                                }} className='btn btn-sm btn-error'>Logout</button></li>
+                                        <li><button onClick={signOutHandle} className='btn btn-sm btn-error'>Logout</button></li>
                                     </ul>
                                     </div>
                                 </div>

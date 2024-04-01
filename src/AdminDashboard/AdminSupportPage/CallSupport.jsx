@@ -90,7 +90,7 @@ const CallSupport = () => {
                             <p className='text-sm text-slate-500'>Phone Number: {data?.phoneNumber}</p>
                             {
                                 data?.status === 'Solved' &&
-                                <p className='font-bold'>Call Request Accepted <span className="font-bold text-green-500 me-2">{data.userName}</span>|| <span className="font-bold text-slate-500">{data.ansDate} {data.ansMonth} {data.ansYear} || {data.ansTime}</span></p>
+                                <p className='font-bold'>Call Request Accepted <span className="font-bold text-slate-500">{data.ansDate} {data.ansMonth} {data.ansYear} || {data.ansTime}</span></p>
                             }
                         </div>
                         <div>
