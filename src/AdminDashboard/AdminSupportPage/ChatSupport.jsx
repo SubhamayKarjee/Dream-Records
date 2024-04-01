@@ -18,7 +18,7 @@ const ChatSupport = () => {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/support/chat-support-list/?page=${currentPage}&limit=${itemPerPage}&status=${supportStatus}`)
+        axios.get(`http://localhost:5000/common/api/v1/support/chat-support-list?page=${currentPage}&limit=${itemPerPage}&status=${supportStatus}`)
         .then(res => {
             if(res.status === 200){
                 setLoading(false)
