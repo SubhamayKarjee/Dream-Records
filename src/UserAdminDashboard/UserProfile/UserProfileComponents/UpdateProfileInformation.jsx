@@ -74,7 +74,7 @@ const UpdateProfileInformation = () => {
 
     const [udateLoading, setUpdateLoading] = useState(false)
     // React Hook Form Submit Function For Create User _________________________
-    const { register, handleSubmit, formState: { errors }} = useForm();
+    const { register, handleSubmit,} = useForm();
     const onSubmit = async (data) => {
         setUpdateLoading(true)
         let first_name;
@@ -119,13 +119,12 @@ const UpdateProfileInformation = () => {
             imgKey = '';
         }
 
-        const name = data.nick_name;
-        const formData = {first_name, last_name, address, photoURL, imgKey, name}
+        const formData = {first_name, last_name, address, photoURL, imgKey,}
         
 
         // // setMainProfileImage
-        const displayName = `${data.nick_name}'__'${userNameIdRoll[1]}'__'${userNameIdRoll[2]}`;
-        const success = await updateProfile({ displayName, photoURL });
+        // const displayName = `${data.nick_name}'__'${userNameIdRoll[1]}'__'${userNameIdRoll[2]}`;
+        const success = await updateProfile({ photoURL });
 
         if(success){
            axios.put(`http://localhost:5000/api/v1/users/${userNameIdRoll[1]}`, formData)
@@ -197,9 +196,8 @@ const UpdateProfileInformation = () => {
                         </div>
                     </div>
                     <div className="mt-2">
-                        <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Display Name/Nick Name</p>
-                        <input type="text" defaultValue={userNameIdRoll[0]} className="input rounded-full input-bordered w-full" {...register("nick_name", { required: true})}/>
-                        {errors.nick_name && <span className='text-red-600 pt-2 block'>Nick/Display Name Required</span>}
+                        <p className="my-1 text-sm font-semibold text-slate-500 ms-2">User Name</p>
+                        <input type="text" defaultValue={userNameIdRoll[0]} className="input rounded-full input-bordered w-full" disabled/>
 
                         <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Address</p>
                         {

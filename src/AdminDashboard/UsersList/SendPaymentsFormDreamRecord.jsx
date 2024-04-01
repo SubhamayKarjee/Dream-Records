@@ -35,11 +35,11 @@ const SendPaymentsFormDreamRecord = ({id}) => {
           if(preData.balance){
             const preAmount = preData.balance.amount;
             const newAmount = parseInt(preAmount) + parseInt(payAmount);
-            const newData = {...preData, balance:{amount: newAmount, year: year, month: month, time: time, date: date,}}
+            const newData = {...preData, balance:{amount: parseInt(newAmount), year: year, month: month, time: time, date: date,}}
             axios.put(`http://localhost:5000/api/v1/users/${id}`, newData)
             .then(res => {
               if(res.status === 200){
-                const formData = {amount: payAmount, date, time, month, year, masterUserId: id, paymentReportDate }
+                const formData = {amount: parseInt(payAmount), date, time, month, year, masterUserId: id, paymentReportDate }
                 axios.post(`http://localhost:5000/common/api/v1/payment`, formData)
                 .then(res => {
                   if(res.status === 200){

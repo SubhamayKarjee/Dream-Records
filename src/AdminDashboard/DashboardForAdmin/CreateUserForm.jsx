@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import axios from 'axios';
-// import {  LinkIcon } from '@heroicons/react/24/solid'
 import { useState } from "react";
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 
@@ -12,21 +11,25 @@ const CreateUserForm = () => {
     const [userEmail, setUserEmail] = useState('');
     const [loading, setLoading] = useState(false);
 
+    const [userNameErr, setUserNameErr] = useState('')
     // React Hook Form Submit Function For Create User _________________________
     const { register, handleSubmit, reset, formState: { errors }} = useForm();
     const onSubmit = (data) => {
-        const roll = 'User'
-        const formData = {...data, roll}
+        setUserNameErr('')
         setLoading(true)
-        axios.post('http://localhost:5000/api/v1/users', formData).then(res => {
+        axios.post('http://localhost:5000/api/v1/users', data).then(res => {
             if(res.status == 200){
-                setMessage(res.data.message);
-                setUserEmail(res.data.email)
-                setUserId(res.data.data.insertedId);
-                setLoading(false);
-                setFormHidden(true);
-                reset();
-                console.log(res.data)
+                if(res.data.message === 'This User Name all ready exist!'){
+                    setUserNameErr(res.data.message)
+                    setLoading(false);
+                }else{
+                    setMessage(res.data.message);
+                    setUserEmail(res.data.email)
+                    setUserId(res.data.data.insertedId);
+                    setLoading(false);
+                    setFormHidden(true);
+                    reset();
+                }
             }
             
         })
@@ -48,9 +51,19 @@ const CreateUserForm = () => {
             </div>
             {
                 formHidden == false ? <form onSubmit={handleSubmit(onSubmit)}>
-                        <input type="text" placeholder="Enter User name" className="input input-bordered rounded-full w-full" {...register("userName", { required: true})}/>
+
+                        <p className="mt-3 text-sm font-semibold text-slate-500">Select Role <span className="text-red-500">*</span></p>
+                        <select className="select select-sm select-bordered w-full" {...register("roll", { required: true})}>
+                            <option>User</option>
+                            <option>Admin</option>
+                        </select>
+                        {errors.roll && <span className='text-red-600 pt-2 block'>Please Select Role</span>}
+
+                        <input type="text" placeholder="Enter User name" className="mt-2 input input-sm input-bordered rounded-full w-full" {...register("userName", { required: true})}/>
                         {errors.userName && <span className='text-red-600 pt-2 block'>Please Fill User Name</span>}
-                        <input type="email" placeholder="Enter User Email" className="input input-bordered rounded-full mt-2 w-full" {...register("email", { required: true})}/>
+                        {userNameErr && <span className='text-red-600 pt-2 block'>{userNameErr}</span>}
+
+                        <input type="email" placeholder="Enter User Email" className="input input-sm input-bordered rounded-full mt-2 w-full" {...register("email", { required: true})}/>
                         {errors.email && <span className='text-red-600 pt-2 block'>Please Fill Email</span>}
                         {
                             loading && <LoadingComponentsInsidePage/>
@@ -66,7 +79,6 @@ const CreateUserForm = () => {
                         }
                         <div className="flex justify-between items-center">
                             <span className="font-sm bg-slate-200 p-2 rounded-md">http://localhost:5173/set-password/{userId}</span>
-                            {/* <span style={{cursor: 'pointer'}} className="pointer bg-slate-100 rounded-md p-2"><LinkIcon className='w-4 h-4'/></span> */}
                         </div>
                     </div>
             }

@@ -102,25 +102,25 @@ const WalletPage = () => {
             <div className="md:flex justify-between items-center p-2 border rounded-md">
                 <p className="font-bold text-lg py-1 px-3 border rounded-md flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/>{userData?.balance?.amount ? userData.balance.amount : 0}</p>
                 {
-                    userData?.balance?.amount > 50 && bankData != 0 && 
+                    userData?.balance?.amount > 5000 && bankData != 0 && 
                     <button onClick={showModal} className="btn btn-sm btn-neutral my-2">Withdrawal</button>
                 }
                 {
-                    userData?.balance?.amount > 50 && bankData == 0 && 
+                    userData?.balance?.amount > 5000 && bankData == 0 && 
                     <div className="md:flex items-center">
                         <p className="text-xs m-2 text-slate-600">Please add bank account then withdrawal button visible</p>
                         <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
                     </div>
                 }
                 {
-                    userData?.balance?.amount < 50 && bankData != 0 &&
+                    userData?.balance?.amount < 5000 && bankData != 0 &&
                     <div className="md:flex items-center">
                         <p className="text-xs m-2 text-slate-600">Have to Balance more than <span className="font-bold">5000</span> Rupee</p>
                         <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
                     </div>
                 }
                 {
-                    userData?.balance?.amount < 50 && bankData == 0 &&
+                    userData?.balance?.amount < 5000 && bankData == 0 &&
                     <div className="md:flex items-center">
                         <p className="text-xs m-2 text-slate-600">Have to Balance more than <span className="font-bold">5000</span> Rupee</p>
                         <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
