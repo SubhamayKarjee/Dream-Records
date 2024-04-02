@@ -1,6 +1,6 @@
 import { Select, Tabs } from 'antd';
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import toast from 'react-hot-toast';
 // import { useNavigate } from 'react-router-dom';
 import supportIcon from '../../assets/support-icon/support.png'
@@ -68,26 +68,14 @@ const SupportPage = () => {
     const [categoryErr, setCategoryErr] = useState('')
     const selectCategory = (value) => {
         setCategory(value)
-    }
-
-
-    // Get Language select Option Form API__________________________
-    const [language, setLanguage] = useState();
-    const [options, setOptions] = useState([]);
-    useEffect( () => {
-        axios.get('http://localhost:5000/admin/api/v1/language')
-        .then(res => {
-            setOptions(res.data.data);
-        })
-    },[])
-
+    }    
+    
     // Handle Lyrics Language Select Input _________________________
+    const [language, setLanguage] = useState();
     const [languageErr, setLanguageErr] = useState('')
     const selectLanguage = (value) => {
         setLanguage(value)
     };
-    // Filter `option.label` match the user type `input`
-    const filterOption = (input, option) =>(option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
     // Phone Number Input ___________________________________________
     const [value, setValue] = useState();
@@ -178,10 +166,11 @@ const SupportPage = () => {
                             showSearch
                             className="w-full rounded-full"
                             placeholder="Select Language"
-                            optionFilterProp="children"
                             onChange={selectLanguage}
-                            filterOption={filterOption}
-                            options={options.map(option => ({ value: option.language, label: option.language }))}
+                            options={[
+                                {value: 'Bangla',label: 'Bangla',},
+                                {value: 'Hindi',label: 'Hindi',},
+                            ]}
                         />
                         {languageErr && <span className='text-red-600 pt-2 block'>{languageErr}</span>}
 

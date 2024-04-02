@@ -45,8 +45,6 @@ const UserProfile = React.lazy(() => import('./UserAdminDashboard/UserProfile/Us
 const UpdateProfileInformation = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/UpdateProfileInformation'));
 const UserPassUpdateComponent = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/UserPassUpdateComponent'));
 const UserEmailUpdateComponent = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/UserEmailUpdateComponent'));
-const UserYoutubeOacRequestComponent = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/UserYoutubeOacRequestComponent'));
-const UserClaimReleaseComponent = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/UserClaimReleaseComponent'));
 // Release Route________________________________________________________________________
 const ReleasesPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/ReleasesPage'));
 const CreateMusicPage = React.lazy(() => import('./UserAdminDashboard/CreateMusicPage/CreateMusicPage'));
@@ -66,6 +64,8 @@ const UserLabelsPage = React.lazy(() => import('./UserAdminDashboard/UserLabelPa
 const DetailsSingleLabels = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/DetailsSingleLabels'));
 // Wallet Route_________________________________________________________________________
 const WalletPage = React.lazy(() => import('./UserAdminDashboard/WalletPage/WalletPage'));
+// Claim Release Route__________________________________________________________________
+const ClaimReleasePage = React.lazy(() => import('./UserAdminDashboard/ClaimReleasePage/ClaimReleasePage'));
 // Analytics Route______________________________________________________________________
 const AnalyticsPage = React.lazy(() => import('./UserAdminDashboard/AnalyticsPage/AnalyticsPage'));
 // Support Route________________________________________________________________________
@@ -254,6 +254,10 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><WalletPage/></Suspense>,
       },
       {
+        path: '/claim-release',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ClaimReleasePage/></Suspense>,
+      },
+      {
         path: '/support',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SupportPage/></Suspense>,
       },
@@ -281,14 +285,6 @@ const router = createBrowserRouter([
           {
             path: '/account/change-email',
             element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserEmailUpdateComponent/></Suspense>,
-          },
-          {
-            path: '/account/youtube-oac-request',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserYoutubeOacRequestComponent/></Suspense>,
-          },
-          {
-            path: '/account/youtube-claim-release',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserClaimReleaseComponent/></Suspense>,
           },
         ]
       },

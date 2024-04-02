@@ -11,6 +11,7 @@ import {
     UserCircleIcon,
     CurrencyDollarIcon,
     RectangleGroupIcon,
+    ExclamationTriangleIcon,
  } from '@heroicons/react/24/solid'
 import { useState } from 'react';
 import { Drawer } from 'antd';
@@ -131,6 +132,10 @@ const UserAdminHomePage = () => {
                                     <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                     Wallet
                                 </Link>
+                                <Link className='text-white flex items-center py-2' to={'/claim-release'}>
+                                    <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
+                                    Claim Release
+                                </Link>
                                 <Link className='text-white flex items-center py-2' to={'/support'}>
                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                     Support
@@ -209,15 +214,19 @@ const UserAdminHomePage = () => {
                                                     <UserGroupIcon className="h-7 w-7 pe-2" />    
                                                     Labels
                                                 </Link>
-                                                <Link className='text-white flex items-center py-2' to={'/analytics'}>
+                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/analytics'}>
                                                     <ChartPieIcon className="h-7 w-7 pe-2" />
                                                     Analytics
                                                 </Link>
-                                                <Link className='text-white flex items-center py-2' to={'/wallet'}>
+                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/wallet'}>
                                                     <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                                     Wallet
                                                 </Link>
-                                                <Link className='text-white flex items-center py-2' to={'/support'}>
+                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/claim-release'}>
+                                                    <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
+                                                    Claim Release
+                                                </Link>
+                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/support'}>
                                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                                     Support
                                                 </Link>
