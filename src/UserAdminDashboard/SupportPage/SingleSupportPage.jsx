@@ -1,4 +1,4 @@
-import { CheckBadgeIcon, ClockIcon } from "@heroicons/react/24/solid";
+import { ArrowDownTrayIcon, CheckBadgeIcon, ClockIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -17,6 +17,7 @@ const SingleSupportPage = () => {
         if(res.status === 200){
             setLoading(false)
             setSupportData(res.data.data);
+            console.log(res.data.data);
         }
     })
     },[id])
@@ -48,6 +49,13 @@ const SingleSupportPage = () => {
                             <div>
                                 <p>Submited Request <span className="font-bold text-slate-500">{data.date} {data.month} {data.year} || {data.time}</span></p>
                                 <p className='text-sm text-slate-500'>{data?.supportText} </p>
+                                {
+                                    data?.attachment &&
+                                    <div className='p-2 border rounded-md mt-2'>
+                                        <p className='text-sm text-slate-500'>Attachment</p>
+                                        <a className="px-2 py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={data?.attachment?.fileUrl} download={data?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
+                                    </div>
+                                }
                             </div>
                         </div>
                         {
@@ -57,6 +65,7 @@ const SingleSupportPage = () => {
                                 <p className='text-sm text-slate-500'>{data?.supportAnsText} </p>
                             </div>
                         }
+                       
                     </div>
                 )
             }

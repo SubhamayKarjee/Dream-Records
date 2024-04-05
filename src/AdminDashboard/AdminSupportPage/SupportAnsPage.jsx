@@ -1,4 +1,4 @@
-import { CheckBadgeIcon, ClockIcon } from "@heroicons/react/24/solid";
+import { ArrowDownTrayIcon, CheckBadgeIcon, ClockIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -81,6 +81,13 @@ const SupportAnsPage = () => {
                             <div>
                                 <p>Submited Request From <span className="font-bold text-green-500 me-2">{data.userName}</span>|| <span className="font-bold text-slate-500">{data.date} {data.month} {data.year} || {data.time}</span></p>
                                 <p className='text-sm text-slate-500'>{data?.supportText} </p>
+                                {
+                                    data?.attachment &&
+                                    <div className='p-2 border rounded-md mt-2'>
+                                        <p className='text-sm text-slate-500'>Attachment</p>
+                                        <a className="px-2 py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={data?.attachment?.fileUrl} download={data?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
+                                    </div>
+                                }
                             </div>
                         </div>
                         {

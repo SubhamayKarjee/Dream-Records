@@ -25,6 +25,7 @@ const ChartSupport = ({id}) => {
                 setLoading(false)
                 setSupportData(res.data.data);
                 setTotalItems(res.data.dataCount)
+                console.log(res.data.data);
             }
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps

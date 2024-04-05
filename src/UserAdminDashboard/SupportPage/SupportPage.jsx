@@ -17,6 +17,27 @@ const SupportPage = () => {
     const {userNameIdRoll} = useContext(AuthContext);
     // const navigate = useNavigate()
 
+    const [attachment, setAttachment] = useState();
+    const [upLoadLoading, setUploadLoading] = useState(false);
+
+    const attachmentUpload = (e) => {
+        setUploadLoading(true)
+        const file = e[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        if(attachment){
+            axios.delete(`http://localhost:5000/common/api/v1/support/delete-file?key=${attachment.key}`)
+        }
+        axios.post(`http://localhost:5000/common/api/v1/support/upload-file`, formData)
+        .then(res => {
+            setUploadLoading(false);
+            setAttachment(res.data.data)
+            toast.success('File Uploaded')
+        })
+    }
+
+
+
     const [supportText, setSupportText] = useState();
     const [supportTextErr, setSupportTextErr] = useState();
     const [supportSendLoading, setSupportSendLoading] = useState(false);
@@ -38,7 +59,7 @@ const SupportPage = () => {
         const masterUserId = userNameIdRoll[1]
         const userName = userNameIdRoll[0]
         const status = 'Pending'
-        const data = {supportText, masterUserId, date, month, year, time, userName, status}
+        const data = {supportText, masterUserId, date, month, year, time, userName, status, attachment}
         axios.post(`http://localhost:5000/common/api/v1/support`, data)
         .then(res => {
             if(res.status === 200){
@@ -129,11 +150,19 @@ const SupportPage = () => {
             <div className='my-3 p-3 md:p-4 border rounded-lg md:flex justify-between'>
                 <div className='flex-1 m-2'>
                     <p className='font-bold text-sm text-slate-500 mb-2'>Support Box</p>
-                    <textarea id='text_box' onChange={e => setSupportText(e.target.value)} className="textarea textarea-bordered w-full md:h-52" placeholder="If you have a complaint or opinion about something. Please write here!"></textarea>
+                    <textarea id='text_box' onChange={e => setSupportText(e.target.value)} className="textarea textarea-bordered w-full md:h-40" placeholder="If you have a complaint or opinion about something. Please write here!"></textarea>
                     {
                         supportTextErr && <p className='text-sm text-red-500 mb-2'>{supportTextErr}</p>
                     }
-                    <div className='flex items-center'>
+                    <p className='font-bold text-sm text-slate-500 mb-2'>Attachment</p>
+                    <div className="flex items-center ">
+                        {
+                            upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                        }
+                        <input type="file" id="fileInput" name='image' onChange={e => attachmentUpload(e.target.files)} />
+                    </div>
+                    {/* {errorMessage && <p className="font-bold text-sm text-red-500">{errorMessage}</p>} */}
+                    <div className='flex items-center mt-2'>
                         {
                             supportSendLoading && <span className="loading loading-spinner loading-md me-2"></span>
                         }
