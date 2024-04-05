@@ -12,6 +12,7 @@ import LoadingComponentsForPage from './LoadingComponents/LoadingComponentsForPa
 import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsInsidePage';
 import axios from 'axios';
 
+
 // Commont Routes import_______________________________________________________________
 // ____________________________________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
@@ -31,6 +32,7 @@ const AdminArtistPage = React.lazy(() => import('./AdminDashboard/AdminArtistPag
 const SingleArtistForAdmin = React.lazy(() => import('./AdminDashboard/AdminArtistPage/SingleArtistForAdmin'));
 const AdminWithdrawalPage = React.lazy(() => import('./AdminDashboard/AdminWithdrawalPage/AdminWithdrawalPage'));
 const SingleWithdrawalDetails = React.lazy(() => import('./AdminDashboard/AdminWithdrawalPage/SingleWithdrawalDetails'));
+const AdminClaimReleasePage = React.lazy(() => import('./AdminDashboard/AdminClaimReleasePage/AdminClaimReleasePage'));
 const AdminSupportPage = React.lazy(() => import('./AdminDashboard/AdminSupportPage/AdminSupportPage'));
 const SupportAnsPage = React.lazy(() => import('./AdminDashboard/AdminSupportPage/SupportAnsPage'));
 // Admin Setting Route__________________________________________________________________
@@ -149,6 +151,15 @@ const router = createBrowserRouter([
         path: '/admin-dashboard/withdrawal-request/:id',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleWithdrawalDetails/></Suspense>,
       },
+
+
+      {
+        path: '/admin-dashboard/claim-release',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminClaimReleasePage/></Suspense>,
+      },
+
+
+
       {
         path: '/admin-dashboard/support',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminSupportPage/></Suspense>,

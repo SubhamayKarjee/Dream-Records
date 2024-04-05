@@ -22,6 +22,7 @@ const ClaimReleasePage = () => {
     const [releaseData, setReleaseData] = useState();
     const [releaseForSearch, setReleaseForSearch] = useState()
     const [release, setRelease] = useState();
+    const [reFetch, setReFetch] = useState(1)
 
     useEffect(() => {
         setFetchLoading(true)
@@ -77,6 +78,8 @@ const ClaimReleasePage = () => {
             setErrorMessageRelease('Please Select Release');
             // return;
         }
+        setReleaseData([])
+        setClaimOption('')
         const userName = userNameIdRoll[0]
         const masterUserId = userNameIdRoll[1]
         const status = 'Pending';
@@ -89,6 +92,8 @@ const ClaimReleasePage = () => {
         axios.post('http://localhost:5000/common/api/v1/claim-release', formData)
         .then(res => {
             if(res.status === 200){
+                const r = reFetch + 1;
+                setReFetch(r)
                 toast.success('Successfully Submited')
             }
         })
@@ -114,7 +119,7 @@ const ClaimReleasePage = () => {
             }
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[currentPage, claimStatus, userNameIdRoll])
+    },[currentPage, claimStatus, userNameIdRoll, reFetch])
 
     const handlePageChange = (page) => {
         setCurrentPage(page)
@@ -257,7 +262,11 @@ const ClaimReleasePage = () => {
                                                 </div>
                                             </div>
 
-                                        <a href={data.claimLink}>{data.claimLink}</a>
+                                        <a href={data.claimLink} target='_blank' className='text-info'>{data.claimLink}</a>
+                                        {
+                                            data?.actionRequired &&
+                                            <p className="p-2 rounded-md bg-red-200">{data.actionRequired}</p>
+                                        }
                                     </div>
                                     {
                                         data.status === 'Pending' &&
@@ -304,8 +313,6 @@ const ClaimReleasePage = () => {
                         }
                     </div>
                 </div>
-                  
-
             </div>
         </div>
     );
