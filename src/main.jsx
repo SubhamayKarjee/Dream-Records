@@ -151,15 +151,10 @@ const router = createBrowserRouter([
         path: '/admin-dashboard/withdrawal-request/:id',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleWithdrawalDetails/></Suspense>,
       },
-
-
       {
         path: '/admin-dashboard/claim-release',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminClaimReleasePage/></Suspense>,
       },
-
-
-
       {
         path: '/admin-dashboard/support',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminSupportPage/></Suspense>,
