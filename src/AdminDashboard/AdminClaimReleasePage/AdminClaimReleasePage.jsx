@@ -95,7 +95,7 @@ const AdminClaimReleasePage = () => {
                                     {
                                         data.status === 'Pending' &&
                                         <div>
-                                            <div onClick={()=>document.getElementById(`${data._id}`).showModal()} className="flex items-center p-1 bg-info my-2 rounded-md shadow">
+                                            <div style={{cursor: 'pointer'}} onClick={()=>document.getElementById(`${data._id}`).showModal()} className="flex items-center p-1 bg-info my-2 rounded-md shadow">
                                                 <ClockIcon className="h-3 w-3 text-white me-1"/>
                                                 <p className="text-xs font-semibold text-white">Update Status</p>
                                             </div>

@@ -37,6 +37,7 @@ const AdminSupportPage = React.lazy(() => import('./AdminDashboard/AdminSupportP
 const SupportAnsPage = React.lazy(() => import('./AdminDashboard/AdminSupportPage/SupportAnsPage'));
 // Admin Setting Route__________________________________________________________________
 const AdminSetting = React.lazy(() => import('./AdminDashboard/AdminSetting/AdminSetting'));
+const NoticeDetailsPage = React.lazy(() => import('./AdminDashboard/AdminSetting/NoticeFromDreamRecord/NoticeDetailsPage'));
 // User Dashboard Routes import_________________________________________________________
 // _____________________________________________________________________________________
 const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdminHomePage/UserAdminHomePage'));
@@ -166,6 +167,10 @@ const router = createBrowserRouter([
       {
         path: '/admin-dashboard/settings',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminSetting/></Suspense>,
+      },
+      {
+        path: '/admin-dashboard/notice-details/:id',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><NoticeDetailsPage/></Suspense>,
       },
     ]
   },

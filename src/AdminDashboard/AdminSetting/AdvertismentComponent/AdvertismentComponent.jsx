@@ -17,7 +17,6 @@ const AdvertismentComponent = () => {
         axios.get(`http://localhost:5000/admin/api/v1/advertisment/66106c5bcda450b5173c46d8`)
         .then(res => {
             if(res.status === 200){
-                console.log(res.data.data);
                 setUploadedAdvertismentImg(res.data.data.imgUrl)
                 setImageData(res.data.data)
                 setGetLoading(false)
