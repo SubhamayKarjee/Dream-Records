@@ -276,6 +276,10 @@ const router = createBrowserRouter([
         path: '/support/:id',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleSupportPage/></Suspense>,
       },
+      {
+        path: '/notice/:id',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><NoticeDetailsPage/></Suspense>,
+      },
       //User Account Page _________________________________________________________________________________________
       {
         path: '/account',

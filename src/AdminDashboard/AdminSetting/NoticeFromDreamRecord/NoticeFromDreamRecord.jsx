@@ -11,6 +11,7 @@ const NoticeFromDreamRecord = () => {
 
     const [noticeData, setNoticeData] = useState();
     const [getDataLoading, setGetDataLoading] = useState(false)
+    const [reFetch, setRefetch] = useState(1)
     useEffect(() => {
         setGetDataLoading(true)
         axios.get(`http://localhost:5000/admin/api/v1/notice/661089403281a4347e1d3498`)
@@ -18,14 +19,10 @@ const NoticeFromDreamRecord = () => {
             if(res.status === 200){
                 setGetDataLoading(false)
                 setNoticeData(res.data.data)
-                console.log(res.data.data)
             }
         })
-    },[])
+    },[reFetch])
 
-
-
-    
     
     const [loading, setLoading] = useState(false)
     const { register, handleSubmit, formState: { errors }} = useForm();
@@ -41,6 +38,8 @@ const NoticeFromDreamRecord = () => {
         axios.put(`http://localhost:5000/admin/api/v1/notice/661089403281a4347e1d3498`, formData)
         .then(res => {
             if(res.status === 200){
+                const r = reFetch + 1;
+                setRefetch(r)
                 toast.success('Notice Updeted');
                 setLoading(false);
             }

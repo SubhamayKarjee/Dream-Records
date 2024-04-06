@@ -13,7 +13,6 @@ const NoticeDetailsPage = () => {
             if(res.status === 200){
                 setGetDataLoading(false)
                 setNoticeData(res.data.data)
-                console.log(res.data.data)
             }
         })
     },[])
