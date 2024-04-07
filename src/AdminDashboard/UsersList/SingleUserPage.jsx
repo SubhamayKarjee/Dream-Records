@@ -89,7 +89,10 @@ const SingleUserPage = () => {
                 </div>
             }
             <main>
-                <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+                {
+                    !userLoading && userData?.roll === 'User' &&
+                    <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+                }
             </main>
         </div>
     );
