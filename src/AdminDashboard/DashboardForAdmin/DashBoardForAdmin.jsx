@@ -53,7 +53,7 @@ const DashBoardForAdmin = () => {
 
     const logOutHandle = () => {
         signOut();
-        navigate('/admin')
+        navigate('/log-in')
     }
 
 

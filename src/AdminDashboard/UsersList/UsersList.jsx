@@ -9,7 +9,6 @@ import SendReporsFormDreamRecord from "./SendReporsFormDreamRecord";
 
 const UsersList = () => {
 
-
     const navigate = useNavigate()
 
     const [usersData, setUsersData] = useState();
@@ -28,6 +27,7 @@ const UsersList = () => {
               setFetchLoading(false);
               setTotalItems(res.data.dataCount);
               setUsersData(res.data.data);
+              console.log(res.data.data)
             }
           })
           .catch(er => console.log(er));
@@ -98,12 +98,20 @@ const UsersList = () => {
                               <h2 className="font-bold">{data.userName}</h2>
                               <p className="text-sm text-slate-400">ID: {data._id}</p>
                             </div>
-                          </div>
-
-                          <div className="flex items-center">
-                            <button onClick={()=>document.getElementById(`${data._id}`).showModal()} className="btn btn-sm btn-neutral m-2"><CreditCardIcon className="w-5 h-5 text-white"/>Pay</button>
-                            <button onClick={()=>document.getElementById(`${index}`).showModal()} className="btn btn-sm btn-neutral m-2"><ChartBarSquareIcon className="w-5 h-5 text-white"/>Reports</button>
-                          </div>
+                          </div>  
+                          {
+                            data.roll === 'User' &&
+                            <div className="flex items-center">
+                              <button onClick={()=>document.getElementById(`${data._id}`).showModal()} className="btn btn-sm btn-neutral m-2"><CreditCardIcon className="w-5 h-5 text-white"/>Pay</button>
+                              <button onClick={()=>document.getElementById(`${index}`).showModal()} className="btn btn-sm btn-neutral m-2"><ChartBarSquareIcon className="w-5 h-5 text-white"/>Reports</button>
+                            </div>
+                          }                        
+                          {
+                            data.roll === 'Admin' &&
+                            <div className="flex items-center">
+                              <button className="btn btn-sm btn-info m-2">Admin</button>
+                            </div>
+                          }                        
                         </div>
 
                         {/* Modal Update Payments */}
