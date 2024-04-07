@@ -23,6 +23,7 @@ const SignUp = React.lazy(() => import('./Authentication/SignUp/SignUp'));
 // _____________________________________________________________________________________
 const DashBoardForAdmin = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/DashBoardForAdmin'));
 const CreateUserForm = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/CreateUserForm'));
+const DashbardHomePage = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/DashbardHomePage'));
 const UsersList = React.lazy(() => import('./AdminDashboard/UsersList/UsersList'));
 const SingleUserPage = React.lazy(() => import('./AdminDashboard/UsersList/SingleUserPage'));
 const AdminReleasePage = React.lazy(() => import('./AdminDashboard/AdminReleases/AdminReleasePage'));
@@ -103,7 +104,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/admin-dashboard',
-        element: <div>Mehedi Hasan</div>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><DashbardHomePage/></Suspense>
       },
       {
         path: '/admin-dashboard/create-user',

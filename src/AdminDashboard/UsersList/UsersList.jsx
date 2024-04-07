@@ -45,7 +45,18 @@ const UsersList = () => {
     }
 
     const searchByName = () => {
-        console.log(searchText);
+      if (event.key === 'Enter') {
+        setFetchLoading(true);
+        axios.get(`http://localhost:5000/admin/api/v1/users/search-user?userName=${searchText}`)
+          .then( res => {
+            if(res.status == 200){
+              setFetchLoading(false);
+              setTotalItems(res.data.dataCount);
+              setUsersData(res.data.data);
+            }
+          })
+          .catch(er => console.log(er));
+      }
     }
 
 
