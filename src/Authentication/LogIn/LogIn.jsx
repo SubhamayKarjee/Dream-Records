@@ -26,16 +26,14 @@ const LogIn = () => {
         const email = data.email;
         const password = data.password;
         await signInWithEmailAndPassword(email, password)
-        .then(res => {
-            if(res.status === 200){
-                const user = res.user.displayName;
-                let userNameIdRoll = user?.displayName?.split("'__'");
-                if(userNameIdRoll[2] === 'User'){
-                    navigate('/')
-                }
-                if(userNameIdRoll[2] === 'Admin'){
-                    navigate('/admin-dashboard')
-                }
+        .then((res) => {
+            let userNameIdRoll = res.user?.displayName?.split("'__'");
+            if(userNameIdRoll[2] === 'User'){
+                localStorage.setItem('popupShown', 'false');
+                navigate('/')
+            }
+            if(userNameIdRoll[2] === 'Admin'){
+                navigate('/admin-dashboard')
             }
         })
     }

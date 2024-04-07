@@ -55,6 +55,7 @@ const SignUp = () => {
                     setLoadingHandle(false);
                     await updateProfile({ displayName });
                     if(roll === 'User'){
+                        localStorage.setItem('popupShown', 'false');
                         navigate('/')
                     }
                     if(roll === 'Admin'){

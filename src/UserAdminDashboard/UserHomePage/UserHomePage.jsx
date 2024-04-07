@@ -7,6 +7,7 @@ import UserArtistComponentForHomePage from '../UserArtistPage/UserArtistComponen
 import LatestApprovedRelease from './LatestApprovedRelease';
 import './UserHomePage.css';
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import PopUp from '../PopUP/PopUp';
 
 const UserHomePage = () => {
 
@@ -41,9 +42,23 @@ const UserHomePage = () => {
             }
         })
     },[])
+
+    const [showPopup, setShowPopup] = useState(false);
+    const hasPopupBeenShown = localStorage.getItem('popupShown');
+    useEffect(() => {
+        if (hasPopupBeenShown == 'false') {
+            setShowPopup(true);
+        }
+    }, [hasPopupBeenShown]);
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+        localStorage.setItem('popupShown', 'true');
+    };
     
     return (
         <div className="md:flex md:h-full">
+            {showPopup && <PopUp visible={showPopup} onClose={handleClosePopup} />}
             <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2'>
                 <div className='home_banner_image'>
                     <div className='h-full bg-gradient-to-r from-[#EF4136]'>
