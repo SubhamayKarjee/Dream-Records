@@ -11,6 +11,7 @@ import { Suspense } from 'react';
 import LoadingComponentsForPage from './LoadingComponents/LoadingComponentsForPage';
 import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsInsidePage';
 import axios from 'axios';
+// import ProtectAdminRoute from './ProtectRoute/ProtectAdminRoute';
 
 
 // Commont Routes import_______________________________________________________________
@@ -110,6 +111,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin-dashboard/all-user',
+        // element: <ProtectAdminRoute></ProtectAdminRoute>
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UsersList/></Suspense>,
       },
       {
