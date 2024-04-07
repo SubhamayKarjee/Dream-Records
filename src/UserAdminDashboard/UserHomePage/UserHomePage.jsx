@@ -69,8 +69,8 @@ const UserHomePage = () => {
                                 }
                                 <p className='font-semibold text-sm text-white'>Welcome to Dream Records</p>
                                 <div className='py-1'>
-                                    <button className='btn btn-neutral py-1 rounded-full btn-sm border-none me-2'>Create</button>
-                                    <button className='btn btn-neutral py-1 rounded-full btn-sm border-none '>Releases</button>
+                                    <button onClick={() => navigate('/create-release')} className='btn btn-neutral py-1 rounded-full btn-sm border-none me-2'>Create</button>
+                                    <button onClick={() => navigate('/releases')} className='btn btn-neutral py-1 rounded-full btn-sm border-none '>Releases</button>
                                 </div>
                             </div>
                         </div>
