@@ -5,7 +5,8 @@ import {
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import auth from "../../../firebase.config";
-import { useAuthState, useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+// import { useAuthState, useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 import axios from "axios";
 
@@ -14,7 +15,7 @@ const SignUp = () => {
     const userData = useLoaderData();
     const navigate = useNavigate()
 
-    const [user] = useAuthState(auth);
+    // const [user] = useAuthState(auth);
 
     const id = userData.data.data._id;
     const roll = userData.data.data.roll;
@@ -53,9 +54,12 @@ const SignUp = () => {
                 if(res.status == 200){
                     setLoadingHandle(false);
                     await updateProfile({ displayName });
-                    navigate('/')
-                    console.log(res.data)
-                    console.log(user);
+                    if(roll === 'User'){
+                        navigate('/')
+                    }
+                    if(roll === 'Admin'){
+                        navigate('/admin-dashboard')
+                    }
                 }
             })
         }else{
