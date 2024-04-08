@@ -85,6 +85,7 @@ const DashbardHomePage = () => {
         axios.get(`http://localhost:5000/common/api/v1/claim-release/all-claim?page=1&limit=2&status=Pending`)
             .then( res => {
               if(res.status == 200){
+                console.log(res.data.data);
                 setPendingWithdrawalReq(res.data.dataCount);
                 setPendingWithdrawalReqLoading(false)
               }

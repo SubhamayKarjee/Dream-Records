@@ -1,6 +1,6 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { updatePassword } from "firebase/auth";
 import { useState } from "react";
-import { useUpdatePassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -9,21 +9,39 @@ import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingCompo
 
 const UserPassUpdateComponent = () => {
 
-    const [updatePassword, updating, error] = useUpdatePassword(auth);
-
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false);
     const [passMatchErr, setPassMatchErr] = useState('')
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = async (data) => {
-        if(data.pass1 === data.pass2){
-            setPassMatchErr('');
-            const password = data.pass1;
-            const success = await updatePassword(password)
-            if(success){
-                toast.success('Password Updated Successfully!')
-            }
-        }else{
+        setPassMatchErr('')
+        setLoading(true);
+        if(data.pass1 !== data.pass2){
             setPassMatchErr('Password Not Match');
             return;
+        }
+        const user = auth.currentUser;
+        try {
+            await updatePassword(user, data.pass1); // Pass the user object and new password to the updatePassword function
+            setPassMatchErr('');
+            setLoading(false);
+            toast.success('Password updated successfully');
+        } catch (error) {
+            if (error.code === 'auth/requires-recent-login') {
+                setError('User requires recent login. Initiating reauthentication...');
+                try {
+                    await user.reauthenticateWithPopup(
+                        new auth.GoogleAuthProvider() // Use appropriate provider for your app
+                    );
+                    await updatePassword(user, data.pass1); // Pass the user object and new password to the updatePassword function
+                    setPassMatchErr('');
+                    toast.success('Password updated successfully after reauthentication');
+                } catch (reauthError) {
+                    setError('Reauthentication failed:', reauthError.message);
+                }
+            } else {
+                setError('Password update error:', error.message);
+            }
         }
     };
 
@@ -37,7 +55,7 @@ const UserPassUpdateComponent = () => {
                 <h2 className="text-lg font-semibold text-slate-500 px-2">Update your Password</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="p-3 border mt-2 rounded-lg">
                     <p className="my-1 text-sm font-semibold text-slate-500 ms-2">New Password</p>
-                    <input type="password" placeholder="New Password" className="input rounded-full input-bordered w-full" {...register("pass1", { required: true})}/>
+                    <input type="text" placeholder="New Password" className="input rounded-full input-bordered w-full" {...register("pass1", { required: true})}/>
                     {errors.pass1 && <span className='text-red-600 pt-2 block'>New Password Required</span>}
                     <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Confirm Password</p>
                     <input type="password" placeholder="Confirm Password" className="input rounded-full input-bordered w-full" {...register("pass2", { required: true})}/>
@@ -46,7 +64,7 @@ const UserPassUpdateComponent = () => {
                         passMatchErr && <span className='text-red-600 pt-2 block'>{passMatchErr}</span>
                     }
                     {
-                        updating && <LoadingComponentsInsidePage/>
+                        loading && <LoadingComponentsInsidePage/>
                     }
                     {
                         error && <span className='text-red-600 pt-2 block'>{error.message}</span>
