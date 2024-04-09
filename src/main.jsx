@@ -11,13 +11,14 @@ import { Suspense } from 'react';
 import LoadingComponentsForPage from './LoadingComponents/LoadingComponentsForPage';
 import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsInsidePage';
 import axios from 'axios';
-// import ProtectAdminRoute from './ProtectRoute/ProtectAdminRoute';
+import ProtectAdminRoute from './ProtectRoute/ProtectAdminRoute';
+import ProtectUserRoute from './ProtectRoute/ProtectUserRoute';
 
 
 // Commont Routes import_______________________________________________________________
 // ____________________________________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
-const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
+// const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
 const SignUp = React.lazy(() => import('./Authentication/SignUp/SignUp'));
 // Admin Routes import__________________________________________________________________
 // _____________________________________________________________________________________
@@ -87,10 +88,10 @@ const router = createBrowserRouter([
     path: "/log-in",
     element: <Suspense fallback={<LoadingComponentsForPage/>}><LogIn/></Suspense>,
   },
-  {
-    path: "/admin",
-    element: <Suspense fallback={<LoadingComponentsForPage/>}><AdminLoginPage/></Suspense>,
-  },
+  // {
+  //   path: "/admin",
+  //   element: <Suspense fallback={<LoadingComponentsForPage/>}><AdminLoginPage/></Suspense>,
+  // },
   {
     path: "/set-password/:id",
     loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${params.id}`),
@@ -100,32 +101,32 @@ const router = createBrowserRouter([
   //________________________________________________________________________________________
   {
     path: "/admin-dashboard",
-    element: <Suspense fallback={<LoadingComponentsForPage/>}><DashBoardForAdmin/></Suspense>,
+    element: <Suspense fallback={<LoadingComponentsForPage/>}><ProtectAdminRoute><DashBoardForAdmin/></ProtectAdminRoute></Suspense>,
     children: [
       {
         path: '/admin-dashboard',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><DashbardHomePage/></Suspense>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><DashbardHomePage/></ProtectAdminRoute></Suspense>
       },
       {
         path: '/admin-dashboard/create-user',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><CreateUserForm/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><CreateUserForm/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/all-user',
         // element: <ProtectAdminRoute></ProtectAdminRoute>
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UsersList/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UsersList/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/user/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleUserPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><SingleUserPage/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/release',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminReleasePage/></Suspense>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminReleasePage/></ProtectAdminRoute></Suspense>
       },
       {
         path: '/admin-dashboard/release/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminSingleReleasePage/></Suspense>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminSingleReleasePage/></ProtectAdminRoute></Suspense>
       },
       {
         path: '/admin-dashboard/release/updated-status',
@@ -133,47 +134,47 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin-dashboard/labels',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminLabelsPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminLabelsPage/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/labels/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UpdateLabelsComponent/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UpdateLabelsComponent/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/artist',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminArtistPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminArtistPage/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/artist/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleArtistForAdmin/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><SingleArtistForAdmin/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/withdrawal-request/',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminWithdrawalPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminWithdrawalPage/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/withdrawal-request/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleWithdrawalDetails/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><SingleWithdrawalDetails/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/claim-release',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminClaimReleasePage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminClaimReleasePage/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/support',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminSupportPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminSupportPage/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/support/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SupportAnsPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><SupportAnsPage/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/settings',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdminSetting/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminSetting/></ProtectAdminRoute></Suspense>,
       },
       {
         path: '/admin-dashboard/notice-details/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><NoticeDetailsPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><NoticeDetailsPage/></ProtectAdminRoute></Suspense>,
       },
     ]
   },
@@ -182,36 +183,37 @@ const router = createBrowserRouter([
   //____________________________________________________________________________________________________________________
   {
     path: "/",
-    element: <Suspense fallback={<LoadingComponentsForPage/>}><UserAdminHomePage/></Suspense>,
+    element: <Suspense fallback={<LoadingComponentsForPage/>}><ProtectUserRoute><UserAdminHomePage/></ProtectUserRoute></Suspense>,
     children: [
       {
         path: '/',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserHomePage/></Suspense>
+        // element: <ProtectUserRoute></ProtectUserRoute>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserHomePage/></ProtectUserRoute></Suspense>
       },
       {
         path: '/releases',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ReleasesPage/></Suspense>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><ReleasesPage/></ProtectUserRoute></Suspense>
       },
       {
         path: '/releases/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleReleasePage/></Suspense>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><SingleReleasePage/></ProtectUserRoute></Suspense>
       },
       {
         // Create Release _________________________________________________________________________________________________
         path: '/create-release',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><CreateMusicPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><CreateMusicPage/></ProtectUserRoute></Suspense>,
         children: [
           {
             path: '/create-release',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><FirstStep/></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><FirstStep/></ProtectUserRoute></Suspense>,
           },
           {
             path: '/create-release/tracks',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SecondStepTrack/></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><SecondStepTrack/></ProtectUserRoute></Suspense>,
           },
           {
             path: '/create-release/date',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ThirdStepDate/></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><ThirdStepDate/></ProtectUserRoute></Suspense>,
           },
           {
             path: '/create-release/thenks',
@@ -223,19 +225,19 @@ const router = createBrowserRouter([
       {
         // Edit Release _________________________________________________________________________________________________
         path: '/releases/edit/',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><EditReleaseMainPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><EditReleaseMainPage/></ProtectUserRoute></Suspense>,
         children: [
           {
             path: '/releases/edit/:id',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><EditReleaseFirstStep/></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><EditReleaseFirstStep/></ProtectUserRoute></Suspense>,
           },
           {
             path: '/releases/edit/second-step',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><EditReleaseSecondStep/></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><EditReleaseSecondStep/></ProtectUserRoute></Suspense>,
           },
           {
             path: '/releases/edit/third-step',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><EditReleaseThirdStep/></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><EditReleaseThirdStep/></ProtectUserRoute></Suspense>,
           },
           {
             path: '/releases/edit/thanks',
@@ -245,64 +247,64 @@ const router = createBrowserRouter([
       },
       {
         path: '/artist',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserArtistPage/></Suspense>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserArtistPage/></ProtectUserRoute></Suspense>
       },
       {
         path: '/artist/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><DetailsSingleArtist/></Suspense>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><DetailsSingleArtist/></ProtectUserRoute></Suspense>
       },
       {
         path: '/labels',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserLabelsPage/></Suspense>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserLabelsPage/></ProtectUserRoute></Suspense>
       },
       {
         path: '/labels/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><DetailsSingleLabels/></Suspense>
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><DetailsSingleLabels/></ProtectUserRoute></Suspense>
       },
       {
         path: '/analytics',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AnalyticsPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><AnalyticsPage/></ProtectUserRoute></Suspense>,
       },
       {
         path: '/wallet',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><WalletPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><WalletPage/></ProtectUserRoute></Suspense>,
       },
       {
         path: '/claim-release',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ClaimReleasePage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><ClaimReleasePage/></ProtectUserRoute></Suspense>,
       },
       {
         path: '/support',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SupportPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><SupportPage/></ProtectUserRoute></Suspense>,
       },
       {
         path: '/support/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SingleSupportPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><SingleSupportPage/></ProtectUserRoute></Suspense>,
       },
       {
         path: '/notice/:id',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><NoticeDetailsPage/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><NoticeDetailsPage/></ProtectUserRoute></Suspense>,
       },
       //User Account Page _________________________________________________________________________________________
       {
         path: '/account',
-        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserProfile/></Suspense>,
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserProfile/></ProtectUserRoute></Suspense>,
         children: [
           {
             path: '/account',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProfileHomeComponents/></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><ProfileHomeComponents/></ProtectUserRoute></Suspense>,
           },
           {
             path: '/account/update-profile-information',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UpdateProfileInformation/></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UpdateProfileInformation/></ProtectUserRoute></Suspense>,
           },
           {
             path: '/account/change-password',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserPassUpdateComponent/></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserPassUpdateComponent/></ProtectUserRoute></Suspense>,
           },
           {
             path: '/account/change-email',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserEmailUpdateComponent/></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserEmailUpdateComponent/></ProtectUserRoute></Suspense>,
           },
         ]
       },
