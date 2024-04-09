@@ -24,7 +24,7 @@ const AdminReleasePage = () => {
         setItemPerPage(12)
         // Calculate Pagination and Fetch__________________________________________________
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/admin/api/v1/release?status=${releaseStatus}&page=${currentPage}&limit=${itemPerPage}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/release?status=${releaseStatus}&page=${currentPage}&limit=${itemPerPage}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -56,7 +56,7 @@ const AdminReleasePage = () => {
         setItemPerPage(50)
         if (event.key === 'Enter') {
           setFetchLoading(true);
-          axios.get(`http://localhost:5000/admin/api/v1/release/search-by-title?status=${releaseStatus}&search=${searchText}`)
+          axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/release/search-by-title?status=${releaseStatus}&search=${searchText}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -72,7 +72,7 @@ const AdminReleasePage = () => {
         setItemPerPage(50)
         if (event.key === 'Enter') {
           setFetchLoading(true);
-          axios.get(`http://localhost:5000/admin/api/v1/release/search-by-upc?status=${releaseStatus}&search=${searchText}`)
+          axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/release/search-by-upc?status=${releaseStatus}&search=${searchText}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);

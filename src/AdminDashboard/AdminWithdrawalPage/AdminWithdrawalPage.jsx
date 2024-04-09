@@ -21,7 +21,7 @@ const AdminWithdrawalPage = () => {
     useEffect( () => {
         setItemPerPage(14)
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/payment/admin/withdrawal/req-list?page=${currentPage}&limit=${itemPerPage}&status=${withdrawalStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/req-list?page=${currentPage}&limit=${itemPerPage}&status=${withdrawalStatus}`)
         .then(res => {
             setWithdrawalData(res.data.data);
             setTotalItems(res.data.dataCount)
@@ -46,7 +46,7 @@ const AdminWithdrawalPage = () => {
 
     const handleKeyPress = () => {
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/payment/admin/withdrawal/search-req-list?search=${searchText}&status=${withdrawalStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/search-req-list?search=${searchText}&status=${withdrawalStatus}`)
         .then(res => {
             setWithdrawalData(res.data.data);
             setTotalItems(res.data.dataCount)

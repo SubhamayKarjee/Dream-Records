@@ -37,7 +37,7 @@ const UpdateArtistForm = ({artist, imgUrl, imgKey}) => {
           return;
         }
   
-        axios.post('http://localhost:5000/api/v1/artist/upload-artist-img', formData)
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/upload-artist-img', formData)
         .then(res => {
             if(res.status == 200){
               setUploadedImageLink(res.data.data.imgUrl);
@@ -60,7 +60,7 @@ const UpdateArtistForm = ({artist, imgUrl, imgKey}) => {
         const formData = {...data, ...uploadedImage};
         console.log(formData);
         // eslint-disable-next-line react/prop-types
-        axios.put(`http://localhost:5000/api/v1/artist/update-artist/${artist._id}`, formData)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/update-artist/${artist._id}`, formData)
             .then(res => {
                 if(res.status == 200){
                   toast.success('Successfully Created Artist!')

@@ -18,7 +18,7 @@ const AnalyticsReportList = ({id, text}) => {
     useEffect( () => {
         setItemPerPage(12)
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/reports/${id}?page=${currentPage}&limit=${itemPerPage}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/reports/${id}?page=${currentPage}&limit=${itemPerPage}`)
         .then(res => {
             if(res.status === 200){
                 setReportList(res.data.data);
@@ -40,7 +40,7 @@ const AnalyticsReportList = ({id, text}) => {
         }else{
             setItemPerPage(20)
             setFetchLoading(true)
-            axios.get(`http://localhost:5000/common/api/v1/reports/search/${id}?page=${currentPage}&limit=${itemPerPage}&search=${dateString}`)
+            axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/reports/search/${id}?page=${currentPage}&limit=${itemPerPage}&search=${dateString}`)
             .then(res => {
                 setReportList(res.data.data);
                 setTotalItems(res.data.dataCount)

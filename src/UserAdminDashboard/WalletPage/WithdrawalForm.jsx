@@ -17,7 +17,7 @@ const WithdrawalForm = () => {
         const bankInfo = bankData[0]
         const updateUserBalance = {...userData, balance: {...userData.balance, amount: 0}}
 
-        axios.put(`http://localhost:5000/api/v1/users/${userData._id}`, updateUserBalance)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userData._id}`, updateUserBalance)
         .then(res => {
             if(res.status === 200){
                 const now = new Date();
@@ -27,7 +27,7 @@ const WithdrawalForm = () => {
                 const withdrawalTime = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
                 const withdrawalAmount = userData.balance.amount;
                 const data = {...userData,  masterUserId: userData._id, bankInfo, status, withdrawalMonth, withdrawalYear, withdrawalTime, withdrawalDate, withdrawalAmount};
-                axios.post(`http://localhost:5000/common/api/v1/payment/withdrawal`, data)
+                axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/withdrawal`, data)
                 .then(res => {
                 if(res.status === 200){
                     const reloadAPI = withdrawalReFetch + 1;

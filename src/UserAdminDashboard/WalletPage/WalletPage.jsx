@@ -32,7 +32,7 @@ const WalletPage = () => {
     }
     
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/v1/users/${userNameIdRoll[1]}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`)
             .then(res => {
                 if(res.status == 200){
                     setUserData(res.data.data);
@@ -46,7 +46,7 @@ const WalletPage = () => {
     const [deleteFetch, setDeleteFetch] = useState(1)
     useEffect(() => {
         setBankInfoLoading(ArrowTopRightOnSquareIcon)
-        axios.get(`http://localhost:5000/api/v1/bank-info/${userNameIdRoll[1]}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/bank-info/${userNameIdRoll[1]}`)
             .then(res => {
                 if(res.status == 200){
                     setBankData(res.data.data);
@@ -59,7 +59,7 @@ const WalletPage = () => {
     const [deleteLoading, setDeleteLoading] = useState(false);
     const deleteBankInfo = (id) => {
         setDeleteLoading(true)
-        axios.delete(`http://localhost:5000/api/v1/bank-info/${id}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/bank-info/${id}`)
         .then( res => {
             if(res.status == 200){
                 const f = deleteFetch + 1;

@@ -12,7 +12,7 @@ const AddLanguageComponent = () => {
     const [loading, setLoading] = useState(false)
     useEffect( () => {
         setLoading(true)
-        axios.get('http://localhost:5000/admin/api/v1/language')
+        axios.get('https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/language')
         .then(res => {
             setLanguage(res.data.data);
             setTotalCount(res.data.dataCount)
@@ -26,7 +26,7 @@ const AddLanguageComponent = () => {
     const { register, handleSubmit, reset, formState: { errors }} = useForm();
     const onSubmit = (data) => {
         setAddLoading(true)
-        axios.post('http://localhost:5000/admin/api/v1/language/add-language', data)
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/language/add-language', data)
         .then(res => {
             if(res.status == 200){
                 const r = refe + 1
@@ -41,7 +41,7 @@ const AddLanguageComponent = () => {
 
 
     const handleDeleteLanguage = (id) => {
-        axios.delete(`http://localhost:5000/admin/api/v1/language/${id}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/language/${id}`)
         .then(res => {
             if(res.status == 200){
                 const r = refe + 1

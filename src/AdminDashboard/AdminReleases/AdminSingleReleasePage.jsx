@@ -20,7 +20,7 @@ const AdminSingleReleasePage = () => {
 
     useEffect(() => {
         setLoading(true)
-        axios.get(`http://localhost:5000/api/v1/release/single/${id}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/single/${id}`)
             .then( res => {
                 if(res.status == 200){
                     setLoading(false);
@@ -50,7 +50,7 @@ const AdminSingleReleasePage = () => {
         setUpdateLoading(true)
         const status = releaseStatus;
         const formData = {...releaseData, status, ...data }
-            axios.put(`http://localhost:5000/api/v1/release/update-release/${id}`, formData)
+            axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/update-release/${id}`, formData)
             .then(res => {
                 if(res.status == 200){
                     setUpdateLoading(false);
@@ -65,7 +65,7 @@ const AdminSingleReleasePage = () => {
     const [deleteLoading, setDeleteLoading] = useState(false)
     const handleDeleteRelease = () => {
         setDeleteLoading(true)
-        axios.delete(`http://localhost:5000/api/v1/release//delete-release/${id}?imgKey=${releaseData.key}&audioKey=${releaseData.audioKey}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release//delete-release/${id}?imgKey=${releaseData.key}&audioKey=${releaseData.audioKey}`)
         .then(res => {
             if(res.status == 200){
                 setDeleteLoading(false)

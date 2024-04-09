@@ -18,9 +18,9 @@ const SendReporsFormDreamRecord = ({id}) => {
         const formData = new FormData();
         formData.append('file', file);
         if(reportFile){
-            axios.delete(`http://localhost:5000/common/api/v1/reports/delete-file?key=${reportFile.key}`)
+            axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/reports/delete-file?key=${reportFile.key}`)
         }
-        axios.post(`http://localhost:5000/common/api/v1/reports/upload-file`, formData)
+        axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/reports/upload-file`, formData)
         .then(res => {
             console.log(res.data.data);
             setUploadLoading(false);
@@ -52,7 +52,7 @@ const SendReporsFormDreamRecord = ({id}) => {
         const year = now.getFullYear();
         const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
         const data = {...reportFile, reportDate, masterUserId: id, date, time, month, year}
-        axios.post('http://localhost:5000/common/api/v1/reports', data)
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/common/api/v1/reports', data)
         .then(res => {
             if(res.status === 200){
                 setSendLoading(false);

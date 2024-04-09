@@ -14,7 +14,7 @@ const NoticeFromDreamRecord = () => {
     const [reFetch, setRefetch] = useState(1)
     useEffect(() => {
         setGetDataLoading(true)
-        axios.get(`http://localhost:5000/admin/api/v1/notice/661089403281a4347e1d3498`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice/661089403281a4347e1d3498`)
         .then(res => {
             if(res.status === 200){
                 setGetDataLoading(false)
@@ -35,7 +35,7 @@ const NoticeFromDreamRecord = () => {
         const formData = {...data, date, time}
         console.log(formData);
         console.log(noticeData);
-        axios.put(`http://localhost:5000/admin/api/v1/notice/661089403281a4347e1d3498`, formData)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice/661089403281a4347e1d3498`, formData)
         .then(res => {
             if(res.status === 200){
                 const r = reFetch + 1;

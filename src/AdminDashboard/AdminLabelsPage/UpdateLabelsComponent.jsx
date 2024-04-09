@@ -22,7 +22,7 @@ const UpdateLabelsComponent = () => {
 
     useEffect( () => {
         setLoading(true)
-        axios.get(`http://localhost:5000/admin/api/v1/labels/single/${id}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/labels/single/${id}`)
         .then(res => {
             setLabels(res.data.data[0]);
             setLabesStatus(res.data.data[0].status)
@@ -35,7 +35,7 @@ const UpdateLabelsComponent = () => {
     const handleUpdateStatus = () => {
         setUpdateLoading(true)
         const data = {...labels, status: labelsStatus };
-        axios.put(`http://localhost:5000/admin/api/v1/labels/update/${id}`, data)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/labels/update/${id}`, data)
         .then(res => {
             if(res.status == 200){
                 const count = refetch + 1;
@@ -64,7 +64,7 @@ const UpdateLabelsComponent = () => {
         if(actionRequired){
             setUpdateLoading(true)
             const data = {...labels, status: labelsStatus, actionRequired };
-            axios.put(`http://localhost:5000/admin/api/v1/labels/update/${id}`, data)
+            axios.put(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/labels/update/${id}`, data)
             .then(res => {
                 if(res.status == 200){
                     const count = refetch + 1;
@@ -95,7 +95,7 @@ const UpdateLabelsComponent = () => {
         setItemPerPage(12)
         // Calculate Pagination and Fetch__________________________________________________
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/api/v1/release/labels/${id}?page=${currentPage}&limit=${itemPerPage}&status=${releaseStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/labels/${id}?page=${currentPage}&limit=${itemPerPage}&status=${releaseStatus}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -127,7 +127,7 @@ const UpdateLabelsComponent = () => {
         setItemPerPage(50)
         if (event.key === 'Enter') {
           setFetchLoading(true);
-          axios.get(`http://localhost:5000/api/v1/release/labels/search/${id}?status=${releaseStatus}&search=${searchText}`)
+          axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/labels/search/${id}?status=${releaseStatus}&search=${searchText}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -143,7 +143,7 @@ const UpdateLabelsComponent = () => {
     const [deleteLoading, setDeleteLoading] = useState(false)
     const handleDelete = (id, imgKey) => {
         setDeleteLoading(true)
-        axios.delete(`http://localhost:5000/api/v1/labels/delete-labels/${id}?imgKey=${imgKey}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/delete-labels/${id}?imgKey=${imgKey}`)
           .then( res => {
             if(res.status == 200){
                 setDeleteLoading(false)

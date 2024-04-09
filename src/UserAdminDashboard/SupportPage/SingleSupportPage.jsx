@@ -12,7 +12,7 @@ const SingleSupportPage = () => {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/support/single/${id}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/single/${id}`)
         .then(res => {
         if(res.status === 200){
             setLoading(false)

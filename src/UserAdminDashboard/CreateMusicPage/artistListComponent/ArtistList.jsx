@@ -17,7 +17,7 @@ const ArtistList = ({handleCancel}) => {
 
     useEffect( () => {
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/api/v1/artist/for-release/${userNameIdRoll[1]}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/for-release/${userNameIdRoll[1]}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);

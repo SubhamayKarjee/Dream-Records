@@ -12,7 +12,7 @@ const DashbardHomePage = () => {
     // Get Release List ______________________________________________________________
     useEffect(() => {
         setPendingReleaseLoading(true)
-        axios.get(`http://localhost:5000/admin/api/v1/release?status=Pending&page=1&limit=2`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/release?status=Pending&page=1&limit=2`)
             .then( res => {
               if(res.status == 200){
                 setPendingRelease(res.data.dataCount);
@@ -27,7 +27,7 @@ const DashbardHomePage = () => {
     // Get Release List ______________________________________________________________
     useEffect(() => {
         setPendingLabelsLoading(true)
-        axios.get(`http://localhost:5000/admin/api/v1/labels?page=1&limit=2&status=Pending`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/labels?page=1&limit=2&status=Pending`)
             .then( res => {
               if(res.status == 200){
                 setPendingLabels(res.data.dataCount);
@@ -42,7 +42,7 @@ const DashbardHomePage = () => {
     // Get Release List ______________________________________________________________
     useEffect(() => {
         setPendingClaimLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/claim-release/all-claim?page=1&limit=2&status=Pending`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release/all-claim?page=1&limit=2&status=Pending`)
             .then( res => {
               if(res.status == 200){
                 setPendingClaim(res.data.dataCount);
@@ -57,12 +57,12 @@ const DashbardHomePage = () => {
     // Get Release List ______________________________________________________________
     useEffect(() => {
         setPendingSupportLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/support/chat-support-list?page=1&limit=2&status=Pending`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/chat-support-list?page=1&limit=2&status=Pending`)
             .then( res => {
               if(res.status == 200){
                 const chatCount = res.data.dataCount;
                 setPendingSupportLoading(false)
-                axios.get(`http://localhost:5000/common/api/v1/support/call-support-list?page=1&limit=2&status=Pending`)
+                axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/call-support-list?page=1&limit=2&status=Pending`)
                     .then( res => {
                     if(res.status == 200){
                         const total = parseInt(chatCount) + res.data.dataCount
@@ -82,7 +82,7 @@ const DashbardHomePage = () => {
     // Get Release List ______________________________________________________________
     useEffect(() => {
         setPendingWithdrawalReqLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/claim-release/all-claim?page=1&limit=2&status=Pending`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release/all-claim?page=1&limit=2&status=Pending`)
             .then( res => {
               if(res.status == 200){
                 console.log(res.data.data);

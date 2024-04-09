@@ -23,7 +23,7 @@ const UserArtistPageForAdmin = ({userId}) => {
     useEffect( () => {
       setItemPerPage(10)
       setFetchLoading(true)
-      axios.get(`http://localhost:5000/api/v1/artist/${userId}?page=${currentPage}&limit=${itemPerPage}`)
+      axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/${userId}?page=${currentPage}&limit=${itemPerPage}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);
@@ -50,7 +50,7 @@ const UserArtistPageForAdmin = ({userId}) => {
       if (event.key === 'Enter') {
         console.log(currentPage);
         setFetchLoading(true);
-        axios.get(`http://localhost:5000/api/v1/artist/search/${userId}?search=${searchText}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/search/${userId}?search=${searchText}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);

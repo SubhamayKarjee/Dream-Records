@@ -14,7 +14,7 @@ const AdvertismentComponent = () => {
 
     useEffect(() => {
         setGetLoading(true)
-        axios.get(`http://localhost:5000/admin/api/v1/advertisment/66106c5bcda450b5173c46d8`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/advertisment/66106c5bcda450b5173c46d8`)
         .then(res => {
             if(res.status === 200){
                 setUploadedAdvertismentImg(res.data.data.imgUrl)
@@ -35,10 +35,10 @@ const AdvertismentComponent = () => {
         formData.append('file', file);
 
         if(imageData){
-            axios.delete(`http://localhost:5000/admin/api/v1/advertisment/delete-file?key=${imageData.key}`)
+            axios.delete(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/advertisment/delete-file?key=${imageData.key}`)
         }
 
-        axios.post('http://localhost:5000/admin/api/v1/advertisment/upload-advertisment-image', formData)
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/advertisment/upload-advertisment-image', formData)
             .then(res => {
                 if(res.status == 200){
                     setUploadedAdvertismentImg(res.data.data.imgUrl);
@@ -54,7 +54,7 @@ const AdvertismentComponent = () => {
     const [submitLoading, setSubmitLoading] = useState(false)
     const handleAdvertismentImageUpload = () => {
         setSubmitLoading(true)
-        axios.put(`http://localhost:5000/admin/api/v1/advertisment/66106c5bcda450b5173c46d8`, imageData)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/advertisment/66106c5bcda450b5173c46d8`, imageData)
         .then(res => {
             if(res.status === 200){
                 setSubmitLoading(false);

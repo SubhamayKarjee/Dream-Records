@@ -29,7 +29,7 @@ const ReleasesPage = () => {
         setItemPerPage(9)
         // Calculate Pagination and Fetch__________________________________________________
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/api/v1/release/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${releaseStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${releaseStatus}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -58,7 +58,7 @@ const ReleasesPage = () => {
         setItemPerPage(50)
         if (event.key === 'Enter') {
           setFetchLoading(true);
-          axios.get(`http://localhost:5000/api/v1/release/search/${userNameIdRoll[1]}?status=${releaseStatus}&search=${searchText}`)
+          axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/search/${userNameIdRoll[1]}?status=${releaseStatus}&search=${searchText}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);

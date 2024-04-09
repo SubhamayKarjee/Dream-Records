@@ -17,7 +17,7 @@ const SingleReleasePage = () => {
 
     useEffect(() => {
         setLoading(true)
-        axios.get(`http://localhost:5000/api/v1/release/single/${id}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/single/${id}`)
             .then( res => {
                 if(res.status == 200){
                     setLoading(false);
@@ -36,7 +36,7 @@ const SingleReleasePage = () => {
     const [deleteLoading, setDeleteLoading] = useState(false)
     const handleDeleteRelease = () => {
         setDeleteLoading(true)
-        axios.delete(`http://localhost:5000/api/v1/release/delete-release/${id}?imgKey=${data.key}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/delete-release/${id}?imgKey=${data.key}`)
         .then(res => {
             if(res.status == 200){
                 setDeleteLoading(false)

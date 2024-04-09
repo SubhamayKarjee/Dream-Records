@@ -21,7 +21,7 @@ const UsersList = () => {
     useEffect( () => {
       setItemPerPage(10)
       setFetchLoading(true)
-      axios.get(`http://localhost:5000/admin/api/v1/users?page=${currentPage}&limit=${itemPerPage}`)
+      axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/users?page=${currentPage}&limit=${itemPerPage}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);
@@ -47,7 +47,7 @@ const UsersList = () => {
     const searchByName = () => {
       if (event.key === 'Enter') {
         setFetchLoading(true);
-        axios.get(`http://localhost:5000/admin/api/v1/users/search-user?userName=${searchText}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/users/search-user?userName=${searchText}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);

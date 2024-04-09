@@ -11,7 +11,7 @@ const ActionRequiredRelease = () => {
 
     const [release, setRelease] = useState();
     useEffect( () => {
-        axios.get(`http://localhost:5000/api/v1/release/action-required/${userNameIdRoll[1]}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/action-required/${userNameIdRoll[1]}`)
             .then( res => {
               if(res.status == 200){
                 setRelease(res.data.data);

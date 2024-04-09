@@ -15,7 +15,7 @@ const UserArtistComponentForHomePage = () => {
     const [loading, setLoading] = useState(false)
     useEffect( () => {
         setLoading(true)
-        axios.get(`http://localhost:5000/api/v1/artist/${userNameIdRoll[1]}?page=1&limit=5`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/${userNameIdRoll[1]}?page=1&limit=5`)
             .then( res => {
               if(res.status == 200){
                 setArtistData(res.data.data);

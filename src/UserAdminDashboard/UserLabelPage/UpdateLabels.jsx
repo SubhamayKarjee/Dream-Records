@@ -34,7 +34,7 @@ const UpdateLabels = ({labels, imgUrl, imgKey}) => {
           return;
         }
 
-        axios.post('http://localhost:5000/api/v1/labels/upload-labels-img', formData)
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/upload-labels-img', formData)
         .then(res => {
             if(res.status == 200){
               setUploadedImageLink(res.data.data.imgUrl);
@@ -65,7 +65,7 @@ const UpdateLabels = ({labels, imgUrl, imgKey}) => {
         }else{
             formData = {...data, ...uploadedImage, status, actionRequird};
         }
-        axios.put(`http://localhost:5000/api/v1/labels/update-labels/${labels._id}`, formData)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/update-labels/${labels._id}`, formData)
         .then(res => {
             if(res.status == 200){
               toast.success('Successfully Updated Labels. We will Review Shortly!')

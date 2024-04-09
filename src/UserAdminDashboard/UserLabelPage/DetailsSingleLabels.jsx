@@ -24,7 +24,7 @@ const DetailsSingleLabels = () => {
     const [labelsFetchLoading, setLabelsFetchLoading] = useState(false);
     useEffect( () => {
         setLabelsFetchLoading(true)
-        axios.get(`http://localhost:5000/api/v1/labels/single-labels/${id}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/single-labels/${id}`)
         .then(res => {
             setLabels(res.data.data[0]);
             setLabelsFetchLoading(false)
@@ -50,7 +50,7 @@ const DetailsSingleLabels = () => {
         setItemPerPage(9)
         // Calculate Pagination and Fetch__________________________________________________
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/api/v1/release/labels/${id}?page=${currentPage}&limit=${itemPerPage}&status=${releaseStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/labels/${id}?page=${currentPage}&limit=${itemPerPage}&status=${releaseStatus}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -79,7 +79,7 @@ const DetailsSingleLabels = () => {
         setItemPerPage(50)
         if (event.key === 'Enter') {
           setFetchLoading(true);
-          axios.get(`http://localhost:5000/api/v1/release/labels/search/${id}?status=${releaseStatus}&search=${searchText}`)
+          axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/labels/search/${id}?status=${releaseStatus}&search=${searchText}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -94,7 +94,7 @@ const DetailsSingleLabels = () => {
     const [deleteLoading, setDeleteLoading] = useState(false)
     const deleteLabels = (id, imgKey) => {
         setDeleteLoading(true)
-        axios.delete(`http://localhost:5000/api/v1/labels/delete-labels/${id}?imgKey=${imgKey}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/delete-labels/${id}?imgKey=${imgKey}`)
           .then( res => {
             if(res.status == 200){
                 setDeleteLoading(false)

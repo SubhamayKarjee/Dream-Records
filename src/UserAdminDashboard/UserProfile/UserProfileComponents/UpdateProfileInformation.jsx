@@ -26,7 +26,7 @@ const UpdateProfileInformation = () => {
     const [addressHandle, setAddressHandle] = useState();
     useEffect( () => {
         setGetUserDataLoading(true)
-        axios.get(`http://localhost:5000/api/v1/users/${userNameIdRoll[1]}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`)
             .then( res => {
                 setFirstNameHandle(res.data.data.first_name)
                 setLastNameHandle(res.data.data.last_name)
@@ -58,7 +58,7 @@ const UpdateProfileInformation = () => {
         return;
         }
 
-        axios.post('http://localhost:5000/api/v1/users/upload-profile-img', formData)
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/users/upload-profile-img', formData)
             .then(res => {
                 if(res.status == 200){
                     setUploadedProfileImg(res.data.data.imgUrl);
@@ -127,7 +127,7 @@ const UpdateProfileInformation = () => {
         const success = await updateProfile({ photoURL });
 
         if(success){
-           axios.put(`http://localhost:5000/api/v1/users/${userNameIdRoll[1]}`, formData)
+           axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`, formData)
             .then(res => {
                 if(res.status == 200){
                     setUserData(res.data.data);

@@ -28,7 +28,7 @@ const SendPaymentsFormDreamRecord = ({id}) => {
       const year = now.getFullYear();
       const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
 
-      axios.get(`http://localhost:5000/admin/api/v1/users/${id}`)
+      axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/users/${id}`)
       .then(res => {
         if(res.status === 200){
           const preData = res.data.data;
@@ -36,11 +36,11 @@ const SendPaymentsFormDreamRecord = ({id}) => {
             const preAmount = preData.balance.amount;
             const newAmount = parseInt(preAmount) + parseInt(payAmount);
             const newData = {...preData, balance:{amount: parseInt(newAmount), year: year, month: month, time: time, date: date,}}
-            axios.put(`http://localhost:5000/api/v1/users/${id}`, newData)
+            axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, newData)
             .then(res => {
               if(res.status === 200){
                 const formData = {amount: parseInt(payAmount), date, time, month, year, masterUserId: id, paymentReportDate }
-                axios.post(`http://localhost:5000/common/api/v1/payment`, formData)
+                axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment`, formData)
                 .then(res => {
                   if(res.status === 200){
                     setPayLoading(false)
@@ -51,11 +51,11 @@ const SendPaymentsFormDreamRecord = ({id}) => {
             })
           }else{
             const newData = {...preData, balance:{amount: payAmount, year: year, month: month, time: time, date: date,}}
-            axios.put(`http://localhost:5000/api/v1/users/${id}`, newData)
+            axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, newData)
             .then(res => {
               if(res.status === 200){
                 const formData = {amount: payAmount, date, time, month, year, masterUserId: id, paymentReportDate }
-                axios.post(`http://localhost:5000/common/api/v1/payment`, formData)
+                axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment`, formData)
                 .then(res => {
                   if(res.status === 200){
                     setPayLoading(false)

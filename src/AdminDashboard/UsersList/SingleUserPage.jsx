@@ -16,7 +16,7 @@ const SingleUserPage = () => {
     const [userLoading, setUserLoading] = useState(false)
     useEffect(() => {
         setUserLoading(true)
-        axios.get(`http://localhost:5000/admin/api/v1/users/${id}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/users/${id}`)
         .then(res => {
             setUserData(res.data.data)
             setUserLoading(false)

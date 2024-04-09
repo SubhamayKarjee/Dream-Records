@@ -18,7 +18,7 @@ const WithdrawalList = ({id, text}) => {
     useEffect( () => {
         setItemPerPage(14)
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/payment/withdrawal/${id}?page=${currentPage}&limit=${itemPerPage}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/withdrawal/${id}?page=${currentPage}&limit=${itemPerPage}`)
         .then(res => {
             setWithdrawalData(res.data.data);
             setTotalItems(res.data.dataCount)
@@ -39,7 +39,7 @@ const WithdrawalList = ({id, text}) => {
         }else{
             setItemPerPage(20)
             setFetchLoading(true)
-            axios.get(`http://localhost:5000/common/api/v1/payment/withdrawal/search/${id}?page=${currentPage}&limit=${itemPerPage}&search=${dateString}`)
+            axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/withdrawal/search/${id}?page=${currentPage}&limit=${itemPerPage}&search=${dateString}`)
             .then(res => {
                 setWithdrawalData(res.data.data);
                 setTotalItems(res.data.dataCount)

@@ -60,7 +60,7 @@ const ThirdStepDate = () => {
         const status = 'Pending'
         const masterUserId = userNameIdRoll[1]
         const data = {...releaseFormData, releaseDate, status, masterUserId }
-        axios.post('http://localhost:5000/api/v1/release/create-release', data)
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/release/create-release', data)
             .then(res => {
                 if(res.status == 200){
                     setLoading(false);

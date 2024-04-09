@@ -19,7 +19,7 @@ const CallSupport = () => {
     const [reFetch, setReFetch] = useState(1)
     useEffect(() => {
         setLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/support/call-support-list?page=${currentPage}&limit=${itemPerPage}&status=${supportStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/call-support-list?page=${currentPage}&limit=${itemPerPage}&status=${supportStatus}`)
         .then(res => {
             if(res.status === 200){
                 console.log(res.data.data);
@@ -51,7 +51,7 @@ const CallSupport = () => {
 
         const status = 'Solved'
         const data = {...supportData, status, ansDate: date, ansMonth: month, ansYear: year, ansTime: time,}
-        axios.put(`http://localhost:5000/common/api/v1/support/call-support/update/${e}`, data)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/call-support/update/${e}`, data)
         .then(res => {
             if(res.status === 200){
                 setSupportAnsSendLoading(false);

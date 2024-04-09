@@ -26,7 +26,7 @@ const ClaimReleasePage = () => {
 
     useEffect(() => {
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/api/v1/release/${userNameIdRoll[1]}?page=1&limit=1000&status=Approved`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/${userNameIdRoll[1]}?page=1&limit=1000&status=Approved`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -89,7 +89,7 @@ const ClaimReleasePage = () => {
         const year = now.getFullYear();
         const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
         const formData = {...data, release: release[0], claimOption, userName, masterUserId, status, date, month, year, time};
-        axios.post('http://localhost:5000/common/api/v1/claim-release', formData)
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release', formData)
         .then(res => {
             if(res.status === 200){
                 const r = reFetch + 1;
@@ -109,7 +109,7 @@ const ClaimReleasePage = () => {
     const [claimStatus, setClaimStatus] = useState('All');
     useEffect(() => {
         setLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/claim-release/users-claim/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${claimStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release/users-claim/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${claimStatus}`)
         .then(res => {
             if(res.status === 200){
                 setLoading(false)

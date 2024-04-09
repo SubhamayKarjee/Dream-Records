@@ -21,12 +21,12 @@ const SingleWithdrawalDetails = () => {
     const [userData, setUserData] = useState();
     useEffect( () => {
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/payment/admin/withdrawal/single/${id}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/single/${id}`)
         .then(res => {
             if(res.status === 200) {
                 setWithdrawalData(res.data.data[0]);
                 setWithdrawalStatus(res.data.data[0].status)
-                axios.get(`http://localhost:5000/api/v1/users/${res.data.data[0]?.masterUserId}`)
+                axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${res.data.data[0]?.masterUserId}`)
                 .then(res => {
                     if(res.status === 200) {
                         setFetchLoading(false)
@@ -46,7 +46,7 @@ const SingleWithdrawalDetails = () => {
         const updatedDate = currentDate;
         const updatedProcessed = `Your payment has been processed`
         const data = {...withdrawalData, status: withdrawalStatus, updatedProcessed, updatedDate}
-        axios.put(`http://localhost:5000/common/api/v1/payment/admin/withdrawal/single/${id}`, data)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/single/${id}`, data)
         .then(res => {
             if(res.status == 200){
                 const count = refetch + 1;
@@ -76,7 +76,7 @@ const SingleWithdrawalDetails = () => {
         setReasonFieldErr('')
         if(actionRequired){
             const updateUserBalance = {...userData, balance: {...userData.balance, amount: parseInt(withdrawalData.withdrawalAmount)}}
-            axios.put(`http://localhost:5000/api/v1/users/${id}`, updateUserBalance)
+            axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, updateUserBalance)
             .then(res => {
                 if(res.status === 200){
                     const currentDateAndTime = new Date();
@@ -84,7 +84,7 @@ const SingleWithdrawalDetails = () => {
                     const rejectResoan = actionRequired;
                     const updatedDate = currentDate
                     const data = {...withdrawalData, status: withdrawalStatus, rejectResoan, updatedDate}
-                    axios.put(`http://localhost:5000/common/api/v1/payment/admin/withdrawal/single/${withdrawalData._id}`, data)
+                    axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/single/${withdrawalData._id}`, data)
                     .then(res => {
                         if(res.status == 200){
                             const count = refetch + 1;
@@ -102,7 +102,7 @@ const SingleWithdrawalDetails = () => {
     }
 
     const handleDeleteWithdrawalData = (id) => {
-        axios.delete(`http://localhost:5000/common/api/v1/payment/admin/withdrawal/single/${id}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/single/${id}`)
         .then(res => {
             if(res.status === 200){
                 toast.success('Deleted');

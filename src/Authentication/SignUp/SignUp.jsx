@@ -49,7 +49,7 @@ const SignUp = () => {
             await createUserWithEmailAndPassword(email, password);
             const userData = {openingDate, openingTime};
             setLoadingHandle(true)
-            await axios.put(`http://localhost:5000/api/v1/users/${id}`, userData).then( async res => {
+            await axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, userData).then( async res => {
                 const displayName = `${data.userName}'__'${id}'__'${roll}`
                 if(res.status == 200){
                     setLoadingHandle(false);

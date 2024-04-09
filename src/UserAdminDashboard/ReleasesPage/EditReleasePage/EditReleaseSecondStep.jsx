@@ -48,7 +48,7 @@ const EditReleaseSecondStep = () => {
     // Get Language select Option Form API__________________________
     const [options, setOptions] = useState([]);
     useEffect( () => {
-        axios.get('http://localhost:5000/admin/api/v1/language')
+        axios.get('https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/language')
         .then(res => {
             setOptions(res.data.data);
         })
@@ -269,7 +269,7 @@ const EditReleaseSecondStep = () => {
         formData.append('file', file);
   
         if(audioData?.audioKey){
-            axios.delete(`http://localhost:5000/api/v1/release/delete-file?key=${audioData.audioKey}`)
+            axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/delete-file?key=${audioData.audioKey}`)
             .then( res => {
             if(res.status == 200){
                 setAudioData('')
@@ -278,7 +278,7 @@ const EditReleaseSecondStep = () => {
             .catch(er => console.log(er));
         }
   
-        axios.post('http://localhost:5000/api/v1/release/upload-release-audio', formData)
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/release/upload-release-audio', formData)
             .then(res => {
                 if(res.status == 200){
                     event.target.value = ''
@@ -291,7 +291,7 @@ const EditReleaseSecondStep = () => {
     }
     
     const handleDeleteAudio = (e) => {
-        axios.delete(`http://localhost:5000/api/v1/release/delete-file?key=${e}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/delete-file?key=${e}`)
         .then( res => {
           if(res.status == 200){
             setAudioData('')

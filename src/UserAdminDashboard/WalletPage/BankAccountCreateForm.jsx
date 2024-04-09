@@ -17,7 +17,7 @@ const BankAccountCreateForm = () => {
         setLoading(true)
         if(data.account_number === data.match_account_number){
             const formData = {...data, masterUserId: userNameIdRoll[1]}
-            axios.post('http://localhost:5000/api/v1/bank-info', formData)
+            axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/bank-info', formData)
             .then(res => {
                 if(res.status === 200){
                     setAddBankSuccess(true)

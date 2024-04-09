@@ -23,7 +23,7 @@ const AdminLabelsPage = () => {
     useEffect( () => {
         setItemPerPage(10)
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/admin/api/v1/labels?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/labels?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -52,7 +52,7 @@ const AdminLabelsPage = () => {
       setItemPerPage(50)
       if (event.key === 'Enter') {          
         setFetchLoading(true);
-        axios.get(`http://localhost:5000/admin/api/v1/labels/search?status=${lebelStatus}&search=${searchText}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/labels/search?status=${lebelStatus}&search=${searchText}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);

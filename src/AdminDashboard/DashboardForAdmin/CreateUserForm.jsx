@@ -17,7 +17,7 @@ const CreateUserForm = () => {
     const onSubmit = (data) => {
         setUserNameErr('')
         setLoading(true)
-        axios.post('http://localhost:5000/api/v1/users', data).then(res => {
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/users', data).then(res => {
             if(res.status == 200){
                 if(res.data.message === 'This User Name all ready exist!'){
                     setUserNameErr(res.data.message)

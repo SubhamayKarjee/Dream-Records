@@ -11,7 +11,7 @@ const PopUp = ({ visible, onClose }) => {
 
     useEffect(() => {
         setGetImageLoading(true)
-        axios.get(`http://localhost:5000/admin/api/v1/advertisment/66106c5bcda450b5173c46d8`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/advertisment/66106c5bcda450b5173c46d8`)
         .then(res => {
             if(res.status === 200){
                 setImageData(res.data.data)

@@ -8,7 +8,7 @@ const NoticeDetailsPage = () => {
     const [getDataLoading, setGetDataLoading] = useState(false)
     useEffect(() => {
         setGetDataLoading(true)
-        axios.get(`http://localhost:5000/admin/api/v1/notice/661089403281a4347e1d3498`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice/661089403281a4347e1d3498`)
         .then(res => {
             if(res.status === 200){
                 setGetDataLoading(false)

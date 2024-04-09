@@ -24,7 +24,7 @@ const UserLabelsPage = ({userId}) => {
     useEffect( () => {
         setItemPerPage(10)
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/api/v1/labels/${userId}?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/${userId}?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -53,7 +53,7 @@ const UserLabelsPage = ({userId}) => {
       setItemPerPage(50)
       if (event.key === 'Enter') {          
         setFetchLoading(true);
-        axios.get(`http://localhost:5000/api/v1/labels/search/${userId}?status=${lebelStatus}&search=${searchText}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/search/${userId}?status=${lebelStatus}&search=${searchText}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);

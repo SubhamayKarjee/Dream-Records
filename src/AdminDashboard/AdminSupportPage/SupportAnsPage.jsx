@@ -14,7 +14,7 @@ const SupportAnsPage = () => {
     const [reFetch, setReFetch] = useState(1)
     useEffect(() => {
         setLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/support/single/${id}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/single/${id}`)
         .then(res => {
         if(res.status === 200){
             setLoading(false)
@@ -43,7 +43,7 @@ const SupportAnsPage = () => {
 
         const status = 'Solved'
         const data = {...supportData, status, ansDate: date, ansMonth: month, ansYear: year, ansTime: time, supportAnsText}
-        axios.put(`http://localhost:5000/common/api/v1/support/ans/${id}`, data)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/ans/${id}`, data)
         .then(res => {
             if(res.status === 200){
                 document.getElementById('text_box').value = ''

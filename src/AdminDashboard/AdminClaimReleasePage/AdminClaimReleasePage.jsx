@@ -19,7 +19,7 @@ const AdminClaimReleasePage = () => {
     const [claimStatus, setClaimStatus] = useState('All');
     useEffect(() => {
         setLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/claim-release/all-claim?page=${currentPage}&limit=${itemPerPage}&status=${claimStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release/all-claim?page=${currentPage}&limit=${itemPerPage}&status=${claimStatus}`)
         .then(res => {
             if(res.status === 200){
                 setLoading(false)

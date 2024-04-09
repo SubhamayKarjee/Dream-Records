@@ -31,7 +31,7 @@ const DetailsSingleArtist = () => {
     }
     useEffect( () => {
         setArtistFetchLoading(true)
-        axios.get(`http://localhost:5000/api/v1/artist/single-artist/${id}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/single-artist/${id}`)
         .then(res => {
             setArtist(res.data.data[0]);
             setArtistFetchLoading(false)
@@ -56,7 +56,7 @@ const DetailsSingleArtist = () => {
         setItemPerPage(9)
         // Calculate Pagination and Fetch__________________________________________________
         setFetchLoading(true)
-        axios.get(`http://localhost:5000/api/v1/release/artist/${id}?page=${currentPage}&limit=${itemPerPage}&status=${releaseStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/artist/${id}?page=${currentPage}&limit=${itemPerPage}&status=${releaseStatus}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -89,7 +89,7 @@ const DetailsSingleArtist = () => {
         setItemPerPage(50)
         if (event.key === 'Enter') {
           setFetchLoading(true);
-          axios.get(`http://localhost:5000/api/v1/release/artist/search/${id}?status=${releaseStatus}&search=${searchText}`)
+          axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/artist/search/${id}?status=${releaseStatus}&search=${searchText}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -105,7 +105,7 @@ const DetailsSingleArtist = () => {
     const [deleteLoading, setDeleteLoading] = useState(false)
     const deleteArtist = (id, imgKey) => {
         setDeleteLoading(true)
-        axios.delete(`http://localhost:5000/api/v1/artist/delete-artist/${id}?imgKey=${imgKey}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/delete-artist/${id}?imgKey=${imgKey}`)
         .then( res => {
             if(res.status == 200){
                 setDeleteLoading(false)

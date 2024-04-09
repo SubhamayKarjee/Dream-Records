@@ -93,7 +93,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/set-password/:id",
-    loader: ({ params }) => axios.get(`http://localhost:5000/api/v1/users/${params.id}`),
+    loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${params.id}`),
     element: <Suspense fallback={<LoadingComponentsForPage/>}><SignUp/></Suspense>,
   },
   // Admin Dashboard________________________________________________________________________

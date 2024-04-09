@@ -13,7 +13,7 @@ const AddGenreComponent = () => {
 
     useEffect( () => {
         setLoading(true)
-        axios.get('http://localhost:5000/admin/api/v1/genre')
+        axios.get('https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/genre')
         .then(res => {
             setLoading(false)
             setTotalCount(res.data.dataCount)
@@ -26,7 +26,7 @@ const AddGenreComponent = () => {
     const { register, handleSubmit, reset, formState: { errors }} = useForm();
     const onSubmit = (data) => {
         setAddLoading(true)
-        axios.post('http://localhost:5000/admin/api/v1/genre/add-genre', data)
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/genre/add-genre', data)
         .then(res => {
             if(res.status == 200){
                 const r = refe + 1
@@ -40,7 +40,7 @@ const AddGenreComponent = () => {
     };
 
     const handleDeleteGenre = (id) => {
-        axios.delete(`http://localhost:5000/admin/api/v1/genre/${id}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/genre/${id}`)
         .then(res => {
             if(res.status == 200){
                 const r = refe + 1

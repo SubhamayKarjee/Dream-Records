@@ -25,7 +25,7 @@ const UserArtistPage = () => {
     useEffect( () => {
       setItemPerPage(10)
       setFetchLoading(true)
-      axios.get(`http://localhost:5000/api/v1/artist/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}`)
+      axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);
@@ -51,7 +51,7 @@ const UserArtistPage = () => {
       if (event.key === 'Enter') {
         console.log(currentPage);
         setFetchLoading(true);
-        axios.get(`http://localhost:5000/api/v1/artist/search/${userNameIdRoll[1]}?search=${searchText}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/search/${userNameIdRoll[1]}?search=${searchText}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);

@@ -32,7 +32,7 @@ const CreateLabelsForm = () => {
       }
 
       if(uploadedImage?.key){
-        axios.delete(`http://localhost:5000/api/v1/release/delete-file?key=${uploadedImage.key}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/delete-file?key=${uploadedImage.key}`)
         .then( res => {
         if(res.status == 200){
             setUploadedImage()
@@ -41,7 +41,7 @@ const CreateLabelsForm = () => {
         .catch(er => console.log(er));
     }
 
-      axios.post('http://localhost:5000/api/v1/labels/upload-labels-img', formData)
+      axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/upload-labels-img', formData)
           .then(res => {
               if(res.status == 200){
                 setUploadedImageLink(res.data.data.imgUrl);
@@ -61,7 +61,7 @@ const CreateLabelsForm = () => {
       const status = 'Pending';
       const masterUserId = userNameIdRoll[1];
       const formData = {...data, ...uploadedImage, masterUserId, status};
-      axios.post('http://localhost:5000/api/v1/labels/create-labels', formData)
+      axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/create-labels', formData)
           .then(res => {
               if(res.status == 200){
                 toast.success('Successfully Created Labels. We will Review Shortly!')

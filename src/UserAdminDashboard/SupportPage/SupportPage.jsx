@@ -26,9 +26,9 @@ const SupportPage = () => {
         const formData = new FormData();
         formData.append('file', file);
         if(attachment){
-            axios.delete(`http://localhost:5000/common/api/v1/support/delete-file?key=${attachment.key}`)
+            axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/delete-file?key=${attachment.key}`)
         }
-        axios.post(`http://localhost:5000/common/api/v1/support/upload-file`, formData)
+        axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/upload-file`, formData)
         .then(res => {
             setUploadLoading(false);
             setAttachment(res.data.data)
@@ -60,7 +60,7 @@ const SupportPage = () => {
         const userName = userNameIdRoll[0]
         const status = 'Pending'
         const data = {supportText, masterUserId, date, month, year, time, userName, status, attachment}
-        axios.post(`http://localhost:5000/common/api/v1/support`, data)
+        axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support`, data)
         .then(res => {
             if(res.status === 200){
                 document.getElementById('text_box').value = ''
@@ -129,7 +129,7 @@ const SupportPage = () => {
         const userName = userNameIdRoll[0]
         const status = 'Pending'
         const data = {category, language, phoneNumber: value, masterUserId, date, month, year, time, userName, status}
-        axios.post(`http://localhost:5000/common/api/v1/support/call-support`, data)
+        axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/call-support`, data)
         .then(res => {
             if(res.status === 200){
                 setCallReqLoading(false);

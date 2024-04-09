@@ -25,7 +25,7 @@ const EditReleaseFirstStep = () => {
         formData.append('file', file);
 
         if(uploadedImage?.key){
-            axios.delete(`http://localhost:5000/api/v1/release/delete-file?key=${uploadedImage.key}`)
+            axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/delete-file?key=${uploadedImage.key}`)
             .then( res => {
             if(res.status == 200){
                 console.log('delete');
@@ -40,7 +40,7 @@ const EditReleaseFirstStep = () => {
             img.onload = function() {
                 if (this.width === 3000 && this.height === 3000) {
                     setErrorMessage('');
-                    axios.post('http://localhost:5000/api/v1/release/upload-release-img', formData)
+                    axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/release/upload-release-img', formData)
                     .then(res => {
                         if(res.status == 200){
                             setUploadedImageLink(res.data.data.imgUrl);
@@ -70,7 +70,7 @@ const EditReleaseFirstStep = () => {
     const [genreError, setGenreError] = useState('')
     const [options, setOptions] = useState([]);
     useEffect( () => {
-        axios.get('http://localhost:5000/admin/api/v1/genre')
+        axios.get('https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/genre')
         .then(res => {
             setOptions(res.data.data);
             setGenre(preReleaseData.genre)
