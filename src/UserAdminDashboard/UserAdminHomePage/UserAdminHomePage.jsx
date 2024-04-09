@@ -89,7 +89,7 @@ const UserAdminHomePage = () => {
                         <div className='for_height_issue_logo_div'>
                             <div className="avatar">
                                 <div className="w-32">
-                                    <img src={logo} />
+                                    <img src={logo} alt={logo}/>
                                 </div>
                             </div>
                             <div style={{marginTop: '-20px'}}>

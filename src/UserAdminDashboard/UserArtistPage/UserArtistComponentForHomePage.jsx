@@ -2,14 +2,16 @@ import { PlusIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { Image } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import { useNavigate } from "react-router-dom";
 
 
 const UserArtistComponentForHomePage = () => {
 
     const { userNameIdRoll } = useContext(AuthContext);
+    const navigate = useNavigate()
 
     const [artistData, setArtistData] = useState();
     const [loading, setLoading] = useState(false)
@@ -32,7 +34,7 @@ const UserArtistComponentForHomePage = () => {
                 <p className="text-sm font-semibold text-slate-500">Artists</p>
             </div>
             <div className="flex gap-4 flex-wrap py-3">
-                <Link to={'/artist'} className="w-12 h-12 outline-dashed outline-1 outline-slate-500 rounded-full flex items-center justify-center"><PlusIcon className="w-6 h-6 text-slate-500"/></Link>
+                <p style={{cursor: 'pointer'}} onClick={() => navigate('/artist')} className="w-12 h-12 outline-dashed outline-1 outline-slate-500 rounded-full flex items-center justify-center"><PlusIcon className="w-6 h-6 text-slate-500"/></p>
                 {
                     loading && <div className="w-12 h-12 rounded-full bg-gray-300 animate-pulse"></div>
                 }

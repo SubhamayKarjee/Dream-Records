@@ -101,10 +101,10 @@ const UserHomePage = () => {
                         getDataLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-sm me-2"></span></div>
                     }
                     <div className='bg-slate-100 rounded-md'>
-                        <p className="text-slate-500 text-sm font-bold bg-green-200 p-2 rounded-md">Current Notice {noticeData?.date} || {noticeData?.time}</p>
+                        <p className="text-sm font-bold bg-green-200 p-2 rounded-md">Current Notice {noticeData?.date} || {noticeData?.time}</p>
                         <div style={{cursor: 'pointer'}} onClick={() => navigate(`/notice/661089403281a4347e1d3498`)} className="p-2">
-                            <p className="text-sm text-slate-500 font-bold">{noticeData?.noticeTitle}</p>
-                            <p className="text-xs text-slate-500">{noticeData?.noticeDescription.slice(0, 50)}...</p>
+                            <p className=" font-bold">{noticeData?.noticeTitle}</p>
+                            <p className="">{noticeData?.noticeDescription.slice(0, 50)}...</p>
                         </div>
                     </div>
                 </div>
