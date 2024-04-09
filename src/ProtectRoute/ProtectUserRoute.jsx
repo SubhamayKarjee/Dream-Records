@@ -3,12 +3,14 @@ import { Navigate } from "react-router-dom";
 import auth from "../../firebase.config";
 import LoadingComponentsForPage from "../LoadingComponents/LoadingComponentsForPage";
 
-const ProtectUserRoute = (children) => {
+// eslint-disable-next-line react/prop-types
+const ProtectUserRoute = ({children}) => {
     const [user, loading] = useAuthState(auth);
 
     if(loading){
         return <LoadingComponentsForPage/>
     }
+
     if(user){
         let userNameIdRoll = user?.displayName?.split("'__'");
         if(userNameIdRoll[2] === 'User'){
