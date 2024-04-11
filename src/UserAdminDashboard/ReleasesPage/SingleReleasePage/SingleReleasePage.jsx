@@ -114,7 +114,7 @@ const SingleReleasePage = () => {
                             <p className="text-xs font-bold">Artist Details</p>
                             <div className=" p-2 bg-slate-100 rounded-md">
                                 {
-                                    data?.artist.map(a => 
+                                    data?.artist && data?.artist?.map(a => 
                                         <div key={a._id} className="flex my-2">
                                             <div>
                                                 <Image
@@ -140,7 +140,7 @@ const SingleReleasePage = () => {
                             <p className="text-xs font-bold">Labels Details</p>
                             <div className=" p-2 bg-slate-100 rounded-md">
                                 {
-                                    data?.labels.map((l) => 
+                                    data?.labels && data?.labels?.map((l) => 
                                         <div key={l._id}>
                                             <div className="flex my-2">
                                                 <div>
@@ -169,7 +169,7 @@ const SingleReleasePage = () => {
                             <p className="text-xs font-bold">Featuring Details</p>
                             <div className=" p-2 bg-slate-100 rounded-md">
                                 {
-                                    data?.featuring?.map(f => 
+                                    data?.featuring && data?.featuring?.map(f => 
                                         <div key={f._id} className="flex my-2">
                                             <div>
                                                 <Image
@@ -202,7 +202,7 @@ const SingleReleasePage = () => {
                                     <td>Authors Name:</td>
                                     <td>
                                         {
-                                            data?.authors.map((a, index)=> <span className="mx-1 px-2 py-1 bg-slate-200 rounded-md" key={index}>{a}</span>)
+                                            data?.authors && data?.authors?.map((a, index)=> <span className="mx-1 px-2 py-1 bg-slate-200 rounded-md" key={index}>{a}</span>)
                                         }
                                     </td>
                                 </tr>
@@ -219,7 +219,7 @@ const SingleReleasePage = () => {
                                     <td>Composer Name:</td>
                                     <td>
                                         {
-                                            data?.composer?.map((c, index)=> <span className="mx-1 px-2 py-1 bg-slate-200 rounded-md" key={index}>{c}</span>)
+                                            data?.composer && data?.composer?.map((c, index)=> <span className="mx-1 px-2 py-1 bg-slate-200 rounded-md" key={index}>{c}</span>)
                                         }
                                     </td>
                                 </tr>

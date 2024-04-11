@@ -10,7 +10,7 @@ const LatestApprovedRelease = () => {
 
     // Paginatin and Search State __________________________________________________
     const [releaseStatus] = useState('Approved')
-    const [totalItems, setTotalItems] = useState();
+    const [totalItems] = useState(6);
     const [currentPage] = useState(1);
     const [itemPerPage] = useState(6);
     const [releaseData, setReleaseData] = useState();
@@ -24,7 +24,7 @@ const LatestApprovedRelease = () => {
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
-                setTotalItems(res.data.dataCount);
+                // setTotalItems(res.data.dataCount);
                 setReleaseData(res.data.data);
               }
             })
