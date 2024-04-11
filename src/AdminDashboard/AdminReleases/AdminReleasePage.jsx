@@ -12,7 +12,7 @@ const AdminReleasePage = () => {
     const [releaseStatus, setReleaseStatus] = useState('All')
     const [totalItems, setTotalItems] = useState();
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(12);
+    const [itemPerPage, setItemPerPage] = useState(8);
     const [searchText, setSearchText] = useState('');
 
     const [releaseData, setReleaseData] = useState();
@@ -21,7 +21,7 @@ const AdminReleasePage = () => {
 
     // Get Release List ______________________________________________________________
     useEffect(() => {
-        setItemPerPage(12)
+        setItemPerPage(8)
         // Calculate Pagination and Fetch__________________________________________________
         setFetchLoading(true)
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/release?status=${releaseStatus}&page=${currentPage}&limit=${itemPerPage}`)
