@@ -34,17 +34,6 @@ const ThirdStepDate = () => {
 
     const [loading, setLoading] = useState(false)
     const handleSubmit = () => {
-        setArtist();
-        setLabels();
-        setFeaturing(); 
-        setReleaseFormData();
-        setFirstStep();
-        setSecondStep();
-        setAudioData();
-        setLyricsLanguage();
-        setComposer();
-        setAuthors();
-
         setLoading(true)
         setError('')
         if(!releaseDate){
@@ -64,7 +53,17 @@ const ThirdStepDate = () => {
             .then(res => {
                 if(res.status == 200){
                     setLoading(false);
-                    navigate('/create-release/thenks')
+                    navigate('/create-release/thenks');
+                    setArtist();
+                    setLabels();
+                    setFeaturing(); 
+                    setReleaseFormData();
+                    setFirstStep();
+                    setSecondStep();
+                    setAudioData();
+                    setLyricsLanguage();
+                    setComposer();
+                    setAuthors();
                 }
             })
             .catch(er => console.log(er))        
