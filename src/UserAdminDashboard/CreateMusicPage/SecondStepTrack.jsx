@@ -196,6 +196,7 @@ const SecondStepTrack = () => {
         defaultValues: secondStep
     });
     const onSubmit = (data) => {
+        console.log(data);
         setErrorMessageArtist('');
         setErrorMessageLabels('');
         setErrorMessageAudio('');
@@ -219,11 +220,13 @@ const SecondStepTrack = () => {
             setLanguageErr('Language Required')
             return;
         }
-        if(!composer){
+        if(composer === null){
             setComposerErr('Composer Name Required')
+            return
         }
-        if(!authors){
+        if(authors === null) {
             setAuthorsErr('Author Name Required')
+            return
         }
         if(!releaseFormData){
             navigate('/create-release')
@@ -232,6 +235,7 @@ const SecondStepTrack = () => {
         }
 
         const d = {...data, ...releaseFormData, ...audioData, lyricsLanguage, artist, labels, featuring, composer, authors}
+        console.log('d', d);
         setSecondStep(data)
         setReleaseFormData(d)
         navigate('/create-release/date')
@@ -381,10 +385,10 @@ const SecondStepTrack = () => {
                                     {authorLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{authorLastNameErr}</span>}
                                 </div>
                             </div>
-                            {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
                             <span style={{width: '150px'}} onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1"><PlusIcon className="w-4 h-4 text-white font-bold"/> Add Author</span>
                         </div>
                     </div>
+                    {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
 
                     {/* Select Language ____________________ */}
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Lyrics language <span className="text-red-500">*</span></p>
@@ -491,10 +495,10 @@ const SecondStepTrack = () => {
                                     {composerLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerLastNameErr}</span>}
                                 </div>
                             </div>
-                            {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
                             <span style={{width: '150px'}} onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1"><PlusIcon className="w-4 h-4 text-white font-bold"/> Add Composer</span>
                         </div>
                     </div>
+                    {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">ISRC</p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("ISRC")}/>

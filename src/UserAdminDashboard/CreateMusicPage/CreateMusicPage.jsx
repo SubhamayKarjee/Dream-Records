@@ -16,8 +16,8 @@ const CreateMusicPage = () => {
     const [labels, setLabels] = useState();
     const [audioData, setAudioData] = useState();
     const [lyricsLanguage, setLyricsLanguage] = useState();
-    const [composer, setComposer] = useState();
-    const [authors, setAuthors] = useState();
+    const [composer, setComposer] = useState(null);
+    const [authors, setAuthors] = useState(null);
     const [featuring, setFeaturing] = useState();
     const [genre, setGenre] = useState();
     const [uploadedImageLink, setUploadedImageLink] = useState('');

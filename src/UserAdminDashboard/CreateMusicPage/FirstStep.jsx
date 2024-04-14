@@ -136,6 +136,7 @@ const FirstStep = () => {
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Genre <span className="text-red-500">*</span></p>
                     <Select
+                        showSearch
                         defaultValue={genre ? genre : 'Select Genre'}
                         size="large"
                         className="font-bold mb-2"
