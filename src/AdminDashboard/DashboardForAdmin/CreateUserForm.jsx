@@ -12,11 +12,18 @@ const CreateUserForm = () => {
     const [loading, setLoading] = useState(false);
 
     const [userNameErr, setUserNameErr] = useState('')
+    const [spaceErr, setSpaceErr] = useState('')
     // React Hook Form Submit Function For Create User _________________________
     const { register, handleSubmit, reset, formState: { errors }} = useForm();
     const onSubmit = (data) => {
         setUserNameErr('')
+        setSpaceErr('');
         setLoading(true)
+        if(data.userName.includes(' ')){
+            setSpaceErr('Please Remove Empty Space');
+            setLoading(false);
+            return;
+        }
         axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/users', data).then(res => {
             if(res.status == 200){
                 if(res.data.message === 'This User Name all ready exist!'){
@@ -62,6 +69,7 @@ const CreateUserForm = () => {
                         <input type="text" placeholder="Enter User name" className="mt-2 input input-sm input-bordered rounded-full w-full" {...register("userName", { required: true})}/>
                         {errors.userName && <span className='text-red-600 pt-2 block'>Please Fill User Name</span>}
                         {userNameErr && <span className='text-red-600 pt-2 block'>{userNameErr}</span>}
+                        {spaceErr && <span className='text-red-600 pt-2 block'>{spaceErr}</span>}
 
                         <input type="email" placeholder="Enter User Email" className="input input-sm input-bordered rounded-full mt-2 w-full" {...register("email", { required: true})}/>
                         {errors.email && <span className='text-red-600 pt-2 block'>Please Fill Email</span>}
