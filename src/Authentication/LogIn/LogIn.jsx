@@ -1,11 +1,9 @@
-import { 
-    UserIcon, 
- } from '@heroicons/react/24/solid'
 import { useState } from 'react';
 import { useSignInWithEmailAndPassword, useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.config';
+import logoImg from '../../assets/logo/Dream-Records Logo-(Dark).png'
 
 const LogIn = () => {
 
@@ -72,11 +70,10 @@ const LogIn = () => {
         <div className='xl:max-w-[1140px] lg:max-w-[90%] md:max-w-[90%] sm:max-w-[90%] w-[95%] mx-auto'>
             <div className="h-screen flex justify-center items-center">
                 <div className="card w-96 bg-base-100 shadow-xl border">
-                    
-                    <div className="flex justify-center pt-4">
-                        <UserIcon className='w-12 h-12'/>
+                    <div className='flex justify-center items-center'>
+                        <img style={{width: '120px', hight: 'auto'}} src={logoImg} alt={logoImg} />
                     </div>
-                    <h3 className="px-4 text-2xl font-bold text-center">Log In</h3>
+                    <h3 className="px-4 text-2xl font-bold text-center">Sign In</h3>
                     <div className="card-body">
                         <form onSubmit={handleSubmit(onSubmit)} className="w-100">
                             <label className="input input-bordered flex items-center gap-2 mb-2">

@@ -217,7 +217,7 @@ const ClaimReleasePage = () => {
                     </div>
 
                     {
-                        claimOption !== 'Audio Fingerprinting' && 
+                        claimOption != 'Audio Fingerprinting' && 
                         <div>
                             <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Paste infringing link <span className="text-red-500">*</span></p>
                             <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("claimLink", { required: true})}/>
