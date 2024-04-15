@@ -13,6 +13,10 @@ const EditReleaseFirstStep = () => {
 
     const navigate = useNavigate('')
 
+    const [formate, setFormate] = useState(preReleaseData.formate);
+    const [formateErr, setFormateErr] = useState('')
+
+
     const [errorMessage, setErrorMessage] = useState('');
     const [upLoadLoading, setUploadLoading] = useState(false);
     
@@ -88,12 +92,16 @@ const EditReleaseFirstStep = () => {
         }
     });
     const onSubmit = (data) => {
+        if(!formate){
+            setFormateErr('Please Select Formate')
+            return;
+        }
         if(!genre){
             setGenreError('Genre Required')
             return;
         }
         if(uploadedImage){
-            const formData = {...data, ...uploadedImage, genre};
+            const formData = {...data, ...uploadedImage, genre, formate};
             setReleaseFormData(formData)
             navigate('/releases/edit/second-step')
         }else{
@@ -160,8 +168,23 @@ const EditReleaseFirstStep = () => {
 
 
                         <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Format <span className="text-red-500">*</span></p>
-                        <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("format", { required: true})}/>
-                        {errors.format && <span className='text-red-600 pt-2 block'>Format Required</span>}
+                        <Select
+                            showSearch
+                            defaultValue={preReleaseData.formate}
+                            size="large"
+                            className="font-bold mb-2"
+                            style={{
+                                width: '100%',
+                            }}
+                            onChange={e => setFormate(e)}
+                            options={[
+                                {label: 'Single', value: 'Single'},
+                                {label: 'Album', value: 'Album'},
+                            ]}
+                        />
+                        {
+                            formateErr && <span className='text-red-600 pt-2 block'>{formateErr}</span>
+                        }
 
                         <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">UPC</p>
                         <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("UPC")}/>

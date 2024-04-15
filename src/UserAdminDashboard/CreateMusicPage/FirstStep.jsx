@@ -80,17 +80,24 @@ const FirstStep = () => {
     }
 
     const [genreError, setGenreError] = useState('')
+    const [formate, setFormate] = useState('');
+    const [formateErr, setFormateErr] = useState('')
 
     const { register, handleSubmit, formState: { errors }} = useForm({
         defaultValues: firstStep
     });
     const onSubmit = (data) => {
+        setFormateErr('')
         if(!genre){
             setGenreError('Genre Required')
             return;
         }
+        if(!formate){
+            setFormateErr('Please Select Formate')
+            return;
+        }
         if(uploadedImage){
-            const formData = {...data, ...uploadedImage, genre};
+            const formData = {...data, ...uploadedImage, genre, formate};
             setReleaseFormData(formData);
             setFirstStep(data);
             navigate('/create-release/tracks')
@@ -158,8 +165,23 @@ const FirstStep = () => {
 
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Format <span className="text-red-500">*</span></p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("format", { required: true})}/>
-                    {errors.format && <span className='text-red-600 pt-2 block'>Format Required</span>}
+                    <Select
+                        showSearch
+                        placeholder='Select Formate'
+                        size="large"
+                        className="font-bold mb-2"
+                        style={{
+                            width: '100%',
+                        }}
+                        onChange={e => setFormate(e)}
+                        options={[
+                            {label: 'Single', value: 'Single'},
+                            {label: 'Album', value: 'Album'},
+                        ]}
+                    />
+                    {
+                        formateErr && <span className='text-red-600 pt-2 block'>{formateErr}</span>
+                    }
 
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">UPC</p>
                     <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("UPC")}/>

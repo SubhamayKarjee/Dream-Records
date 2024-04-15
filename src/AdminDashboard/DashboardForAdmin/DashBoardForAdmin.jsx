@@ -142,7 +142,7 @@ const DashBoardForAdmin = () => {
                             </button>
                             {/* __________________________________________________________________________________________________________ */}
                             {/* Drawer____________________________________________________________________________________________________ */}
-                            <Drawer className='bg-slate-950' onClose={onClose} open={open}>
+                            <Drawer className='bg-slate-950' onClose={onClose} open={open}  placement={'left'}>
                                 <div className="pt-4 bg-slate-950">
                                     <div className="avatar">
                                         <div className="w-32">
