@@ -12,35 +12,45 @@ const LogIn = () => {
     const navigate = useNavigate();
     const [
         signInWithEmailAndPassword,
-        // user,
-        loading,
-        error,
     ] = useSignInWithEmailAndPassword(auth);
 
     const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
 
     //   signInWithEmailAndPassword(email, password)
 
+    const [signInError, setSignInError] = useState('');
+    const [signInLoading, setSignInLoading] = useState(false);
     const { register, handleSubmit, formState: { errors }} = useForm();
     const [email, setEmail] = useState('')
     const [emailErr, setEmailErr] = useState();
     const onSubmit = async (data) => {
-        if(!email){
-            setEmailErr('Please Enter Email');
-            return;
+        setSignInLoading(true)
+        setSignInError('')
+        try {
+            if(!email){
+                setEmailErr('Please Enter Email');
+                return;
+            }
+            const password = data.password;
+            await signInWithEmailAndPassword(email, password)
+            .then((res) => {
+                let userNameIdRoll = res.user?.displayName?.split("'__'");
+                if(userNameIdRoll[2] === 'User'){
+                    localStorage.setItem('popupShown', 'false');
+                    navigate('/')
+                }
+                if(userNameIdRoll[2] === 'Admin'){
+                    navigate('/admin-dashboard')
+                }
+            })
+            setSignInLoading(false)
+        } catch (error) {
+            if (error) {
+                setSignInError("Email/Password Not Correct");
+                setSignInLoading(false)
+            }
         }
-        const password = data.password;
-        await signInWithEmailAndPassword(email, password)
-        .then((res) => {
-            let userNameIdRoll = res.user?.displayName?.split("'__'");
-            if(userNameIdRoll[2] === 'User'){
-                localStorage.setItem('popupShown', 'false');
-                navigate('/')
-            }
-            if(userNameIdRoll[2] === 'Admin'){
-                navigate('/admin-dashboard')
-            }
-        })
+        
     }
 
     const handleForgetPassword = () => {
@@ -55,6 +65,8 @@ const LogIn = () => {
         .then(() => alert("Please check your Email"))
         .catch(err => setEmailErr(err))
     }
+
+
 
     return (
         <div className='xl:max-w-[1140px] lg:max-w-[90%] md:max-w-[90%] sm:max-w-[90%] w-[95%] mx-auto'>
@@ -78,10 +90,10 @@ const LogIn = () => {
                             </label>
                             {errors.password && <span className='text-red-600 pt-2 block'>Password Required</span>}
                             {
-                                loading && <div className='flex justify-center'><span className="block loading loading-spinner loading-md me-2"></span></div>
+                                signInLoading && <div className='flex justify-center'><span className="block loading loading-spinner loading-md me-2"></span></div>
                             }
                             {
-                                error && <span className='text-red-600 pt-2 block'>{error.message}</span>
+                                signInError && <span className='text-red-600 pt-2 block'>{signInError}</span>
                             }
                             <div className="flex justify-center mt-4">
                                 <input className="btn btn-neutral rounded-full btn-wide" type="submit" value={'Submit'} />
