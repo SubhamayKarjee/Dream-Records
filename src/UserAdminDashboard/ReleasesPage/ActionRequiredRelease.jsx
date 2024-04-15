@@ -10,11 +10,15 @@ const ActionRequiredRelease = () => {
     const navigate = useNavigate('')
 
     const [release, setRelease] = useState();
+    const [noData, setNoData] = useState(false);
     useEffect( () => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/action-required/${userNameIdRoll[1]}`)
             .then( res => {
               if(res.status == 200){
                 setRelease(res.data.data);
+                if(res.data.data.length === 0){
+                    setNoData(true);
+                }
               }
             })
             .catch(er => console.log(er));
@@ -45,6 +49,9 @@ const ActionRequiredRelease = () => {
                         </div>
                     </div>
                 )
+            }
+            {
+                noData && <div className="m-2 flex justify-center items-center p-3 bg-slate-100 rounded-md my-2"><p className="font-bold text-slate-600">NO Notification Yet!</p></div>
             }
         </div>
     );

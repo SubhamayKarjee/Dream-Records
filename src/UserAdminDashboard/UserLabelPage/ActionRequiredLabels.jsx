@@ -7,12 +7,18 @@ const ActionRequiredLabels = () => {
 
     const { userNameIdRoll } = useContext(AuthContext);
 
+    const [noData, setNoData] = useState(false)
     const [labels, setLabels] = useState();
+
     useEffect( () => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/action-required/${userNameIdRoll[1]}`)
             .then( res => {
               if(res.status == 200){
                 setLabels(res.data.data);
+                if(res.data.data.length === 0){
+                    setNoData(true)
+                    console.log('true');
+                }
               }
             })
             .catch(er => console.log(er));
@@ -36,6 +42,9 @@ const ActionRequiredLabels = () => {
                         </Link>
                     </div>
                 )
+            }
+            {
+                noData && <div className="m-2 flex justify-center items-center p-3 bg-slate-100 rounded-md my-2"><p className="font-bold text-slate-600">NO Notification Yet!</p></div>
             }
         </div>
     );
