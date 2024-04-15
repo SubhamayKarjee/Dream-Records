@@ -94,6 +94,7 @@ const ClaimReleasePage = () => {
             if(res.status === 200){
                 const r = reFetch + 1;
                 setReFetch(r)
+                setRelease([])
                 toast.success('Successfully Submited')
             }
         })
