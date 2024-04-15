@@ -125,7 +125,7 @@ const FirstStep = () => {
                         {
                             upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                         }
-                        <input type="file" accept=".jpeg" id="fileInput" name='image' onChange={releaseImageUpload} />
+                        <input type="file" accept=".jpeg, .JPG, .jpg" id="fileInput" name='image' onChange={releaseImageUpload} />
                     </div>
                     {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
                 </div>
