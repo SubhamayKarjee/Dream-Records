@@ -79,7 +79,7 @@ const SingleUserPage = () => {
                         />
                     </div>
                     <div>
-                        <h2 className="font-bold text-slate-600">{userData?.nick_name ? userData.nick_name : userData?.name}</h2>
+                        <h2 className="font-bold text-slate-600">{userData?.userName}</h2>
                         <p className="text-sm text-slate-700">Address: {userData?.address}</p>
                         <p className="text-sm text-slate-700">ID: {userData?._id}</p>
                         <p className="text-sm text-slate-700 font-semibold pt-2">{userData?.email}</p>
