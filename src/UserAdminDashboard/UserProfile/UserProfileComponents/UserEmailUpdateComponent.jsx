@@ -26,14 +26,13 @@ const UserEmailUpdateComponent = () => {
     const onSubmit = async (data) => {
         setError('');
         setLoading(true);
-    
         try {
             const user = auth.currentUser;
             const password = data.password;
             const email = data.email;
             const credential = EmailAuthProvider.credential(user.email, password);
             await reauthenticateWithCredential(user, credential);            
-            verifyBeforeUpdateEmail(email)
+            await verifyBeforeUpdateEmail(email)
             toast.success('Please verify Email')
             navigate('/log-in')
             setLoading(false);

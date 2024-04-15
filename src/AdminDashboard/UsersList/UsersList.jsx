@@ -31,8 +31,7 @@ const UsersList = () => {
             }
           })
           .catch(er => console.log(er));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[currentPage, itemPerPage])
 
     const handlePageChange = (page) => {
         setCurrentPage(page)
