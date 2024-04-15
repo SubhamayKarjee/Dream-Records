@@ -14,11 +14,12 @@ import {
     ExclamationTriangleIcon,
  } from '@heroicons/react/24/solid'
 import { useState } from 'react';
-import { Drawer } from 'antd';
+import { Drawer, Image } from 'antd';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.config';
 import LoadingComponentsForPage from '../../LoadingComponents/LoadingComponentsForPage';
 import { createContext } from 'react';
+import fallbackImage from '../../assets/userImage.webp'
 
 export const AuthContext = createContext();
 
@@ -158,7 +159,23 @@ const UserAdminHomePage = () => {
                                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                         <div className="w-12 rounded-full">
                                         {
-                                            mainProfileImage ? <img className='bg-slate-200' alt="Profile Img" src={mainProfileImage} /> : <img className='bg-slate-200' alt="Profile Img" src={user?.photoURL} />
+                                            mainProfileImage ? <Image
+                                                width={'100%'}
+                                                height={'100%'}
+                                                className="rounded-full p-2 bg-slate-100"
+                                                src={mainProfileImage}
+                                                fallback={fallbackImage}
+                                                preview={false}
+                                                alt="profile-image"
+                                            /> : <Image
+                                                    width={'100%'}
+                                                    height={'100%'}
+                                                    className="rounded-full p-2 bg-slate-100"
+                                                    src={user.photoURL}
+                                                    fallback={fallbackImage}
+                                                    preview={false}
+                                                    alt="profile-image"
+                                                /> 
                                         }
                                         </div>
                                     </div>
@@ -246,7 +263,23 @@ const UserAdminHomePage = () => {
                                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                             <div className="w-12 rounded-full">
                                                 {
-                                                    mainProfileImage ? <img className='bg-slate-200' alt="Profile Img" src={mainProfileImage} /> : <img className='bg-slate-200' alt="Profile Img" src={user?.photoURL} />
+                                                    mainProfileImage ? <Image
+                                                        width={'100%'}
+                                                        height={'100%'}
+                                                        className="rounded-full bg-slate-100"
+                                                        src={mainProfileImage}
+                                                        fallback={fallbackImage}
+                                                        preview={false}
+                                                        alt="profile-image"
+                                                    /> : <Image
+                                                            width={'100%'}
+                                                            height={'100%'}
+                                                            className="rounded-full bg-slate-100"
+                                                            src={user.photoURL}
+                                                            fallback={fallbackImage}
+                                                            preview={false}
+                                                            alt="profile-image"
+                                                        /> 
                                                 }
                                             </div>
                                         </div>

@@ -2,9 +2,8 @@ import { PlusIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { Image } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
-import fallbackImage from '../../assets/fallbackImage.jpg'
+import fallbackImage from '../../assets/userImage.webp'
 import { useNavigate } from "react-router-dom";
 
 

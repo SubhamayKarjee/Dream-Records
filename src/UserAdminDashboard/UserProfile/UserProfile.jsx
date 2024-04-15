@@ -1,7 +1,9 @@
 import { BellIcon } from "@heroicons/react/24/solid";
+import { Image } from "antd";
 import { useContext } from "react";
 import { Outlet } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
+import fallbackImage from '../../assets/userImage.webp'
 
 const UserProfile = () => {
 
@@ -15,7 +17,23 @@ const UserProfile = () => {
                     <div className="avatar me-2">
                         <div className="w-16 rounded-md">
                             {
-                                mainProfileImage ? <img className="bg-slate-200" src={mainProfileImage} alt="Profile Img" /> : <img className="bg-slate-200" src={user.photoURL} alt="Profile Img" />
+                                mainProfileImage ? <Image
+                                    width={65}
+                                    height={65}
+                                    className="rounded-md bg-slate-100"
+                                    src={mainProfileImage}
+                                    fallback={fallbackImage}
+                                    preview={false}
+                                    alt="profile-image"
+                                /> : <Image
+                                        width={65}
+                                        height={65}
+                                        className="rounded-md bg-slate-100"
+                                        src={user.photoURL}
+                                        fallback={fallbackImage}
+                                        preview={false}
+                                        alt="profile-image"
+                                    /> 
                             }
                             
                         </div>
