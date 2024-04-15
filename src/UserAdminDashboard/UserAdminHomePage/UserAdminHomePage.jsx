@@ -135,7 +135,7 @@ const UserAdminHomePage = () => {
                                 </Link>
                                 <Link className='text-white flex items-center py-2' to={'/claim-release'}>
                                     <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
-                                    Claim Release
+                                    Rights manager
                                 </Link>
                                 <Link className='text-white flex items-center py-2' to={'/support'}>
                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
@@ -241,7 +241,7 @@ const UserAdminHomePage = () => {
                                                 </Link>
                                                 <Link onClick={onClose} className='text-white flex items-center py-2' to={'/claim-release'}>
                                                     <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
-                                                    Claim Release
+                                                    Rights manager
                                                 </Link>
                                                 <Link onClick={onClose} className='text-white flex items-center py-2' to={'/support'}>
                                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
