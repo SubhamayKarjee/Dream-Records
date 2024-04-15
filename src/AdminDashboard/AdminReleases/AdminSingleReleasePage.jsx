@@ -141,12 +141,20 @@ const AdminSingleReleasePage = () => {
                                                     { value: 'Pending', label: 'Pending' },
                                                     { value: 'Approved', label: 'Approved' },
                                                     { value: 'Action Required', label: 'Action Required' },
+                                                    { value: 'Takedown', label: 'Takedown' },
                                                 ]}
                                             />
                                             {
                                                 releaseStatus === 'Action Required' &&
                                                 <div>
                                                     <textarea {...register("actionRequired", { required: true})} className="textarea mt-2 textarea-bordered w-full" placeholder="Release Action Required Details"></textarea>
+                                                    {errors.actionReuired && <span className='text-red-600 block'>You have to Explain</span>}
+                                                </div>
+                                            }
+                                            {
+                                                releaseStatus === 'Takedown' &&
+                                                <div>
+                                                    <textarea {...register("actionRequired", { required: true})} className="textarea mt-2 textarea-bordered w-full" placeholder="Release Takedown Reason"></textarea>
                                                     {errors.actionReuired && <span className='text-red-600 block'>You have to Explain</span>}
                                                 </div>
                                             }
