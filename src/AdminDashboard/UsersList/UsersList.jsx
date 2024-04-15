@@ -75,7 +75,7 @@ const UsersList = () => {
                     <ExclamationCircleIcon className="w-6 h-6 me-1 text-slate-500"/>
                     Total Users
                 </div>
-                <div><span className="text-sm font-bold">{1}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{1}</span> </div>
+                <div><span className="text-sm font-bold">{itemPerPage}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{totalItems}</span> </div>
             </div>
 
             <main className="my-2 p-2">
