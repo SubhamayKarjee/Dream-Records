@@ -66,7 +66,7 @@ const AnalyticsReportList = ({id, text}) => {
                             <div className="md:flex justify-between">
                                 <div>
                                     <p>{text} <span className="font-bold text-slate-500">{r.date} {r.month} {r.year} || {r.time}</span></p>
-                                    <p>Reports issued date <span className="font-bold text-green-600">{r.reportDate}</span></p>
+                                    <p>Reports based on <span className="font-bold text-green-600">{r.reportDate}</span></p>
                                 </div>
                                 <div>
                                     <a className="px-2 py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={r.fileUrl} download={r.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
