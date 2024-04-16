@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { useSignInWithEmailAndPassword, useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
@@ -33,9 +34,22 @@ const LogIn = () => {
             await signInWithEmailAndPassword(email, password)
             .then((res) => {
                 let userNameIdRoll = res.user?.displayName?.split("'__'");
+                const userEmail = res.user?.email;
                 if(userNameIdRoll[2] === 'User'){
-                    localStorage.setItem('popupShown', 'false');
-                    navigate('/')
+                    axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`)
+                    .then(res => {
+                        if(res.status === 200){
+                            const data = res.data.data;
+                            const formData = {...data, userEmail}
+                            axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`, formData)
+                            .then(res => {
+                                if(res.status === 200){
+                                    localStorage.setItem('popupShown', 'false');
+                                    navigate('/')
+                                }
+                            })
+                        }
+                    })
                 }
                 if(userNameIdRoll[2] === 'Admin'){
                     navigate('/admin-dashboard')

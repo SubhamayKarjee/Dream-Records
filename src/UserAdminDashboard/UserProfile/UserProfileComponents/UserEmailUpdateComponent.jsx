@@ -31,7 +31,8 @@ const UserEmailUpdateComponent = () => {
             const password = data.password;
             const email = data.email;
             const credential = EmailAuthProvider.credential(user.email, password);
-            await reauthenticateWithCredential(user, credential);            
+            await reauthenticateWithCredential(user, credential);
+            // Generate verification link with additional user information            
             await verifyBeforeUpdateEmail(email)
             toast.success('Please verify Email')
             navigate('/log-in')
