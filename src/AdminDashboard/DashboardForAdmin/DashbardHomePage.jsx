@@ -82,7 +82,7 @@ const DashbardHomePage = () => {
     // Get Release List ______________________________________________________________
     useEffect(() => {
         setPendingWithdrawalReqLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release/all-claim?page=1&limit=2&status=Pending`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/req-list?page=1&limit=2&status=Pending`)
             .then( res => {
               if(res.status == 200){
                 console.log(res.data.data);
