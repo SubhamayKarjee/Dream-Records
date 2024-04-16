@@ -1,9 +1,9 @@
 import { Result } from "antd";
 import axios from "axios";
 import { useState } from "react";
-
 // eslint-disable-next-line react/prop-types
 const SendPaymentsFormDreamRecord = ({id}) => {
+
 
     const [successHandle, setSuccessHandle] = useState(false)
     const [payAmount, setPayAmount] = useState(0);
@@ -68,6 +68,8 @@ const SendPaymentsFormDreamRecord = ({id}) => {
         }
       })
     }
+
+
     return (
         <div>
             {
@@ -82,7 +84,7 @@ const SendPaymentsFormDreamRecord = ({id}) => {
                               {payAmountError && <span className='text-red-600 pt-2 block'>{payAmountError}</span>}
                               <div>
                                 <p className="text-sm font-bold mt-2 ms-2 text-slate-500">Payment Report Date</p>
-                                <input type="date" onChange={e => setPaymentReportDate(e.target.value)} className="border rounded-full px-2 py-1" />
+                                <input type="date" onChange={e => setPaymentReportDate(e.target.value.slice(0,7))} className="border rounded-full px-2 py-1" />
                                 {paymentReportDateErr && <p className="font-bold text-sm text-red-500">{paymentReportDateErr}</p>}
                               </div>
                             </div>

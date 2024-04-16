@@ -83,7 +83,7 @@ const SendReporsFormDreamRecord = ({id}) => {
                         <p className="text-sm text-slate-500 mt-3 font-bold">Analytics Reports Date</p>
                         <div className="flex items-center justify-between">
                             <div>
-                                <input type="date" onChange={e => setReportDate(e.target.value)} className="border rounded-full px-2 py-1" />
+                                <input type="date" onChange={e => setReportDate(e.target.value.slice(0,7))} className="border rounded-full px-2 py-1" />
                                 {reportDateErr && <p className="font-bold text-sm text-red-500">{reportDateErr}</p>}
                             </div>
                             <div className="flex items-center">

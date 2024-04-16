@@ -2,7 +2,8 @@
     height: 220px;
     border-radius: 20px;
     overflow: hidden;
-    background-image: url('../../assets/user-home-page-image/dream-records-banner.jpg');
+    background-image: url('../../assets/user-home-page-image/dR-Cover.webp');
+    /* background-image: url('../../assets/user-home-page-image/dream-records-banner.jpg'); */
     background-size: cover;
     background-position: top;
     background-repeat: no-repeat;
