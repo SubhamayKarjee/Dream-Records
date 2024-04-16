@@ -146,7 +146,7 @@ const FirstStep = () => {
                         showSearch
                         defaultValue={genre ? genre : 'Select Genre'}
                         size="large"
-                        className="font-bold mb-2"
+                        className="mb-2"
                         style={{
                             width: '100%',
                         }}
@@ -169,7 +169,7 @@ const FirstStep = () => {
                         showSearch
                         placeholder='Select Formate'
                         size="large"
-                        className="font-bold mb-2"
+                        className="mb-2"
                         style={{
                             width: '100%',
                         }}

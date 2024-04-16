@@ -235,7 +235,6 @@ const SecondStepTrack = () => {
         }
 
         const d = {...data, ...releaseFormData, ...audioData, lyricsLanguage, artist, labels, featuring, composer, authors}
-        console.log('d', d);
         setSecondStep(data)
         setReleaseFormData(d)
         navigate('/create-release/date')
@@ -355,9 +354,10 @@ const SecondStepTrack = () => {
                             )
                         }
                         <span onClick={showModal} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/>Add Featuring</span>
-                            <Modal title="Search/Select Featuring" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                            <Modal title="Search/Select Featuring"className="relative" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
                                 <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
                                 <div>
+                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/artist" target={'_blank'}>Add Featuring</a>
                                     <FeaturingComponent handleCancel={handleCancel}/>
                                 </div>
                             </Modal>
@@ -395,7 +395,7 @@ const SecondStepTrack = () => {
                     <Select
                         showSearch
                         size="large"
-                        className="w-full rounded-full"
+                        className="w-full rounded-full text-normal"
                         placeholder="Select Language"
                         defaultValue={lyricsLanguage}
                         optionFilterProp="children"
@@ -430,9 +430,10 @@ const SecondStepTrack = () => {
                         }
 
                         <span onClick={showModal1} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Artist</span>
-                            <Modal title="Search/Select Artist" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
+                            <Modal title="Search/Select Artist" className='relative' open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
                                 <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Artist</p>
                                 <div>
+                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/artist" target={'_blank'}>Add Artist</a>
                                     <ArtistList handleCancel={handleCancel1}/>
                                 </div>
                             </Modal>
@@ -463,9 +464,10 @@ const SecondStepTrack = () => {
                             )
                         }
                         <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Labels</span>
-                            <Modal title="Search/Select Label" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
+                            <Modal title="Search/Select Label" className="relative" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
                                 <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">Select Label</p>
                                 <div>
+                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/labels" target={'_blank'}>Add Labels</a>
                                     <LabelsList handleCancel={handleCancel2}/>
                                 </div>
                             </Modal>
