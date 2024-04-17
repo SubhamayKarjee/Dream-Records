@@ -1,4 +1,4 @@
-import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
+import { CheckBadgeIcon, ClockIcon, DocumentMagnifyingGlassIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { Empty, Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 import './ReleaseCardComponent.css'
@@ -53,6 +53,13 @@ const ReleaseCardComponent = ({releaseData, totalItems, fetchLoading, currentPag
                                     d.status === 'Takedown' &&
                                         <div className="flex items-center p-1 music_status bg-red-500 rounded-md shadow">
                                             <ExclamationTriangleIcon className="h-3 w-3 text-white me-1"/>
+                                            <p className="text-xs font-semibold text-white">{d.status}</p>
+                                        </div>
+                                }
+                                {
+                                    d.status === 'Review' &&
+                                        <div className="flex items-center p-1 music_status bg-info rounded-md shadow">
+                                            <DocumentMagnifyingGlassIcon className="h-3 w-3 text-white me-1"/>
                                             <p className="text-xs font-semibold text-white">{d.status}</p>
                                         </div>
                                 }

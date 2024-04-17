@@ -1,5 +1,5 @@
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
-import { Image, Modal, Select } from "antd";
+import { Image, Modal, Popconfirm, Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -63,7 +63,7 @@ const AdminSingleReleasePage = () => {
 
 
     const [deleteLoading, setDeleteLoading] = useState(false)
-    const handleDeleteRelease = () => {
+    const confirm = () => {
         setDeleteLoading(true)
         axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release//delete-release/${id}?imgKey=${releaseData.key}&audioKey=${releaseData.audioKey}`)
         .then(res => {
@@ -81,6 +81,10 @@ const AdminSingleReleasePage = () => {
         document.execCommand('copy');
         window.getSelection().removeAllRanges();
         toast.success('Coppied')
+    };
+
+    const cancel = () => {
+        return;
     };
 
     if(deleteLoading){
@@ -178,7 +182,18 @@ const AdminSingleReleasePage = () => {
                                             </div>
                                         </form>
                                     </Modal>
-                                    <span style={{cursor: 'pointer'}} onClick={handleDeleteRelease} className="bg-red-400 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><TrashIcon className="w-4 h-4 me-1"/> Delete</span>
+                                    <Popconfirm
+                                        title="Delete"
+                                        placement="leftTop"
+                                        className="z-1000"
+                                        description="Are you sure to Delete Release?"
+                                        onConfirm={confirm}
+                                        onCancel={cancel}
+                                        okText="Yes"
+                                        cancelText="No"
+                                        >
+                                        <span style={{cursor: 'pointer'}} className="bg-red-400 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><TrashIcon className="w-4 h-4 me-1"/> Delete</span>
+                                    </Popconfirm>
                                 </div>
                             </div>
                         </div>                                 
