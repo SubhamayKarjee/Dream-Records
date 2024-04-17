@@ -210,6 +210,7 @@ const DetailsSingleArtist = () => {
                     <div className="my-3">
                         <button onClick={() => handleStatus('All')} className="btn btn-sm btn-neutral m-1">All</button>
                         <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral m-1">Pending</button>
+                        <button onClick={() => handleStatus('Review')} className="btn btn-sm btn-neutral m-1">Review</button>
                         <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral m-1">Approved</button>
                         <button onClick={() => handleStatus('Action Required')} className="btn btn-sm btn-neutral m-1">Action Required</button>
                         <button onClick={() => handleStatus('Takedown')} className="btn btn-sm btn-neutral m-1">Takedown</button>
