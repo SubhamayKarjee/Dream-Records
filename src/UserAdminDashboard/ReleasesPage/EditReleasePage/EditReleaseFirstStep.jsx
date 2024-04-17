@@ -13,7 +13,7 @@ const EditReleaseFirstStep = () => {
 
     const navigate = useNavigate('')
 
-    const [formate, setFormate] = useState(preReleaseData.formate);
+    const [format, setFormat] = useState(preReleaseData.formate);
     const [formateErr, setFormateErr] = useState('')
 
 
@@ -92,7 +92,7 @@ const EditReleaseFirstStep = () => {
         }
     });
     const onSubmit = (data) => {
-        if(!formate){
+        if(!format){
             setFormateErr('Please Select Formate')
             return;
         }
@@ -101,7 +101,7 @@ const EditReleaseFirstStep = () => {
             return;
         }
         if(uploadedImage){
-            const formData = {...data, ...uploadedImage, genre, formate};
+            const formData = {...data, ...uploadedImage, genre, format};
             setReleaseFormData(formData)
             navigate('/releases/edit/second-step')
         }else{
@@ -176,7 +176,7 @@ const EditReleaseFirstStep = () => {
                             style={{
                                 width: '100%',
                             }}
-                            onChange={e => setFormate(e)}
+                            onChange={e => setFormat(e)}
                             options={[
                                 {label: 'Single', value: 'Single'},
                                 {label: 'Album', value: 'Album'},
