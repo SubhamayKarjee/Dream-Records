@@ -378,7 +378,7 @@ const SecondStepTrack = () => {
                             <Modal title="Search/Select Featuring"className="relative" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
                                 <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
                                 <div>
-                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="http://localhost:5173/artist" target={'_blank'}>Add Featuring</a>
+                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/artist" target={'_blank'}>Add Featuring</a>
                                     <FeaturingComponent handleCancel={handleCancel} reFetchArtist={reFetchArtist}/>
                                 </div>
                             </Modal>
