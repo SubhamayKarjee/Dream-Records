@@ -14,7 +14,8 @@ const FirstStep = () => {
         firstStep, setFirstStep, 
         genre, setGenre,
         uploadedImageLink, setUploadedImageLink, 
-        uploadedImage, setUploadedImage 
+        uploadedImage, setUploadedImage,
+        format, setFormat
     } = useContext(ReleaseContext);
 
     const navigate = useNavigate('');
@@ -80,7 +81,7 @@ const FirstStep = () => {
     }
 
     const [genreError, setGenreError] = useState('')
-    const [formate, setFormate] = useState('');
+
     const [formateErr, setFormateErr] = useState('')
 
     const { register, handleSubmit, formState: { errors }} = useForm({
@@ -92,12 +93,12 @@ const FirstStep = () => {
             setGenreError('Genre Required')
             return;
         }
-        if(!formate){
+        if(!format){
             setFormateErr('Please Select Formate')
             return;
         }
         if(uploadedImage){
-            const formData = {...data, ...uploadedImage, genre, formate};
+            const formData = {...data, ...uploadedImage, genre, format};
             setReleaseFormData(formData);
             setFirstStep(data);
             navigate('/create-release/tracks')
@@ -173,7 +174,7 @@ const FirstStep = () => {
                         style={{
                             width: '100%',
                         }}
-                        onChange={e => setFormate(e)}
+                        onChange={e => setFormat(e)}
                         options={[
                             {label: 'Single', value: 'Single'},
                             {label: 'Album', value: 'Album'},

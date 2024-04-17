@@ -22,6 +22,7 @@ const CreateMusicPage = () => {
     const [genre, setGenre] = useState();
     const [uploadedImageLink, setUploadedImageLink] = useState('');
     const [uploadedImage, setUploadedImage] = useState();
+    const [format, setFormat] = useState()
     
     
     const releaseContextValue = {
@@ -37,7 +38,8 @@ const CreateMusicPage = () => {
         featuring, setFeaturing,
         genre, setGenre,
         uploadedImageLink, setUploadedImageLink,
-        uploadedImage, setUploadedImage
+        uploadedImage, setUploadedImage,
+        format, setFormat
     }
 
    
