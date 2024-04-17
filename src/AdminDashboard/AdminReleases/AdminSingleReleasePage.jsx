@@ -139,6 +139,7 @@ const AdminSingleReleasePage = () => {
                                                 onChange={value => setReleaseStatus(value)}
                                                 options={[
                                                     { value: 'Pending', label: 'Pending' },
+                                                    { value: 'Review', label: 'Review' },
                                                     { value: 'Approved', label: 'Approved' },
                                                     { value: 'Action Required', label: 'Action Required' },
                                                     { value: 'Takedown', label: 'Takedown' },
