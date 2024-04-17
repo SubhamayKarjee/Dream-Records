@@ -13,7 +13,7 @@ const EditReleaseFirstStep = () => {
 
     const navigate = useNavigate('')
 
-    const [format, setFormat] = useState(preReleaseData.formate);
+    const [format, setFormat] = useState(preReleaseData.format);
     const [formateErr, setFormateErr] = useState('')
 
 
@@ -87,11 +87,12 @@ const EditReleaseFirstStep = () => {
             releaseTitle: preReleaseData.releaseTitle,
             pLine: preReleaseData.pLine,
             cLine: preReleaseData.cLine,
-            format: preReleaseData.format,
             UPC: preReleaseData.UPC,
         }
     });
     const onSubmit = (data) => {
+        setFormateErr('')
+        setGenre('')
         if(!format){
             setFormateErr('Please Select Formate')
             return;
@@ -170,7 +171,7 @@ const EditReleaseFirstStep = () => {
                         <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Format <span className="text-red-500">*</span></p>
                         <Select
                             showSearch
-                            defaultValue={preReleaseData.formate}
+                            defaultValue={preReleaseData.format}
                             size="large"
                             className="font-bold mb-2"
                             style={{
