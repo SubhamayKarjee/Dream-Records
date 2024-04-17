@@ -6,9 +6,9 @@ import fallbackImage from '../../../assets/fallbackImage.jpg'
 import toast from "react-hot-toast";
 
 // eslint-disable-next-line react/prop-types
-const LabelsList = ({handleCancel}) => {
+const LabelsList = ({handleCancel, reFetchLabels}) => {
 
-    const { userNameIdRoll , setLabels,} = useContext(AuthContext);
+    const { userNameIdRoll , setLabels} = useContext(AuthContext);
 
     const [totalItems, setTotalItems] = useState();
     const [labelsData, setLabelsData] = useState();
@@ -27,8 +27,7 @@ const LabelsList = ({handleCancel}) => {
               }
             })
             .catch(er => console.log(er));
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[userNameIdRoll, reFetchLabels])
 
     const handleLabel = (data) => {
         setLabels([data]);

@@ -38,15 +38,24 @@ const SecondStepTrack = () => {
         })
     },[])
 
+    const [reFetchArtist, setRefetchArtist] = useState(1)
+    const [reFetchLabels, setRefetchLabels] = useState(1)
+
     // Modal Function For Featuring __________________________________
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
+        const re = reFetchArtist + 1;
+        setRefetchArtist(re)
         setIsModalOpen(true);
     };
     const handleOk = () => {
+        const re = reFetchArtist + 1;
+        setRefetchArtist(re)
         setIsModalOpen(false);
     };
     const handleCancel = () => {
+        const re = reFetchArtist + 1;
+        setRefetchArtist(re)
         setIsModalOpen(false);
     };
 
@@ -59,12 +68,18 @@ const SecondStepTrack = () => {
     const [errorMessageArtist, setErrorMessageArtist] = useState('');
     const [isModalOpen1, setIsModalOpen1] = useState(false);
     const showModal1 = () => {
+        const re = reFetchArtist + 1;
+        setRefetchArtist(re)
         setIsModalOpen1(true);
     };
     const handleOk1 = () => {
+        const re = reFetchArtist + 1;
+        setRefetchArtist(re)
         setIsModalOpen1(false);
     };
     const handleCancel1 = () => {
+        const re = reFetchArtist + 1;
+        setRefetchArtist(re)
         setIsModalOpen1(false);
     };
 
@@ -77,12 +92,18 @@ const SecondStepTrack = () => {
     const [errorMessageLabels, setErrorMessageLabels] = useState('');
     const [isModalOpen2, setIsModalOpen2] = useState(false);
     const showModal2 = () => {
+        const re = reFetchLabels + 1;
+        setRefetchLabels(re)
         setIsModalOpen2(true);
     };
     const handleOk2 = () => {
+        const re = reFetchLabels + 1;
+        setRefetchLabels(re)
         setIsModalOpen2(false);
     };
     const handleCancel2 = () => {
+        const re = reFetchLabels + 1;
+        setRefetchLabels(re)
         setIsModalOpen2(false);
     };
 
@@ -358,7 +379,7 @@ const SecondStepTrack = () => {
                                 <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
                                 <div>
                                     <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="http://localhost:5173/artist" target={'_blank'}>Add Featuring</a>
-                                    <FeaturingComponent handleCancel={handleCancel}/>
+                                    <FeaturingComponent handleCancel={handleCancel} reFetchArtist={reFetchArtist}/>
                                 </div>
                             </Modal>
                     </div>
@@ -434,7 +455,7 @@ const SecondStepTrack = () => {
                                 <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Artist</p>
                                 <div>
                                     <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/artist" target={'_blank'}>Add Artist</a>
-                                    <ArtistList handleCancel={handleCancel1}/>
+                                    <ArtistList handleCancel={handleCancel1} reFetchArtist={reFetchArtist}/>
                                 </div>
                             </Modal>
                         {errorMessageArtist && <span className='text-red-600 pt-2 block'>{errorMessageArtist}</span>}
@@ -468,7 +489,7 @@ const SecondStepTrack = () => {
                                 <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">Select Label</p>
                                 <div>
                                     <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/labels" target={'_blank'}>Add Labels</a>
-                                    <LabelsList handleCancel={handleCancel2}/>
+                                    <LabelsList handleCancel={handleCancel2} reFetchLabels={reFetchLabels}/>
                                 </div>
                             </Modal>
                         {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}

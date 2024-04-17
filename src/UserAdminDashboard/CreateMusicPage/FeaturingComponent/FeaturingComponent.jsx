@@ -6,7 +6,7 @@ import { Empty, Image } from "antd";
 import toast from "react-hot-toast";
 
 // eslint-disable-next-line react/prop-types
-const FeaturingComponent = ({handleCancel}) => {
+const FeaturingComponent = ({handleCancel, reFetchArtist}) => {
 
     const { userNameIdRoll, setFeaturing, featuring } = useContext(AuthContext);
 
@@ -25,8 +25,7 @@ const FeaturingComponent = ({handleCancel}) => {
               }
             })
             .catch(er => console.log(er));
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[reFetchArtist, userNameIdRoll])
 
     const handleData = (data) => {
         if(featuring){

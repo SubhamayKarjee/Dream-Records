@@ -6,7 +6,7 @@ import fallbackImage from '../../../assets/fallbackImage.jpg'
 import toast from "react-hot-toast";
 
 // eslint-disable-next-line react/prop-types
-const ArtistList = ({handleCancel}) => {
+const ArtistList = ({handleCancel, reFetchArtist}) => {
 
     const { userNameIdRoll, setArtist, artist } = useContext(AuthContext);
 
@@ -15,6 +15,8 @@ const ArtistList = ({handleCancel}) => {
     const [fetchLoading, setFetchLoading] = useState(false);
     const [forSearch, setForSearch] = useState()
 
+
+    
     useEffect( () => {
         setFetchLoading(true)
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/for-release/${userNameIdRoll[1]}`)
@@ -27,8 +29,7 @@ const ArtistList = ({handleCancel}) => {
               }
             })
             .catch(er => console.log(er));
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[userNameIdRoll, reFetchArtist])
 
 
     const handleData = (data) => {
