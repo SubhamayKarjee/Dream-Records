@@ -30,6 +30,7 @@ const AdminReleasePage = () => {
                 setFetchLoading(false);
                 setTotalItems(res.data.dataCount);
                 setReleaseData(res.data.data);
+                console.log(res.data.data)
                 if(!res.data.totalCount){
                     // setHideShow('block')
                 }
