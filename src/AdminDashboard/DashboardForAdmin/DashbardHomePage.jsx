@@ -117,7 +117,7 @@ const DashbardHomePage = () => {
                     }
                 </div>
                 <div style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/claim-release')} className="p-2 rounded-md shadow border">
-                    <h2 className="font-extrabold text-2xl text-slate-500">Claim Release</h2>
+                    <h2 className="font-extrabold text-2xl text-slate-500">Rights manager</h2>
                     <p className="text-sm text-slate-500 flex items-center"><ClockIcon className="h-4 w-4 me-1"/>Pending</p>
                     {
                         pendingClaimLoading === true ? <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-sm me-2"></span></div> :

@@ -114,7 +114,7 @@ const DashBoardForAdmin = () => {
                                 </Link>
                                 <Link className='text-white flex items-center py-2' to={'/admin-dashboard/claim-release'}>
                                     <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
-                                    Claim Release
+                                    Rights manager
                                 </Link>
                                 <Link className='text-white flex items-center py-2' to={'/admin-dashboard/support'}>
                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
@@ -185,7 +185,7 @@ const DashBoardForAdmin = () => {
                                             </Link>
                                             <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/claim-release'}>
                                                 <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
-                                                Claim Release
+                                                Rights manager
                                             </Link>
                                             <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/support'}>
                                                 <RectangleGroupIcon className="h-7 w-7 pe-2" />

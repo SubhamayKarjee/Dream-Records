@@ -4,7 +4,7 @@ import { useSignInWithEmailAndPassword, useSendPasswordResetEmail } from 'react-
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.config';
-import logoImg from '../../assets/logo/Dream-Records Logo-(Dark).png'
+import logoImg from '../../assets/logo/Dream Records Logo (Dark).png'
 
 const LogIn = () => {
 
