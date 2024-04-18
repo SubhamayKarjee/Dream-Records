@@ -36,7 +36,7 @@ const ActionRequiredRelease = () => {
             {
                 release && release.map(d => 
                     <div key={d._id} style={{cursor: 'pointer'}} onClick={() => handleNavigate(d._id)}  className="card_parent_div my-2">
-                        <img src={d.imgUrl} alt="" />
+                        <img style={{minHeight: '160px'}} src={d.imgUrl} alt="" />
                         <div className="card_child_div">
                             <div className="card_content">
                                 <p className="font-bold text-white">{d.releaseTitle}</p>
