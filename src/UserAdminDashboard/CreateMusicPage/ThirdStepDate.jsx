@@ -16,6 +16,8 @@ const ThirdStepDate = () => {
         setLyricsLanguage,
         setComposer,
         setAuthors,
+        setUploadedImageLink,
+        setUploadedImage,
     } = useContext(ReleaseContext);
     const { userNameIdRoll, setArtist, setLabels, setFeaturing } = useContext(AuthContext);
 
@@ -64,6 +66,8 @@ const ThirdStepDate = () => {
                     setLyricsLanguage();
                     setComposer();
                     setAuthors();
+                    setUploadedImageLink();
+                    setUploadedImage();
                 }
             })
             .catch(er => console.log(er))        

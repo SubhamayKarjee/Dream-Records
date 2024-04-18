@@ -168,7 +168,7 @@ const FirstStep = () => {
                     <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Format <span className="text-red-500">*</span></p>
                     <Select
                         showSearch
-                        placeholder='Select Formate'
+                        placeholder='Select Format'
                         size="large"
                         className="mb-2"
                         style={{
