@@ -23,9 +23,6 @@ const PopUp = ({ visible, onClose }) => {
 
     return (
         <div>
-            {
-                getImageLoading && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-sm me-2"></span></div>
-            }
             <Modal
                 visible={visible}
                 title=""
@@ -36,6 +33,9 @@ const PopUp = ({ visible, onClose }) => {
                     </Button>
                 ]}
                 >
+                    {
+                        getImageLoading && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-sm me-2"></span></div>
+                    }
                 <img style={{width: '100%', height: 'auto'}} className='rounded-md mt-6' src={imageData?.imgUrl} alt={imageData?.imgUrl} />
             </Modal>
         </div>

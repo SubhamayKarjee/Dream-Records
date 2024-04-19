@@ -86,7 +86,7 @@ const CreateUserForm = () => {
                             message &&  <p className="font-bold">{message} <span className="text-green-500 font-bold">{userEmail}</span></p>
                         }
                         <div className="flex justify-between items-center">
-                            <span className="font-sm bg-slate-200 p-2 rounded-md">http://localhost:5173/set-password/{userId}</span>
+                            <span className="font-sm bg-slate-200 p-2 rounded-md">https://shark-app-65c5t.ondigitalocean.app/set-password/{userId}</span>
                         </div>
                     </div>
             }
