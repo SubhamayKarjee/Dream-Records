@@ -1,9 +1,11 @@
-import { ChartBarSquareIcon, CreditCardIcon, ExclamationCircleIcon } from "@heroicons/react/24/solid";
-import { Empty, Image, Pagination } from "antd";
+import { ChartBarSquareIcon, CreditCardIcon, ExclamationCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { Empty, Image, Pagination, Popconfirm } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 import SendPaymentsFormDreamRecord from "./SendPaymentsFormDreamRecord";
 import SendReporsFormDreamRecord from "./SendReporsFormDreamRecord";
 
@@ -18,6 +20,7 @@ const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const [fetchLoading, setFetchLoading] = useState(false)
+    const [refetch, setRefetch] = useState(1)
     useEffect( () => {
       setItemPerPage(10)
       setFetchLoading(true)
@@ -27,11 +30,10 @@ const UsersList = () => {
               setFetchLoading(false);
               setTotalItems(res.data.dataCount);
               setUsersData(res.data.data);
-              console.log(res.data.data)
             }
           })
           .catch(er => console.log(er));
-    },[currentPage, itemPerPage])
+    },[currentPage, itemPerPage, refetch])
 
     const handlePageChange = (page) => {
         setCurrentPage(page)
@@ -57,6 +59,28 @@ const UsersList = () => {
           .catch(er => console.log(er));
       }
     }
+    const [deleteLoading, setDeleteLoading] = useState(false)
+    const confirm = (id, imgKey, uid) => {
+        setDeleteLoading(true)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/users/${id}?imgKey=${imgKey}&uid=${uid}`)
+        .then(res => {
+            if(res.status == 200){
+                const r = refetch + 1;
+                setRefetch(r);
+                setDeleteLoading(false)
+                toast.success('User Deleted')
+            }
+        })
+    }
+
+    const cancel = () => {
+      return;
+    };
+
+    if(deleteLoading){
+      return <LoadingComponentsInsidePage/>
+    }
+
 
 
 
@@ -103,6 +127,18 @@ const UsersList = () => {
                             <div className="flex items-center">
                               <button onClick={()=>document.getElementById(`${data._id}`).showModal()} className="btn btn-sm btn-neutral m-2"><CreditCardIcon className="w-5 h-5 text-white"/>Pay</button>
                               <button onClick={()=>document.getElementById(`${index}`).showModal()} className="btn btn-sm btn-neutral m-2"><ChartBarSquareIcon className="w-5 h-5 text-white"/>Reports</button>
+                              <Popconfirm
+                                title="Delete"
+                                placement="leftTop"
+                                className="z-1000"
+                                description="Are you sure to Delete User?"
+                                onConfirm={() => confirm(data._id, data.imgKey, data.uid)}
+                                onCancel={cancel}
+                                okText="Yes"
+                                cancelText="No"
+                                >
+                                <TrashIcon style={{cursor: 'pointer'}} className="w-5 h-5 text-red-500"/>
+                              </Popconfirm>
                             </div>
                           }                        
                           {

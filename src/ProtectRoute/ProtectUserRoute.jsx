@@ -6,6 +6,7 @@ import LoadingComponentsForPage from "../LoadingComponents/LoadingComponentsForP
 // eslint-disable-next-line react/prop-types
 const ProtectUserRoute = ({children}) => {
     const [user, loading] = useAuthState(auth);
+    
 
     if(loading){
         return <LoadingComponentsForPage/>

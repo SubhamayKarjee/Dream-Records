@@ -65,7 +65,7 @@ const AdminSingleReleasePage = () => {
     const [deleteLoading, setDeleteLoading] = useState(false)
     const confirm = () => {
         setDeleteLoading(true)
-        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release//delete-release/${id}?imgKey=${releaseData.key}&audioKey=${releaseData.audioKey}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/delete-release/${id}?imgKey=${releaseData.key}&audioKey=${releaseData.audioKey}`)
         .then(res => {
             if(res.status == 200){
                 setDeleteLoading(false)
