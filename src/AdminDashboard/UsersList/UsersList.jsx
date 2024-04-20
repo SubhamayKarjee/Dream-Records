@@ -61,6 +61,12 @@ const UsersList = () => {
     }
     const [deleteLoading, setDeleteLoading] = useState(false)
     const confirm = (id, imgKey, uid) => {
+        if (!imgKey) {
+            imgKey = '';
+        }
+        if (!uid) {
+            uid = '';
+        }
         setDeleteLoading(true)
         axios.delete(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/users/${id}?imgKey=${imgKey}&uid=${uid}`)
         .then(res => {
