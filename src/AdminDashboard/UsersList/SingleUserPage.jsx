@@ -19,6 +19,7 @@ const SingleUserPage = () => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/users/${id}`)
         .then(res => {
             setUserData(res.data.data)
+            console.log(res.data.data);
             setUserLoading(false)
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,7 +83,7 @@ const SingleUserPage = () => {
                         <h2 className="font-bold text-slate-600">{userData?.userName}</h2>
                         <p className="text-sm text-slate-700">Address: {userData?.address}</p>
                         <p className="text-sm text-slate-700">ID: {userData?._id}</p>
-                        <p className="text-sm text-slate-700 font-semibold pt-2">{userData?.email}</p>
+                        <p className="text-sm text-slate-700 font-semibold pt-2">{userData?.userEmail}</p>
                         <p className="text-sm text-slate-700 font-semibold">Roll: <span className="bg-green-500 px-2 rounded-md text-white">{userData?.roll}</span></p>
                         <p className="text-sm text-slate-700">Account Opening Date: {userData?.openingDate} || Time: {userData?.openingTime}</p>
                     </div>
