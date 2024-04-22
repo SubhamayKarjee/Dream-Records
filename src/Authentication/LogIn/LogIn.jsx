@@ -42,7 +42,7 @@ const LogIn = () => {
                     .then(res => {
                         if(res.status === 200){
                             const data = res.data.data;
-                            const formData = {...data, userEmail, uid}
+                            const formData = {...data, userEmail: '', email: userEmail, uid}
                             axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`, formData)
                             .then(res => {
                                 if(res.status === 200){
