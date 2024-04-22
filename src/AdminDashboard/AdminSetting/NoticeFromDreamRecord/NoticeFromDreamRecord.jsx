@@ -33,8 +33,6 @@ const NoticeFromDreamRecord = () => {
         const date = currentDate.slice(0,10)
         const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
         const formData = {...data, date, time}
-        console.log(formData);
-        console.log(noticeData);
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice/661089403281a4347e1d3498`, formData)
         .then(res => {
             if(res.status === 200){

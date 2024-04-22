@@ -61,7 +61,6 @@ const CreateArtistForm = () => {
       setSubmitLoading(true)
       const masterUserId = userNameIdRoll[1];
       const formData = {...data, ...uploadedImage, masterUserId};
-      console.log(formData);
       axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/create-artist', formData)
           .then(res => {
               if(res.status == 200){

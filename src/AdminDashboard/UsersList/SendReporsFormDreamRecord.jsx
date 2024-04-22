@@ -59,7 +59,6 @@ const SendReporsFormDreamRecord = ({id}) => {
                 setSuccessHandle(true);
             }
         })
-        console.log(data);
     }
 
 

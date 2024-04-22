@@ -25,7 +25,6 @@ const AdminClaimReleasePage = () => {
                 setLoading(false)
                 setClaimData(res.data.data);
                 setTotalItems(res.data.dataCount);
-                console.log(res.data.data);
             }
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps

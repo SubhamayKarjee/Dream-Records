@@ -36,7 +36,6 @@ const LogIn = () => {
                 let userNameIdRoll = res.user?.displayName?.split("'__'");
                 const userEmail = res.user?.email;
                 const uid = res.user?.uid;
-                console.log(res.user);
                 if(userNameIdRoll[2] === 'User'){
                     axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`)
                     .then(res => {
@@ -68,13 +67,11 @@ const LogIn = () => {
     }
 
     const handleForgetPassword = () => {
-        console.log(email);
         setEmailErr('')
         if(!email){
             setEmailErr('Please Type Emali')
             return;
         }
-        console.log('object');
         sendPasswordResetEmail(email)
         .then(() => alert("Please check your Email"))
         .catch(err => setEmailErr(err))

@@ -22,7 +22,6 @@ const CallSupport = () => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/call-support-list?page=${currentPage}&limit=${itemPerPage}&status=${supportStatus}`)
         .then(res => {
             if(res.status === 200){
-                console.log(res.data.data);
                 setLoading(false)
                 setSupportData(res.data.data);
                 setTotalItems(res.data.dataCount)

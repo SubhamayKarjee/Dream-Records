@@ -17,7 +17,6 @@ const ActionRequiredLabels = () => {
                 setLabels(res.data.data);
                 if(res.data.data.length === 0){
                     setNoData(true)
-                    console.log('true');
                 }
               }
             })

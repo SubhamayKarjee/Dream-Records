@@ -161,7 +161,6 @@ const SecondStepTrack = () => {
 
     const handleDeleteAuthor = (name) => {
         const removeName = authors.filter(item => item !== name);
-        console.log(removeName);
         setAuthors(removeName)
     }
 

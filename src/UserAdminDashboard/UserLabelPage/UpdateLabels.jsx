@@ -39,7 +39,6 @@ const UpdateLabels = ({labels, imgUrl, imgKey}) => {
             if(res.status == 200){
               setUploadedImageLink(res.data.data.imgUrl);
               setUploadedImage(res.data.data);
-              console.log(res.data.data);
               setUploadLoading(false);
               toast.success('Successfully Label image Uploaded');
             }

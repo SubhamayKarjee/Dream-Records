@@ -32,7 +32,6 @@ const WithdrawalList = ({id, text}) => {
     };
 
     const onChange = (date, dateString) => {
-        console.log(dateString);
         if(!dateString){
             const load = reload + 1 
             setReload(load)

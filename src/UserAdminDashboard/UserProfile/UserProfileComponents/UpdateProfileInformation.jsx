@@ -112,7 +112,6 @@ const UpdateProfileInformation = () => {
             photoURL = user.photoURL;
             let forKey = user.photoURL.split("/");
             imgKey = `${forKey[3]}/${forKey[4]}`
-            console.log(imgKey);
         }
         if(!imageData && !user.photoURL){
             photoURL = user.photoURL;

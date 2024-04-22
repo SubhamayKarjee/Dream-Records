@@ -19,7 +19,6 @@ const SingleUserPage = () => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/users/${id}`)
         .then(res => {
             setUserData(res.data.data)
-            console.log(res.data.data);
             setUserLoading(false)
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps

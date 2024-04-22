@@ -58,7 +58,6 @@ const UpdateArtistForm = ({artist, imgUrl, imgKey}) => {
     const onSubmit = (data) => {
         setSubmitLoading(true)
         const formData = {...data, ...uploadedImage};
-        console.log(formData);
         // eslint-disable-next-line react/prop-types
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/update-artist/${artist._id}`, formData)
             .then(res => {

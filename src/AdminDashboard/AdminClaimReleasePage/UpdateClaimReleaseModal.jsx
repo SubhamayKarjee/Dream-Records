@@ -32,7 +32,6 @@ const UpdateClaimReleaseModal = ({id, data}) => {
         }else{
             updatedData = {...data, status: claimStatus, ansDate: date, ansMonth: month, ansYear: year, ansTime: time,}
         }
-        console.log(updatedData);
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release/${id}`, updatedData)
         .then(res => {
             if(res.status === 200){

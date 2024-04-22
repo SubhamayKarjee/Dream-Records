@@ -24,7 +24,6 @@ const BankAccountCreateForm = () => {
                     const reFetch = reFetchBankInfo + 1;
                     setReFetchBankInfo(reFetch);
                     setLoading(false);
-                    console.log(res.data.data);
                 }
             })
         }else{

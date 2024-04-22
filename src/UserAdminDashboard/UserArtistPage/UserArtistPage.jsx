@@ -49,7 +49,6 @@ const UserArtistPage = () => {
     const handleKeyPress = (event) => {
       setItemPerPage(50)
       if (event.key === 'Enter') {
-        console.log(currentPage);
         setFetchLoading(true);
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/search/${userNameIdRoll[1]}?search=${searchText}`)
           .then( res => {
