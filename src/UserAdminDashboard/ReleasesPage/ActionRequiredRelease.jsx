@@ -4,7 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 
-const ActionRequiredRelease = () => {
+// eslint-disable-next-line react/prop-types
+const ActionRequiredRelease = ({onClose}) => {
 
     const { userNameIdRoll } = useContext(AuthContext);
     const navigate = useNavigate('')
@@ -36,16 +37,18 @@ const ActionRequiredRelease = () => {
             {
                 release && release.map(d => 
                     <div key={d._id} style={{cursor: 'pointer'}} onClick={() => handleNavigate(d._id)}  className="card_parent_div my-2">
-                        <img style={{minHeight: '160px'}} src={d.imgUrl} alt="" />
-                        <div className="card_child_div">
-                            <div className="card_content">
-                                <p className="font-bold text-white">{d.releaseTitle}</p>
-                                <h3 className="text-xs font-semibold text-slate-300">ID: {d._id}</h3>
+                        <div onClick={onClose}>
+                            <img style={{minHeight: '160px'}} src={d.imgUrl} alt="" />
+                            <div className="card_child_div">
+                                <div className="card_content">
+                                    <p className="font-bold text-white">{d.releaseTitle}</p>
+                                    <h3 className="text-xs font-semibold text-slate-300">ID: {d._id}</h3>
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex items-center p-1 music_status bg-red-700 rounded-md shadow">
-                            <ExclamationTriangleIcon className="h-3 w-3 text-white me-1"/>
-                            <p className="text-xs font-semibold text-white">{d.status}</p>
+                            <div className="flex items-center p-1 music_status bg-red-700 rounded-md shadow">
+                                <ExclamationTriangleIcon className="h-3 w-3 text-white me-1"/>
+                                <p className="text-xs font-semibold text-white">{d.status}</p>
+                            </div>
                         </div>
                     </div>
                 )
