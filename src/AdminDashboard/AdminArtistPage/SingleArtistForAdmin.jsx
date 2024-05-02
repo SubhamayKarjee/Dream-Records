@@ -1,4 +1,4 @@
-import { Image, Skeleton } from "antd";
+import { Image, Popconfirm, Skeleton } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import fallbackImage from "../../assets/fallbackImage.jpg";
@@ -95,7 +95,7 @@ const SingleArtistForAdmin = () => {
 
     // Delete Artist________________________
     const [deleteLoading, setDeleteLoading] = useState(false)
-    const deleteArtist = (id, imgKey) => {
+    const confirm = (id, imgKey) => {
         setDeleteLoading(true)
         axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/delete-artist/${id}?imgKey=${imgKey}`)
         .then( res => {
@@ -107,6 +107,10 @@ const SingleArtistForAdmin = () => {
         })
         .catch(er => console.log(er));
     }
+
+    const cancel = () => {
+      return;
+    };
 
     if(deleteLoading){
         return <LoadingComponentsForPage/>
@@ -165,7 +169,18 @@ const SingleArtistForAdmin = () => {
                                 {
                                     totalReleaseCount < 1 &&
                                     <div style={{display: `${hideDeleteButton}`}}>
-                                        <button  className="btn btn-xs bg-red-400 flex text-slate-700 px-3 items-center font-bold text-sm w-full md:w-[120px] mb-2" onClick={() => deleteArtist(artist._id, artist.key)}>Delete Artist</button>
+                                        <Popconfirm
+                                            title="Delete"
+                                            placement="leftTop"
+                                            className="z-1000"
+                                            description="Are you sure to Delete Artist?"
+                                            onConfirm={() => confirm(artist._id, artist.key)}
+                                            onCancel={cancel}
+                                            okText="Yes"
+                                            cancelText="No"
+                                            >
+                                            <button  className="btn btn-xs bg-red-400 flex text-slate-700 px-3 items-center font-bold text-sm w-full md:w-[120px] mb-2">Delete Artist</button>
+                                        </Popconfirm>
                                     </div>
 
                                 }

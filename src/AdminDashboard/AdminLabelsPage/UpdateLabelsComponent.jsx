@@ -1,5 +1,5 @@
 import { CheckBadgeIcon, ClockIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import { Image, Modal, Select, Skeleton } from "antd";
+import { Image, Modal, Popconfirm, Select, Skeleton } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -141,7 +141,7 @@ const UpdateLabelsComponent = () => {
 
     // Delete Labels
     const [deleteLoading, setDeleteLoading] = useState(false)
-    const handleDelete = (id, imgKey) => {
+    const confirm = (id, imgKey) => {
         setDeleteLoading(true)
         axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/delete-labels/${id}?imgKey=${imgKey}`)
           .then( res => {
@@ -153,6 +153,12 @@ const UpdateLabelsComponent = () => {
           })
           .catch(er => console.log(er));
     }
+
+    const cancel = () => {
+      return;
+    };
+
+
     if(deleteLoading){
         return <LoadingComponentsForPage/>
     }
@@ -161,7 +167,18 @@ const UpdateLabelsComponent = () => {
         <div>
             
             <div style={{display: `${hideShow}`}} className="flex justify-end mt-2">
-                <span onClick={() => handleDelete(labels._id, labels.key)} className="btn btn-xs bg-red-400 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center">Delete Label</span>
+            <Popconfirm
+                title="Delete"
+                placement="leftTop"
+                className="z-1000"
+                description="Are you sure to Delete Labels?"
+                onConfirm={() => confirm(labels._id, labels.key)}
+                onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
+                >
+                <span className="btn btn-xs bg-red-400 py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center">Delete Label</span>
+            </Popconfirm>
             </div>
             
             {
