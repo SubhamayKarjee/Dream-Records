@@ -1,9 +1,10 @@
-import { BellIcon } from "@heroicons/react/24/solid";
-import { Result } from "antd";
+import { BellAlertIcon, BellIcon } from "@heroicons/react/24/solid";
+import { Drawer, Result } from "antd";
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
+import ActionRequiredRelease from "../ActionRequiredRelease";
 
 export const EditReleaseContext = createContext();
 
@@ -46,6 +47,14 @@ const EditReleaseMainPage = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const [open, setOpen] = useState(false);
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
+
     if(loading){
         return <LoadingComponentsInsidePage/>
     }
@@ -74,11 +83,18 @@ const EditReleaseMainPage = () => {
             </div>
 
             {/* Blog Post Div  _______________________________*/}
-            <div className="md:basis-1/4">
+            <div className="md:basis-1/4 hidden md:block">
                 <div className='p-2 border-b'>
                     <h4 className='flex items-center font-bold text-lg text-slate-500'> <BellIcon className='w-6 h-6 me-2 text-slate-500'/> Notification</h4>
+                    <ActionRequiredRelease onClose={onClose}/>
                 </div>
             </div>
+
+            {/* Sideber Div Mobile _______________________________*/}
+            <BellAlertIcon onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer'/>
+            <Drawer className='bg-white' title="Notification" onClose={onClose} open={open}>
+                <ActionRequiredRelease onClose={onClose}/>
+            </Drawer>
         </div>
     );
 };
