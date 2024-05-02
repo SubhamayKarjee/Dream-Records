@@ -1,4 +1,4 @@
-import { Image } from 'antd';
+import { Drawer, Image } from 'antd';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import LatestApprovedRelease from './LatestApprovedRelease';
 import './UserHomePage.css';
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import PopUp from '../PopUP/PopUp';
+import { BellAlertIcon } from '@heroicons/react/24/solid';
 
 const UserHomePage = () => {
 
@@ -55,6 +56,14 @@ const UserHomePage = () => {
         setShowPopup(false);
         localStorage.setItem('popupShown', 'true');
     };
+
+    const [open, setOpen] = useState(false);
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
     
     return (
         <div className="md:flex md:h-full">
@@ -80,8 +89,40 @@ const UserHomePage = () => {
                 <LatestApprovedRelease/>
             </div>
 
-            {/* Blog Post Div  _______________________________*/}
-            <div className="md:basis-1/4">
+            {/* Notification Div Mobile _______________________________*/}
+            <BellAlertIcon onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer'/>
+            <Drawer className='bg-white' title="Notification" onClose={onClose} open={open}>
+                <div onClick={onClose}>
+                    {
+                        getImageLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-sm me-2"></span></div>
+                    }
+                    <Image
+                        width={'100%'}
+                        height={'auto'}
+                        className="rounded-md"
+                        src={imageData?.imgUrl}
+                        fallback={fallbackImage}
+                        preview={true}
+                        alt="advertisment-image"
+                    />
+                </div>
+                <div onClick={onClose} className='pt-2'>
+                    {
+                        getDataLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-sm me-2"></span></div>
+                    }
+                    <div className='bg-slate-100 rounded-md'>
+                        <p className="text-sm font-bold bg-green-200 p-2 rounded-md">Current Notice {noticeData?.date} || {noticeData?.time}</p>
+                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/notice/661089403281a4347e1d3498`)} className="p-2">
+                            <p className=" font-bold">{noticeData?.noticeTitle}</p>
+                            <p className="">{noticeData?.noticeDescription.slice(0, 50)}...</p>
+                        </div>
+                    </div>
+                </div>
+            </Drawer>
+
+
+            {/* Notification Div Desktop _______________________________*/}
+            <div className="md:basis-1/4 hidden md:block">
                 <div className='p-2 border-b'>
                     {
                         getImageLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-sm me-2"></span></div>
