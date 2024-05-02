@@ -1,5 +1,5 @@
 import { ChatBubbleBottomCenterTextIcon, CheckBadgeIcon, ClockIcon, PencilSquareIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import { Image, Skeleton } from "antd";
+import { Image, Popconfirm, Skeleton } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -92,7 +92,7 @@ const DetailsSingleLabels = () => {
     };
     // Delete Labels
     const [deleteLoading, setDeleteLoading] = useState(false)
-    const deleteLabels = (id, imgKey) => {
+    const confirm = (id, imgKey) => {
         setDeleteLoading(true)
         axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/delete-labels/${id}?imgKey=${imgKey}`)
           .then( res => {
@@ -104,6 +104,10 @@ const DetailsSingleLabels = () => {
           })
           .catch(er => console.log(er));
     }
+
+    const cancel = () => {
+      return;
+    };
 
     if(deleteLoading){
         return <LoadingComponentsForPage/>
@@ -129,7 +133,18 @@ const DetailsSingleLabels = () => {
                         {
                             !labelsFetchLoading && labels?.status === 'Rejected' &&
                             <div className="absolute top-1 right-2 flex items-center gap-2 bg-white py-1 px-2 rounded-md">
-                                <TrashIcon style={{cursor: 'pointer'}} onClick={() => deleteLabels(labels._id, labels.imgKey)} className="w-5 h-5 text-red-500"/>
+                                <Popconfirm
+                                    title="Delete"
+                                    placement="leftTop"
+                                    className="z-1000"
+                                    description="Are you sure to Delete Labelse?"
+                                    onConfirm={() => confirm(labels._id, labels.imgKey)}
+                                    onCancel={cancel}
+                                    okText="Yes"
+                                    cancelText="No"
+                                    >
+                                    <TrashIcon style={{cursor: 'pointer'}} className="w-5 h-5 text-red-500"/>
+                                </Popconfirm>
                             </div>
                         }
                         {

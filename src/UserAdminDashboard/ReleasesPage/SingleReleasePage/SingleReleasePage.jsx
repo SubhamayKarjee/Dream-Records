@@ -1,5 +1,5 @@
 import { ChatBubbleBottomCenterTextIcon, CheckBadgeIcon, ClockIcon, PencilIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import { Image } from "antd";
+import { Image, Popconfirm } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -34,7 +34,7 @@ const SingleReleasePage = () => {
     }
 
     const [deleteLoading, setDeleteLoading] = useState(false)
-    const handleDeleteRelease = () => {
+    const confirm = () => {
         setDeleteLoading(true)
         axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/delete-release/${id}?imgKey=${data.key}`)
         .then(res => {
@@ -45,6 +45,10 @@ const SingleReleasePage = () => {
             }
         })
     }
+
+    const cancel = () => {
+      return;
+    };
 
 
     if(deleteLoading){
@@ -96,7 +100,18 @@ const SingleReleasePage = () => {
                                                 <PencilIcon className="h-3 w-3 text-white me-1"/>
                                                 <p className="text-xs font-semibold text-white">Edit</p>
                                             </div>
-                                            <span onClick={handleDeleteRelease} className="bg-red-400 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><TrashIcon className="w-4 h-4 me-1"/> Delete</span>
+                                            <Popconfirm
+                                                title="Delete"
+                                                placement="leftTop"
+                                                className="z-1000"
+                                                description="Are you sure to Delete Release?"
+                                                onConfirm={confirm}
+                                                onCancel={cancel}
+                                                okText="Yes"
+                                                cancelText="No"
+                                                >
+                                                <span className="bg-red-400 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><TrashIcon className="w-4 h-4 me-1"/> Delete</span>
+                                            </Popconfirm>
                                         </div>
                                     }
                                 </div>
