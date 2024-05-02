@@ -1,5 +1,5 @@
 import { BellAlertIcon, CheckBadgeIcon, ClockIcon, ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import { Empty, Image, Pagination } from "antd";
+import { Drawer, Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -68,6 +68,14 @@ const UserLabelsPage = () => {
             })
             .catch(er => console.log(er));
         }
+    };
+
+    const [open, setOpen] = useState(false);
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
     };
 
 
@@ -174,12 +182,18 @@ const UserLabelsPage = () => {
             </div>
 
             {/* Blog Post Div  _______________________________*/}
-            <div className="md:basis-1/4 overflow-y-auto">
+            <div className="md:basis-1/4 overflow-y-auto hidden md:block">
                 <div className='p-2'>
                     <h4 className='flex items-center font-bold text-md text-slate-500'> <BellAlertIcon className='w-5 h-5 me-2 text-slate-500'/> Notification</h4>
                 </div>
-                <ActionRequiredLabels/>
+                <ActionRequiredLabels onClose={onClose}/>
             </div>
+
+            {/* Sideber Div Mobile _______________________________*/}
+            <BellAlertIcon onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer'/>
+            <Drawer className='bg-white' title="Notification" onClose={onClose} open={open}>
+              <ActionRequiredLabels onClose={onClose}/>
+            </Drawer>
         </div>
     );
 };

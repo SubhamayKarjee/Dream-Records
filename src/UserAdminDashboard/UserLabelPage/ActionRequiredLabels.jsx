@@ -3,7 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 
-const ActionRequiredLabels = () => {
+// eslint-disable-next-line react/prop-types
+const ActionRequiredLabels = ({onClose}) => {
 
     const { userNameIdRoll } = useContext(AuthContext);
 
@@ -30,7 +31,7 @@ const ActionRequiredLabels = () => {
         <div>
             {
                 labels && labels.map(l => 
-                    <div className="m-2" key={l._id}>
+                    <div className="m-2" onClick={onClose} key={l._id}>
                         <Link to={`/labels/${l._id}`}>
                             <div className="p-2 bg-slate-200 rounded-md relative">
                                 <div style={{width: '100%', height: '100px'}} className='overflow-hidden rounded-md'>

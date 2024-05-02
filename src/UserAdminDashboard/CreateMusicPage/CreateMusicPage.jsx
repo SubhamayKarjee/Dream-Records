@@ -71,6 +71,7 @@ const CreateMusicPage = () => {
             <div className="md:basis-1/4 hidden md:block">
                 <div className='p-2 border-b'>
                     <h4 className='flex items-center font-bold text-lg text-slate-500'> <BellIcon className='w-6 h-6 me-2 text-slate-500'/> Notification</h4>
+                    <ActionRequiredRelease onClose={onClose}/>
                 </div>
             </div>
             {/* Sideber Div Mobile _______________________________*/}
