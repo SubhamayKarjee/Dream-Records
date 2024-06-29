@@ -110,7 +110,7 @@ const LogIn = () => {
                             </div>
                         </form>
                         {emailErr && <span className='text-red-600 pt-2 block'>{emailErr}</span>}
-                        <span onClick={handleForgetPassword} className="text-semibold link text-info">Forgate Password</span>
+                        <span onClick={handleForgetPassword} className="text-semibold link text-info">Forgot Password</span>
                     </div>
                 </div>
             </div>

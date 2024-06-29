@@ -25,6 +25,7 @@ const SingleArtistForAdmin = () => {
         setArtistFetchLoading(true)
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/single-artist/${id}`)
         .then(res => {
+            console.log(res.data.data);
             setArtist(res.data.data[0]);
             setArtistFetchLoading(false)
         })
@@ -144,7 +145,7 @@ const SingleArtistForAdmin = () => {
                             <div className="ps-2">
                                 <h2 className="font-bold">{artist.artistName}</h2>
                                 <p className="text-sm text-slate-400">ID: {artist._id}</p>
-                                <p className="font-bold text-sm text-slate-600">Youtube ID : <span>{artist?.youtubeChannelId}</span></p>
+                                <p className="font-bold text-sm text-slate-600">Youtube ID : <span>{artist?.youtube}</span></p>
                                 <div className="flex items-center gap-3 my-2">
                                     {
                                         artist?.appleId &&
