@@ -151,8 +151,8 @@ const DetailsSingleArtist = () => {
                             />
                             <div className="ps-2">
                                 <h2 className="font-bold">{artist.artistName}</h2>
-                                <p className="text-sm text-slate-400">ID: {artist._id}</p>
-                                <p className="font-bold text-sm text-slate-600">Youtube ID : <span>{artist?.youtubeChannelId}</span></p>
+                                <p className="text-sm text-slate-400">{artist?.userName}</p>
+                                <p className="font-bold text-sm text-slate-600">Youtube ID : <span>{artist?.youtube}</span></p>
                                 <div className="flex items-center gap-3 my-2">
                                     {
                                         artist?.appleId &&

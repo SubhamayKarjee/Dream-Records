@@ -138,7 +138,7 @@ const UserLabelsPage = () => {
                                 />
                             <div className="ps-2">
                               <h2 className="font-bold">{data.labelName}</h2>
-                              <p className="text-sm text-slate-400">ID: {data._id}</p>
+                              <p className="text-sm text-slate-400">{data?.userName}</p>
                             </div>
                           </div>
                           <div className="flex items-center">

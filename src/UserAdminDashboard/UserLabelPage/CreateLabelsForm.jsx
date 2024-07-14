@@ -60,7 +60,8 @@ const CreateLabelsForm = () => {
       setSubmitLoading(true)
       const status = 'Pending';
       const masterUserId = userNameIdRoll[1];
-      const formData = {...data, ...uploadedImage, masterUserId, status};
+      const userName = userNameIdRoll[0]
+      const formData = {...data, ...uploadedImage, masterUserId, status, userName};
       axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/create-labels', formData)
           .then(res => {
               if(res.status == 200){

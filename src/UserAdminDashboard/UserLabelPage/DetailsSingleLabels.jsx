@@ -172,7 +172,7 @@ const DetailsSingleLabels = () => {
                             />
                             <div className="ps-2">
                                 <h2 className="font-bold">{labels.labelName}</h2>
-                                <p className="text-sm text-slate-400">ID: {labels._id}</p>
+                                <p className="text-sm text-slate-400">{labels?.userName}</p>
                                 {
                                     labels.status === 'Pending' &&
                                     <span className="bg-yellow-500 my-1 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {labels.status}</span>

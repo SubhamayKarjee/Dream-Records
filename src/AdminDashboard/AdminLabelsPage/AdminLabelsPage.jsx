@@ -29,6 +29,7 @@ const AdminLabelsPage = () => {
                 setFetchLoading(false);
                 setTotalItems(res.data.dataCount);
                 setLabelsData(res.data.data);
+                console.log(res.data.data);
               }
             })
             .catch(er => console.log(er));
