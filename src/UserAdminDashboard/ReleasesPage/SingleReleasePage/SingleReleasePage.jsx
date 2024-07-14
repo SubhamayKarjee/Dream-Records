@@ -36,7 +36,7 @@ const SingleReleasePage = () => {
     const [deleteLoading, setDeleteLoading] = useState(false)
     const confirm = () => {
         setDeleteLoading(true)
-        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/delete-release/${id}?imgKey=${data.key}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/delete-release/${id}?imgKey=${data.key}&audioKey=${data.audioKey}`)
         .then(res => {
             if(res.status == 200){
                 setDeleteLoading(false)
@@ -58,6 +58,14 @@ const SingleReleasePage = () => {
 
     return (
         <div className="md:flex md:h-full">
+            {
+                data?.actionRequired && 
+                <div className="block md:hidden">
+                    <div className="p-2 bg-red-200 rounded-md">
+                        <p className="text-sm font-semibold">{data.actionRequired}</p>
+                    </div>
+                </div>
+            }
             <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2'>
                 {
                   loading ? <LoadingComponentsInsidePage/> :
@@ -77,6 +85,7 @@ const SingleReleasePage = () => {
                             <div className="md:flex justify-between">
                                 <div>
                                     <h2 className="text-white font-bold text-lg">{data?.releaseTitle}</h2>
+                                    <p className="text-white text-sm">{data?.userName}</p>
                                     <p className="text-white text-sm">ID: {data?._id}</p>
                                 </div>
                                 <div>
@@ -144,7 +153,7 @@ const SingleReleasePage = () => {
                                             </div>
                                             <div className="ms-2">
                                                 <h2 className="font-bold">{a?.artistName}</h2>
-                                                <p className="text-xs">ID: {a?._id}</p>
+                                                <p className="text-xs">{a?.userName}</p>
                                             </div>
                                         </div>
                                     )
@@ -171,7 +180,7 @@ const SingleReleasePage = () => {
                                                 </div>
                                                 <div className="ms-2">
                                                     <h2 className="font-bold">{l?.labelName}</h2>
-                                                    <p className="text-xs">ID: {l?._id}</p>
+                                                    <p className="text-xs">{l?.userName}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -199,7 +208,7 @@ const SingleReleasePage = () => {
                                             </div>
                                             <div className="ms-2">
                                                 <h2 className="font-bold">{f?.artistName}</h2>
-                                                <p className="text-xs">ID: {f?._id}</p>
+                                                <p className="text-xs">ID: {f?.userName}</p>
                                             </div>
                                         </div>
                                     )
@@ -257,7 +266,7 @@ const SingleReleasePage = () => {
 
 
             {/* Sideber Div  _______________________________*/}
-            <div className="md:basis-1/4">
+            <div className="md:basis-1/4 hidden md:block">
                 <div className='p-2'>
                     <h4 className='flex items-center font-bold text-slate-500'> <ChatBubbleBottomCenterTextIcon className='w-5 h-5 me-2 text-slate-500'/>Notice</h4>
                     <div className="my-2">

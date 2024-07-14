@@ -26,6 +26,7 @@ const AdminSingleReleasePage = () => {
                     setLoading(false);
                     setReleaseData(res.data.data[0]);
                     setReleaseStatus(res.data.data[0].status)
+                    console.log(res.data.data);
                 }
             })
             .catch(er => console.log(er));
@@ -64,6 +65,7 @@ const AdminSingleReleasePage = () => {
 
     const [deleteLoading, setDeleteLoading] = useState(false)
     const confirm = () => {
+
         setDeleteLoading(true)
         axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/delete-release/${id}?imgKey=${releaseData.key}&audioKey=${releaseData.audioKey}`)
         .then(res => {
@@ -119,6 +121,7 @@ const AdminSingleReleasePage = () => {
                             <div className="md:flex justify-between">
                                 <div>
                                     <h2 className="text-white font-bold text-lg">{releaseData?.releaseTitle}</h2>
+                                    <p className="text-white text-sm">{releaseData?.userName}</p>
                                     <p className="text-white text-sm">ID: {releaseData?._id}</p>
                                 </div>
                                 <div>
@@ -224,7 +227,7 @@ const AdminSingleReleasePage = () => {
                                             </div>
                                             <div className="ms-2">
                                                 <h2 className="font-bold">{a?.artistName}</h2>
-                                                <p className="text-xs">ID: {a?._id}</p>
+                                                <p className="text-xs">{a?.userName}</p>
                                             </div>
                                             <dialog id={index} className="modal">
                                                 <div className="modal-box">
@@ -242,7 +245,7 @@ const AdminSingleReleasePage = () => {
                                                         alt={a?.artistName}
                                                     />
                                                     <h3 className="font-bold text-lg">{a?.artistName}</h3>
-                                                    <p className="text-sm text-slate-500">ID: {a?._id}</p>
+                                                    <p className="text-sm text-slate-500">{a?.userName}</p>
                                                     {
                                                         a?.instagramId &&
                                                         <div className="my-2 p-2 border rounded-md">
@@ -311,7 +314,7 @@ const AdminSingleReleasePage = () => {
                                                 </div>
                                                 <div className="ms-2">
                                                     <h2 className="font-bold">{l?.labelName}</h2>
-                                                    <p className="text-xs">ID: {l?._id}</p>
+                                                    <p className="text-xs">{l?.userName}</p>
                                                 </div>
                                             </div>
                                             <dialog id={l._id} className="modal">
@@ -330,7 +333,7 @@ const AdminSingleReleasePage = () => {
                                                         alt={l.labelName}
                                                     />
                                                     <h3 className="font-bold text-lg">{l?.labelName}</h3>
-                                                    <p className="text-sm text-slate-500">ID: {l?._id}</p>
+                                                    <p className="text-sm text-slate-500">{l?.userName}</p>
                                                     {
                                                         l?.youtubeChannelLink &&
                                                         <div className="my-2 p-2 border rounded-md">
@@ -368,7 +371,7 @@ const AdminSingleReleasePage = () => {
                                             </div>
                                             <div className="ms-2">
                                                 <h2 className="font-bold">{f?.artistName}</h2>
-                                                <p className="text-xs">ID: {f?._id}</p>
+                                                <p className="text-xs">{f?.userName}</p>
                                             </div>
                                             <dialog id={f._id} className="modal">
                                                 <div className="modal-box">
@@ -386,7 +389,7 @@ const AdminSingleReleasePage = () => {
                                                         alt={f.artistName}
                                                     />
                                                     <h3 className="font-bold text-lg">{f?.artistName}</h3>
-                                                    <p className="text-sm text-slate-500">ID: {f?._id}</p>
+                                                    <p className="text-sm text-slate-500">{f?.userName}</p>
                                                     {
                                                         f?.instagramId &&
                                                         <div className="my-2 p-2 border rounded-md">
