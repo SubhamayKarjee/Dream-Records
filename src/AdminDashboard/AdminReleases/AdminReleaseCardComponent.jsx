@@ -23,6 +23,7 @@ const AdminReleaseCardComponent = ({releaseData, totalItems, fetchLoading, curre
                             <div className="card_child_div">
                                 <div className="card_content">
                                     <p className="font-bold text-white">{d.releaseTitle}</p>
+                                    <h3 className="text-xs font-semibold text-slate-300">{d?.userName}</h3>
                                     <h3 className="text-xs font-semibold text-slate-300">ID: {d._id}</h3>
                                 </div>
                             </div>

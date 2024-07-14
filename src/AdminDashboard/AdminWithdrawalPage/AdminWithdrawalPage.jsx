@@ -80,7 +80,7 @@ const AdminWithdrawalPage = () => {
                             <div className="md:flex justify-between">
                                 <div>
                                     <p className="text-green-500"> Withdrawal Request Form {data?.nick_name ? data.nick_name : data?.name} || <span className="font-bold text-slate-600">{data?.withdrawalDate}/{data?.withdrawalMonth}/{data?.withdrawalYear} || {data?.withdrawalTime}</span> </p>
-                                    <p>ID: {data?._id}</p>
+                                    <p>{data?.userName}</p>
                                     {
                                         data?.status === 'Approved' && <p className="text-sm font-bold text-slate-500">Payment on {data.updatedDate} has been processed</p> 
                                     }
