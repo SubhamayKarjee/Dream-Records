@@ -204,6 +204,7 @@ const UpdateLabelsComponent = () => {
                         />
                         <div className="ps-2">
                             <h2 className="font-bold">{labels.labelName}</h2>
+                            <p className="text-sm text-slate-400">{labels?.userName}</p>
                             <p className="text-sm text-slate-400">ID: {labels._id}</p>
                             {
                                 labels?.youtubeChannelLink && <a href={labels.youtubeChannelLink} target="_blank" className="flex items-center">
