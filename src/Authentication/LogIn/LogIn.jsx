@@ -37,13 +37,12 @@ const LogIn = () => {
                 let userNameIdRoll = res.user?.displayName?.split("'__'");
                 const userEmail = res.user?.email;
                 const uid = res.user?.uid;
-                const lastLogin = res?.user?.metadata.lastSignInTime;
                 if(userNameIdRoll[2] === 'User'){
                     axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`)
                     .then(res => {
                         if(res.status === 200){
                             const data = res.data.data;
-                            const formData = {...data, email: userEmail, uid, lastLogin}
+                            const formData = {...data, email: userEmail, uid}
                             axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`, formData)
                             .then(res => {
                                 if(res.status === 200){

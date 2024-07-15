@@ -13,13 +13,14 @@ import {
     RectangleGroupIcon,
     ExclamationTriangleIcon,
  } from '@heroicons/react/24/solid'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Drawer, Image } from 'antd';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.config';
 import LoadingComponentsForPage from '../../LoadingComponents/LoadingComponentsForPage';
 import { createContext } from 'react';
 import fallbackImage from '../../assets/userImage.webp'
+import axios from 'axios';
 
 export const AuthContext = createContext();
 
@@ -27,11 +28,51 @@ const UserAdminHomePage = () => {
 
     const navigate = useNavigate()
 
-
     const [signOut, error1] = useSignOut(auth);
     const [user, loading] = useAuthState(auth);
     const [uploadedProfileImg, setUploadedProfileImg] = useState(user?.photoURL);
     const [mainProfileImage, setMainProfileImage] = useState(user?.photoURL);
+
+    useEffect(() => {
+        if(loading){
+            return <LoadingComponentsForPage/>
+        }
+        let userNameIdRoll = user?.displayName?.split("'__'");
+        // Create a new Date object for the current date and time
+        const now = new Date();
+
+        // Create an options object for formatting the date and time
+        const options = {
+            timeZone: 'Asia/Kolkata',
+            hour12: true,
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        };
+
+        // Create a new Intl.DateTimeFormat object with the specified options
+        const formatter = new Intl.DateTimeFormat('en-GB', options);
+
+        // Format the current date and time for Kolkata
+        const lastLogin = formatter.format(now);
+        if(user){
+            axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`)
+            .then(res => {
+                if(res.status === 200){
+                    const data = res.data.data;
+                    const formData = {...data, lastLogin}
+                    axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`, formData)
+                }
+            })
+        }
+    }, []);
+
+
+
+
 
     // State for Labels and Artist for Create Release ___________________________
     const [artist, setArtist] = useState();
@@ -50,8 +91,7 @@ const UserAdminHomePage = () => {
     const onClose = () => {
         setOpen(false);
     };
-
-
+    
     if(loading){
         return <LoadingComponentsForPage/>
     }
