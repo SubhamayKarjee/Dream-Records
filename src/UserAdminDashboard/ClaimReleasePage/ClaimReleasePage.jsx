@@ -14,7 +14,7 @@ const ClaimReleasePage = () => {
     const { userNameIdRoll } = useContext(AuthContext);
 
     // Claim Option Handle ________________________________________________________
-    const [claimOption, setClaimOption] = useState();
+    const [claimOption, setClaimOption] = useState('');
     const [claimOptionErr, setClaimOptionErr] = useState('')
     
     // Get Release List ______________________________________________________________
@@ -95,6 +95,7 @@ const ClaimReleasePage = () => {
                 const r = reFetch + 1;
                 setReFetch(r)
                 setRelease([])
+                setClaimOption('')
                 toast.success('Successfully Submited')
             }
         })
@@ -156,75 +157,82 @@ const ClaimReleasePage = () => {
                         claimOptionErr && <span className='text-red-600 pt-2 block'>{claimOptionErr}</span>
                     }
 
-                    {/* Release Select Option ______________________________________________________________ */}
-                    <div className="p-2 border rounded-md mt-3">
-                        <p className="text-sm font-semibold text-slate-500 ms-2">Select Release <span className="text-red-500">*</span></p>
-                        {
-                            release && release?.map(data => 
-                                <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                                    <div className="flex items-center">
-                                            <Image
-                                            width={35}
-                                            height={35}
-                                            className="rounded-lg"
-                                            src={data?.imgUrl}
-                                            fallback={fallbackImage}
-                                            />
-                                        <div className="ps-2">
-                                        <h2 className="font-bold text-sm">{data?.releaseTitle}</h2>
-                                        <p className="text-xs text-slate-400">ID: {data?._id}</p>
-                                        </div>
-                                    </div>
-                                    <span style={{cursor: 'pointer'}} onClick={() => removeRelease(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
-                                </div>
-                            )
-                        }
-                        <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Release</span>
-                            <Modal title="Search/Select Release" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
-                                <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">Select Release</p>
-                                <div>
-                                    <input type="text" placeholder="Search" onChange={e => handleSearch(e.target.value)} className="input input-sm rounded-full input-bordered w-full"/>
-                                    {
-                                        fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
-                                    }
-                                    {
-                                    releaseData?.map((data) => 
-                                        <div onClick={() => handleRelease(data)} key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
-                                            <div style={{cursor: 'pointer'}} onClick={handleCancel2} className="w-full">
-                                                <div className="flex items-center">
+                    {
+                        claimOption && 
+                        <div>
+                            {/* Release Select Option ______________________________________________________________ */}
+                            <div className="p-2 border rounded-md mt-3">
+                                <p className="text-sm font-semibold text-slate-500 ms-2">Select Release <span className="text-red-500">*</span></p>
+                                {
+                                    release && release?.map(data => 
+                                        <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                            <div className="flex items-center">
                                                     <Image
-                                                        width={55}
-                                                        height={55}
-                                                        className="rounded-lg"
-                                                        src={data.imgUrl}
-                                                        fallback={fallbackImage}
+                                                    width={35}
+                                                    height={35}
+                                                    className="rounded-lg"
+                                                    src={data?.imgUrl}
+                                                    fallback={fallbackImage}
                                                     />
                                                 <div className="ps-2">
-                                                    <h2 className="font-bold">{data.releaseTitle}</h2>
-                                                    <p className="text-sm text-slate-400">ID: {data._id}</p>
-                                                </div>
+                                                <h2 className="font-bold text-sm">{data?.releaseTitle}</h2>
+                                                <p className="text-xs text-slate-400">ID: {data?._id}</p>
                                                 </div>
                                             </div>
+                                            <span style={{cursor: 'pointer'}} onClick={() => removeRelease(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                                         </div>
                                     )
-                                    }
-                                    {
-                                    !totalItems && !fetchLoading && <Empty className="pt-12" />
-                                    }
-                                </div>
-                            </Modal>
-                        {errorMessageRelease && <span className='text-red-600 pt-2 block'>{errorMessageRelease}</span>}
-                    </div>
+                                }
+                                <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Release</span>
+                                    <Modal title="Search/Select Release" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
+                                        <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">Select Release</p>
+                                        <div>
+                                            <input type="text" placeholder="Search" onChange={e => handleSearch(e.target.value)} className="input input-sm rounded-full input-bordered w-full"/>
+                                            {
+                                                fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
+                                            }
+                                            {
+                                            releaseData?.map((data) => 
+                                                <div onClick={() => handleRelease(data)} key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
+                                                    <div style={{cursor: 'pointer'}} onClick={handleCancel2} className="w-full">
+                                                        <div className="flex items-center">
+                                                            <Image
+                                                                width={55}
+                                                                height={55}
+                                                                className="rounded-lg"
+                                                                src={data.imgUrl}
+                                                                fallback={fallbackImage}
+                                                            />
+                                                        <div className="ps-2">
+                                                            <h2 className="font-bold">{data.releaseTitle}</h2>
+                                                            <p className="text-sm text-slate-400">ID: {data._id}</p>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                            }
+                                            {
+                                            !totalItems && !fetchLoading && <Empty className="pt-12" />
+                                            }
+                                        </div>
+                                    </Modal>
+                                {errorMessageRelease && <span className='text-red-600 pt-2 block'>{errorMessageRelease}</span>}
+                            </div>
 
-                    {
-                        claimOption != 'Audio Fingerprinting' && 
-                        <div>
-                            <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Paste infringing link <span className="text-red-500">*</span></p>
-                            <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("claimLink", { required: true})}/>
-                            {errors.claimLink && <span className='text-red-600 pt-2 block'>Claim Link Required</span>}
+                            {
+                                claimOption != 'Audio Fingerprinting' && 
+                                <div>
+                                    <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Paste infringing link <span className="text-red-500">*</span></p>
+                                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("claimLink", { required: true})}/>
+                                    {errors.claimLink && <span className='text-red-600 pt-2 block'>Claim Link Required</span>}
+                                </div>
+                            }
+                            <input className='btn btn-sm rounded-full bg-info mt-4' type="submit" value="Submit" />
                         </div>
                     }
-                    <input className='btn btn-sm rounded-full bg-info mt-4' type="submit" value="Submit" />
+
+
                 </form>
 
                 <div className='my-3'>
