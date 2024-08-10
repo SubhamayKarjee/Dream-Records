@@ -100,7 +100,7 @@ const DashbardHomePage = () => {
                 <h1 className="text-2xl font-extrabold ">Dream Record Admin Dashboard</h1>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4  gap-3 my-4">
-                <div style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/release')} className="p-2 rounded-md shadow border">
+                <div style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/release/1/8/Pending')} className="p-2 rounded-md shadow border">
                     <h2 className="font-extrabold text-2xl text-slate-500">Release</h2>
                     <p className="text-sm text-slate-500 flex items-center"><ClockIcon className="h-4 w-4 me-1"/>Pending</p>
                     {

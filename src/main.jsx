@@ -121,7 +121,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><SingleUserPage/></ProtectAdminRoute></Suspense>,
       },
       {
-        path: '/admin-dashboard/release',
+        path: '/admin-dashboard/release/:pageNumber/:perPageRelease/:status',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminReleasePage/></ProtectAdminRoute></Suspense>
       },
       {

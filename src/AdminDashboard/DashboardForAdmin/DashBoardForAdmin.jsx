@@ -26,6 +26,7 @@ export const AdminAuthContext = createContext();
 
 const DashBoardForAdmin = () => {
 
+
     const [signOut] = useSignOut(auth);
     const navigate = useNavigate()
 
@@ -46,6 +47,7 @@ const DashBoardForAdmin = () => {
     }
     
     let adminNameIdRoll = user?.displayName?.split("'__'");
+    
 
     const contextValue = {
         adminNameIdRoll
@@ -96,7 +98,7 @@ const DashBoardForAdmin = () => {
                                     <UserIcon className="h-7 w-7 pe-2" />
                                     All User
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/release'}>
+                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/release/1/8/All'}>
                                     <AdjustmentsHorizontalIcon className="h-7 w-7 pe-2" />
                                     Release
                                 </Link>

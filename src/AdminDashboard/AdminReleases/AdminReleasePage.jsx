@@ -1,30 +1,30 @@
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AdminReleaseCardComponent from "./AdminReleaseCardComponent";
+import { useParams } from 'react-router-dom';
 
 const AdminReleasePage = () => {
 
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
+    const { pageNumber, perPageRelease, status } = useParams();
 
     // Paginatin and Search State __________________________________________________
-    const [releaseStatus, setReleaseStatus] = useState('All')
+    const [releaseStatus, setReleaseStatus] = useState(status)
     const [totalItems, setTotalItems] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(8);
+    const [itemPerPage, setItemPerPage] = useState(perPageRelease);
     const [searchText, setSearchText] = useState('');
 
     const [releaseData, setReleaseData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false);
-    // const [hideShow, setHideShow] = useState('none');
+
 
     // Get Release List ______________________________________________________________
     useEffect(() => {
-        setItemPerPage(8)
         // Calculate Pagination and Fetch__________________________________________________
         setFetchLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/release?status=${releaseStatus}&page=${currentPage}&limit=${itemPerPage}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/release?status=${releaseStatus}&page=${pageNumber}&limit=${itemPerPage}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -37,19 +37,19 @@ const AdminReleasePage = () => {
             })
             .catch(er => console.log(er));
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [currentPage, releaseStatus]);
+      }, [releaseStatus, pageNumber]);
 
     const handleSearch = (e) => {
         setSearchText(e)
     }
 
     const handleStatus = (e) => {
-        setCurrentPage(1)
         setReleaseStatus(e)
+        navigate(`/admin-dashboard/release/${1}/${itemPerPage}/${e}`)
     }
 
     const handlePageChange = (page) => {
-        setCurrentPage(page)
+        navigate(`/admin-dashboard/release/${page}/${itemPerPage}/${releaseStatus}`)
     };
 
     const searchByTitle = (event) => {
@@ -120,7 +120,7 @@ const AdminReleasePage = () => {
                     {
                         fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
-                    <AdminReleaseCardComponent releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={currentPage} itemPerPage={itemPerPage} handlePageChange={handlePageChange}/>
+                    <AdminReleaseCardComponent releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={pageNumber} itemPerPage={itemPerPage} handlePageChange={handlePageChange}/>
                 </main>
 
             </div>
