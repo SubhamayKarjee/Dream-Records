@@ -13,9 +13,7 @@ const AdminReleasePage = () => {
     // Paginatin and Search State __________________________________________________
     const [releaseStatus, setReleaseStatus] = useState(status)
     const [totalItems, setTotalItems] = useState();
-    const [itemPerPage, setItemPerPage] = useState(perPageRelease);
     const [searchText, setSearchText] = useState('');
-
     const [releaseData, setReleaseData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false);
 
@@ -24,7 +22,7 @@ const AdminReleasePage = () => {
     useEffect(() => {
         // Calculate Pagination and Fetch__________________________________________________
         setFetchLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/release?status=${releaseStatus}&page=${pageNumber}&limit=${itemPerPage}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/release?status=${releaseStatus}&page=${pageNumber}&limit=${8}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -37,7 +35,7 @@ const AdminReleasePage = () => {
             })
             .catch(er => console.log(er));
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [releaseStatus, pageNumber]);
+    }, [releaseStatus, pageNumber, status]);
 
     const handleSearch = (e) => {
         setSearchText(e)
@@ -45,15 +43,14 @@ const AdminReleasePage = () => {
 
     const handleStatus = (e) => {
         setReleaseStatus(e)
-        navigate(`/admin-dashboard/release/${1}/${itemPerPage}/${e}`)
+        navigate(`/admin-dashboard/release/${1}/${8}/${e}`)
     }
 
     const handlePageChange = (page) => {
-        navigate(`/admin-dashboard/release/${page}/${itemPerPage}/${releaseStatus}`)
+        navigate(`/admin-dashboard/release/${page}/${8}/${releaseStatus}`)
     };
 
     const searchByTitle = (event) => {
-        setItemPerPage(50)
         if (event.key === 'Enter') {
           setFetchLoading(true);
           axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/release/search-by-title?status=${releaseStatus}&search=${searchText}`)
@@ -69,7 +66,6 @@ const AdminReleasePage = () => {
     };
 
     const searchByUpc = (event) => {
-        setItemPerPage(50)
         if (event.key === 'Enter') {
           setFetchLoading(true);
           axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/release/search-by-upc?status=${releaseStatus}&search=${searchText}`)
@@ -120,7 +116,7 @@ const AdminReleasePage = () => {
                     {
                         fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
-                    <AdminReleaseCardComponent releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={pageNumber} itemPerPage={itemPerPage} handlePageChange={handlePageChange}/>
+                    <AdminReleaseCardComponent releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={pageNumber} itemPerPage={perPageRelease} handlePageChange={handlePageChange}/>
                 </main>
 
             </div>
