@@ -3,40 +3,40 @@ import { CheckBadgeIcon, ClockIcon, CurrencyRupeeIcon, ExclamationTriangleIcon }
 import { Empty, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 const AdminWithdrawalPage = () => {
 
     const navigate = useNavigate();
+    const { pageNumber, perPageList, status } = useParams();
 
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(14);
     const [fetchLoading, setFetchLoading] = useState(false)
     
-    const [withdrawalStatus, setWithdrawalStatus] = useState('All')
+    const [withdrawalStatus, setWithdrawalStatus] = useState(status)
     const [withdrawalData, setWithdrawalData] = useState();
+    // const [activeList, setActiveList] = useState()
     useEffect( () => {
-        setItemPerPage(14)
         setFetchLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/req-list?page=${currentPage}&limit=${itemPerPage}&status=${withdrawalStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/req-list?page=${pageNumber}&limit=${perPageList}&status=${withdrawalStatus}`)
         .then(res => {
             setWithdrawalData(res.data.data);
             setTotalItems(res.data.dataCount)
+            // setActiveList(res.data.data.length);
             setFetchLoading(false)
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage, withdrawalStatus])
+    }, [pageNumber, withdrawalStatus])
 
     const handlePageChange = (page) => {
-        setCurrentPage(page)
+        navigate(`/admin-dashboard/withdrawal-request/${page}/${10}/${withdrawalStatus}`)
     };
 
     const [searchText, setSearchText] = useState('')
     const handleStatus = (e) => {
-        setCurrentPage(1)
+        navigate(`/admin-dashboard/withdrawal-request/${1}/${10}/${e}`)
         setWithdrawalStatus(e)
     }
   
@@ -49,7 +49,8 @@ const AdminWithdrawalPage = () => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/search-req-list?search=${searchText}&status=${withdrawalStatus}`)
         .then(res => {
             setWithdrawalData(res.data.data);
-            setTotalItems(res.data.dataCount)
+            setTotalItems(res.data.dataCount);
+            // setActiveList(res.data.data.length);
             setFetchLoading(false)
         })
     };
@@ -117,16 +118,16 @@ const AdminWithdrawalPage = () => {
                     )
                 }
             </div>
-            <div className="pt-6">
+            <div className="py-6">
                 {
                     !totalItems && !fetchLoading && <Empty className="pt-8" />
                 }
                 {
-                    totalItems > 14 && !fetchLoading && <div className="flex justify-center items-center my-4">
+                    totalItems > 10 && !fetchLoading && <div className="flex justify-center items-center my-4">
                         <Pagination 
-                            defaultCurrent={currentPage} 
+                            defaultCurrent={pageNumber} 
                             total={totalItems}
-                            pageSize={itemPerPage}
+                            pageSize={perPageList}
                             onChange={handlePageChange}
                         /> 
                   </div>

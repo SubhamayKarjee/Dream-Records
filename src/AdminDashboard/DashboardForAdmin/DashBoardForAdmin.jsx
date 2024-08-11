@@ -110,7 +110,7 @@ const DashBoardForAdmin = () => {
                                     <UsersIcon className="h-7 w-7 pe-2" />
                                     Artist
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/withdrawal-request'}>
+                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/withdrawal-request/1/10/All'}>
                                     <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                     Withdrawal
                                 </Link>

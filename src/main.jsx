@@ -149,7 +149,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><SingleArtistForAdmin/></ProtectAdminRoute></Suspense>,
       },
       {
-        path: '/admin-dashboard/withdrawal-request/',
+        path: '/admin-dashboard/withdrawal-request/:pageNumber/:perPageList/:status',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminWithdrawalPage/></ProtectAdminRoute></Suspense>,
       },
       {
