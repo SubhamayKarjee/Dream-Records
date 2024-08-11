@@ -112,7 +112,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><CreateUserForm/></ProtectAdminRoute></Suspense>,
       },
       {
-        path: '/admin-dashboard/all-user',
+        path: '/admin-dashboard/all-user/:pageNumber/:perPageUser',
         // element: <ProtectAdminRoute></ProtectAdminRoute>
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UsersList/></ProtectAdminRoute></Suspense>,
       },

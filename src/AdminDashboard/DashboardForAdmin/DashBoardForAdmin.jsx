@@ -94,7 +94,7 @@ const DashBoardForAdmin = () => {
                                     <HomeIcon className="h-7 w-7 pe-2" />
                                     Home
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/all-user'}>
+                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/all-user/1/10'}>
                                     <UserIcon className="h-7 w-7 pe-2" />
                                     All User
                                 </Link>

@@ -3,28 +3,29 @@ import { Empty, Image, Pagination, Popconfirm } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 import SendPaymentsFormDreamRecord from "./SendPaymentsFormDreamRecord";
 import SendReporsFormDreamRecord from "./SendReporsFormDreamRecord";
+import './UserList.css'
 
 const UsersList = () => {
 
     const navigate = useNavigate()
 
+    const { pageNumber, perPageUser } = useParams();
+
     const [usersData, setUsersData] = useState();
 
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(10);
+    // const [currentPage, setCurrentPage] = useState(1);
     const [fetchLoading, setFetchLoading] = useState(false)
     const [refetch, setRefetch] = useState(1)
     useEffect( () => {
-      setItemPerPage(10)
       setFetchLoading(true)
-      axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/users?page=${currentPage}&limit=${itemPerPage}`)
+      axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/users?page=${pageNumber}&limit=${perPageUser}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);
@@ -33,10 +34,10 @@ const UsersList = () => {
             }
           })
           .catch(er => console.log(er));
-    },[currentPage, itemPerPage, refetch])
+    },[pageNumber, refetch, perPageUser])
 
     const handlePageChange = (page) => {
-        setCurrentPage(page)
+        navigate(`/admin-dashboard/all-user/${page}/${perPageUser}`)
     };
 
 
@@ -104,7 +105,7 @@ const UsersList = () => {
                     <ExclamationCircleIcon className="w-6 h-6 me-1 text-slate-500"/>
                     Total Users
                 </div>
-                <div><span className="text-sm font-bold">{itemPerPage}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{totalItems}</span> </div>
+                <div><span className="text-sm font-bold">{perPageUser}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{totalItems}</span> </div>
             </div>
 
             <main className="my-2 p-2">
@@ -186,10 +187,10 @@ const UsersList = () => {
                     {
                         totalItems > 9 && !fetchLoading && <div className="flex justify-center items-center my-4">
                             <Pagination 
-                            defaultCurrent={currentPage} 
-                            total={totalItems}
-                            pageSize={itemPerPage}
-                            onChange={handlePageChange}
+                              defaultCurrent={pageNumber} 
+                              total={totalItems}
+                              pageSize={perPageUser}
+                              onChange={handlePageChange}
                             /> 
                         </div>
                     }
