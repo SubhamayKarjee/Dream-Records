@@ -2,28 +2,26 @@ import { CheckBadgeIcon, ClockIcon, ExclamationCircleIcon, XCircleIcon } from "@
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import fallbackImage from "../../assets/fallbackImage.jpg"
 // import UpdateLabelsComponent from "./UpdateLabelsComponent";
 
 const AdminLabelsPage = () => {
 
     const navigate = useNavigate()
+    const { pageNumber, perPageLabel, status } = useParams();
+    
 
     // Paginatin and Search State __________________________________________________
-    const [lebelStatus, setLabelStatus] = useState('All')
+    const [lebelStatus, setLabelStatus] = useState(status)
     const [totalItems, setTotalItems] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(10);
     const [searchText, setSearchText] = useState('');
-
     const [labelsData, setLabelsData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false);
 
     useEffect( () => {
-        setItemPerPage(10)
         setFetchLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/labels?page=${currentPage}&limit=${itemPerPage}&status=${lebelStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/labels?page=${pageNumber}&limit=${perPageLabel}&status=${lebelStatus}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -32,16 +30,15 @@ const AdminLabelsPage = () => {
               }
             })
             .catch(er => console.log(er));
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[ currentPage, lebelStatus]);
+    },[ pageNumber, perPageLabel, lebelStatus]);
 
     const handlePageChange = (page) => {
-        setCurrentPage(page)
+        navigate(`/admin-dashboard/labels/${page}/${10}/${lebelStatus}`)
     };
   
     const handleStatus = (e) => {
-        setCurrentPage(1)
         setLabelStatus(e)
+        navigate(`/admin-dashboard/labels/${1}/${10}/${e}`)
     }
   
     const handleSearch = (e) => {
@@ -49,7 +46,6 @@ const AdminLabelsPage = () => {
     }
   
     const handleKeyPress = (event) => {
-      setItemPerPage(50)
       if (event.key === 'Enter') {          
         setFetchLoading(true);
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/labels/search?status=${lebelStatus}&search=${searchText}`)
@@ -147,9 +143,9 @@ const AdminLabelsPage = () => {
                     {
                         totalItems > 10 && !fetchLoading && <div className="flex justify-center items-center my-4">
                             <Pagination 
-                            defaultCurrent={currentPage} 
+                            defaultCurrent={pageNumber} 
                             total={totalItems}
-                            pageSize={itemPerPage}
+                            pageSize={perPageLabel}
                             onChange={handlePageChange}
                             /> 
                       </div>

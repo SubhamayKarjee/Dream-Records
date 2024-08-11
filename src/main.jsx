@@ -133,7 +133,7 @@ const router = createBrowserRouter([
         element: <SuccessPage link={'/admin-dashboard/release'} heading={'Successfully Updated Release Status'} text={'Now user can see Updated Status her Release'}/>
       },
       {
-        path: '/admin-dashboard/labels',
+        path: '/admin-dashboard/labels/:pageNumber/:perPageLabel/:status',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminLabelsPage/></ProtectAdminRoute></Suspense>,
       },
       {

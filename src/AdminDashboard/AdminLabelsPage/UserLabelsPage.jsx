@@ -9,7 +9,8 @@ import fallbackImage from "../../assets/fallbackImage.jpg"
 // eslint-disable-next-line react/prop-types
 const UserLabelsPage = ({userId}) => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
 
     // Paginatin and Search State __________________________________________________
     const [lebelStatus, setLabelStatus] = useState('All')

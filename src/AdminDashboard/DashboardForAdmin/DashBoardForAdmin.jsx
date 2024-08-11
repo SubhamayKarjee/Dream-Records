@@ -102,7 +102,7 @@ const DashBoardForAdmin = () => {
                                     <AdjustmentsHorizontalIcon className="h-7 w-7 pe-2" />
                                     Release
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/labels/1/10'}>
+                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/labels/1/10/All'}>
                                     <UserGroupIcon className="h-7 w-7 pe-2" />    
                                     Labels
                                 </Link>
