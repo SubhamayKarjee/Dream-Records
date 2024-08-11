@@ -2,40 +2,41 @@ import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
 
 const AdminArtistPage = () => {
 
     const navigate = useNavigate();
 
+    const { pageNumber, perPageAritst } = useParams();
+
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
-
     const [searchText, setSearchText] = useState('');
-
     const [artistData, setArtistData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false)
+    const [activeList, setActiveList] = useState()
     useEffect( () => {
       setItemPerPage(10)
       setFetchLoading(true)
-      axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/artist?page=${currentPage}&limit=${itemPerPage}`)
+      axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/artist?page=${pageNumber}&limit=${itemPerPage}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);
               setTotalItems(res.data.dataCount);
               setArtistData(res.data.data);
+              setActiveList(res.data.data.length);
             }
           })
           .catch(er => console.log(er));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[currentPage])
+    },[pageNumber, perPageAritst])
 
 
     const handlePageChange = (page) => {
-      setCurrentPage(page)
+      navigate(`/admin-dashboard/artist/${page}/${perPageAritst}`)
     };
 
     const handleSearch = (e) => {
@@ -45,9 +46,7 @@ const AdminArtistPage = () => {
     const handleKeyPress = (event) => {
         console.log(searchText);
         console.log(event);
-        setItemPerPage(50)
         if (event.key === 'Enter') {
-            console.log(currentPage);
             setFetchLoading(true);
             axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/artist/search-artist?search=${searchText}`)
             .then( res => {
@@ -55,6 +54,7 @@ const AdminArtistPage = () => {
                   setFetchLoading(false);
                   setTotalItems(res.data.dataCount);
                   setArtistData(res.data.data);
+                  setActiveList(res.data.data.length);
                 }
             })
             .catch(er => console.log(er));
@@ -78,7 +78,7 @@ const AdminArtistPage = () => {
                           <ExclamationCircleIcon className="w-6 h-6 me-1 text-slate-500"/>
                           Artist Count
                       </div>
-                      <div><span className="text-sm font-bold">{artistData?.length}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{totalItems}</span> </div>
+                      <div><span className="text-sm font-bold">{activeList}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{totalItems}</span> </div>
                   </div>
 
                   {/* Artist List and Relase Title Section _____________________________________________________________________________ */}
@@ -118,9 +118,9 @@ const AdminArtistPage = () => {
                     {
                       totalItems > 10 && !fetchLoading && <div className="flex justify-center items-center my-4">
                         <Pagination 
-                          defaultCurrent={currentPage} 
+                          defaultCurrent={pageNumber} 
                           total={totalItems}
-                          pageSize={itemPerPage}
+                          pageSize={activeList}
                           onChange={handlePageChange}
                         /> 
                     </div>

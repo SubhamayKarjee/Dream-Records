@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 const AdminReleasePage = () => {
 
     const navigate = useNavigate()
-    const { pageNumber, perPageRelease, status } = useParams();
+    const { pageNumber, status } = useParams();
 
     // Paginatin and Search State __________________________________________________
     const [releaseStatus, setReleaseStatus] = useState(status)
@@ -16,6 +16,7 @@ const AdminReleasePage = () => {
     const [searchText, setSearchText] = useState('');
     const [releaseData, setReleaseData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false);
+    const [activeList, setActiveList] = useState()
 
 
     // Get Release List ______________________________________________________________
@@ -28,9 +29,7 @@ const AdminReleasePage = () => {
                 setFetchLoading(false);
                 setTotalItems(res.data.dataCount);
                 setReleaseData(res.data.data);
-                if(!res.data.totalCount){
-                    // setHideShow('block')
-                }
+                setActiveList(res.data.data.length);
               }
             })
             .catch(er => console.log(er));
@@ -59,6 +58,7 @@ const AdminReleasePage = () => {
                 setFetchLoading(false);
                 setTotalItems(res.data.dataCount);
                 setReleaseData(res.data.data);
+                setActiveList(res.data.data.length);
               }
             })
             .catch(er => console.log(er));
@@ -100,7 +100,7 @@ const AdminReleasePage = () => {
                         <ExclamationCircleIcon className="w-6 h-6 me-1 text-slate-500"/>
                         Release Count
                     </div>
-                    <div><span className="text-sm font-bold">{releaseData?.length}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{totalItems}</span> </div>
+                    <div><span className="text-sm font-bold">{activeList}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{totalItems}</span> </div>
                 </div>
                 {/* Show Release Section ____________________________________________ */}
                 <main>
@@ -116,7 +116,7 @@ const AdminReleasePage = () => {
                     {
                         fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
-                    <AdminReleaseCardComponent releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={pageNumber} itemPerPage={perPageRelease} handlePageChange={handlePageChange}/>
+                    <AdminReleaseCardComponent releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={pageNumber} itemPerPage={activeList} handlePageChange={handlePageChange}/>
                 </main>
 
             </div>

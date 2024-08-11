@@ -20,9 +20,9 @@ const UsersList = () => {
 
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
-    // const [currentPage, setCurrentPage] = useState(1);
     const [fetchLoading, setFetchLoading] = useState(false)
-    const [refetch, setRefetch] = useState(1)
+    const [refetch, setRefetch] = useState(1);
+    const [activeList, setActiveList] = useState()
     useEffect( () => {
       setFetchLoading(true)
       axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/users?page=${pageNumber}&limit=${perPageUser}`)
@@ -31,6 +31,7 @@ const UsersList = () => {
               setFetchLoading(false);
               setTotalItems(res.data.dataCount);
               setUsersData(res.data.data);
+              setActiveList(res.data.data.length);
             }
           })
           .catch(er => console.log(er));
@@ -55,6 +56,7 @@ const UsersList = () => {
               setFetchLoading(false);
               setTotalItems(res.data.dataCount);
               setUsersData(res.data.data);
+              setActiveList(res.data.data.length);
             }
           })
           .catch(er => console.log(er));
@@ -105,7 +107,7 @@ const UsersList = () => {
                     <ExclamationCircleIcon className="w-6 h-6 me-1 text-slate-500"/>
                     Total Users
                 </div>
-                <div><span className="text-sm font-bold">{perPageUser}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{totalItems}</span> </div>
+                <div><span className="text-sm font-bold">{activeList}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{totalItems}</span> </div>
             </div>
 
             <main className="my-2 p-2">
@@ -189,7 +191,7 @@ const UsersList = () => {
                             <Pagination 
                               defaultCurrent={pageNumber} 
                               total={totalItems}
-                              pageSize={perPageUser}
+                              pageSize={activeList}
                               onChange={handlePageChange}
                             /> 
                         </div>

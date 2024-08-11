@@ -141,7 +141,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UpdateLabelsComponent/></ProtectAdminRoute></Suspense>,
       },
       {
-        path: '/admin-dashboard/artist',
+        path: '/admin-dashboard/artist/:pageNumber/:perPageAritst',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminArtistPage/></ProtectAdminRoute></Suspense>,
       },
       {
