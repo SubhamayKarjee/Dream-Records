@@ -118,7 +118,7 @@ const DashBoardForAdmin = () => {
                                     <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
                                     Rights manager
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/support'}>
+                                <Link className='text-white flex items-center py-2' to={'/admin-dashboard/support/chat/1/10/All'}>
                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                     Support
                                 </Link>
@@ -165,23 +165,23 @@ const DashBoardForAdmin = () => {
                                                 <HomeIcon className="h-7 w-7 pe-2" />
                                                 Home
                                             </Link>
-                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/all-user'}>
+                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/all-user/1/10'}>
                                                 <UserIcon className="h-7 w-7 pe-2" />
                                                 All User
                                             </Link>
-                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/release'}>
+                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/release/1/8/All'}>
                                                 <AdjustmentsHorizontalIcon className="h-7 w-7 pe-2" />
                                                 Release
                                             </Link>
-                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/labels'}>
+                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/labels/1/10/All'}>
                                                 <UserGroupIcon className="h-7 w-7 pe-2" />    
                                                 Labels
                                             </Link>
-                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/artist'}>
+                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/artist/1/10'}>
                                                 <UsersIcon className="h-7 w-7 pe-2" />
                                                 Artist
                                             </Link>
-                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/withdrawal-request'}>
+                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/withdrawal-request/1/10/All'}>
                                                 <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                                 Withdrawal
                                             </Link>
@@ -189,7 +189,7 @@ const DashBoardForAdmin = () => {
                                                 <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
                                                 Rights manager
                                             </Link>
-                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/support'}>
+                                            <Link onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/support/chat/1/10/All'}>
                                                 <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                                 Support
                                             </Link>

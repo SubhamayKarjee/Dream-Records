@@ -1,22 +1,15 @@
-import { Tabs } from 'antd';
-import supportIcon from '../../assets/support-icon/support.png'
-import CallSupport from './CallSupport';
-import ChatSupport from "./ChatSupport";
+import { NavLink, Outlet } from 'react-router-dom';
+import supportIcon from '../../assets/support-icon/support.png';
 
 const AdminSupportPage = () => {
 
-    const items = [
-        {
-          key: '1',
-          label: 'Chat Support',
-          children: <ChatSupport/>
-        },
-        {
-          key: '2',
-          label: 'Call Support',
-          children: <CallSupport/>
-        },
-    ];
+    const activeLink = (isActive) => {
+        return {
+            color: isActive ? 'red' : '',
+            borderBottom: isActive ? '2px solid red' : '',
+        }
+    }
+
 
     return (
         <div>
@@ -25,7 +18,15 @@ const AdminSupportPage = () => {
                     <img className='me-2' src={supportIcon} alt={supportIcon} />
                     <h1 className='font-semibold text-xl text-slate-500'>Support History...</h1>
                 </div>
-                <Tabs defaultActiveKey="1" items={items} />
+                <div className='py-3'>
+                    <NavLink style={({isActive}) => activeLink(isActive)} className='py-2 inactive-link me-4 fw-bold transition-all duration-300' to={'/admin-dashboard/support/chat/1/10/All'} activeClassName='active-link'>
+                        Chat Support
+                    </NavLink>
+                    <NavLink style={({isActive}) => activeLink(isActive)} className='py-2 inactive-link fw-bold' to={'/admin-dashboard/support/call/1/10/All'} activeClassName='active-link'>
+                        Call Support
+                    </NavLink>
+                </div>
+                <Outlet/>
             </div>
         </div>
     );

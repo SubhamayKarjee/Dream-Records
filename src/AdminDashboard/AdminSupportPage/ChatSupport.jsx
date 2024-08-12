@@ -2,39 +2,40 @@ import { CheckBadgeIcon, ClockIcon } from "@heroicons/react/24/solid";
 import { Empty, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 const ChatSupport = () => {
 
     const navigate = useNavigate()
+    const { pageNumber, perPageList, status } = useParams();
 
     const [totalItems, setTotalItems] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage] = useState(12);
-    const [supportStatus, setSupportStatus] = useState('All')
-
+    const [supportStatus, setSupportStatus] = useState(status)
     const [supportData, setSupportData] = useState()
     const [loading, setLoading] = useState(false);
+    const [activeList, setActiveList] = useState()
+
     useEffect(() => {
         setLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/chat-support-list?page=${currentPage}&limit=${itemPerPage}&status=${supportStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/chat-support-list?page=${pageNumber}&limit=${perPageList}&status=${supportStatus}`)
         .then(res => {
             if(res.status === 200){
                 setLoading(false)
                 setSupportData(res.data.data);
+                setActiveList(res.data.data.length);
                 setTotalItems(res.data.dataCount)
             }
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[currentPage, supportStatus])
+    },[pageNumber, supportStatus])
 
     const handlePageChange = (page) => {
-        setCurrentPage(page)
+        navigate(`/admin-dashboard/support/chat/${page}/${10}/${supportStatus}`)
     };
 
     const handleStatus = (e) => {
-        setCurrentPage(1)
+        navigate(`/admin-dashboard/support/chat/${1}/${10}/${e}`)
         setSupportStatus(e)
     }
 
@@ -80,9 +81,9 @@ const ChatSupport = () => {
             {
                 totalItems > 12 && !loading && <div className="flex justify-center items-center my-4">
                     <Pagination 
-                    defaultCurrent={currentPage} 
+                    defaultCurrent={pageNumber} 
                     total={totalItems}
-                    pageSize={itemPerPage}
+                    pageSize={activeList}
                     onChange={handlePageChange}
                     /> 
                 </div>

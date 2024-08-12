@@ -108,7 +108,7 @@ const DashbardHomePage = () => {
                         <p className="font-extrabold text-xl border rounded-md px-2 bg-green-100">{pendingRelease}</p>
                     }
                 </div>
-                <div style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/labels')} className="p-2 rounded-md shadow border">
+                <div style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/labels/1/10/Pending')} className="p-2 rounded-md shadow border">
                     <h2 className="font-extrabold text-2xl text-slate-500">Labels</h2>
                     <p className="text-sm text-slate-500 flex items-center"><ClockIcon className="h-4 w-4 me-1"/>Pending</p>
                     {
@@ -132,7 +132,7 @@ const DashbardHomePage = () => {
                         <p className="font-extrabold text-xl border rounded-md px-2 bg-green-100">{pendingSupport}</p>
                     }
                 </div>
-                <div style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/withdrawal-request')} className="p-2 rounded-md shadow border">
+                <div style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/withdrawal-request/1/10/Pending')} className="p-2 rounded-md shadow border">
                     <h2 className="font-extrabold text-2xl text-slate-500">Withdrawal Request</h2>
                     <p className="text-sm text-slate-500 flex items-center"><ClockIcon className="h-4 w-4 me-1"/>Pending</p>
                     {

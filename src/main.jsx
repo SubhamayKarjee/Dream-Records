@@ -13,6 +13,8 @@ import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsIn
 import axios from 'axios';
 import ProtectAdminRoute from './ProtectRoute/ProtectAdminRoute';
 import ProtectUserRoute from './ProtectRoute/ProtectUserRoute';
+import ChatSupport from './AdminDashboard/AdminSupportPage/ChatSupport';
+import CallSupport from './AdminDashboard/AdminSupportPage/CallSupport';
 
 
 // Commont Routes import_______________________________________________________________
@@ -163,6 +165,16 @@ const router = createBrowserRouter([
       {
         path: '/admin-dashboard/support',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminSupportPage/></ProtectAdminRoute></Suspense>,
+        children: [ 
+          {
+            path: '/admin-dashboard/support/chat/:pageNumber/:perPageList/:status',
+            element: <ChatSupport/>
+          },
+          {
+            path: '/admin-dashboard/support/call/:pageNumber/:perPageList/:status',
+            element: <CallSupport/>
+          }
+        ]
       },
       {
         path: '/admin-dashboard/support/:id',
