@@ -8,7 +8,6 @@ const AdminSupportPage = () => {
     const currentPath = location.pathname;
 
     const activeLink = (to , currentPath) => {
-        console.log(currentPath);
         return currentPath.startsWith(to)
         ? { color: 'red', borderBottom: '1.5px solid red' } // Active styles
         : {};
