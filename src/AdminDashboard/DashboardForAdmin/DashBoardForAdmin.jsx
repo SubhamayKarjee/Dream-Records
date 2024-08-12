@@ -1,5 +1,5 @@
 import './DashBoardForAdmin.css'
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo/Dream-Records Logo-(Light).png';
 import { 
     HomeIcon, 
@@ -26,6 +26,9 @@ export const AdminAuthContext = createContext();
 
 const DashBoardForAdmin = () => {
 
+    const location = useLocation();
+    const currentPath = location.pathname;
+
 
     const [signOut] = useSignOut(auth);
     const navigate = useNavigate()
@@ -46,6 +49,13 @@ const DashBoardForAdmin = () => {
         return {
             color: isActive ? '#db6058' : '',
         }
+    }
+
+    const activeLinkDynamic = (to , currentPath) => {
+        console.log(currentPath);
+        return currentPath.startsWith(to)
+        ? { color: '#db6058'} // Active styles
+        : {};
     }
 
     if(loading){
@@ -100,35 +110,35 @@ const DashBoardForAdmin = () => {
                                     <HomeIcon className="h-7 w-7 pe-2" />
                                     Home
                                 </NavLink>
-                                <NavLink style={({isActive}) => activeLink(isActive)} className='text-white flex items-center py-2' to={'/admin-dashboard/all-user/1/10'}>
+                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/all-user', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/all-user/1/10'}>
                                     <UserIcon className="h-7 w-7 pe-2" />
                                     All User
                                 </NavLink>
-                                <NavLink style={({isActive}) => activeLink(isActive)} className='text-white flex items-center py-2' to={'/admin-dashboard/release/1/8/All'}>
+                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/release', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/release/1/8/All'}>
                                     <AdjustmentsHorizontalIcon className="h-7 w-7 pe-2" />
                                     Release
                                 </NavLink>
-                                <NavLink style={({isActive}) => activeLink(isActive)} className='text-white flex items-center py-2' to={'/admin-dashboard/labels/1/10/All'}>
+                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/labels', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/labels/1/10/All'}>
                                     <UserGroupIcon className="h-7 w-7 pe-2" />    
                                     Labels
                                 </NavLink>
-                                <NavLink style={({isActive}) => activeLink(isActive)} className='text-white flex items-center py-2' to={'/admin-dashboard/artist/1/10'}>
+                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/artist', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/artist/1/10'}>
                                     <UsersIcon className="h-7 w-7 pe-2" />
                                     Artist
                                 </NavLink>
-                                <NavLink style={({isActive}) => activeLink(isActive)} className='text-white flex items-center py-2' to={'/admin-dashboard/withdrawal-request/1/10/All'}>
+                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/withdrawal-request', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/withdrawal-request/1/10/All'}>
                                     <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                     Withdrawal
                                 </NavLink>
-                                <NavLink style={({isActive}) => activeLink(isActive)} className='text-white flex items-center py-2' to={'/admin-dashboard/claim-release'}>
+                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/claim-release', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/claim-release'}>
                                     <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
                                     Rights manager
                                 </NavLink>
-                                <NavLink style={({isActive}) => activeLink(isActive)} className='text-white flex items-center py-2' to={'/admin-dashboard/support/chat/1/10/All'}>
+                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/support', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/support/chat/1/10/All'}>
                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                     Support
                                 </NavLink>
-                                <NavLink style={({isActive}) => activeLink(isActive)} className='text-white flex items-center py-2' to={'/admin-dashboard/settings'}>
+                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/settings', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/settings'}>
                                     <Cog6ToothIcon className="h-7 w-7 pe-2" />
                                     Settings
                                 </NavLink>
@@ -160,7 +170,7 @@ const DashBoardForAdmin = () => {
                                     <h1 className='text-xl font-extrabold text-white'>DR Admin</h1>
                                     <p className='text-white text-sm'>Explore the site Admin. Easily Manage Your Site</p>
                                     <div className='py-4'>
-                                        <NavLink style={({isActive}) => activeLink(isActive)} to={'/admin-dashboard/create-user'}>
+                                        <NavLink to={'/admin-dashboard/create-user'}>
                                             <button onClick={onClose} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
                                                 + Create User
                                             </button>
@@ -171,35 +181,35 @@ const DashBoardForAdmin = () => {
                                                 <HomeIcon className="h-7 w-7 pe-2" />
                                                 Home
                                             </NavLink>
-                                            <NavLink style={({isActive}) => activeLink(isActive)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/all-user/1/10'}>
+                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard/all-user', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/all-user/1/10'}>
                                                 <UserIcon className="h-7 w-7 pe-2" />
                                                 All User
                                             </NavLink>
-                                            <NavLink style={({isActive}) => activeLink(isActive)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/release/1/8/All'}>
+                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard/release', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/release/1/8/All'}>
                                                 <AdjustmentsHorizontalIcon className="h-7 w-7 pe-2" />
                                                 Release
                                             </NavLink>
-                                            <NavLink style={({isActive}) => activeLink(isActive)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/labels/1/10/All'}>
+                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard/release', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/labels/1/10/All'}>
                                                 <UserGroupIcon className="h-7 w-7 pe-2" />    
                                                 Labels
                                             </NavLink>
-                                            <NavLink style={({isActive}) => activeLink(isActive)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/artist/1/10'}>
+                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard/artist', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/artist/1/10'}>
                                                 <UsersIcon className="h-7 w-7 pe-2" />
                                                 Artist
                                             </NavLink>
-                                            <NavLink style={({isActive}) => activeLink(isActive)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/withdrawal-request/1/10/All'}>
+                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard/withdrawal-request', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/withdrawal-request/1/10/All'}>
                                                 <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                                 Withdrawal
                                             </NavLink>
-                                            <NavLink style={({isActive}) => activeLink(isActive)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/claim-release'}>
+                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard/claim-release', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/claim-release'}>
                                                 <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
                                                 Rights manager
                                             </NavLink>
-                                            <NavLink style={({isActive}) => activeLink(isActive)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/support/chat/1/10/All'}>
+                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard//admin-dashboard/support', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/support/chat/1/10/All'}>
                                                 <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                                 Support
                                             </NavLink>
-                                            <NavLink style={({isActive}) => activeLink(isActive)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/settings'}>
+                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard/settings', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/settings'}>
                                                 <Cog6ToothIcon className="h-7 w-7 pe-2" />
                                                 Settings
                                             </NavLink>

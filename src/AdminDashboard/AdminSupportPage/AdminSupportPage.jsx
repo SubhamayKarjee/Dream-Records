@@ -1,13 +1,17 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import supportIcon from '../../assets/support-icon/support.png';
 
 const AdminSupportPage = () => {
 
-    const activeLink = (isActive) => {
-        return {
-            color: isActive ? 'red' : '',
-            borderBottom: isActive ? '2px solid red' : '',
-        }
+
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+    const activeLink = (to , currentPath) => {
+        console.log(currentPath);
+        return currentPath.startsWith(to)
+        ? { color: 'red', borderBottom: '1.5px solid red' } // Active styles
+        : {};
     }
 
 
@@ -19,10 +23,10 @@ const AdminSupportPage = () => {
                     <h1 className='font-semibold text-xl text-slate-500'>Support History...</h1>
                 </div>
                 <div className='py-3'>
-                    <NavLink style={({isActive}) => activeLink(isActive)} className='py-2 inactive-link me-4 fw-bold transition-all duration-300' to={'/admin-dashboard/support/chat/1/10/All'} activeClassName='active-link'>
+                    <NavLink style={() => activeLink('/admin-dashboard/support/chat', currentPath)} className='py-2 inactive-link me-4 fw-bold transition-all duration-300' to={'/admin-dashboard/support/chat/1/10/All'}>
                         Chat Support
                     </NavLink>
-                    <NavLink style={({isActive}) => activeLink(isActive)} className='py-2 inactive-link fw-bold' to={'/admin-dashboard/support/call/1/10/All'} activeClassName='active-link'>
+                    <NavLink style={() => activeLink('/admin-dashboard/support/call', currentPath)} className='py-2 inactive-link fw-bold' to={'/admin-dashboard/support/call/1/10/All'}>
                         Call Support
                     </NavLink>
                 </div>
