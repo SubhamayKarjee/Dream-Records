@@ -65,14 +65,13 @@ const AdminSingleReleasePage = () => {
 
     const [deleteLoading, setDeleteLoading] = useState(false)
     const confirm = () => {
-
         setDeleteLoading(true)
         axios.delete(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/delete-release/${id}?imgKey=${releaseData.key}&audioKey=${releaseData.audioKey}`)
         .then(res => {
             if(res.status == 200){
                 setDeleteLoading(false)
                 toast.success('Release Deleted')
-                navigate('/admin-dashboard/release')
+                navigate('/admin-dashboard/release/1/8/All')
             }
         })
     }
@@ -249,9 +248,9 @@ const AdminSingleReleasePage = () => {
                                                     {
                                                         a?.instagramId &&
                                                         <div className="my-2 p-2 border rounded-md">
-                                                            <p className="text-xs font-bold text-slate-500">Instagram ID</p>
+                                                            <p className="text-xs font-bold text-slate-500">Instagram</p>
                                                             <div className="flex justify-between items-center">
-                                                                <input className="admin_release_page_input grow" id='artist_instagram' defaultValue={`https://www.instagram.com/${a.instagramId}`} type="text" />
+                                                                <input className="admin_release_page_input grow" id='artist_instagram' defaultValue={a.instagramId} type="text" />
                                                                 <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('artist_instagram')} className="w-5 h-5 text-slate-500"/>
                                                             </div>
                                                         </div>
@@ -260,9 +259,9 @@ const AdminSingleReleasePage = () => {
                                                     {
                                                         a?.appleId &&
                                                         <div className="my-2 p-2 border rounded-md">
-                                                            <p className="text-xs font-bold text-slate-500">Apple ID</p>
+                                                            <p className="text-xs font-bold text-slate-500">Apple</p>
                                                             <div className="flex justify-between items-center">
-                                                                <input className="admin_release_page_input grow" id='artist_apple' defaultValue={`https://music.apple.com/profile/${a.appleId}`} type="text" />
+                                                                <input className="admin_release_page_input grow" id='artist_apple' defaultValue={a.appleId} type="text" />
                                                                 <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('artist_apple')} className="w-5 h-5 text-slate-500"/>
                                                             </div>
                                                         </div>
@@ -270,9 +269,9 @@ const AdminSingleReleasePage = () => {
                                                     {
                                                         a?.spotifyId &&
                                                         <div className="my-2 p-2 border rounded-md">
-                                                            <p className="text-xs font-bold text-slate-500">Spotify ID</p>
+                                                            <p className="text-xs font-bold text-slate-500">Spotify</p>
                                                             <div className="flex justify-between items-center">
-                                                                <input className="admin_release_page_input grow" id='artist_spotify' defaultValue={`https://open.spotify.com/user/${a.spotifyId}`} type="text" />
+                                                                <input className="admin_release_page_input grow" id='artist_spotify' defaultValue={a.spotifyId} type="text" />
                                                                 <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('artist_spotify')} className="w-5 h-5 text-slate-500"/>
                                                             </div>
                                                         </div>
@@ -280,10 +279,20 @@ const AdminSingleReleasePage = () => {
                                                     {
                                                         a?.facebook &&
                                                         <div className="my-2 p-2 border rounded-md">
-                                                            <p className="text-xs font-bold text-slate-500">Facebook URL</p>
+                                                            <p className="text-xs font-bold text-slate-500">Facebook</p>
                                                             <div className="flex justify-between items-center">
                                                                 <input className="admin_release_page_input grow" id='artist_facebook' defaultValue={a.facebook} type="text" />
                                                                 <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('artist_facebook')} className="w-5 h-5 text-slate-500"/>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    {
+                                                        a?.youtube &&
+                                                        <div className="my-2 p-2 border rounded-md">
+                                                            <p className="text-xs font-bold text-slate-500">Youtube</p>
+                                                            <div className="flex justify-between items-center">
+                                                                <input className="admin_release_page_input grow" id='artist_youtube' defaultValue={a.youtube} type="text" />
+                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('artist_youtube')} className="w-5 h-5 text-slate-500"/>
                                                             </div>
                                                         </div>
                                                     }
@@ -393,9 +402,9 @@ const AdminSingleReleasePage = () => {
                                                     {
                                                         f?.instagramId &&
                                                         <div className="my-2 p-2 border rounded-md">
-                                                            <p className="text-xs font-bold text-slate-500">Instagram ID</p>
+                                                            <p className="text-xs font-bold text-slate-500">Instagram</p>
                                                             <div className="flex justify-between items-center">
-                                                                <input className="admin_release_page_input grow" id='featuring_artist_instagram' defaultValue={`https://www.instagram.com/${f.instagramId}`} type="text" />
+                                                                <input className="admin_release_page_input grow" id='featuring_artist_instagram' defaultValue={f.instagramId} type="text" />
                                                                 <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('featuring_artist_instagram')} className="w-5 h-5 text-slate-500"/>
                                                             </div>
                                                         </div>
@@ -404,9 +413,9 @@ const AdminSingleReleasePage = () => {
                                                     {
                                                         f?.appleId &&
                                                         <div className="my-2 p-2 border rounded-md">
-                                                            <p className="text-xs font-bold text-slate-500">Apple ID</p>
+                                                            <p className="text-xs font-bold text-slate-500">Apple</p>
                                                             <div className="flex justify-between items-center">
-                                                                <input className="admin_release_page_input grow" id='featuring_artist_apple' defaultValue={`https://music.apple.com/profile/${f.appleId}`} type="text" />
+                                                                <input className="admin_release_page_input grow" id='featuring_artist_apple' defaultValue={f.appleId} type="text" />
                                                                 <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('featuring_artist_apple')} className="w-5 h-5 text-slate-500"/>
                                                             </div>
                                                         </div>
@@ -414,9 +423,9 @@ const AdminSingleReleasePage = () => {
                                                     {
                                                         f?.spotifyId &&
                                                         <div className="my-2 p-2 border rounded-md">
-                                                            <p className="text-xs font-bold text-slate-500">Spotify ID</p>
+                                                            <p className="text-xs font-bold text-slate-500">Spotify</p>
                                                             <div className="flex justify-between items-center">
-                                                                <input className="admin_release_page_input grow" id='featuring_artist_spotify' defaultValue={`https://open.spotify.com/user/${f.spotifyId}`} type="text" />
+                                                                <input className="admin_release_page_input grow" id='featuring_artist_spotify' defaultValue={f.spotifyId} type="text" />
                                                                 <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('featuring_artist_spotify')} className="w-5 h-5 text-slate-500"/>
                                                             </div>
                                                         </div>
@@ -424,10 +433,20 @@ const AdminSingleReleasePage = () => {
                                                     {
                                                         f?.facebook &&
                                                         <div className="my-2 p-2 border rounded-md">
-                                                            <p className="text-xs font-bold text-slate-500">Facebook URL</p>
+                                                            <p className="text-xs font-bold text-slate-500">Facebook</p>
                                                             <div className="flex justify-between items-center">
                                                                 <input className="admin_release_page_input grow" id='featuring_artist_facebook' defaultValue={f.facebook} type="text" />
                                                                 <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('featuring_artist_facebook')} className="w-5 h-5 text-slate-500"/>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    {
+                                                        f?.youtube &&
+                                                        <div className="my-2 p-2 border rounded-md">
+                                                            <p className="text-xs font-bold text-slate-500">Youtube</p>
+                                                            <div className="flex justify-between items-center">
+                                                                <input className="admin_release_page_input grow" id='featuring_artist_youtube' defaultValue={f.youtube} type="text" />
+                                                                <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText('featuring_artist_youtube')} className="w-5 h-5 text-slate-500"/>
                                                             </div>
                                                         </div>
                                                     }

@@ -132,7 +132,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin-dashboard/release/updated-status',
-        element: <SuccessPage link={'/admin-dashboard/release'} heading={'Successfully Updated Release Status'} text={'Now user can see Updated Status her Release'}/>
+        element: <SuccessPage link={'/admin-dashboard/release/1/10/All'} heading={'Successfully Updated Release Status'} text={'Now user can see Updated Status her Release'}/>
       },
       {
         path: '/admin-dashboard/labels/:pageNumber/:perPageLabel/:status',

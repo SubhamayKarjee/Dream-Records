@@ -147,7 +147,7 @@ const UpdateLabelsComponent = () => {
           .then( res => {
             if(res.status == 200){
                 setDeleteLoading(false)
-                navigate('/admin-dashboard/labels');
+                navigate('/admin-dashboard/labels/1/10/All');
                 toast.success('Deleted the Labels');
             }
           })

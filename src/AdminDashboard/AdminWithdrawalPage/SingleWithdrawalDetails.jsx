@@ -106,7 +106,7 @@ const SingleWithdrawalDetails = () => {
         .then(res => {
             if(res.status === 200){
                 toast.success('Deleted');
-                navigate('/admin-dashboard/withdrawal-request/')
+                navigate('/admin-dashboard/withdrawal-request/1/10/All')
             }
         })
     }
