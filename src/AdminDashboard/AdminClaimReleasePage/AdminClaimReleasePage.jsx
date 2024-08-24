@@ -2,24 +2,23 @@ import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon } from "@heroicons/r
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import fallbackImage from "../../assets/fallbackImage.jpg"
 import UpdateClaimReleaseModal from "./UpdateClaimReleaseModal";
 
 const AdminClaimReleasePage = () => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { pageNumber, perPageList, status } = useParams();
 
     const [totalItems, setTotalItems] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage] = useState(12);
 
     const [claimData, setClaimData] = useState()
     const [loading, setLoading] = useState(false);
-    const [claimStatus, setClaimStatus] = useState('All');
+    // const [claimStatus, setClaimStatus] = useState(status);
     useEffect(() => {
         setLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release/all-claim?page=${currentPage}&limit=${itemPerPage}&status=${claimStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release/all-claim?page=${pageNumber}&limit=${perPageList}&status=${status}`)
         .then(res => {
             if(res.status === 200){
                 setLoading(false)
@@ -27,16 +26,14 @@ const AdminClaimReleasePage = () => {
                 setTotalItems(res.data.dataCount);
             }
         })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[currentPage, claimStatus])
+    },[pageNumber, perPageList, status])
 
     const handlePageChange = (page) => {
-        setCurrentPage(page)
+        navigate(`/admin-dashboard/claim-release/${page}/${8}/${status}`)
     };
 
     const handleStatus = (e) => {
-        setCurrentPage(1)
-        setClaimStatus(e)
+        navigate(`/admin-dashboard/claim-release/${1}/${8}/${e}`)
     }
 
 
@@ -139,9 +136,9 @@ const AdminClaimReleasePage = () => {
                         {
                             totalItems > 12 && !loading && <div className="flex justify-center items-center my-4">
                                 <Pagination 
-                                defaultCurrent={currentPage} 
+                                defaultCurrent={pageNumber} 
                                 total={totalItems}
-                                pageSize={itemPerPage}
+                                pageSize={perPageList}
                                 onChange={handlePageChange}
                                 /> 
                             </div>

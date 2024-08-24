@@ -159,7 +159,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><SingleWithdrawalDetails/></ProtectAdminRoute></Suspense>,
       },
       {
-        path: '/admin-dashboard/claim-release',
+        path: '/admin-dashboard/claim-release/:pageNumber/:perPageList/:status',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminClaimReleasePage/></ProtectAdminRoute></Suspense>,
       },
       {

@@ -52,7 +52,6 @@ const DashBoardForAdmin = () => {
     }
 
     const activeLinkDynamic = (to , currentPath) => {
-        console.log(currentPath);
         return currentPath.startsWith(to)
         ? { color: '#db6058'} // Active styles
         : {};
@@ -130,7 +129,7 @@ const DashBoardForAdmin = () => {
                                     <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                     Withdrawal
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/claim-release', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/claim-release'}>
+                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/claim-release', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/claim-release/1/10/All'}>
                                     <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
                                     Rights manager
                                 </NavLink>
@@ -201,7 +200,7 @@ const DashBoardForAdmin = () => {
                                                 <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                                 Withdrawal
                                             </NavLink>
-                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard/claim-release', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/claim-release'}>
+                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard/claim-release', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/claim-release/1/10/All'}>
                                                 <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
                                                 Rights manager
                                             </NavLink>

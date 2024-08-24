@@ -62,7 +62,7 @@ const UpdateArtistForm = ({artist, imgUrl, imgKey}) => {
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/update-artist/${artist._id}`, formData)
             .then(res => {
                 if(res.status == 200){
-                  toast.success('Successfully Created Artist!')
+                  toast.success('Successfully Updeted Artist!')
                   reset();
                   const forArtistDataRefatch = artistDataRefatch + 1;
                   setModalBoxChange(true);
