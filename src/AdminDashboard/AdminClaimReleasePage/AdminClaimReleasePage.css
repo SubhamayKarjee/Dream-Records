@@ -1,0 +1,8 @@
+.copy_text_field{
+    background: none;
+    border: none;
+}
+.copy_text_field:focus{
+    outline: none;
+    border: none;
+}

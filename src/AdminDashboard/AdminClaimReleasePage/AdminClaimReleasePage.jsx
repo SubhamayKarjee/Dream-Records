@@ -1,10 +1,12 @@
-import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
+import { CheckBadgeIcon, ClockIcon, DocumentDuplicateIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import fallbackImage from "../../assets/fallbackImage.jpg"
 import UpdateClaimReleaseModal from "./UpdateClaimReleaseModal";
+import './AdminClaimReleasePage.css'
 
 const AdminClaimReleasePage = () => {
 
@@ -12,10 +14,9 @@ const AdminClaimReleasePage = () => {
     const { pageNumber, perPageList, status } = useParams();
 
     const [totalItems, setTotalItems] = useState();
-
     const [claimData, setClaimData] = useState()
     const [loading, setLoading] = useState(false);
-    // const [claimStatus, setClaimStatus] = useState(status);
+
     useEffect(() => {
         setLoading(true)
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release/all-claim?page=${pageNumber}&limit=${perPageList}&status=${status}`)
@@ -35,6 +36,16 @@ const AdminClaimReleasePage = () => {
     const handleStatus = (e) => {
         navigate(`/admin-dashboard/claim-release/${1}/${8}/${e}`)
     }
+
+    const handleCopyText = (index) => {
+        const inputElement = document.getElementById(index);
+        console.log(inputElement);
+        inputElement.select();
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+        toast.success('Coppied')
+    };
+
 
 
     return (
@@ -57,26 +68,38 @@ const AdminClaimReleasePage = () => {
                                     <div className='grow m-2'>
                                         <p>Submited Request <span className="font-bold text-slate-500">{data.userName}</span> <span className="font-bold text-slate-500">{data.date} {data.month} {data.year} || {data.time}</span></p>
                                         <p className='font-bold'>{data.claimOption}</p>
-                                            <div style={{cursor: 'pointer'}} onClick={() => navigate(`/admin-dashboard/release/${data.release._id}`)} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                                                <div className="flex items-center">
+                                            <div className="my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                                <div className="flex">
                                                         <Image
-                                                        width={35}
-                                                        height={35}
-                                                        className="rounded-lg"
-                                                        src={data?.release?.imgUrl}
-                                                        fallback={fallbackImage}
+                                                            onClick={() => navigate(`/admin-dashboard/release/${data.release._id}`)}
+                                                            width={35}
+                                                            height={35}
+                                                            className="rounded-lg"
+                                                            src={data?.release?.imgUrl}
+                                                            fallback={fallbackImage}
                                                         />
-                                                    <div className="ps-2">
-                                                    <h2 className="font-bold text-sm">{data?.release?.releaseTitle}</h2>
-                                                    <p className="text-xs text-slate-400">ID: {data?.release?._id}</p>
+                                                    <div className="ps-2 grow">
+                                                        <div className="flex">
+                                                            <input id={data?.release?._id} className="font-bold text-sm copy_text_field me-3" value={data?.release?.releaseTitle} readOnly/>
+                                                            <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText(data?.release?._id)} className="w-5 h-5 text-slate-500"/>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-xs text-slate-400">ID: {data?.release?._id}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        <a href={data.claimLink} target='_blank' className="text-info">{data.claimLink}</a>
-                                        {
-                                            data?.actionRequired &&
-                                            <p className="p-2 rounded-md bg-red-200">{data.actionRequired}</p>
-                                        }
+                                                {
+                                                    data?.claimLink && 
+                                                    <div className="flex">
+                                                        <input id={data.claimLink} className="text-info copy_text_field me-3" value={data.claimLink} readOnly />
+                                                        <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText(data.claimLink)} className="w-5 h-5 text-slate-500"/>
+                                                    </div>
+                                                }
+                                            {
+                                                data?.actionRequired &&
+                                                <p className="p-2 rounded-md bg-red-200">{data.actionRequired}</p>
+                                            }
                                     </div>
                                     <div>
                                     {
