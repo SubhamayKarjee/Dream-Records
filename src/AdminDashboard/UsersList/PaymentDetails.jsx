@@ -22,8 +22,7 @@ const PaymentDetails = ({id, text}) => {
             setTotalItems(res.data.dataCount)
             setFetchLoading(false)
         })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage, reload])
+    }, [currentPage, reload, itemPerPage, id])
 
     const handlePageChange = (page) => {
         setCurrentPage(page)

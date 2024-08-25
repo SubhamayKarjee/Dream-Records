@@ -1,8 +1,9 @@
+import { CurrencyRupeeIcon } from "@heroicons/react/24/solid";
 import { Result } from "antd";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line react/prop-types
-const SendPaymentsFormDreamRecord = ({id}) => {
+const SendPaymentsFormDreamRecord = ({id, isOpenModalPayment, clickIdPayment}) => {
 
 
     const [successHandle, setSuccessHandle] = useState(false)
@@ -11,6 +12,26 @@ const SendPaymentsFormDreamRecord = ({id}) => {
     const [paymentReportDate, setPaymentReportDate] = useState();
     const [paymentReportDateErr, setPaymentReportDateErr] = useState('');
     const [payLoading, setPayLoading] = useState(false);
+
+    const [paymentHistory, setPaymentHistory] = useState([])
+    useEffect(() => {
+      if (isOpenModalPayment && id == clickIdPayment) {
+        const fetchPaymentData = async () => {
+          try {
+            axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/${id}?page=${1}&limit=${3}`)
+            .then(res => {
+                setPaymentHistory(res.data.data);
+            })
+          } catch (error) {
+            console.error('Error fetching payment data:', error);
+          }
+        };
+  
+        fetchPaymentData();
+      }
+    }, [id, isOpenModalPayment, clickIdPayment]);
+
+
     const paymentSend = (id) => {
       setPayAmountError('');
       setPayLoading(true)
@@ -77,6 +98,19 @@ const SendPaymentsFormDreamRecord = ({id}) => {
                 <div>
                     <h3 className="font-bold text-lg">Payments!</h3>
                     <div className="py-2 px-3 border rounded-lg">
+                        <div>
+                          <p className="text-sm font-semibold ms-2 text-slate-500">Last 3 Month Payments</p>
+                          <div className="p-2 bg-gradient-to-r from-slate-200 to-slate-100 rounded-md mb-2">
+                            {
+                              paymentHistory && paymentHistory.map((data) => 
+                                  <p key={data._id} className="text-base flex items-center subpixel-antialiased">Payment Based on {data.month} {data.year} || <span className="font-medium flex items-center subpixel-antialiased"><CurrencyRupeeIcon className="w-4 h-4 mx-2"/> {data.amount}.00</span></p>
+                              )
+                            }
+                            {
+                              paymentHistory.length === 0 && <p className="text-center">No payment History</p>
+                            }
+                          </div>
+                        </div>
                         <p className="text-sm font-semibold ms-2 text-slate-500">Ammount</p>
                         <div className="flex justify-between items-end">
                             <div>

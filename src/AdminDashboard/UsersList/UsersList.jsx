@@ -16,8 +16,11 @@ const UsersList = () => {
 
     const { pageNumber, perPageUser } = useParams();
 
-    const [usersData, setUsersData] = useState();
+    const [isOpenModalPayment, setIsOpenModalPayment] = useState(false);
+    const [clickIdPayment, setClickIdPayment] = useState('')
 
+
+    const [usersData, setUsersData] = useState();
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
     const [fetchLoading, setFetchLoading] = useState(false)
@@ -134,7 +137,11 @@ const UsersList = () => {
                           {
                             data.roll === 'User' &&
                             <div className="flex items-center">
-                              <button onClick={()=>document.getElementById(`${data._id}`).showModal()} className="btn btn-sm btn-neutral m-2"><CreditCardIcon className="w-5 h-5 text-white"/>Pay</button>
+                              <button onClick={()=>{
+                                document.getElementById(`${data._id}`).showModal(); 
+                                setIsOpenModalPayment(true);
+                                setClickIdPayment(data._id);
+                              }} className="btn btn-sm btn-neutral m-2"><CreditCardIcon className="w-5 h-5 text-white"/>Pay</button>
                               <button onClick={()=>document.getElementById(`${index}`).showModal()} className="btn btn-sm btn-neutral m-2"><ChartBarSquareIcon className="w-5 h-5 text-white"/>Reports</button>
                               <Popconfirm
                                 title="Delete"
@@ -163,11 +170,11 @@ const UsersList = () => {
                           <div className="modal-box">
                             <form method="dialog">
                               {/* if there is a button in form, it will close the modal */}
-                              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                              <button onClick={() => setIsOpenModalPayment(false)} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                             </form>
-                            <SendPaymentsFormDreamRecord id={data._id}/>
+                            <SendPaymentsFormDreamRecord id={data._id} isOpenModalPayment={isOpenModalPayment} clickIdPayment={clickIdPayment}/>
                           </div>
-                        </dialog>
+                        </dialog>  
 
                         {/* Modal Update Reports */}
                         <dialog id={`${index}`} className="modal">
