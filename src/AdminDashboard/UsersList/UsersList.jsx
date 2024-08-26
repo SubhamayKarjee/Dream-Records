@@ -16,8 +16,13 @@ const UsersList = () => {
 
     const { pageNumber, perPageUser } = useParams();
 
+    // State For Open Modal Payment ___________________________________
     const [isOpenModalPayment, setIsOpenModalPayment] = useState(false);
-    const [clickIdPayment, setClickIdPayment] = useState('')
+    const [clickIdPayment, setClickIdPayment] = useState('');
+    
+    // State For Open Modal Report ___________________________________
+    const [isOpenModalReport, setIsOpenModalReport] = useState(false);
+    const [clickIdReport, setClickIdReport] = useState('');
 
 
     const [usersData, setUsersData] = useState();
@@ -137,12 +142,18 @@ const UsersList = () => {
                           {
                             data.roll === 'User' &&
                             <div className="flex items-center">
+                              {/* Payment Send Button _________________________ */}
                               <button onClick={()=>{
                                 document.getElementById(`${data._id}`).showModal(); 
                                 setIsOpenModalPayment(true);
                                 setClickIdPayment(data._id);
                               }} className="btn btn-sm btn-neutral m-2"><CreditCardIcon className="w-5 h-5 text-white"/>Pay</button>
-                              <button onClick={()=>document.getElementById(`${index}`).showModal()} className="btn btn-sm btn-neutral m-2"><ChartBarSquareIcon className="w-5 h-5 text-white"/>Reports</button>
+                              {/* Report Send Button _________________________ */}
+                              <button onClick={()=>{
+                                document.getElementById(`${index}`).showModal();
+                                setIsOpenModalReport(true);
+                                setClickIdReport(data._id);
+                              }} className="btn btn-sm btn-neutral m-2"><ChartBarSquareIcon className="w-5 h-5 text-white"/>Reports</button>
                               <Popconfirm
                                 title="Delete"
                                 placement="leftTop"
@@ -181,9 +192,9 @@ const UsersList = () => {
                           <div className="modal-box">
                             <form method="dialog">
                               {/* if there is a button in form, it will close the modal */}
-                              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                              <button onClick={() => setIsOpenModalReport(false)} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                             </form>
-                            <SendReporsFormDreamRecord id={data._id}/>
+                            <SendReporsFormDreamRecord id={data._id} isOpenModalReport={isOpenModalReport} clickIdReport={clickIdReport}/>
                           </div>
                         </dialog>
                       </div>

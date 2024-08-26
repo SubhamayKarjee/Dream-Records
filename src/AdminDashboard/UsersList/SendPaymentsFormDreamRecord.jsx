@@ -100,10 +100,10 @@ const SendPaymentsFormDreamRecord = ({id, isOpenModalPayment, clickIdPayment}) =
                     <div className="py-2 px-3 border rounded-lg">
                         <div>
                           <p className="text-sm font-semibold ms-2 text-slate-500">Last 3 Month Payments</p>
-                          <div className="p-2 bg-gradient-to-r from-slate-200 to-slate-100 rounded-md mb-2">
+                          <div className="p-2 bg-gradient-to-r from-slate-100 to-slate-50 rounded-md mb-2 shadow">
                             {
                               paymentHistory && paymentHistory.map((data) => 
-                                  <p key={data._id} className="text-base flex items-center subpixel-antialiased">Payment Based on {data.month} {data.year} || <span className="font-medium flex items-center subpixel-antialiased"><CurrencyRupeeIcon className="w-4 h-4 mx-2"/> {data.amount}.00</span></p>
+                                  <p key={data._id} className="text-base flex items-center subpixel-antialiased">Payment Based on {data.date} {data.month} {data.year} || <span className="font-medium flex items-center subpixel-antialiased"><CurrencyRupeeIcon className="w-4 h-4 mx-2"/> {data.amount}.00</span></p>
                               )
                             }
                             {
