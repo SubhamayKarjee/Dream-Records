@@ -1,4 +1,4 @@
-import { CheckBadgeIcon, ClockIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { CheckBadgeIcon, ClockIcon, LockClosedIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { Image, Modal, Popconfirm, Select, Skeleton } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -224,6 +224,10 @@ const UpdateLabelsComponent = () => {
                                 labels.status === 'Rejected' &&
                                 <span className="bg-red-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {labels.status}</span>
                             }
+                            {
+                                labels.status === 'Locked' &&
+                                <span className="bg-slate-200 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><LockClosedIcon className="w-4 h-4 me-1"/> {labels.status}</span>
+                            }
 
                         </div>
                     </div>
@@ -247,9 +251,10 @@ const UpdateLabelsComponent = () => {
                                     { value: 'Pending', label: 'Pending' },
                                     { value: 'Approved', label: 'Approved' },
                                     { value: 'Rejected', label: 'Rejected' },
+                                    { value: 'Locked', label: 'Locked' },
                                 ]}
                             />
-                            <div className="flex items-center">
+                            <div className="flex items-center justify-center">
                                 {
                                     updateLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                                 }
@@ -259,6 +264,10 @@ const UpdateLabelsComponent = () => {
                                 }
                                 {
                                     labelsStatus === 'Approved' &&
+                                    <button onClick={handleUpdateStatus} className="btn btn-sm btn-neutral w-full mt-2">Update</button>
+                                }
+                                {
+                                    labelsStatus === 'Locked' &&
                                     <button onClick={handleUpdateStatus} className="btn btn-sm btn-neutral w-full mt-2">Update</button>
                                 }
                                 {

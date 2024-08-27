@@ -1,4 +1,4 @@
-import { ChatBubbleBottomCenterTextIcon, CheckBadgeIcon, ClockIcon, PencilSquareIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { ChatBubbleBottomCenterTextIcon, CheckBadgeIcon, ClockIcon, LockClosedIcon, PencilSquareIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { Image, Popconfirm, Skeleton } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -184,6 +184,10 @@ const DetailsSingleLabels = () => {
                                 {
                                     labels.status === 'Rejected' &&
                                     <span className="bg-red-400 my-1 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {labels.status}</span>
+                                }
+                                {
+                                    labels.status === 'Locked' &&
+                                    <span className="bg-slate-200 my-1 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><LockClosedIcon className="w-4 h-4 me-1"/> {labels.status}</span>
                                 }
                             </div>
                         </div>

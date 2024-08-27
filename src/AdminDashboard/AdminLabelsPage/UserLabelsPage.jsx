@@ -1,4 +1,4 @@
-import { CheckBadgeIcon, ClockIcon, ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { CheckBadgeIcon, ClockIcon, ExclamationCircleIcon, LockClosedIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -103,6 +103,7 @@ const UserLabelsPage = ({userId}) => {
                         <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral mx-1">Pending</button>
                         <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral mx-1">Approved</button>
                         <button onClick={() => handleStatus('Rejected')} className="btn btn-sm btn-neutral mx-1">Rejected</button>
+                        <button onClick={() => handleStatus('Locked')} className="btn btn-sm btn-neutral mx-1">Locked</button>
                     </div>
                     {
                       fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
@@ -135,6 +136,10 @@ const UserLabelsPage = ({userId}) => {
                             {
                                 data.status === 'Rejected' &&
                                 <span style={{width: '110px'}} className="flex justify-center bg-red-500 my-3 py-1 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data.status}</span>
+                            }
+                            {
+                                data.status === 'Locked' &&
+                                <span style={{width: '110px'}} className="flex justify-center bg-slate-200 my-3 py-1 rounded-md text-sm me-2 font-bold flex items-center"><LockClosedIcon className="w-4 h-4 me-1"/> {data.status}</span>
                             }
                             {/* <span onClick={() => handleUpdate(data._id)} className="btn btn-xs btn-neutral py-1 px-2 rounded-md text-xs me-2 font-bold flex items-center">Update Status</span> */}
                           </div>

@@ -1,4 +1,4 @@
-import { BellAlertIcon, CheckBadgeIcon, ClockIcon, ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { BellAlertIcon, CheckBadgeIcon, ClockIcon, ExclamationCircleIcon, LockClosedIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { Drawer, Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -121,6 +121,7 @@ const UserLabelsPage = () => {
                         <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral mx-1">Pending</button>
                         <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral mx-1">Approved</button>
                         <button onClick={() => handleStatus('Rejected')} className="btn btn-sm btn-neutral mx-1">Rejected</button>
+                        <button onClick={() => handleStatus('Locked')} className="btn btn-sm btn-neutral mx-1">Locked</button>
                     </div>
                     {
                       fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
@@ -153,6 +154,10 @@ const UserLabelsPage = () => {
                             {
                               data.status === 'Rejected' &&
                               <span style={{width: '100px'}} className="flex justify-center bg-red-500 my-3 py-1 rounded-md text-xs me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data.status}</span>
+                            }
+                            {
+                              data.status === 'Locked' &&
+                              <span style={{width: '100px'}} className="flex justify-center bg-slate-200 my-3 py-1 rounded-md text-xs me-2 font-bold flex items-center"><LockClosedIcon className="w-4 h-4 me-1"/> {data.status}</span>
                             }
                             {/* {
                               data.status === 'Rejected' &&
