@@ -30,6 +30,12 @@ const WalletPage = () => {
         bankData, 
         setIsModalOpen
     }
+
+    useEffect(() => {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth(); 
+        console.log(currentMonth);
+    },[])
     
     useEffect(() => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`)

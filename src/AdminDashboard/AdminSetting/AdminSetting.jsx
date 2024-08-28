@@ -3,6 +3,7 @@
 import AddGenreComponent from "./AddGenreComponent/AddGenreComponent";
 import AddLanguageComponent from "./AddLanguageComponent/AddLanguageComponent";
 import AdvertismentComponent from "./AdvertismentComponent/AdvertismentComponent";
+import MonthlyBasedWithdraw from "./MonthlyBasedWithdraw/MonthlyBasedWithdraw";
 import NoticeFromDreamRecord from "./NoticeFromDreamRecord/NoticeFromDreamRecord";
 
 // import { useForm } from "react-hook-form";
@@ -27,6 +28,10 @@ const AdminSetting = () => {
 
                 <div className="m-2 p-4 bg-slate-50">
                     <NoticeFromDreamRecord/>
+                </div>
+
+                <div className="m-2 p-4 bg-slate-50">
+                    <MonthlyBasedWithdraw/>
                 </div>
             </div>
         </div>
