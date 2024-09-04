@@ -11,6 +11,7 @@ import PaymentDetails from "./PaymentDetails";
 
 const SingleUserPage = () => {
     const {id} = useParams();
+    const role = 'Admin';
 
     const [userData, setUserData] = useState()
     const [userLoading, setUserLoading] = useState(false)
@@ -41,7 +42,7 @@ const SingleUserPage = () => {
         {
           key: '3',
           label: 'Payments',
-          children: <PaymentDetails id={id} text='Send Payment Successfully from Dream Records' />
+          children: <PaymentDetails id={id} role={role} text='Send Payment Successfully from Dream Records' />
         },
         {
           key: '4',
@@ -51,7 +52,7 @@ const SingleUserPage = () => {
         {
           key: '5',
           label: 'Analytics',
-          children: <AnalyticsReportList id={id} text={"Successsfully send Analytics Reports form Dream Record!"}/>
+          children: <AnalyticsReportList id={id} role={role} text={"Successsfully send Analytics Reports form Dream Record!"}/>
         },
     ];
 

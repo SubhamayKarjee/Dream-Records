@@ -1,24 +1,44 @@
-import { Checkbox } from "antd";
+import { Checkbox, Spin } from "antd";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const MonthlyBasedWithdraw = () => {
 
+    const [activePaymentMonth, setActivePaymentMonth] = useState();
+    const [loading, setLoading] = useState(false)
+    useEffect(() => {
+      setLoading(true)
+      axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/active-payment-month/66d80b32544c7126feb39661`)
+        .then(res => {
+          setActivePaymentMonth(res.data.data.activeMonth);
+          setLoading(false)
+        })
+    },[])
+
     const options = [
-        { label: 'January', value: 0,},
-        { label: 'February', value: 1,},
-        { label: 'March', value: 2,},
-        { label: 'April', value: 3,},
-        { label: 'May', value: 4,},
-        { label: 'June', value: 5,},
-        { label: 'July', value: 6,},
-        { label: 'August', value: 7,},
-        { label: 'September', value: 8,},
-        { label: 'October', value: 9,},
-        { label: 'November', value: 10,},
-        { label: 'December', value: 11,},
+        { label: 'January', value: 'January'},
+        { label: 'February', value: 'February'},
+        { label: 'March', value: 'March'},
+        { label: 'April', value: 'April'},
+        { label: 'May', value: 'May'},
+        { label: 'June', value: 'June'},
+        { label: 'July', value: 'July'},
+        { label: 'August', value: 'August'},
+        { label: 'September', value: 'September'},
+        { label: 'October', value: 'October'},
+        { label: 'November', value: 'November'},
+        { label: 'December', value: 'December'},
     ];
 
+    
+
+
     const onChange = (checkedValues) => {
-        console.log('checked = ', checkedValues);
+      const value = checkedValues;
+      console.log(value);
+      const formData = {activeMonth: value}
+      axios.put(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/active-payment-month/66d80b32544c7126feb39661`, formData)
+      .then(res => console.log(res.status))
     };
 
 
@@ -26,7 +46,13 @@ const MonthlyBasedWithdraw = () => {
     return (
         <div>
             <h2 className="font-bold text-slate-700 mb-2">Payment withdrawal Activated month</h2>
-            <Checkbox.Group options={options} defaultValue={[3]} onChange={onChange} />
+            {
+              loading && <Spin/>
+            }
+            {
+              !loading && activePaymentMonth &&
+            <Checkbox.Group options={options} defaultValue={activePaymentMonth}  onChange={onChange} />
+            }
         </div>
     );
 };

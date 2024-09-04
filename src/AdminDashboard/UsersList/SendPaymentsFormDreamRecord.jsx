@@ -71,11 +71,11 @@ const SendPaymentsFormDreamRecord = ({id, isOpenModalPayment, clickIdPayment}) =
               }
             })
           }else{
-            const newData = {...preData, balance:{amount: payAmount, year: year, month: month, time: time, date: date,}}
+            const newData = {...preData, balance:{amount: parseInt(payAmount), year: year, month: month, time: time, date: date,}}
             axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, newData)
             .then(res => {
               if(res.status === 200){
-                const formData = {amount: payAmount, date, time, month, year, masterUserId: id, paymentReportDate }
+                const formData = {amount: parseInt(payAmount), date, time, month, year, masterUserId: id, paymentReportDate }
                 axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment`, formData)
                 .then(res => {
                   if(res.status === 200){

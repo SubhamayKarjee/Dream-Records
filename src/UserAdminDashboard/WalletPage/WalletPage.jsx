@@ -1,4 +1,4 @@
-import { ArrowTopRightOnSquareIcon, CurrencyRupeeIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { CurrencyRupeeIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { Modal, Tabs, Tooltip } from "antd";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -15,6 +15,7 @@ export const WalletPageContext = createContext();
 const WalletPage = () => {
 
     const {userNameIdRoll} = useContext(AuthContext);
+    const role = userNameIdRoll[2]
 
     const [userData, setUserData] = useState();
     const [bankData, setBankData] = useState([])
@@ -31,10 +32,29 @@ const WalletPage = () => {
         setIsModalOpen
     }
 
+    const [activePaymentMonth, setActivePaymentMonth] = useState(false);
+    const [paymentMonthLoading, setPaymentMonthLoading] = useState(false)
+    useEffect(() => {
+        setPaymentMonthLoading(true)
+        const currentDate = new Date();
+        const month = currentDate.toLocaleString('default', { month: 'long' });
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/active-payment-month/66d80b32544c7126feb39661`)
+            .then(res => {
+            res.data.data.activeMonth.map(activeMonth => {
+                if(activeMonth === month){
+                    setActivePaymentMonth(true)
+                    setPaymentMonthLoading(false)
+                }
+            })
+
+
+            })
+    },[])
+
     useEffect(() => {
         const currentDate = new Date();
-        const currentMonth = currentDate.getMonth(); 
-        console.log(currentMonth);
+        const month = currentDate.toLocaleString('default', { month: 'long' });
+        console.log(month);
     },[])
     
     useEffect(() => {
@@ -48,14 +68,22 @@ const WalletPage = () => {
     }, [userNameIdRoll, withdrawalReFetch, reFetchBankInfo]);
     // Get Bank INFO
 
+    const [bankDataStatus, setBankDataStatus] = useState(false);
     const [bankInfoLoading, setBankInfoLoading] = useState(false);
     const [deleteFetch, setDeleteFetch] = useState(1)
     useEffect(() => {
-        setBankInfoLoading(ArrowTopRightOnSquareIcon)
+        setBankInfoLoading(true)
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/bank-info/${userNameIdRoll[1]}`)
             .then(res => {
                 if(res.status == 200){
                     setBankData(res.data.data);
+                    if(res.data.data[0]){
+                        setBankDataStatus(true)
+                        console.log('yes');
+                    }else{
+                        setBankDataStatus(false)
+                        console.log('no')
+                    }
                     setBankInfoLoading(false)
                 }
             })
@@ -92,7 +120,7 @@ const WalletPage = () => {
         {
           key: '1',
           label: 'Payments History',
-          children: <PaymentDetails id={userNameIdRoll[1]} text='Successfully Get Payments from Dream Records' />,
+          children: <PaymentDetails id={userNameIdRoll[1]} role={role} text='Successfully Get Payments from Dream Records' />,
         },
         {
           key: '2',
@@ -108,30 +136,33 @@ const WalletPage = () => {
             <div className="md:flex justify-between items-center p-2 border rounded-md">
                 <p className="font-bold text-lg py-1 px-3 border rounded-md flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/>{userData?.balance?.amount ? userData.balance.amount : 0}</p>
                 {
-                    userData?.balance?.amount > 5000 && bankData != 0 && 
-                    <button onClick={showModal} className="btn btn-sm btn-neutral my-2">Withdrawal</button>
+                    activePaymentMonth && !paymentMonthLoading ?
+                    <div>
+                            {
+                                userData?.balance?.amount > 5000 && bankDataStatus === true && 
+                                <button onClick={showModal} className="btn btn-sm btn-neutral my-2">Withdrawal</button>
+                            }
+                            {
+                                userData?.balance?.amount > 5000 && bankDataStatus === false && 
+                                <div className="md:flex items-center">
+                                    <p className="text-xs m-2 text-slate-600">Please add bank account then withdrawal button visible</p>
+                                    <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
+                                </div>
+                            }
+                            {
+                                userData?.balance?.amount < 5000 && bankDataStatus === false &&
+                                <div className="md:flex items-center">
+                                    <p className="text-xs m-2 text-slate-600">Have to Balance more than <span className="font-bold">5000</span> Rupee</p>
+                                    <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
+                                </div>
+                            }
+                            
+                    </div> : <div className="md:flex items-center">
+                                    <p className="text-xs m-2 text-slate-600">This month not abailable for withdrawal</p>
+                                    <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
+                                </div>
                 }
-                {
-                    userData?.balance?.amount > 5000 && bankData == 0 && 
-                    <div className="md:flex items-center">
-                        <p className="text-xs m-2 text-slate-600">Please add bank account then withdrawal button visible</p>
-                        <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
-                    </div>
-                }
-                {
-                    userData?.balance?.amount < 5000 && bankData != 0 &&
-                    <div className="md:flex items-center">
-                        <p className="text-xs m-2 text-slate-600">Have to Balance more than <span className="font-bold">5000</span> Rupee</p>
-                        <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
-                    </div>
-                }
-                {
-                    userData?.balance?.amount < 5000 && bankData == 0 &&
-                    <div className="md:flex items-center">
-                        <p className="text-xs m-2 text-slate-600">Have to Balance more than <span className="font-bold">5000</span> Rupee</p>
-                        <button className="btn btn-sm btn-neutral my-2" disabled>Withdrawal</button>
-                    </div>
-                }
+                
                 <Modal title="Withdrawal Payments" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
                     <WithdrawalForm/>
                 </Modal>

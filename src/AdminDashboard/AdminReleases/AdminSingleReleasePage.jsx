@@ -26,7 +26,6 @@ const AdminSingleReleasePage = () => {
                     setLoading(false);
                     setReleaseData(res.data.data[0]);
                     setReleaseStatus(res.data.data[0].status)
-                    console.log(res.data.data);
                 }
             })
             .catch(er => console.log(er));

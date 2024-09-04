@@ -25,7 +25,6 @@ const SingleArtistForAdmin = () => {
         setArtistFetchLoading(true)
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/single-artist/${id}`)
         .then(res => {
-            console.log(res.data.data);
             setArtist(res.data.data[0]);
             setArtistFetchLoading(false)
         })

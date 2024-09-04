@@ -116,7 +116,7 @@ const DashbardHomePage = () => {
                         <p className="font-extrabold text-xl border rounded-md px-2 bg-green-100">{pendingLabels}</p>
                     }
                 </div>
-                <div style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/claim-release')} className="p-2 rounded-md shadow border">
+                <div style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/claim-release/1/10/Pending')} className="p-2 rounded-md shadow border">
                     <h2 className="font-extrabold text-2xl text-slate-500">Rights manager</h2>
                     <p className="text-sm text-slate-500 flex items-center"><ClockIcon className="h-4 w-4 me-1"/>Pending</p>
                     {

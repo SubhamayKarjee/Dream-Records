@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ArrowDownTrayIcon } from "@heroicons/react/24/solid";
-import { DatePicker, Empty, Pagination } from "antd";
+import { ArrowDownTrayIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { DatePicker, Empty, Pagination, Popconfirm } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-const AnalyticsReportList = ({id, text}) => {
+const AnalyticsReportList = ({id, text, role}) => {
 
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
@@ -26,7 +26,7 @@ const AnalyticsReportList = ({id, text}) => {
                 setFetchLoading(false)
             }
         })
-    },[id, currentPage])
+    },[id, currentPage, reload])
 
     const handlePageChange = (page) => {
         setCurrentPage(page)
@@ -49,6 +49,28 @@ const AnalyticsReportList = ({id, text}) => {
         }
     };
 
+    const confirm = (id, data) => {
+        setFetchLoading(true)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/reports/delete-report/${id}`)
+        .then(res => {
+            if(res.status === 200){
+                axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/reports/delete-file?key=${data.key}`)
+                .then(res => {
+                    if(res.status === 200){
+                        const load = reload + 1;
+                        setReload(load)
+                        setFetchLoading(false)
+                    }
+                })
+            }
+        })
+        
+    }
+
+    const cancel = () => {
+        return;
+    };
+
 
     return (
         <div>
@@ -68,8 +90,23 @@ const AnalyticsReportList = ({id, text}) => {
                                     <p>{text} <span className="font-bold text-slate-500">{r.date} {r.month} {r.year} || {r.time}</span></p>
                                     <p>Reports based on <span className="font-bold text-green-600">{r.reportDate}</span></p>
                                 </div>
-                                <div>
+                                <div className="flex items-center justify-between">
                                     <a className="px-2 py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={r.fileUrl} download={r.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
+                                    {
+                                        role !== 'User' &&
+                                        <Popconfirm
+                                            title="Delete"
+                                            placement="leftTop"
+                                            className="z-1000"
+                                            description="Are you sure to Delete Report?"
+                                            onConfirm={() => confirm(r._id, r)}
+                                            onCancel={cancel}
+                                            okText="Yes"
+                                            cancelText="No"
+                                            >
+                                            <TrashIcon style={{cursor: 'pointer'}} className="w-5 h-5 ms-2 text-red-500"/>
+                                        </Popconfirm>
+                                    }
                                 </div>
                             </div>
                         </div>

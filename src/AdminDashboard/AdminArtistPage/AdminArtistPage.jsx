@@ -44,8 +44,6 @@ const AdminArtistPage = () => {
     }
 
     const handleKeyPress = (event) => {
-        console.log(searchText);
-        console.log(event);
         if (event.key === 'Enter') {
             setFetchLoading(true);
             axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/artist/search-artist?search=${searchText}`)

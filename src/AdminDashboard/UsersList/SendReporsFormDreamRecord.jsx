@@ -42,7 +42,6 @@ const SendReporsFormDreamRecord = ({id, isOpenModalReport, clickIdReport}) => {
         }
         axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/reports/upload-file`, formData)
         .then(res => {
-            console.log(res.data.data);
             setUploadLoading(false);
             setReportFile(res.data.data)
             toast.success('File Uploaded')
