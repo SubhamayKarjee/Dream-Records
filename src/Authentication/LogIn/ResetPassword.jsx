@@ -1,4 +1,4 @@
-import { LockClosedIcon } from "@heroicons/react/24/solid";
+import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
@@ -41,12 +41,12 @@ const ResetPassword = () => {
     return (
         <div className="h-screen flex justify-center items-center">
             <div className="border shadow-sm p-4 rounded-md">
-                <div className="flex justify-center items-center pt-3 pb-2">
-                    <LockClosedIcon className="h-12 w-12 text-white bg-[#252525] p-3 rounded-full"/>
-                </div>
                 {
                     sendEmailDiv === false ?
                     <>
+                        <div className="flex justify-center items-center pt-3 pb-2">
+                            <LockClosedIcon className="h-12 w-12 text-white bg-[#252525] p-3 rounded-full"/>
+                        </div>
                         <h1 className="text-2xl font-bold text-center">Reset Your Password</h1>
                         <p className="text-sm text-[#64748B] text-center">Enter the email address you used to register with</p>
                         <form onSubmit={handleSubmit(onSubmit)} style={{width: '100%'}} className='pt-4'>
@@ -72,6 +72,9 @@ const ResetPassword = () => {
                         </form>
                     </> : 
                     <>
+                        <div className="flex justify-center items-center pt-3 pb-2">
+                            <EnvelopeIcon className="h-12 w-12 text-white bg-[#252525] p-3 rounded-full"/>
+                        </div>
                         <h1 className="text-2xl font-bold text-center">Check your email !</h1>
                         <p className="text-sm text-[#64748B] text-center">We have sent you a link to reset your password</p>
                         <button onClick={() => navigate('/log-in')} className="btn  btn-neutral bg-[#0F172A] my-4 w-full">Got it</button>
