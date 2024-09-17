@@ -1,13 +1,16 @@
 import { LockClosedIcon } from "@heroicons/react/24/solid";
-import { sendPasswordResetEmail } from "firebase/auth";
 import { useState } from "react";
+import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import auth from "../../../firebase.config";
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 
 const ResetPassword = () => {
 
     const navigate = useNavigate()
+
+    const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
 
     const [loading, setLoading] = useState(false);
     const [emaliErr, setEmailErr] = useState();
@@ -17,10 +20,15 @@ const ResetPassword = () => {
     const onSubmit = async (data) => {
         setLoading(true)
         const email = data.email
-        setSendEmailDiv(true)
         sendPasswordResetEmail(email)
-        .then(() => setSendEmailDiv(true))
-        .catch(err => setEmailErr(err))
+        .then((res) => {
+            console.log(res);
+            setSendEmailDiv(true)
+        })
+        .catch(err => {
+            console.log(err);
+            setEmailErr(err)
+        })
         setLoading(false)   
     }
 
@@ -34,7 +42,7 @@ const ResetPassword = () => {
         <div className="h-screen flex justify-center items-center">
             <div className="border shadow-sm p-4 rounded-md">
                 <div className="flex justify-center items-center pt-3 pb-2">
-                    <LockClosedIcon className="h-12 w-12 text-white bg-[#252525] p-2 rounded-full"/>
+                    <LockClosedIcon className="h-12 w-12 text-white bg-[#252525] p-3 rounded-full"/>
                 </div>
                 {
                     sendEmailDiv === false ?

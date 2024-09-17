@@ -15,6 +15,7 @@ import ProtectAdminRoute from './ProtectRoute/ProtectAdminRoute';
 import ProtectUserRoute from './ProtectRoute/ProtectUserRoute';
 import ChatSupport from './AdminDashboard/AdminSupportPage/ChatSupport';
 import CallSupport from './AdminDashboard/AdminSupportPage/CallSupport';
+import SetNewPassword from './Authentication/LogIn/SetNewPassword';
 
 
 
@@ -98,10 +99,10 @@ const router = createBrowserRouter([
     path: "/reset-password",
     element: <Suspense fallback={<LoadingComponentsForPage/>}><ResetPassword/></Suspense>,
   },
-  // {
-  //   path: "/admin",
-  //   element: <Suspense fallback={<LoadingComponentsForPage/>}><AdminLoginPage/></Suspense>,
-  // },
+  {
+    path: "/set-new-password",
+    element: <Suspense fallback={<LoadingComponentsForPage/>}><SetNewPassword/></Suspense>,
+  },
   {
     path: "/sign-up/:id",
     loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${params.id}`),
