@@ -1,127 +1,206 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { 
-    DocumentTextIcon, EnvelopeIcon, KeyIcon, 
- } from '@heroicons/react/24/solid'
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import auth from "../../../firebase.config";
-// import { useAuthState, useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 import axios from "axios";
+import authImage from '../../assets/authImage/Container.webp'
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css'
+import {
+    CountrySelect,
+    StateSelect,
+} from "react-country-state-city";
+import "react-country-state-city/dist/react-country-state-city.css";
+import './SignUp.css'
 
 const SignUp = () => {
     // Get Data From React Router Loader _______________
     const userData = useLoaderData();
     const navigate = useNavigate()
 
-    // const [user] = useAuthState(auth);
+    // Phone Number Input 
+    const [value, setValue] = useState(userData?.data?.data?.phone);
+    const [valueErr, setValueErr] = useState('');
 
-    const id = userData.data.data._id;
-    const roll = userData.data.data.roll;
-
-    const [loadingHandle, setLoadingHandle] = useState(false)
-
-    // Create User IN Firebase __________________________
-    const [
-        createUserWithEmailAndPassword,
-        // user,
-        loading,
-        error,
-      ] = useCreateUserWithEmailAndPassword(auth);
-
-      const [updateProfile, updating, error1] = useUpdateProfile(auth);
+    // Country State Select 
+    const [countryid, setCountryid] = useState(0);
+    const [country, setCountry] = useState(userData?.data?.data?.country);
+    const [state, setState] = useState(userData?.data?.data?.state)
+    const [countryError, setCountryError] = useState('');
+    const [stateError, setStateError] = useState('')
 
 
 
+
+    const [loading, setLoading] = useState(false)
     // User Update Form _________________________________
-    const [passwordError, setPasswordError] = useState();
-    const { register, handleSubmit, formState: { errors }} = useForm({values: {userName: userData.data.data.userName, email: userData.data.data.email}});
+    const { register, handleSubmit, formState: { errors }} = useForm({
+        values: {
+            userName: userData?.data?.data?.userName, 
+            email: userData?.data?.data?.email, 
+            first_name: userData?.data?.data?.first_name, 
+            last_name: userData?.data?.data?.last_name,
+            city: userData?.data?.data?.city,
+            postalCode: userData?.data?.data?.postalCode
+        }});
     const onSubmit = async (data) => {
-        const date = new Date();
-        const openingDate = date.toLocaleDateString();
-        const openingTime = date.toLocaleTimeString([], { hour12: true});
-        
-        if(data.password1 === data.password2){
-            const password = data.password1;
-            const email = data.email
-            // _________________
-            await createUserWithEmailAndPassword(email, password).then(res => {
-                const uid = res.user.uid
-                const userData = {openingDate, openingTime, uid};
-                setLoadingHandle(true)
-                axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, userData).then( async res => {
-                    const displayName = `${data.userName}'__'${id}'__'${roll}`
-                    if(res.status == 200){
-                        setLoadingHandle(false);
-                        await updateProfile({ displayName });
-                        if(roll === 'User'){
-                            localStorage.setItem('popupShown', 'false');
-                            navigate('/')
-                        }
-                        if(roll === 'Admin'){
-                            navigate('/admin-dashboard')
-                        }
-                    }
-                })
-            })
-            
-        }else{
-            setPasswordError('Password Not Match')
+        setLoading(true)
+        setValue('')
+        setCountryError('')
+        setStateError('')
+
+        if(!value){
+            setValueErr('Please Enter your Phone number')
         }
+        if(!country){
+            setCountryError('Please select your Country')
+        }
+        if(!state){
+            setStateError('Please select your State')
+        }
+
+        const status = 'Pending'
+        const masterUserId = userData.data.data._id;
+        const userName = userData.data.data.userName;
+        const labelName = data.labelName
+        const labelData = { labelName, masterUserId, status, userName};
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/create-labels', labelData)
+            .then(res => {
+                if(res.status == 200){
+                    const formData = {...data, country, state, phone: value}
+                    delete formData.labelName
+                    axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userData.data.data._id}`, formData)
+                        .then(res => {
+                            if(res.status == 200){
+                                navigate(`set-password/${userData.Data.data._id}`);
+                                setLoading(false)
+                            }
+                        })
+                        .catch(er => console.log(er)) 
+                        setLoading(false)
+                }
+                })
+                .catch(er => console.log(er))        
+    }
+
+    const inputStyle ={
+        height: '36px',
+        border: '1px solid #E2E8F0'
     }
 
     return (
-        <div className='xl:max-w-[1140px] lg:max-w-[90%] md:max-w-[90%] sm:max-w-[90%] w-[95%] mx-auto'>
-            <div className="h-screen flex justify-center items-center">
-                <div className="card w-96 bg-base-100 shadow-xl border">
-                    <h3 className="px-4 text-2xl font-semibold text-green-500 italic text-center py-2">🎉Congratulations🎉</h3>
-                    <p className="px-4 text-center font-semibold text-gray-500">An account has been created for you on our site. Now you set your password.</p>
-                    <div className="card-body">
-                        <form onSubmit={handleSubmit(onSubmit)}  className="w-100">
-                            <label className="input input-bordered flex items-center gap-2 mb-2 bg-slate-200">
-                                <EnvelopeIcon className="w-4 h-4 opacity-70" />
-                                <input type="text" className="grow" {...register("email", { required: true})} disabled/>
-                            </label>
+        <div className=''>
+            <div className="md:flex justify-between items-center gap-4">
+                <div className="flex-1 py-4 px-1">
+                    <div style={{maxWidth: '384px'}} className='mx-auto'>
+                        <div style={{borderRadius: '0.5rem'}} className="card border p-6">
+                            <h1 className="text-2xl font-bold">Account Setup</h1>
+                            <p className="text-sm text-[#64748B]">Enter your information to setup your Account</p>
+                            <div className="card-body p-0">
+                                <form onSubmit={handleSubmit(onSubmit)} style={{width: '100%'}} className='pt-6'>
+                                    <div>
+                                        <p className="text-sm text-[#020617] font-semibold pb-1">User Name</p>
+                                        <input style={inputStyle} type="text" className="input-sm w-full input" {...register("userName", { required: true})} readOnly/>
+                                    </div>
 
-                            <label className="input input-bordered flex items-center gap-2 mb-2 bg-slate-200">
-                                <DocumentTextIcon className="w-4 h-4 opacity-70" />
-                                <input type="text" className="grow" placeholder="User Name" {...register("userName", { required: true})} disabled/>
-                            </label>
+                                    <div className="pt-3">
+                                        <p className="text-sm text-[#020617] font-semibold pb-1">Email</p>
+                                        <input style={inputStyle} type="email" className="input-sm w-full input" {...register("email", { required: true})} readOnly/>
+                                    </div>
 
-                            <label className="input input-bordered flex items-center gap-2 mb-2">
-                                <KeyIcon className="w-4 h-4 opacity-70" />
-                                <input type="password" className="grow" placeholder="New Password" {...register("password1", { required: true})}/>
-                            </label>
-                                {errors.password1 && <span className='text-red-600 pb-2 block'>Please Fill Password</span>}
-                            <label className="input input-bordered flex items-center gap-2 mb-2">
-                                <KeyIcon className="w-4 h-4 opacity-70" />
-                                <input type="password" className="grow" placeholder="Confirm Password" {...register("password2", { required: true})}/>
-                            </label>
-                                {errors.password2 && <span className='text-red-600 pb-2 block'>Please Confirm Password</span>}
-                                {passwordError && <span className='text-red-600 pb-2 block font-bold'>{passwordError}</span>}
+                                    <div className="pt-3 flex justify-between gap-2">
+                                        <div>
+                                            <p className="text-sm text-[#020617] font-semibold pb-1">First Name</p>
+                                            <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="First Name" {...register("first_name", { required: true})}/>
+                                            {errors.first_name && <span className='text-red-600 pb-2 block'>Please fill in the First Name</span>}
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-[#020617] font-semibold pb-1">Last Name</p>
+                                            <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Last Name" {...register("last_name", { required: true})}/>
+                                            {errors.last_name && <span className='text-red-600 pb-2 block'>Please fill in the Last Name</span>}
+                                        </div>
+                                    </div>
 
-                            <div>
-                                {
-                                    loadingHandle && loading  && <LoadingComponentsInsidePage/>
-                                }
-                                {
-                                    updating && <LoadingComponentsInsidePage/>
-                                }
-                                {
-                                    error && <span className='text-red-600 pb-2 block font-bold'>{error}</span>
-                                }
-                                {
-                                    error1 && <span className='text-red-600 pb-2 block font-bold'>{error1}</span>
-                                }
+                                    <div className="pt-3">
+                                        <p className="text-sm text-[#020617] font-semibold pb-1">Phone</p>
+                                        <PhoneInput
+                                            international
+                                            style={inputStyle}
+                                            placeholder="Enter phone number"
+                                            className='input input-sm'
+                                            value={value}
+                                            onChange={e => setValue(e)}
+                                            defaultCountry="IN"
+                                        />
+                                    </div>
+                                    {valueErr && <span className='text-red-600 pt-2 block'>{valueErr}</span>}
+
+                                    <div className="pt-3">
+                                        <p className="text-sm text-[#020617] font-semibold pb-1">Label Name</p>
+                                        <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Label Name" {...register("labelName", { required: true})}/>
+                                        {errors.labelName && <span className='text-red-600 pb-2 block'>Please fill in the Label Name</span>}
+                                    </div>
+
+                                    <div className="pt-4">
+                                        <p className="text-sm text-[#020617] font-semibold pb-1">Address</p>
+                                        <div className="grid gap-2 grid-cols-2">
+                                            <div>
+                                                <p className="text-sm text-[#020617] font-semibold pb-1">Country</p>
+                                                <CountrySelect
+                                                    onChange={(e) => {
+                                                        setCountryid(e.id);
+                                                        setCountry(e.name)
+                                                    }}
+                                                    placeHolder="Select Country"
+                                                />
+                                                {
+                                                    countryError && <p className="text-red-600 pb-2">{countryError}</p>
+                                                }
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-[#020617] font-semibold pb-1">State</p>
+                                                <StateSelect
+                                                    countryid={countryid}
+                                                    onChange={(e) => {
+                                                        setState(e.name)
+                                                    }}
+                                                    placeHolder="Select State"
+                                                />
+                                                {
+                                                    stateError && <p className="text-red-600 pb-2">{stateError}</p>
+                                                }
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-[#020617] font-semibold pb-1">City</p>
+                                                <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Enter City Name" {...register("city", { required: true})}/>
+                                                {errors.city && <span className='text-red-600 pb-2 block'>Please fill in the City Name</span>}
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-[#020617] font-semibold pb-1">Postal Code</p>
+                                                <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Enter Code Here" {...register("postalCode", { required: true})}/>
+                                                {errors.postalCode && <span className='text-red-600 pb-2 block'>Please fill in the Postal Code</span>}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        {
+                                            loading && <LoadingComponentsInsidePage/>
+                                        }
+                                    </div>
+                                    <div className="flex justify-center py-5">
+                                        {
+                                            !userData?.data ? <input className="btn btn-md btn-neutral w-full bg-[#0F172A]" type="submit" value={'Finish Setup'} disabled/> : <input className="btn btn-md btn-neutral w-full bg-[#0F172A]" type="submit" value={'Finish Setup'} />
+                                        }
+                                    </div>
+                                    <p>Finish your setup to upload your first Track</p>
+
+                                </form>
                             </div>
-                            <div className="flex justify-center mt-4">
-                                {
-                                    !userData.data ? <input className="btn btn-neutral rounded-full btn-wide" type="submit" value={'Submit'} disabled/> : <input className="btn btn-neutral rounded-full btn-wide" type="submit" value={'Submit'} />
-                                }
-                            </div>
-                        </form>
+                        </div>
                     </div>
+                </div>
+                <div className="flex-1 hidden md:block">
+                    <img className="" style={{width: 'auto', height: '1024px'}}  src={authImage} alt='log/sign up image' />
                 </div>
             </div>
         </div>

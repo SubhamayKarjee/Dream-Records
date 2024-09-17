@@ -1,0 +1,7 @@
+.stdropdown-input input{
+    border: none;
+    padding: 0;
+}
+.stdropdown-input input:focus{
+    outline: none;
+}

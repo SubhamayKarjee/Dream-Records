@@ -17,11 +17,15 @@ import ChatSupport from './AdminDashboard/AdminSupportPage/ChatSupport';
 import CallSupport from './AdminDashboard/AdminSupportPage/CallSupport';
 
 
+
+
 // Commont Routes import_______________________________________________________________
 // ____________________________________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
+const ResetPassword = React.lazy(() => import('./Authentication/LogIn/ResetPassword'));
 // const AdminLoginPage = React.lazy(() => import('./Authentication/LogIn/AdminLoginPage'));
 const SignUp = React.lazy(() => import('./Authentication/SignUp/SignUp'));
+const SetPassword = React.lazy(() => import('./Authentication/SignUp/SetPassword/SetPassword'));
 // Admin Routes import__________________________________________________________________
 // _____________________________________________________________________________________
 const DashBoardForAdmin = React.lazy(() => import('./AdminDashboard/DashboardForAdmin/DashBoardForAdmin'));
@@ -90,14 +94,23 @@ const router = createBrowserRouter([
     path: "/log-in",
     element: <Suspense fallback={<LoadingComponentsForPage/>}><LogIn/></Suspense>,
   },
+  {
+    path: "/reset-password",
+    element: <Suspense fallback={<LoadingComponentsForPage/>}><ResetPassword/></Suspense>,
+  },
   // {
   //   path: "/admin",
   //   element: <Suspense fallback={<LoadingComponentsForPage/>}><AdminLoginPage/></Suspense>,
   // },
   {
-    path: "/set-password/:id",
+    path: "/sign-up/:id",
     loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${params.id}`),
     element: <Suspense fallback={<LoadingComponentsForPage/>}><SignUp/></Suspense>,
+  },
+  {
+    path: "/set-password/:id",
+    loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${params.id}`),
+    element: <Suspense fallback={<LoadingComponentsForPage/>}><SetPassword/></Suspense>,
   },
   // Admin Dashboard________________________________________________________________________
   //________________________________________________________________________________________
