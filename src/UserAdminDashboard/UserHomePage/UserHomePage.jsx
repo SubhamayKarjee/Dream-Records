@@ -8,7 +8,7 @@ import LatestApprovedRelease from './LatestApprovedRelease';
 import './UserHomePage.css';
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import PopUp from '../PopUP/PopUp';
-import { BellAlertIcon } from '@heroicons/react/24/solid';
+import { BellAlertIcon } from '@heroicons/react/24/outline';
 
 const UserHomePage = () => {
 
@@ -68,7 +68,7 @@ const UserHomePage = () => {
     return (
         <div className="md:flex md:h-full">
             {showPopup && <PopUp visible={showPopup} onClose={handleClosePopup} />}
-            <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2'>
+            <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2 bg-[#FCFCFC] border-right md:pt-16'>
                 <div className='home_banner_image'>
                     <div className='h-full bg-gradient-to-r from-[#EF4136]'>
                         <div className='p-3 h-full flex items-end '>
@@ -122,8 +122,26 @@ const UserHomePage = () => {
 
 
             {/* Notification Div Desktop _______________________________*/}
-            <div className="md:basis-1/4 hidden md:block">
-                <div className='p-2 border-b'>
+            <div className="md:basis-1/4 hidden md:block bg-white md:pt-16 px-2">
+            <h3 className='font-semibold text-xl pb-2'>Notices</h3>
+                    {
+                        getDataLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-sm me-2"></span></div>
+                    }
+                <div className='flex bg-[#F2F2F2] rounded-md'>
+                    <BellAlertIcon className='w-12 h-12 ps-1 '/>
+                    <div className=''>
+                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/notice/661089403281a4347e1d3498`)} className="p-2">
+                            <p className=" font-semibold text-[#252525]">{noticeData?.noticeTitle}</p>
+                            <p className="text-[#71717A]">{noticeData?.noticeDescription.slice(0, 50)}...</p>
+                            <div className='flex justify-between items-center pt-2'>
+                                <p className="text-sm text-[#71717A]">{noticeData?.date}</p>
+                                <p className="text-sm text-[#71717A]">{noticeData?.time}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='pt-3'>
                     {
                         getImageLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-sm me-2"></span></div>
                     }
@@ -137,18 +155,7 @@ const UserHomePage = () => {
                         alt="advertisment-image"
                     />
                 </div>
-                <div className='p-2 border-b'>
-                    {
-                        getDataLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-sm me-2"></span></div>
-                    }
-                    <div className='bg-slate-100 rounded-md'>
-                        <p className="text-sm font-bold bg-green-200 p-2 rounded-md">Current Notice {noticeData?.date} || {noticeData?.time}</p>
-                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/notice/661089403281a4347e1d3498`)} className="p-2">
-                            <p className=" font-bold">{noticeData?.noticeTitle}</p>
-                            <p className="">{noticeData?.noticeDescription.slice(0, 50)}...</p>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     );

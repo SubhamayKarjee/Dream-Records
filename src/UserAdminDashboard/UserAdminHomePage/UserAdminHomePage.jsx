@@ -1,6 +1,6 @@
 import './UserAdminHomePage.css'
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import logo from '../../assets/logo/Dream-Records Logo-(Light).png';
+import logo from '../../assets/logo/Dream Records Logo (Dark).png';
 import { 
     HomeIcon, 
     Bars3BottomLeftIcon,
@@ -123,9 +123,9 @@ const UserAdminHomePage = () => {
         navigate('/log-in')
     }
     return (
-        <section className='md:h-screen bg-slate-950'>
+        <section className='md:h-screenn bg-[#FAFAFA]'>
             <div className='xl:max-w-[1300px] lg:max-w-[96%] md:max-w-[96%] sm:max-w-[100%] w-[100%] mx-auto'>
-                <div className="md:grid md:gap-4 grid-cols-5 md:py-4 md:h-screen">
+                <div className="md:grid md:gap-1 grid-cols-5 md:h-screen">
                     <div className="pt-4 hidden md:block h-full relative">
                         <div className='for_height_issue_logo_div'>
                             <div className="avatar">
@@ -134,11 +134,11 @@ const UserAdminHomePage = () => {
                                 </div>
                             </div>
                             <div style={{marginTop: '-20px'}}>
-                                <h1 className='text-xl font-extrabold text-white'>Dream Records</h1>
-                                <p className='text-white text-sm'>Sell your music worldwide.</p>
+                                <h1 className='text-xl font-extrabold'>Dream Records</h1>
+                                <p className='text-sm'>Sell your music worldwide.</p>
                                 <div className='pt-3'>
                                     <Link to={'/create-release'}>
-                                        <button style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
+                                        <button style={{width: '90%'}} className='btn text-white md:text-sm lg:text-lg font-semibold btn-neutral bg-[#252525]'>
                                         + Create
                                         </button>
                                     </Link>
@@ -149,39 +149,39 @@ const UserAdminHomePage = () => {
                              {/* __________________________________________________________________________________________________________ */}
                             {/* Admin All Nav Link ________________________________________________________________________________________ */}
                             <div className='py-2'> 
-                                <Link className='text-white flex items-center py-2' to={'/'}>
+                                <Link className='flex items-center py-2' to={'/'}>
                                     <HomeIcon className="h-7 w-7 pe-2" />
                                     Home
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/releases'}>
+                                <Link className='flex items-center py-2' to={'/releases'}>
                                     <DocumentCheckIcon className="h-7 w-7 pe-2" />
                                     Releases
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/artist'}>
+                                <Link className='flex items-center py-2' to={'/artist'}>
                                     <UsersIcon className="h-7 w-7 pe-2" />
                                     Artists
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/labels'}>
+                                <Link className='flex items-center py-2' to={'/labels'}>
                                     <UserGroupIcon className="h-7 w-7 pe-2" />    
                                     Labels
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/analytics'}>
+                                <Link className='flex items-center py-2' to={'/analytics'}>
                                     <ChartPieIcon className="h-7 w-7 pe-2" />
                                     Analytics
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/wallet'}>
+                                <Link className='flex items-center py-2' to={'/wallet'}>
                                     <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                     Wallet
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/claim-release'}>
+                                <Link className='flex items-center py-2' to={'/claim-release'}>
                                     <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
                                     Rights manager
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/support'}>
+                                <Link className='flex items-center py-2' to={'/support'}>
                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                     Support
                                 </Link>
-                                <Link className='text-white flex items-center py-2' to={'/account'}>
+                                <Link className='flex items-center py-2' to={'/account'}>
                                     <UserCircleIcon className="h-7 w-7 pe-2" />
                                     Account
                                 </Link>
@@ -191,9 +191,9 @@ const UserAdminHomePage = () => {
 
                     <AuthContext.Provider value={contextValue}>
                         {/* __________________________________________________________________________________________________________ */}
-                        <div className="bg-white col-span-4 p-2 md:p-4 md:rounded-lg h-full overflow-hidden">
+                        <div style={{borderLeft: '1px solid #E0E0E0'}} className="bg-[#FCFCFC] col-span-4 h-full overflow-hidden relative">
                             {/* Admin Profile image right Side ________________________________________________________________________ */}
-                            <div style={{marginTop: '-10px'}} className='hidden md:block md:flex justify-end items-center border-b'>
+                            <div className='hidden md:block md:flex justify-end items-center absolute top-3 right-10'>
                                 <div className="flex-none gap-2">
                                     <div className="dropdown dropdown-end">
                                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
