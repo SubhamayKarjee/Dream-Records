@@ -1,4 +1,4 @@
-import { PlusIcon, UsersIcon } from "@heroicons/react/24/solid";
+import { UserPlusIcon, UsersIcon } from "@heroicons/react/24/outline";
 import { Image } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -27,27 +27,30 @@ const UserArtistComponentForHomePage = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       },[])
     return (
-        <div className="py-3">
+        <div className="px-4 pt-4 border rounded-lg shadow my-3">
             <div className="flex items-center">
                 <UsersIcon className="h-5 w-5 text-slate-500 me-2"/>
                 <p className="text-sm font-semibold text-slate-500">Artists</p>
             </div>
             <div className="flex gap-4 flex-wrap py-3">
-                <p style={{cursor: 'pointer'}} onClick={() => navigate('/artist')} className="w-12 h-12 outline-dashed outline-1 outline-slate-500 rounded-full flex items-center justify-center"><PlusIcon className="w-6 h-6 text-slate-500"/></p>
+                <div>
+                    <p style={{cursor: 'pointer', width: '90px', height: '78px', borderRadius: '12px'}} onClick={() => navigate('/artist')} className="outline-dashed outline-1 outline-slate-500 flex items-center justify-center"><UserPlusIcon className="w-10 h-10 text-slate-500"/></p>
+                    <p className="text-center pt-2 text-sm">Add New</p>
+                </div>
                 {
                     loading && <div className="w-12 h-12 rounded-full bg-gray-300 animate-pulse"></div>
                 }
                 {
-                    artistData && artistData.map((image) =>
-                        <div key={image._id} className="avatar">
-                            <div className="w-12 rounded-full outline outline-1 outline-offset-2 outline-[#EF4136]">
+                    artistData && artistData.map((data) =>
+                        <div key={data._id} className="avatar">
+                            <div className="">
                                 <Image
-                                  width={48}
-                                  height={48}
-                                  className="rounded-lg"
-                                  src={image.imgUrl}
+                                  style={{width: '90px', height: '78px', borderRadius: '12px'}}
+                                  className="shadow"
+                                  src={data.imgUrl}
                                   fallback={fallbackImage}
                                 />
+                                <p className="text-sm text-center">{data.artistName}</p>
                             </div>
                         </div> 
                     ) 

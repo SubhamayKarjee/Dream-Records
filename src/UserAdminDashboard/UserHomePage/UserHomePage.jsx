@@ -9,6 +9,7 @@ import './UserHomePage.css';
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import PopUp from '../PopUP/PopUp';
 import { BellAlertIcon } from '@heroicons/react/24/outline';
+import { DocumentCheckIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 const UserHomePage = () => {
 
@@ -69,17 +70,18 @@ const UserHomePage = () => {
         <div className="md:flex md:h-full">
             {showPopup && <PopUp visible={showPopup} onClose={handleClosePopup} />}
             <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2 bg-[#FCFCFC] border-right md:pt-16'>
+                <h3 className='font-semibold text-xl pb-2'>Dashboard</h3>
                 <div className='home_banner_image'>
-                    <div className='h-full bg-gradient-to-r from-[#EF4136]'>
-                        <div className='p-3 h-full flex items-end '>
+                    <div className='h-full'>
+                        <div className='p-4 h-full flex items-end '>
                             <div>
                                 {
                                     userNameIdRoll ? <h1 className='text-xl font-bold text-white'>Hi, {userNameIdRoll[0]}</h1> : <h1 className='text-xl font-bold text-white'>No User</h1>
                                 }
                                 <p className='font-semibold text-sm text-white'>Welcome to Dream Records</p>
-                                <div className='py-1'>
-                                    <button onClick={() => navigate('/create-release')} className='btn btn-neutral py-1 rounded-full btn-sm border-none me-2'>Create</button>
-                                    <button onClick={() => navigate('/releases')} className='btn btn-neutral py-1 rounded-full btn-sm border-none '>Releases</button>
+                                <div className='py-1 flex items-center'>
+                                    <button onClick={() => navigate('/create-release')} className='btn btn-neutral py-1 rounded btn-sm border-none me-2 flex items-center bg-[#252525]'><PlusIcon className='w-5 h-5'/> Create</button>
+                                    <button onClick={() => navigate('/releases')} className='btn btn-neutral py-1 rounded btn-sm border-none flex items-center bg-[#252525]'><DocumentCheckIcon className='w-5 h-5'/> Releases</button>
                                 </div>
                             </div>
                         </div>
