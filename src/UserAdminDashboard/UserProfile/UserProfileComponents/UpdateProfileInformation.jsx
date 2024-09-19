@@ -2,20 +2,19 @@
 import { Image } from "antd";
 import axios from "axios";
 import { useContext, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { useUpdateProfile } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import auth from "../../../../firebase.config";
 import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
-import './UpdateProfileInformation.css';
-import fallbackImage from '../../../assets/fallbackImage.jpg'
 import PhoneInputWithCountrySelect from "react-phone-number-input";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
+import './UpdateProfileInformation.css';
 import 'react-phone-number-input/style.css'
 import "react-country-state-city/dist/react-country-state-city.css";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import fallbackImage from '../../../assets/fallbackImage.jpg'
 import toast from "react-hot-toast";
 import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
-// import toast from "react-hot-toast";
 
 const UpdateProfileInformation = () => {
 

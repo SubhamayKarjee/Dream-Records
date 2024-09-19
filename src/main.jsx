@@ -53,7 +53,6 @@ const NoticeDetailsPage = React.lazy(() => import('./AdminDashboard/AdminSetting
 const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdminHomePage/UserAdminHomePage'));
 const UserHomePage = React.lazy(() => import('./UserAdminDashboard/UserHomePage/UserHomePage'));
 // User Profile Route___________________________________________________________________
-const ProfileHomeComponents = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/ProfileHomeComponents'));
 const UserProfile = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfile'));
 const UpdateProfileInformation = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/UpdateProfileInformation'));
 const UserPassUpdateComponent = React.lazy(() => import('./UserAdminDashboard/UserProfile/UserProfileComponents/UserPassUpdateComponent'));
@@ -311,33 +310,23 @@ const router = createBrowserRouter([
         path: '/notice/:id',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><NoticeDetailsPage/></ProtectUserRoute></Suspense>,
       },
-      //User Account Page _________________________________________________________________________________________
+      //User Account/Profile Page _________________________________________________________________________________________
       {
         path: '/account',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserProfile/></ProtectUserRoute></Suspense>,
-        children: [
-          {
-            path: '/account',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><ProfileHomeComponents/></ProtectUserRoute></Suspense>,
-          },
-          {
-            path: '/account/update-profile-information',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UpdateProfileInformation/></ProtectUserRoute></Suspense>,
-          },
-          {
-            path: '/account/change-password',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserPassUpdateComponent/></ProtectUserRoute></Suspense>,
-          },
-          {
-            path: '/account/change-email',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserEmailUpdateComponent/></ProtectUserRoute></Suspense>,
-          },
-        ]
       },
       {
         path: '/edit-profile/:id',
         loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${params.id}`),
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UpdateProfileInformation/></ProtectUserRoute></Suspense>,
+      },
+      {
+        path: '/set-new-email',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserEmailUpdateComponent/></ProtectUserRoute></Suspense>,
+      },
+      {
+        path: '/set-new-password',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserPassUpdateComponent/></ProtectUserRoute></Suspense>,
       },
     ]
   },
