@@ -194,7 +194,7 @@ const UserAdminHomePage = () => {
                         {/* __________________________________________________________________________________________________________ */}
                         <div style={{borderLeft: '1px solid #E0E0E0'}} className="bg-[#FCFCFC] col-span-4 h-full overflow-hidden relative">
                             {/* Admin Profile image right Side ________________________________________________________________________ */}
-                            <div className='hidden md:block md:flex justify-end items-center absolute top-3 right-2'>
+                            <div className='hidden md:block md:flex justify-end items-center absolute top-3 right-5'>
                                 <div className="flex-none gap-2">
                                     <div className="dropdown dropdown-end">
                                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">

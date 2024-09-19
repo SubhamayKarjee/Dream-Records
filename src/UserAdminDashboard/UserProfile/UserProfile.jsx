@@ -20,7 +20,6 @@ const UserProfile = () => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`)
             .then(res => {
                 setUserData(res.data.data)
-                console.log(res.data.data);
             })
     },[userNameIdRoll]);
 
@@ -64,14 +63,14 @@ const UserProfile = () => {
                         </div>
                         <div>
                             <h2 className="text-2xl font-bold pb-1">{userData?.first_name} {userData?.last_name} </h2>
-                            <p className="">User Name: {user.email}</p>
+                            <p className="">User Name: {userData?.userName}</p>
                         </div>
                     </div>
 
                     <div className="pt-4">
                         <div className="flex justify-between items-center">
                             <h4 className='font-semibold text-lg pb-2 text-[#252525]'>Personal Information</h4>
-                            <span className="text-sm flex items-center border px-3 pt-1 font-semibold rounded-md">Edit <PencilSquareIcon className="w-4 h-4 ms-1"/></span>
+                            <span style={{cursor: 'pointer'}} onClick={() => navigate(`/edit-profile/${userData._id}`)} className="text-sm flex items-center border px-3 pt-1 font-semibold rounded-md">Edit <PencilSquareIcon className="w-4 h-4 ms-1"/></span>
                         </div>
                         <div>
                             <div className="md:flex items-center">
@@ -95,11 +94,11 @@ const UserProfile = () => {
                             <div className="grid grid-cols-2 gap-2 pt-2">
                                 <div className="">
                                     <p className="text-sm text-[#768298]">Country</p>
-                                    <p className="font-semibold text-base">{userData?.country}</p>
+                                    <p className="font-semibold text-base">{userData?.country?.name}</p>
                                 </div>
                                 <div className="">
                                     <p className="text-sm text-[#768298]">State</p>
-                                    <p className="font-semibold text-base">{userData?.state}</p>
+                                    <p className="font-semibold text-base">{userData?.state?.name}</p>
                                 </div>
                                 <div className="">
                                     <p className="text-sm text-[#768298]">City</p>

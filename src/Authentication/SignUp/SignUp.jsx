@@ -6,11 +6,11 @@ import axios from "axios";
 import authImage from '../../assets/authImage/Container.webp'
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css'
+import "react-country-state-city/dist/react-country-state-city.css";
 import {
     CountrySelect,
     StateSelect,
 } from "react-country-state-city";
-import "react-country-state-city/dist/react-country-state-city.css";
 import './SignUp.css'
 
 const SignUp = () => {
@@ -59,7 +59,7 @@ const SignUp = () => {
             setStateError('Please select your State')
         }
 
-        const status = 'Pending'
+        const status = 'Approved'
         const masterUserId = userData.data.data._id;
         const userName = userData.data.data.userName;
         const labelName = data.labelName
@@ -149,7 +149,10 @@ const SignUp = () => {
                                                 <CountrySelect
                                                     onChange={(e) => {
                                                         setCountryid(e.id);
-                                                        setCountry(e.name)
+                                                        const name = e.name;
+                                                        const emoji = e.emoji;
+                                                        const v = {name, emoji}
+                                                        setCountry(v)
                                                     }}
                                                     placeHolder="Select Country"
                                                 />
@@ -162,7 +165,7 @@ const SignUp = () => {
                                                 <StateSelect
                                                     countryid={countryid}
                                                     onChange={(e) => {
-                                                        setState(e.name)
+                                                        setState(e)
                                                     }}
                                                     placeHolder="Select State"
                                                 />

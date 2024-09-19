@@ -1,45 +1,29 @@
 // /* eslint-disable no-unused-vars */
-import {  ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { Image } from "antd";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useUpdateProfile } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import auth from "../../../../firebase.config";
-import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
 import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
-import './UserProfile.css';
+import './UpdateProfileInformation.css';
 import fallbackImage from '../../../assets/fallbackImage.jpg'
+import PhoneInputWithCountrySelect from "react-phone-number-input";
+import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
+import 'react-phone-number-input/style.css'
+import "react-country-state-city/dist/react-country-state-city.css";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
+// import toast from "react-hot-toast";
 
 const UpdateProfileInformation = () => {
+
+    const userData = useLoaderData();
+    const navigate = useNavigate();
+
     // Get And Set Data Using Context API ________________________________________
     const {user, userNameIdRoll, uploadedProfileImg, setUploadedProfileImg, setMainProfileImage } = useContext(AuthContext);
-
-
-    const [userData, setUserData] = useState({});
-    const [getUserDataLoading, setGetUserDataLoading] = useState(false)
-    // Fetch User Data ___________________________________________________________
-    const [firstNameHandle, setFirstNameHandle] = useState();
-    const [lastNameHandle, setLastNameHandle] = useState();
-    const [addressHandle, setAddressHandle] = useState();
-    useEffect( () => {
-        setGetUserDataLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`)
-            .then( res => {
-                setFirstNameHandle(res.data.data.first_name)
-                setLastNameHandle(res.data.data.last_name)
-                setAddressHandle(res.data.data.address)
-                setUserData(res.data.data)
-                setUploadedProfileImg(user.photoURL)
-                setGetUserDataLoading(false)
-            })
-            .catch(er => console.log(er));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
-
-
 
     const [errorMessage, setErrorMessage] = useState('');
     const [upLoadLoading, setUploadLoading] = useState(false);
@@ -69,38 +53,45 @@ const UpdateProfileInformation = () => {
             .catch(er => console.log(er))
     };
 
+    // Phone Number Input 
+    const [value, setValue] = useState(userData?.data?.data?.phone);
+    const [valueErr, setValueErr] = useState('');
 
-    const [updateProfile, updating, error] = useUpdateProfile(auth);
+    // Country State Select 
+    const [countryid, setCountryid] = useState(0);
+    const [country, setCountry] = useState(userData?.data?.data?.country);
+    const [state, setState] = useState(userData?.data?.data?.state)
+    const [countryError, setCountryError] = useState('');
+    const [stateError, setStateError] = useState('')
 
-    const [udateLoading, setUpdateLoading] = useState(false)
+    const [updateLoading, setUpdateLoading] = useState(false)
+
+    const [updateProfile] = useUpdateProfile(auth);
     // React Hook Form Submit Function For Create User _________________________
-    const { register, handleSubmit,} = useForm();
+    const { register, handleSubmit, formState: { errors }} = useForm({
+        values: {
+            userName: userData?.data?.data?.userName, 
+            email: userData?.data?.data?.email, 
+            first_name: userData?.data?.data?.first_name, 
+            last_name: userData?.data?.data?.last_name,
+            city: userData?.data?.data?.city,
+            postalCode: userData?.data?.data?.postalCode
+        }});
     const onSubmit = async (data) => {
         setUpdateLoading(true)
-        let first_name;
-        let last_name;
-        let address;
-        if(data.preName){
-            first_name = data.preName;
-        }
-        if(data.newName){
-            first_name = data.newName
-        }
+        setValue('')
+        setCountryError('')
+        setStateError('')
 
-        if(data.preLast){
-            last_name = data.preLast
+        if(!value){
+            setValueErr('Please Enter your Phone number')
         }
-        if(data.newLast){
-            last_name = data.newLast
+        if(!country){
+            setCountryError('Please select your Country')
         }
-
-        if(data.preAdd){
-            address = data.preAdd
+        if(!state){
+            setStateError('Please select your State')
         }
-        if(data.newLast){
-            address = data.newAdd
-        }
-
         
         let photoURL;
         let imgKey;
@@ -118,21 +109,19 @@ const UpdateProfileInformation = () => {
             imgKey = '';
         }
 
-        const formData = {first_name, last_name, address, photoURL, imgKey,}
+        const formData = {...data, photoURL, imgKey, phone: value, country, state}
         
-
-        // // setMainProfileImage
-        // const displayName = `${data.nick_name}'__'${userNameIdRoll[1]}'__'${userNameIdRoll[2]}`;
         const success = await updateProfile({ photoURL });
 
         if(success){
            axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`, formData)
             .then(res => {
                 if(res.status == 200){
-                    setUserData(res.data.data);
                     setMainProfileImage(res.data.data.photoURL)
                     setUpdateLoading(false)
                     toast.success('Successfully Updated Your Profile Information!')
+                    navigate('/account')
+                    
                 }
             })
             .catch(er => console.log(er)) 
@@ -140,29 +129,32 @@ const UpdateProfileInformation = () => {
     
     };
 
-
-    if(getUserDataLoading){
-        return <LoadingComponentsInsidePage/>
+    const inputStyle ={
+        height: '36px',
+        border: '1px solid #E2E8F0'
     }
 
     return (
-        <div>
-            <div className="my-4">
-                <button><Link className="px-2 py-1 font-semibold text-sm text-slate-500 flex items-center inline bg-slate-200 rounded-md" to={'/account'}><ChevronLeftIcon className="w-4 h-4 me-1 font-bold"/>Back</Link></button>
-            </div>
-            <div>
-                <div className="border rounded-lg p-2">
-
-                    <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Upload/Change Profile Image</p>
-                    <Image
-                        width={80}
-                        height={80}
-                        className="rounded-full"
-                        src={uploadedProfileImg}
-                        fallback={fallbackImage}
-                        preview={false}
-                        alt="profile-image"
-                    />
+        <div className="h-full overflow-y-auto p-2 md:pt-16">
+            <h3 className='font-semibold text-xl pb-2 text-[#252525]'>Edit Personal Info</h3>
+            <div className="p-5 rounded-lg border">
+                <div className="">
+                    <div className="flex items-center gap-2">
+                        <Image
+                            width={100}
+                            height={100}
+                            className="rounded-full"
+                            src={uploadedProfileImg}
+                            fallback={fallbackImage}
+                            preview={false}
+                            alt="profile-image"
+                        />
+                        <div>
+                            <h2 className="text-2xl font-bold pb-1">{userData?.data?.data?.first_name} {userData?.data?.data?.last_name} </h2>
+                            <p className="">User Name: {userData.data?.data?.userName}</p>
+                        </div>
+                    </div>
+                    <p className="text-sm font-semibold text-[#09090B] mt-2">Change Profile Picture</p>
                     <div className="flex items-center ">
                         {
                             upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
@@ -173,49 +165,89 @@ const UpdateProfileInformation = () => {
 
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex flex-wrap gap-2 md:flex-nowrap justify-between items-center">
-                        <div className="flex-1">
-                            <p className="my-1 text-sm font-semibold text-slate-500 ms-2">First Name</p>
-                            {
-                                firstNameHandle && <input type="text" defaultValue={firstNameHandle} className="input rounded-full input-bordered w-full" {...register("preName")}/>
-                            }
-                            {
-                                !firstNameHandle && <input type="text" className="input rounded-full input-bordered w-full" {...register("newName")}/>
-                            }
-                        </div>
-                        
-                        <div className="flex-1">
-                            <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Last Name</p>
-                            {
-                                lastNameHandle && <input type="text" defaultValue={userData.last_name} className="input rounded-full input-bordered w-full" {...register("preLast")}/>
-                            }
-                            {
-                                !lastNameHandle && <input type="text" className="input rounded-full input-bordered w-full" {...register("newLast")}/>
-                            }
-                        </div>
-                    </div>
-                    <div className="mt-2">
-                        <p className="my-1 text-sm font-semibold text-slate-500 ms-2">User Name</p>
-                        <input type="text" defaultValue={userNameIdRoll[0]} className="input rounded-full input-bordered w-full" disabled/>
+                    <h4 className='font-semibold text-lg pb-2 text-[#252525] mt-4'>Personal Information</h4>
+                    <div className="">
 
-                        <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Address</p>
-                        {
-                            addressHandle && <input type="text" defaultValue={userData.address} className="input rounded-full input-bordered w-full" {...register("preAdd")}/> 
-                        }
-                        {
-                            !addressHandle && <input type="text" className="input rounded-full input-bordered w-full" {...register("newAdd")}/> 
-                        }
-                    </div>   
-                    {
-                        error && <span className='text-red-600 pt-2 block'>{error.message}</span>
-                    }
-                    
-                    <div className="flex items-center my-4">
-                        {
-                            udateLoading || updating && <span className="block loading loading-spinner loading-md me-2"></span>
-                        }
-                        <input type="submit" value={'Update'} className="btn btn-sm my-4 px-6 btn-accent rounded-full" />
+                        <div className="md:flex items-center gap-2">
+                            <div className="flex-1">
+                                <p className="text-sm text-[#768298]">First Name</p>
+                                <input style={inputStyle} type="text" className="input w-full" {...register("first_name")}/>
+                            </div>
+                            <div className="flex-1 pt-2 md:pt-0">
+                                <p className="text-sm text-[#768298]">Last Name</p>
+                                <input style={inputStyle} type="text" className="input w-full" {...register("last_name")}/>
+                            </div>
+                        </div>
+
+
+                        <div className="pt-3 md:w-[50%]">
+                            <p className="text-sm text-[#020617] font-semibold pb-1">Phone</p>
+                            <PhoneInputWithCountrySelect
+                                international
+                                style={inputStyle}
+                                placeholder="Enter phone number"
+                                className='input input-sm'
+                                value={value}
+                                onChange={e => setValue(e)}
+                                defaultCountry="IN"
+                            />
+                        </div>
+                        {valueErr && <span className='text-red-600 pt-2 block'>{valueErr}</span>}
+
+
+                        <div className="pt-4">
+                            <p className="text-sm text-[#020617] font-semibold pb-1">Address</p>
+                            <div className="grid gap-2 grid-cols-2">
+                                <div>
+                                    <p className="text-sm text-[#020617] font-semibold pb-1">Country</p>
+                                    <CountrySelect
+                                        onChange={(e) => {
+                                            setCountryid(e.id);
+                                            const name = e.name;
+                                            const emoji = e.emoji;
+                                            const v = {name, emoji}
+                                            setCountry(v)
+                                        }}
+                                        defaultValue={country}
+                                        placeHolder="Select Country"
+                                    />
+                                    {
+                                        countryError && <p className="text-red-600 pb-2">{countryError}</p>
+                                    }
+                                </div>
+                                <div>
+                                    <p className="text-sm text-[#020617] font-semibold pb-1">State</p>
+                                    <StateSelect
+                                        countryid={countryid}
+                                        onChange={(e) => {
+                                            setState(e)
+                                        }}
+                                        defaultValue={state}
+                                        placeHolder="Select State"
+                                    />
+                                    {
+                                        stateError && <p className="text-red-600 pb-2">{stateError}</p>
+                                    }
+                                </div>
+                                <div>
+                                    <p className="text-sm text-[#020617] font-semibold pb-1">City</p>
+                                    <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Enter City Name" {...register("city", { required: true})}/>
+                                    {errors.city && <span className='text-red-600 pb-2 block'>Please fill in the City Name</span>}
+                                </div>
+                                <div>
+                                    <p className="text-sm text-[#020617] font-semibold pb-1">Postal Code</p>
+                                    <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Enter Code Here" {...register("postalCode", { required: true})}/>
+                                    {errors.postalCode && <span className='text-red-600 pb-2 block'>Please fill in the Postal Code</span>}
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <div className="flex items center gap-2">
+                        {
+                            updateLoading && <LoadingComponentsInsidePage/>
+                        }
+                        <input type="submit" value={'Update Profile Information'} className="btn btn-sm btn-neutral my-4 rounded-md bg-[#0F172A]" />
+                    </div>                                       
                 </form>
             </div>
         </div>

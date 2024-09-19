@@ -334,6 +334,11 @@ const router = createBrowserRouter([
           },
         ]
       },
+      {
+        path: '/edit-profile/:id',
+        loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${params.id}`),
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UpdateProfileInformation/></ProtectUserRoute></Suspense>,
+      },
     ]
   },
 ]);
