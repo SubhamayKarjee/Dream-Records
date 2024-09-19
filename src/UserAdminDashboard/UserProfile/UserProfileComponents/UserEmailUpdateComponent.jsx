@@ -96,8 +96,8 @@ const UserEmailUpdateComponent = () => {
                 </div>
 
 
-                <h2 className="font-semibold pt-3">Change Email</h2>
-                <form onSubmit={handleSubmit(onSubmit)} className="mt-2 rounded-lg">
+                <h2 className="font-semibold py-3">Change Email</h2>
+                <form onSubmit={handleSubmit(onSubmit)} className="rounded-lg">
                     <div className="md:flex items-center gap-2">
                         <div className="flex-1">
                             <p className="text-sm font-semibold">New Email</p>

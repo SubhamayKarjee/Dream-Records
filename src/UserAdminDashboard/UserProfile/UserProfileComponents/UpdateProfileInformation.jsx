@@ -166,16 +166,15 @@ const UpdateProfileInformation = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <h4 className='font-semibold text-lg pb-2 text-[#252525] mt-4'>Personal Information</h4>
                     <div className="">
-
                         <div className="md:flex items-center gap-2">
                             <div className="flex-1">
                                 <p className="text-sm text-[#768298]">First Name</p>
-                                <input style={inputStyle} type="text" className="input w-full" {...register("first_name")} required/>
+                                <input style={inputStyle} type="text" className="input w-full" {...register("first_name", { required: true})}/>
                                 {errors.first_name && <span className='text-red-600 pt-2 block'>First Name Required</span>}
                             </div>
                             <div className="flex-1 pt-2 md:pt-0">
                                 <p className="text-sm text-[#768298]">Last Name</p>
-                                <input style={inputStyle} type="text" className="input w-full" {...register("last_name")}/>
+                                <input style={inputStyle} type="text" className="input w-full" {...register("last_name", { required: true})}/>
                                 {errors.last_name && <span className='text-red-600 pt-2 block'>Last Name Required</span>}
                             </div>
                         </div>
