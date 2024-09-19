@@ -7,6 +7,7 @@ import fallbackImage from '../../assets/userImage.webp'
 import { useNavigate } from "react-router-dom";
 
 
+
 const UserArtistComponentForHomePage = () => {
 
     const { userNameIdRoll } = useContext(AuthContext);
@@ -33,7 +34,7 @@ const UserArtistComponentForHomePage = () => {
                 <p className="text-sm font-semibold text-slate-500">Artists</p>
             </div>
             <div className="flex gap-4 flex-wrap py-3">
-                <div>
+                <div>                
                     <p style={{cursor: 'pointer', width: '90px', height: '78px', borderRadius: '12px'}} onClick={() => navigate('/artist')} className="outline-dashed outline-1 outline-slate-500 flex items-center justify-center"><UserPlusIcon className="w-10 h-10 text-slate-500"/></p>
                     <p className="text-center pt-2 text-sm">Add New</p>
                 </div>
@@ -46,7 +47,7 @@ const UserArtistComponentForHomePage = () => {
                             <div className="">
                                 <Image
                                   style={{width: '90px', height: '78px', borderRadius: '12px'}}
-                                  className="shadow"
+                                  className="shadow border"
                                   src={data.imgUrl}
                                   fallback={fallbackImage}
                                 />
