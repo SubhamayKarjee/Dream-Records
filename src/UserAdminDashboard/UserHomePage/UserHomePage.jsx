@@ -70,7 +70,7 @@ const UserHomePage = () => {
         <div className="md:flex md:h-full">
             {showPopup && <PopUp visible={showPopup} onClose={handleClosePopup} />}
             <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2 bg-[#FCFCFC] border-right md:pt-16'>
-                <h3 className='font-semibold text-xl pb-2'>Dashboard</h3>
+                <h3 className='font-semibold text-xl pb-2 text-[#252525]'>Dashboard</h3>
                 <div className='home_banner_image'>
                     <div className='h-full'>
                         <div className='p-4 h-full flex items-end '>
