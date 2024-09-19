@@ -33,7 +33,7 @@ const UserProfile = () => {
 
     return (
         <div className="md:h-full">
-            <div className='h-full overflow-y-auto md:border-r p-2 md:pt-16'>
+            <div className='md:h-full overflow-y-auto md:border-r p-2 md:pt-16'>
                 <h3 className='font-semibold text-xl pb-2 text-[#252525]'>My Account</h3>
                 <div className="p-5 rounded-lg border">
                     <div className='flex items-center'>
@@ -62,7 +62,7 @@ const UserProfile = () => {
                             </div>
                         </div>
                         <div>
-                            <h2 className="text-2xl font-bold pb-1">{userData?.first_name} {userData?.last_name} </h2>
+                            <h2 className="text-2xl font-bold">{userData?.first_name} {userData?.last_name} </h2>
                             <p className="">User Name: {userData?.userName}</p>
                         </div>
                     </div>
@@ -123,14 +123,14 @@ const UserProfile = () => {
                                     <p className="text-sm text-[#768298]">Email</p>
                                     <div className="md:flex justify-between">
                                         <p className="font-semibold text-base">{user.email}</p>
-                                        <span className="text-sm flex items-center border px-3 pt-1 font-semibold rounded-md md:me-4">Change Email <PencilSquareIcon className="w-4 h-4 ms-1"/></span>
+                                        <span style={{cursor: 'pointer'}} onClick={() => navigate('/email-update')} className="text-sm flex items-center border px-3 pt-1 font-semibold rounded-md md:me-4">Change Email <PencilSquareIcon className="w-4 h-4 ms-1"/></span>
                                     </div>
                                 </div>
                                 <div className="flex-1">
                                     <p className="text-sm text-[#768298] pt-4 md:pt-0">Password</p>
                                     <div className="md:flex justify-between">
                                         <p className="font-semibold text-base">***********</p>
-                                        <span className="text-sm flex items-center border px-3 pt-1 font-semibold rounded-md">Change Password <PencilSquareIcon className="w-4 h-4 ms-1"/></span>
+                                        <span style={{cursor: 'pointer'}} onClick={() => navigate('/password-update')} className="text-sm flex items-center border px-3 pt-1 font-semibold rounded-md">Change Password <PencilSquareIcon className="w-4 h-4 ms-1"/></span>
                                     </div>
                                 </div>
                             </div>

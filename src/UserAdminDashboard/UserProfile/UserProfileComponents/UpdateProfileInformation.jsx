@@ -134,7 +134,7 @@ const UpdateProfileInformation = () => {
     }
 
     return (
-        <div className="h-full overflow-y-auto p-2 md:pt-16">
+        <div className="md:h-full overflow-y-auto p-2 md:pt-16">
             <h3 className='font-semibold text-xl pb-2 text-[#252525]'>Edit Personal Info</h3>
             <div className="p-5 rounded-lg border">
                 <div className="">
@@ -149,7 +149,7 @@ const UpdateProfileInformation = () => {
                             alt="profile-image"
                         />
                         <div>
-                            <h2 className="text-2xl font-bold pb-1">{userData?.data?.data?.first_name} {userData?.data?.data?.last_name} </h2>
+                            <h2 className="text-2xl font-bold">{userData?.data?.data?.first_name} {userData?.data?.data?.last_name} </h2>
                             <p className="">User Name: {userData.data?.data?.userName}</p>
                         </div>
                     </div>
@@ -170,14 +170,15 @@ const UpdateProfileInformation = () => {
                         <div className="md:flex items-center gap-2">
                             <div className="flex-1">
                                 <p className="text-sm text-[#768298]">First Name</p>
-                                <input style={inputStyle} type="text" className="input w-full" {...register("first_name")}/>
+                                <input style={inputStyle} type="text" className="input w-full" {...register("first_name")} required/>
+                                {errors.first_name && <span className='text-red-600 pt-2 block'>First Name Required</span>}
                             </div>
                             <div className="flex-1 pt-2 md:pt-0">
                                 <p className="text-sm text-[#768298]">Last Name</p>
                                 <input style={inputStyle} type="text" className="input w-full" {...register("last_name")}/>
+                                {errors.last_name && <span className='text-red-600 pt-2 block'>Last Name Required</span>}
                             </div>
                         </div>
-
 
                         <div className="pt-3 md:w-[50%]">
                             <p className="text-sm text-[#020617] font-semibold pb-1">Phone</p>
@@ -192,7 +193,6 @@ const UpdateProfileInformation = () => {
                             />
                         </div>
                         {valueErr && <span className='text-red-600 pt-2 block'>{valueErr}</span>}
-
 
                         <div className="pt-4">
                             <p className="text-sm text-[#020617] font-semibold pb-1">Address</p>
