@@ -23,14 +23,14 @@ const SingleSupportPage = () => {
 
 
     return (
-        <div className="my-2">
+        <div className="mt-16 mx-2 h-screen overflow-y-auto">
             {
                 loading && <div className='flex justify-center items-center'><span className="loading loading-spinner loading-md me-2"></span></div>
             }
             {
                 supportData && supportData.map(data => 
                     <div className='p-2 rounded-md border' key={data._id}>
-                        <div className="relative bg-slate-100 p-2 rounded-md">
+                        <div className="relative p-2 rounded-md">
                             {
                                 data.status === 'Pending' &&
                                 <div className="flex items-center p-1 absolute top-2 right-2 bg-[#ffae00] rounded-md shadow">
@@ -46,15 +46,25 @@ const SingleSupportPage = () => {
                                 </div>
                             }
                             <div>
-                                <p>Submited Request <span className="font-bold text-slate-500">{data.date} {data.month} {data.year} || {data.time}</span></p>
-                                <p className='text-sm text-slate-500'>{data?.supportText} </p>
-                                {
-                                    data?.attachment &&
-                                    <div className='p-2 border rounded-md mt-2'>
-                                        <p className='text-sm text-slate-500'>Attachment</p>
-                                        <a className="px-2 py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={data?.attachment?.fileUrl} download={data?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
-                                    </div>
-                                }
+                                <div className="flex justify-between items-center">
+                                    <h2 className="text-xl font-bold">Support Title <span className="text-sm ">{data.status}</span></h2>
+                                    <p>{data.date} {data.month} {data.year} || {data.time}</p>
+                                </div>
+                                <p className="font-bold text-sm">User Name</p>
+
+                                <div className="p-4 rounded-lg border">
+                                    <p className='text-sm text-slate-500'>{data?.supportText} </p>
+                                    <p className='text-sm text-slate-500'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore quod ducimus nihil optio illum quidem odit rerum non praesentium fugit? </p>
+                                    <p className='text-sm text-slate-500'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore quod ducimus nihil optio illum quidem odit rerum non praesentium fugit? </p>
+                                    <p className='text-sm text-slate-500'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore quod ducimus nihil optio illum quidem odit rerum non praesentium fugit? </p>
+                                    {
+                                        data?.attachment &&
+                                        <div className='p-2 border rounded-md mt-2'>
+                                            <p className='text-sm text-slate-500'>Attachment</p>
+                                            <a className="px-2 py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={data?.attachment?.fileUrl} download={data?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
                         {

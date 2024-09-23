@@ -38,6 +38,7 @@ const UserAdminHomePage = () => {
             return <LoadingComponentsForPage/>
         }
         let userNameIdRoll = user?.displayName?.split("'__'");
+        console.log(userNameIdRoll);
         // Create a new Date object for the current date and time
         const now = new Date();
 

@@ -1,14 +1,16 @@
-import { Select, Tabs } from 'antd';
+import { DatePicker, Divider, Modal, Select, Tabs } from 'antd';
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import toast from 'react-hot-toast';
 // import { useNavigate } from 'react-router-dom';
-import supportIcon from '../../assets/support-icon/support.png'
 import { AuthContext } from '../UserAdminHomePage/UserAdminHomePage';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css'
 import ChartSupport from './ChartSupport';
 import CallSupport from './CallSupport';
+import { PlusIcon } from '@heroicons/react/24/solid';
+import { useForm } from 'react-hook-form';
+import './SupportPage.css'
 
 
 
@@ -139,14 +141,111 @@ const SupportPage = () => {
         })
     }
 
+    const inputStyle ={
+        height: '36px',
+        border: '1px solid #E2E8F0'
+    }
+
+    const onChange = (date, dateString) => {
+        console.log(date, dateString);
+    };
+
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const { register, handleSubmit, formState: { errors }} = useForm();
+    const onSubmit = async (data) => {
+
+        try {
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+        
+    }
+
 
     return (
-        <div className='overflow-y-auto h-full'>
-            <div className='flex items-center mt-2 p-2 rounded-md bg-green-100'>
-                <img className='me-2' src={supportIcon} alt={supportIcon} />
-                <h1 className='font-semibold text-xl text-slate-500'>Support</h1>
+        <div className='pt-16 p-2 overflow-y-auto h-full'>
+            <h3 className='font-semibold text-xl text-[#252525]'>Support</h3>
+            <div className='flex items-center justify-between py-2'>
+                <input style={inputStyle} type="text" className='input input-sm border w-80' placeholder='Type & Enter to Search'/>
+                <button onClick={showModal} className='btn btn-sm btn-neutral flex items-center bg-[#18181B] w-40 h-9'> <PlusIcon className='w-4 h-4'/> Create</button>
+
+                <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                    <h2 className='font-bold text-xl text-[#020617]'>Support Box</h2>
+                    <p className='text-sm text-[#64748B]'>If you have a complaint or opinion about something, you can let us know. We will try to answer your message as soon as possible</p>
+                    <div className='py-3'>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <div>
+                                <p className="text-sm text-[#020617] font-semibold pb-1 pt-2">Support Title</p>
+                                <input style={inputStyle} type="text" className="input-sm w-full input" placeholder='Issue name here' {...register("title", { required: true})}/>
+                                {errors.title && <span className='text-red-600 pt-2 block'>Support Title Required</span>}
+
+                                <p className="text-sm text-[#020617] font-semibold pb-1 pt-2">Describe Issue here</p>
+                                <textarea type="text" className="rounded-md w-full textarea textarea-bordered" placeholder='Type your message here' {...register("text", { required: true})}/>
+                                {errors.title && <span className='text-red-600 pt-2 block'>Issue Required</span>}
+
+                                <p className="text-sm text-[#020617] font-semibold pb-1 pt-2">Attach issue image</p>
+                                <div className="flex items-center ">
+                                    {
+                                        upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                                    }
+                                    <input type="file" id="fileInput" name='image' onChange={e => attachmentUpload(e.target.files)} />
+                                </div>
+                                <p className='text-sm text-slate-500'>Supported files JPG, JPEG, PDF and PNG</p>
+                                <input id="fileInput" className='btn btn-sm mt-3 w-full rounded-md btn-neutral' type="submit" value="Submit" />
+                            </div>
+                        </form>
+                    </div>
+                </Modal>
+
+
             </div>
-            <p className='text-sm text-slate-500 px-2 mt-1'>If you have a complaint or opinion about something, you can let us know. We will try to answer your message as soon as possible</p>
+            <Divider className='my-2'/>
+            <div className='pt-2 flex justify-between items-center'>
+                <div className='border p-1 rounded-md'>
+                    <button className='bg-[#F1F5F9] px-4 py-1 rounded-sm text-sm font-semibold'>All</button>
+                    <button className='px-4 py-1 rounded-sm text-sm font-semibold'>Pending</button>
+                    <button className='px-4 py-1 rounded-sm text-sm font-semibold'>Solved</button>
+                </div>
+                <div>
+                    <DatePicker className="" onChange={onChange} picker="year" />
+                </div>
+            </div>
+
+            <div className='mt-2'>
+                <div className="p-2">
+                    <div className='border rounded-lg p-3 mb-3'>
+                        <h4 className='font-bold text-[#252525]'>title</h4>
+                        <p className='text-[#252525]'>text Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam unde corrupti maiores perspiciatis vero dolores.</p>
+                    </div>
+                    <div className='border rounded-lg p-3 mb-3'>
+                        <h4 className='font-bold text-[#252525]'>title</h4>
+                        <p className='text-[#252525]'>text Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam unde corrupti maiores perspiciatis vero dolores.</p>
+                    </div>
+                    <div className='border rounded-lg p-3 mb-3'>
+                        <h4 className='font-bold text-[#252525]'>title</h4>
+                        <p className='text-[#252525]'>text Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam unde corrupti maiores perspiciatis vero dolores.</p>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
             <div className='my-3 p-3 md:p-4 border rounded-lg md:flex justify-between'>
                 <div className='flex-1 m-2'>
                     <p className='font-bold text-sm text-slate-500 mb-2'>Support Box</p>
