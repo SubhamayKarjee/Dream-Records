@@ -19,7 +19,7 @@ const ReleaseCardComponent = ({releaseData, totalItems, fetchLoading, currentPag
                 {
                     // eslint-disable-next-line react/prop-types
                     releaseData && releaseData.map(d => 
-                        <div key={d._id} style={{cursor: 'pointer', borderRadius: '24px', height: '276px', width: '265px'}} onClick={() => handleNavigate(d._id)}  className="p-1 border">
+                        <div key={d._id} style={{cursor: 'pointer', borderRadius: '24px', height: '276px',}} onClick={() => handleNavigate(d._id)}  className="p-1 border">
                             <img className="" style={{width: '100%', height: '191px', borderRadius: '20px'}} src={d.imgUrl} alt={d.releaseTitle} />
                             <div className="">
                                 <div className="p-3">

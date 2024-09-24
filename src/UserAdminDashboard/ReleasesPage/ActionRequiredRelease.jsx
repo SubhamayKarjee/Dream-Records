@@ -20,6 +20,7 @@ const ActionRequiredRelease = ({onClose}) => {
                 if(res.data.data.length === 0){
                     setNoData(true);
                 }
+                console.log(res.data.data);
               }
             })
             .catch(er => console.log(er));
@@ -33,21 +34,31 @@ const ActionRequiredRelease = ({onClose}) => {
     }
 
     return (
-        <div className="p-3">
+        <div className="p-2">
             {
                 release && release.map(d => 
-                    <div key={d._id} style={{cursor: 'pointer'}} onClick={() => handleNavigate(d._id)}  className="card_parent_div my-2">
-                        <div onClick={onClose}>
-                            <img style={{minHeight: '160px'}} src={d.imgUrl} alt="" />
-                            <div className="card_child_div">
-                                <div className="card_content">
-                                    <p className="font-bold text-white">{d.releaseTitle}</p>
-                                    <h3 className="text-xs font-semibold text-slate-300">ID: {d._id}</h3>
+                    <div key={d._id} style={{cursor: 'pointer'}} onClick={() => handleNavigate(d._id)}  className="mb-1 bg-[#F2F2F2] p-2 rounded-md">
+                        <div onClick={onClose} className='flex items-center gap-2'>
+                            <img style={{width: '88px', height: '65px', borderRadius: '8px'}} src={d.imgUrl} alt="" />
+                            <div className="">
+                                <div className="">
+                                    <h3 className="font-semibold text-[#252525]">{d.releaseTitle}</h3>
+                                    <p className="text-sm text-[#252525]">UPC {d.UPC}</p>
+                                    {
+                                        d.status === 'Action Required' &&
+                                                <div className="flex items-center">
+                                                    <ExclamationTriangleIcon className="h-3 w-3 text-[#71717A] me-1"/>
+                                                    <p className="text-xs font-semibold text-[#71717A]">{d.status}</p>
+                                                </div>
+                                    }
+                                    {
+                                        d.status === 'Takedown' &&
+                                            <div className="flex items-center">
+                                                <ExclamationTriangleIcon className="h-3 w-3 text-[#FF7050] me-1"/>
+                                                <p className="text-xs font-semibold text-[#FF7050]">{d.status}</p>
+                                            </div>
+                                    }
                                 </div>
-                            </div>
-                            <div className="flex items-center p-1 music_status bg-red-700 rounded-md shadow">
-                                <ExclamationTriangleIcon className="h-3 w-3 text-white me-1"/>
-                                <p className="text-xs font-semibold text-white">{d.status}</p>
                             </div>
                         </div>
                     </div>

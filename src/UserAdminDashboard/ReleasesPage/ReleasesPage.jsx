@@ -94,11 +94,11 @@ const ReleasesPage = () => {
 
     return (
         <div className="md:flex md:h-full">
-            <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2'>
-                <div className="md:pt-16">
+            <div className='h-full md:basis-3/4 overflow-y-auto md:border-r'>
+                <div className="md:pt-16 px-2">
                     <h3 className='font-semibold text-xl text-[#252525]'>Releases</h3>
                     {/* Search and Create Release Section ______________________________________________________________________________ */}
-                    <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg">
+                    <div className="md:flex md:justify-between md:items-center border-b">
                         <div className="my-2">
                             <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                         </div>
@@ -110,7 +110,7 @@ const ReleasesPage = () => {
 
                 
                 {/* Show Release Section ____________________________________________ */}
-                <main className="mt-3">
+                <main className="mt-3 p-2">
                     <div className="flex justify-between">
                         <div className="h-10 px-[5px] py-1 flex items-center p-1 border rounded-md">
                             <NavLink style={() => activeLink('/releases/All', currentPath)} to={'/releases/All/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">All</NavLink>
@@ -141,8 +141,8 @@ const ReleasesPage = () => {
 
             {/* Sideber Div  _______________________________*/}
             <div className="md:basis-1/4 overflow-y-auto hidden md:block">
-                <div className='md:pt-16 p-2'>
-                <h3 className='font-semibold text-xl pb-2'>Notices</h3>
+                <div className='md:pt-16 px-2'>
+                <h3 className='font-semibold text-xl'>Notices</h3>
                 </div>
                 <ActionRequiredRelease/>
             </div>
