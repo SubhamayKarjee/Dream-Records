@@ -1,18 +1,18 @@
 import './UserAdminHomePage.css'
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo/Dream Records Logo (Dark).png';
 import { 
     HomeIcon, 
     Bars3BottomLeftIcon,
     DocumentCheckIcon,
-    UserGroupIcon,
     UsersIcon,
     ChartPieIcon,
     UserCircleIcon,
     CurrencyDollarIcon,
     RectangleGroupIcon,
-    ExclamationTriangleIcon,
- } from '@heroicons/react/24/solid'
+    TagIcon,
+    InformationCircleIcon,
+ } from '@heroicons/react/24/outline'
 import { useEffect, useState } from 'react';
 import { Drawer, Image } from 'antd';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
@@ -27,6 +27,8 @@ export const AuthContext = createContext();
 const UserAdminHomePage = () => {
 
     const navigate = useNavigate()
+    const location = useLocation();
+    const currentPath = location.pathname;
 
     const [signOut, error1] = useSignOut(auth);
     const [user, loading] = useAuthState(auth);
@@ -124,6 +126,19 @@ const UserAdminHomePage = () => {
         signOut();
         navigate('/log-in')
     }
+
+    const activeLink = (isActive) => {
+        return {
+            backgroundColor: isActive ? '#EAEAEA' : '',
+        }
+    }
+
+    const activeLinkDynamic = (to , currentPath) => {
+        return currentPath.startsWith(to)
+        ? { backgroundColor: '#EAEAEA',} // Active styles
+        : {};
+    }
+
     return (
         <section className='md:h-screenn bg-[#FAFAFA]'>
             <div className='xl:max-w-[1300px] lg:max-w-[96%] md:max-w-[96%] sm:max-w-[100%] w-[100%] mx-auto'>
@@ -147,46 +162,46 @@ const UserAdminHomePage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div  className='my-4 first_layoutIssue'>
+                        <div  className='mt-8 first_layoutIssue'>
                              {/* __________________________________________________________________________________________________________ */}
                             {/* Admin All Nav Link ________________________________________________________________________________________ */}
                             <div className='py-2'> 
-                                <Link className='flex items-center py-2' to={'/'}>
+                                <NavLink style={({isActive}) => activeLink(isActive)} className='flex items-center py-2 ps-3 rounded-md' to={'/'}>
                                     <HomeIcon className="h-7 w-7 pe-2" />
                                     Home
-                                </Link>
-                                <Link className='flex items-center py-2' to={'/releases'}>
+                                </NavLink>
+                                <NavLink style={() => activeLinkDynamic('/releases', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/releases/All/1/6'}>
                                     <DocumentCheckIcon className="h-7 w-7 pe-2" />
                                     Releases
-                                </Link>
-                                <Link className='flex items-center py-2' to={'/artist'}>
+                                </NavLink>
+                                <NavLink style={() => activeLinkDynamic('/artist', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/artist'}>
                                     <UsersIcon className="h-7 w-7 pe-2" />
                                     Artists
-                                </Link>
-                                <Link className='flex items-center py-2' to={'/labels'}>
-                                    <UserGroupIcon className="h-7 w-7 pe-2" />    
+                                </NavLink>
+                                <NavLink style={() => activeLinkDynamic('/labels', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/labels'}>
+                                    <TagIcon className="h-7 w-7 pe-2" />    
                                     Labels
-                                </Link>
-                                <Link className='flex items-center py-2' to={'/analytics'}>
+                                </NavLink>
+                                <NavLink style={() => activeLinkDynamic('/analytics', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/analytics'}>
                                     <ChartPieIcon className="h-7 w-7 pe-2" />
                                     Analytics
-                                </Link>
-                                <Link className='flex items-center py-2' to={'/wallet'}>
+                                </NavLink>
+                                <NavLink style={() => activeLinkDynamic('/wallet', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/wallet'}>
                                     <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                     Wallet
-                                </Link>
-                                <Link className='flex items-center py-2' to={'/claim-release'}>
-                                    <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
+                                </NavLink>
+                                <NavLink style={() => activeLinkDynamic('/claim-release', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/claim-release'}>
+                                    <InformationCircleIcon className="h-7 w-7 pe-2" />
                                     Rights manager
-                                </Link>
-                                <Link className='flex items-center py-2' to={'/support'}>
+                                </NavLink>
+                                <NavLink style={() => activeLinkDynamic('/support', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/support'}>
                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                     Support
-                                </Link>
-                                <Link className='flex items-center py-2' to={'/account'}>
+                                </NavLink>
+                                <NavLink style={() => activeLinkDynamic('/account', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/account'}>
                                     <UserCircleIcon className="h-7 w-7 pe-2" />
                                     Account
-                                </Link>
+                                </NavLink>
                             </div>
                         </div>
                     </div>
@@ -257,42 +272,42 @@ const UserAdminHomePage = () => {
                                             </Link>
                                             
                                             <div className='mt-2 py-2'> 
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' htmlFor="menu_drower" aria-label="close sidebar" to={'/'}>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' htmlFor="menu_drower" aria-label="close sidebar" to={'/'}>
                                                     <HomeIcon className="h-7 w-7 pe-2" />
                                                     Home
-                                                </Link>
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/releases'}>
+                                                </NavLink>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/releases'}>
                                                     <DocumentCheckIcon className="h-7 w-7 pe-2" />
                                                     Releases
-                                                </Link>
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/artist'}>
+                                                </NavLink>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/artist'}>
                                                     <UsersIcon className="h-7 w-7 pe-2" />
                                                     Artists
-                                                </Link>
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/labels'}>
-                                                    <UserGroupIcon className="h-7 w-7 pe-2" />    
+                                                </NavLink>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/labels'}>
+                                                    <TagIcon className="h-7 w-7 pe-2" />    
                                                     Labels
-                                                </Link>
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/analytics'}>
+                                                </NavLink>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/analytics'}>
                                                     <ChartPieIcon className="h-7 w-7 pe-2" />
                                                     Analytics
-                                                </Link>
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/wallet'}>
+                                                </NavLink>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/wallet'}>
                                                     <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                                     Wallet
-                                                </Link>
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/claim-release'}>
-                                                    <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
+                                                </NavLink>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/claim-release'}>
+                                                    <InformationCircleIcon className="h-7 w-7 pe-2" />
                                                     Rights manager
-                                                </Link>
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/support'}>
+                                                </NavLink>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/support'}>
                                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                                     Support
-                                                </Link>
-                                                <Link onClick={onClose} className='text-white flex items-center py-2' to={'/account'}>
+                                                </NavLink>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/account'}>
                                                     <UserCircleIcon className="h-7 w-7 pe-2" />
                                                     Account
-                                                </Link>
+                                                </NavLink>
                                             </div>
                                         </div>
                                     </div>

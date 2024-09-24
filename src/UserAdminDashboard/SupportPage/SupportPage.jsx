@@ -175,7 +175,7 @@ const SupportPage = () => {
 
 
     return (
-        <div className='pt-16 p-2 overflow-y-auto h-full'>
+        <div className='md:pt-16 p-2 overflow-y-auto h-full'>
             <h3 className='font-semibold text-xl text-[#252525]'>Support</h3>
             <div className='flex items-center justify-between py-2'>
                 <input style={inputStyle} type="text" className='input input-sm border w-80' placeholder='Type & Enter to Search'/>
@@ -213,10 +213,10 @@ const SupportPage = () => {
             </div>
             <Divider className='my-2'/>
             <div className='pt-2 flex justify-between items-center'>
-                <div className='border p-1 rounded-md'>
-                    <button className='bg-[#F1F5F9] px-4 py-1 rounded-sm text-sm font-semibold'>All</button>
-                    <button className='px-4 py-1 rounded-sm text-sm font-semibold'>Pending</button>
-                    <button className='px-4 py-1 rounded-sm text-sm font-semibold'>Solved</button>
+                <div className='h-10 px-[5px] py-1 flex items-center p-1 border rounded-md'>
+                    <button className='bg-[#F1F5F9] px-[12px] py-[6px] rounded text-sm font-semibold'>All</button>
+                    <button className='px-[12px] py-[6px] rounded text-sm font-semibold'>Pending</button>
+                    <button className='px-[12px] py-[6px] rounded text-sm font-semibold'>Solved</button>
                 </div>
                 <div>
                     <DatePicker className="" onChange={onChange} picker="year" />

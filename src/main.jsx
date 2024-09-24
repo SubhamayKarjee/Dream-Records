@@ -216,7 +216,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserHomePage/></ProtectUserRoute></Suspense>
       },
       {
-        path: '/releases',
+        path: '/releases/:status/:pageNumber/:perPageRelease',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><ReleasesPage/></ProtectUserRoute></Suspense>
       },
       {
