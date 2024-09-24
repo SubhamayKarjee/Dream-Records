@@ -65,6 +65,10 @@ const UserHomePage = () => {
     const onClose = () => {
         setOpen(false);
     };
+
+    const sideBarShadow = {
+        boxShadow: '-2px 2px 18px 0px #EFEFEF',
+    }
     
     return (
         <div className="md:flex md:h-full">
@@ -124,7 +128,7 @@ const UserHomePage = () => {
 
 
             {/* Notification Div Desktop _______________________________*/}
-            <div className="md:basis-1/4 hidden md:block bg-white md:pt-16 px-2">
+            <div style={sideBarShadow} className="md:basis-1/4 hidden md:block bg-white md:pt-16 px-2">
             <h3 className='font-semibold text-xl pb-2'>Notices</h3>
                     {
                         getDataLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-sm me-2"></span></div>

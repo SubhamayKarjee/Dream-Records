@@ -1,8 +1,8 @@
 // import React from 'react';
 
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { ArrowsUpDownIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { BellAlertIcon, DocumentCheckIcon } from "@heroicons/react/24/outline";
-import { Drawer } from "antd";
+import { Button, Drawer, Dropdown } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -91,6 +91,19 @@ const ReleasesPage = () => {
         border: '1px solid #E2E8F0'
     }
 
+    const sideBarShadow = {
+        boxShadow: '-2px 2px 18px 0px #EFEFEF',
+    }
+
+    const items = [
+        { key: '1',label: (<a rel="noopener noreferrer" href={'/releases/All/1/6'}>All</a>),},
+        { key: '2',label: (<a rel="noopener noreferrer" href={'/releases/Pending/1/6'}>Pending</a>),},
+        { key: '3',label: (<a rel="noopener noreferrer" href={'/releases/Review/1/6'}>Review</a>),},
+        { key: '4',label: (<a rel="noopener noreferrer" href={'/releases/Approved/1/6'}>Approved</a>),},
+        { key: '5',label: (<a rel="noopener noreferrer" href={'/releases/Action Required/1/6'}>Action Required</a>),},
+        { key: '6',label: (<a rel="noopener noreferrer" href={'/releases/Takedown/1/6'}>Takedown</a>),},
+    ];
+
 
     return (
         <div className="md:flex md:h-full">
@@ -103,7 +116,7 @@ const ReleasesPage = () => {
                             <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                         </div>
                         <div className="my-2">
-                            <button onClick={()=>navigate('/create-release')} className='btn btn-neutral bg-[#18181B] 3 h-9 btn-sm'><PlusIcon className="w-5 h-5"/> Create Release</button>
+                            <button onClick={()=>navigate('/create-release')} className='btn btn-neutral bg-[#18181B] 3 h-9 btn-sm w-full'><PlusIcon className="w-5 h-5"/> Create Release</button>
                         </div>
                     </div>
                 </div>
@@ -112,14 +125,28 @@ const ReleasesPage = () => {
                 {/* Show Release Section ____________________________________________ */}
                 <main className="mt-3 p-2">
                     <div className="flex justify-between">
-                        <div className="h-10 px-[5px] py-1 flex items-center p-1 border rounded-md">
-                            <NavLink style={() => activeLink('/releases/All', currentPath)} to={'/releases/All/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">All</NavLink>
-                            <NavLink style={() => activeLink('/releases/Pending', currentPath)} to={'/releases/Pending/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Pending</NavLink>
-                            <NavLink style={() => activeLink('/releases/Review', currentPath)} to={'/releases/Review/1/8'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Review</NavLink>
-                            <NavLink style={() => activeLink('/releases/Approved', currentPath)} to={'/releases/Approved/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Approved</NavLink>
-                            <NavLink style={() => activeLink('/releases/Action', currentPath)} to={'/releases/Action Required/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Action Required</NavLink>
-                            <NavLink style={() => activeLink('/releases/TakeDown', currentPath)} to={'/releases/TakeDown/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Takedown</NavLink>
+                        {/* Desktop Div _____________________________________ */}
+                        <div className="hidden md:block">
+                            <div className="h-10 px-[5px] py-1 flex items-center p-1 border rounded-md">
+                                <NavLink style={() => activeLink('/releases/All', currentPath)} to={'/releases/All/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">All</NavLink>
+                                <NavLink style={() => activeLink('/releases/Pending', currentPath)} to={'/releases/Pending/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Pending</NavLink>
+                                <NavLink style={() => activeLink('/releases/Review', currentPath)} to={'/releases/Review/1/8'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Review</NavLink>
+                                <NavLink style={() => activeLink('/releases/Approved', currentPath)} to={'/releases/Approved/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Approved</NavLink>
+                                <NavLink style={() => activeLink('/releases/Action', currentPath)} to={'/releases/Action Required/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Action Required</NavLink>
+                                <NavLink style={() => activeLink('/releases/TakeDown', currentPath)} to={'/releases/TakeDown/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Takedown</NavLink>
+                            </div>
                         </div>
+                        {/* Mobile Div _____________________________________ */}
+                        <div className="block md:hidden">
+                            <Dropdown
+                                menu={{items,}}
+                                placement="bottomLeft"
+                                className="h-10"
+                            >
+                                <Button className="text-md font-semibold flex items-center gap-2">{status} <ArrowsUpDownIcon className="w-4 h-4"/></Button>
+                            </Dropdown>
+                        </div>
+
                         <div className="flex justify-between items-center gap-2">
                             <div className="flex items-center">
                                 <DocumentCheckIcon className="w-4 h-4 me-1 text-slate-500"/>
@@ -140,7 +167,7 @@ const ReleasesPage = () => {
 
 
             {/* Sideber Div  _______________________________*/}
-            <div className="md:basis-1/4 overflow-y-auto hidden md:block">
+            <div style={sideBarShadow} className="md:basis-1/4 overflow-y-auto hidden md:block">
                 <div className='md:pt-16 px-2'>
                 <h3 className='font-semibold text-xl'>Notices</h3>
                 </div>
