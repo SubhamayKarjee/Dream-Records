@@ -74,7 +74,6 @@ const DetailsSingleArtist = () => {
         setSearchText(e)
     }
 
-
     const handlePageChange = (page) => {
         navigate(`/artist/${id}/${status}/${page}/6`)
       };
@@ -109,18 +108,14 @@ const DetailsSingleArtist = () => {
         .catch(er => console.log(er));
     }
 
-
     const location = useLocation();
     const currentPath = location.pathname;
-
 
     const activeLink = (to , currentPath) => {
         return currentPath.startsWith(to)
         ? { backgroundColor: '#F1F5F9'} // Active styles
         : {};
     }
-
-
     const items = [
         { key: '1',label: (<a rel="noopener noreferrer" href={`/artist/${id}/All/1/6`}>All</a>),},
         { key: '2',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Pending/1/6`}>Pending</a>),},
@@ -129,16 +124,11 @@ const DetailsSingleArtist = () => {
         { key: '5',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Action Required/16`}>Action Required</a>),},
         { key: '6',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Takedown/1/6`}>Takedown</a>),},
     ];
-
     const inputStyle ={
         height: '36px',
         border: '1px solid #E2E8F0',
         minWidth: '200px'
     }
-
-
-
-
 
     const cancel = () => {
       return;
@@ -151,7 +141,7 @@ const DetailsSingleArtist = () => {
 
     return (
         <div className="md:h-full">
-            <div className="h-full overflow-y-auto p-2 md:pt-16">
+            <div className="h-full overflow-y-auto px-3 md:pt-16">
                 <h3 className='font-semibold text-xl text-[#252525]'>Artist Details</h3>
                 {
                     artistFetchLoading == true && 
