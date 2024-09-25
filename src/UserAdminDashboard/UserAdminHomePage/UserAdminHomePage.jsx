@@ -174,11 +174,11 @@ const UserAdminHomePage = () => {
                                     <DocumentCheckIcon className="h-7 w-7 pe-2" />
                                     Releases
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/artist', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/artist/1/10'}>
+                                <NavLink style={() => activeLinkDynamic('/artist', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/artist/1/8'}>
                                     <UsersIcon className="h-7 w-7 pe-2" />
                                     Artists
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/labels', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/labels/All/1/10'}>
+                                <NavLink style={() => activeLinkDynamic('/labels', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/labels/All/1/8'}>
                                     <TagIcon className="h-7 w-7 pe-2" />    
                                     Labels
                                 </NavLink>
@@ -276,15 +276,15 @@ const UserAdminHomePage = () => {
                                                     <HomeIcon className="h-7 w-7 pe-2" />
                                                     Home
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/releases'}>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/releases/All/1/6'}>
                                                     <DocumentCheckIcon className="h-7 w-7 pe-2" />
                                                     Releases
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/artist'}>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/artist/1/8'}>
                                                     <UsersIcon className="h-7 w-7 pe-2" />
                                                     Artists
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/labels'}>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/labels/All/1/8'}>
                                                     <TagIcon className="h-7 w-7 pe-2" />    
                                                     Labels
                                                 </NavLink>
