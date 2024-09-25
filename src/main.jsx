@@ -271,15 +271,15 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: '/artist/:pageNumber/:perPageRelease',
+        path: '/artist/:pageNumber/:perPageArtist',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserArtistPage/></ProtectUserRoute></Suspense>
       },
       {
-        path: '/artist/:id/:status/:pageNumber/:perPageRelease',
+        path: '/artist/:id/:status/:pageNumber/:perPageArtist',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><DetailsSingleArtist/></ProtectUserRoute></Suspense>
       },
       {
-        path: '/labels/:status/:pageNumber/:perPageRelease',
+        path: '/labels/:status/:pageNumber/:perPageLabels',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserLabelsPage/></ProtectUserRoute></Suspense>
       },
       {

@@ -1,7 +1,7 @@
 import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import CreateArtistForm from "./CreateArtistForm";
 import './UserArtistPage.css'
@@ -22,20 +22,17 @@ const UserArtistPage = () => {
 
     const navigate = useNavigate();
     const { userNameIdRoll, refatchArtistData } = useContext(AuthContext);
+    const {pageNumber, perPageArtist} = useParams()
 
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(10);
-
     const [searchText, setSearchText] = useState('');
 
     const [artistData, setArtistData] = useState();
     const [fetchLoading, setFetchLoading] = useState(false)
     useEffect( () => {
-      setItemPerPage(10)
       setFetchLoading(true)
-      axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}`)
+      axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/${userNameIdRoll[1]}?page=${pageNumber}&limit=${perPageArtist}`)
           .then( res => {
             if(res.status == 200){
               setFetchLoading(false);
@@ -44,12 +41,11 @@ const UserArtistPage = () => {
             }
           })
           .catch(er => console.log(er));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[refatchArtistData, currentPage])
+    },[refatchArtistData, userNameIdRoll, pageNumber, perPageArtist])
 
 
     const handlePageChange = (page) => {
-      setCurrentPage(page)
+      navigate(`/artist/${status}/${page}/8`)
     };
 
     const handleSearch = (e) => {
@@ -57,7 +53,6 @@ const UserArtistPage = () => {
     }
 
     const handleKeyPress = (event) => {
-      setItemPerPage(50)
       if (event.key === 'Enter') {
         setFetchLoading(true);
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/search/${userNameIdRoll[1]}?search=${searchText}`)
@@ -112,7 +107,7 @@ const UserArtistPage = () => {
                             <DocumentCheckIcon className="w-4 h-4 me-1 text-slate-500"/>
                             <span className="text-sm">Artist Count</span>
                         </div>
-                        <div><span className="text-sm font-bold">{artistData?.length}</span> </div>
+                        <div><span className="text-sm font-bold">{artistData?.length} Out Of {totalItems}</span> </div>
                       </div>
                   </div>
                 
@@ -170,9 +165,9 @@ const UserArtistPage = () => {
                     {
                       totalItems > 8 && !fetchLoading && <div className="flex justify-center items-center my-4">
                         <Pagination 
-                          defaultCurrent={currentPage} 
+                          defaultCurrent={pageNumber} 
                           total={totalItems}
-                          pageSize={itemPerPage}
+                          pageSize={perPageArtist}
                           onChange={handlePageChange}
                         /> 
                     </div>

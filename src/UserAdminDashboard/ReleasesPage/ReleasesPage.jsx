@@ -153,7 +153,7 @@ const ReleasesPage = () => {
                                 <DocumentCheckIcon className="w-4 h-4 me-1 text-slate-500"/>
                                 <span className="text-sm">Release Count</span>
                             </div>
-                            <div><span className="text-sm font-bold">{releaseData?.length}</span> </div>
+                            <div><span className="text-sm font-bold">{releaseData?.length} Out of {totalItems}</span> </div>
                         </div>
                         
                     </div>
