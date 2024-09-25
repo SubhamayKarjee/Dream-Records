@@ -156,7 +156,7 @@ const DetailsSingleArtist = () => {
                 {
                     artist && 
                     <div className="flex justify-between gap-2 flex-col md:flex-row pt-2">
-                        <div className="flex">
+                        <div className="flex flex-col md:flex-row">
                             <Image
                             width={194}
                             height={176}
@@ -169,7 +169,7 @@ const DetailsSingleArtist = () => {
                                     <h2 className="font-bold">{artist.artistName}</h2>
                                     <p className="text-sm text-slate-400">{artist?.userName}</p>
                                 </div>
-                                <div className="flex items-center gap-3 my-2">
+                                <div className="flex items-center gap-3">
                                     {
                                         artist?.appleId &&
                                         <a target='_blank' href={`https://music.apple.com/profile/${artist.appleId}`}><img src={appleImg} alt={appleImg} /></a>
