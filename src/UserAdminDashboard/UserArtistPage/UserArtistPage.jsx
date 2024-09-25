@@ -45,7 +45,7 @@ const UserArtistPage = () => {
 
 
     const handlePageChange = (page) => {
-      navigate(`/artist/${status}/${page}/8`)
+      navigate(`/artist/${page}/8`)
     };
 
     const handleSearch = (e) => {
