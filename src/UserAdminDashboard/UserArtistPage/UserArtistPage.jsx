@@ -1,5 +1,4 @@
-import { BellAlertIcon, BellIcon, ExclamationCircleIcon } from "@heroicons/react/24/solid";
-import { Drawer, Empty, Image, Pagination } from "antd";
+import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +6,17 @@ import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import CreateArtistForm from "./CreateArtistForm";
 import './UserArtistPage.css'
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import MainNotices from "../UserCommonComponent/MainNotices";
+import AdvertisementNotices from "../UserCommonComponent/AdvertisementNotices";
+import MainNoticesMobile from "../UserCommonComponent/MainNoticesMobile";
+import { DocumentCheckIcon, PlusIcon } from "@heroicons/react/24/outline";
+
+import appleImg from '../../assets/social-icon/apple.png' 
+import spotifyImg from '../../assets/social-icon/spotify.png' 
+import instagramImg from '../../assets/social-icon/instagram.png' 
+import facebookImg from '../../assets/social-icon/facebook.png' 
+import youtubeImg from '../../assets/social-icon/youtube.png' 
+
 
 const UserArtistPage = () => {
 
@@ -62,25 +72,28 @@ const UserArtistPage = () => {
       }
     };
 
-    const [open, setOpen] = useState(false);
-    const showDrawer = () => {
-        setOpen(true);
-    };
-    const onClose = () => {
-        setOpen(false);
-    };
+    const sideBarShadow = {
+      boxShadow: '-2px 2px 18px 0px #EFEFEF',
+    }
+    const inputStyle ={
+      height: '36px',
+      border: '1px solid #E2E8F0',
+      minWidth: '300px'
+  }
+
 
 
     return (
         <div className="md:flex md:h-full">
-            <div className='h-full md:basis-3/4 overflow-y-auto md:border-r'>
+            <div className='h-full md:basis-3/4 overflow-y-auto md:pt-16 p-2 bg-[#FCFCFC]'>
+                <h3 className='font-semibold text-xl text-[#252525]'>Artists</h3>
                   {/* Search and Create Artist Section ______________________________________________________________________________ */}
-                  <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg mt-2">
+                  <div className="md:flex md:justify-between md:items-center">
                       <div className="my-2">
-                          <input type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm rounded-full input-bordered w-full"/>
+                          <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                       </div>
                       <div className="my-2">
-                          <button onClick={()=>document.getElementById('create_artist_modal').showModal()} className='btn btn-neutral py-1 px-6 rounded-full btn-sm border-none me-2 w-full'>Create Artist</button>
+                          <button onClick={()=>document.getElementById('create_artist_modal').showModal()} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/>Create Artist</button>
                       </div>
                   </div>
                       {/* Create Artist form with Modal Start _______________________________________________________________________ */}
@@ -91,51 +104,71 @@ const UserArtistPage = () => {
                       </dialog>
                       {/* Create Artist form with Modal End _______________________________________________________________________ */}
 
-                  {/* Total Artist Count Section _____________________________________________________________________________________ */}
-                  <div className="flex justify-between items-center my-3">
-                      <div className="flex items-center">
-                          <ExclamationCircleIcon className="w-6 h-6 me-1 text-slate-500"/>
-                          Artist Count
+                  {/* Artist page Title and Total Artist_____________________________________________________________________________ */}
+                  <div className="flex justify-between items-center py-2">
+                      <h4 className="font-semibold text-lg text-[#252525]">Profiles</h4>
+                      <div className="flex justify-between items-center gap-2">
+                        <div className="flex items-center">
+                            <DocumentCheckIcon className="w-4 h-4 me-1 text-slate-500"/>
+                            <span className="text-sm">Artist Count</span>
+                        </div>
+                        <div><span className="text-sm font-bold">{artistData?.length}</span> </div>
                       </div>
-                      <div><span className="text-sm font-bold">{artistData?.length}</span> <span className="ms-1 p-2 bg-slate-50 rounded-md text-sm font-bold">{totalItems}</span> </div>
-                  </div>
-
-                  {/* Artist List and Relase Title Section _____________________________________________________________________________ */}
-                  <div className="flex justify-between items-center py-2 rounded-full bg-slate-100 px-4">
-                      <h4 className="font-bold text-slate-600">Profile</h4>
-                      {/* <h4 className="font-bold text-slate-600">Releases</h4> */}
                   </div>
                 
                 {/* Show All Artist Data __________________________________________________________________________________________________ */}
-                <main className="my-2 p-2">
-                    {
-                      fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
-                    }
-                    {
-                      !fetchLoading && artistData?.map((data) => 
-                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/artist/${data._id}`)} key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
-                          <div className="flex items-center">
-                                <Image
-                                  width={55}
-                                  height={55}
-                                  className="rounded-lg"
-                                  src={data.imgUrl}
-                                  fallback={fallbackImage}
-                                />
-                            <div className="ps-2">
-                              <h2 className="font-bold">{data.artistName}</h2>
-                              <p className="text-sm text-slate-400">{data?.userName}</p>
+                <main className="my-2">
+                  <div className="grid gap-3 grid-cols-4">
+                      {
+                        fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
+                      }
+                      {
+                        !fetchLoading && artistData?.map((data) => 
+                          <div style={{cursor: 'pointer'}} onClick={() => navigate(`/artist/${data._id}`)} key={data._id} className="">
+                            <div className="">
+                                  <Image
+                                    width={'100%'}
+                                    style={{borderRadius: '20px', height: '170px'}}
+                                    src={data.imgUrl}
+                                    fallback={fallbackImage}
+                                    preview={false}
+                                  />
+                              <div className="">
+                                  <h2 className="font-semibold text-[#252525]">{data.artistName}</h2>
+                                  <div className="flex items-center gap-2">
+                                    {
+                                        data?.appleId &&
+                                        <a target='_blank' href={`${data.appleId}`}><img src={appleImg} alt={appleImg} /></a>
+                                    }
+                                    {
+                                        data?.spotifyId &&
+                                        <a target='_blank' href={`${data.spotifyId}`}><img src={spotifyImg} alt={spotifyImg} /></a>
+                                    }
+                                    {
+                                        data?.instagramId &&
+                                        <a target='_blank' href={`${data.instagramId}`}><img src={instagramImg} alt={instagramImg} /></a>
+                                    }
+                                    {
+                                        data?.youtube &&
+                                        <a target='_blank' href={data.youtube}><img src={youtubeImg} alt={youtubeImg} /></a>
+                                    }
+                                    {
+                                        data?.facebook &&
+                                        <a target='_blank' href={data.facebook}><img src={facebookImg} alt={facebookImg} /></a>
+                                    }
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      )
-                    }
-                    
+                        )
+                      }
+                      
+                      {
+                        !totalItems && !fetchLoading && <Empty className="pt-12" />
+                      }
+                  </div>
                     {
-                      !totalItems && !fetchLoading && <Empty className="pt-12" />
-                    }
-                    {
-                      totalItems > 1 && !fetchLoading && <div className="flex justify-center items-center my-4">
+                      totalItems > 8 && !fetchLoading && <div className="flex justify-center items-center my-4">
                         <Pagination 
                           defaultCurrent={currentPage} 
                           total={totalItems}
@@ -151,18 +184,14 @@ const UserArtistPage = () => {
 
 
             {/* Blog Post Div  _______________________________*/}
-            <div className="md:basis-1/4 hidden md:block">
-                <div className='p-2'>
-                    <h4 className='flex items-center font-bold text-lg text-slate-500'> <BellIcon className='w-6 h-6 me-2 text-slate-500'/> Notification</h4>
-                    <p className="font-bold text-slate-600 my-6 p-3 bg-slate-100 rounded-md">NO Notification Yet!</p>
-                </div>
+            <div style={sideBarShadow} className="md:basis-1/4 hidden md:block md:pt-16 px-2">
+              <h3 className='font-semibold text-xl pb-2'>Notices</h3>
+                <MainNotices/>
+                <AdvertisementNotices/>
             </div>
 
             {/* Sideber Div Mobile _______________________________*/}
-            <BellAlertIcon onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer'/>
-            <Drawer className='bg-white' title="Notification" onClose={onClose} open={open}>
-              <p className="font-bold text-slate-600">NO Notification Yet!</p>
-            </Drawer>
+            <MainNoticesMobile/>
         </div>
     );
 };

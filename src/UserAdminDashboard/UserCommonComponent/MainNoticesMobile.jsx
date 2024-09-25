@@ -2,7 +2,6 @@ import { BellAlertIcon } from "@heroicons/react/24/outline";
 import { Drawer, Image } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import { useNavigate } from "react-router-dom";
 
@@ -11,13 +10,10 @@ const MainNoticesMobile = () => {
     const navigate = useNavigate()
 
     const [noticeData, setNoticeData] = useState();
-    const [loading, setLoading] = useState(false)
     useEffect(() => {
-        setLoading(true)
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice/661089403281a4347e1d3498`)
         .then(res => {
             if(res.status === 200){
-                setLoading(false)
                 setNoticeData(res.data.data)
             }
         })
@@ -44,9 +40,6 @@ const MainNoticesMobile = () => {
 
     return (
         <div>
-            {
-                loading && <LoadingComponentsInsidePage/>
-            }
             <BellAlertIcon onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer'/>
             <Drawer className='' title="Notification" onClose={onClose} open={open}>
                 <div onClick={onClose}>

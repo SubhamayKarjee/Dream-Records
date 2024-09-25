@@ -88,7 +88,8 @@ const ReleasesPage = () => {
 
     const inputStyle ={
         height: '36px',
-        border: '1px solid #E2E8F0'
+        border: '1px solid #E2E8F0',
+        minWidth: '300px'
     }
 
     const sideBarShadow = {
@@ -116,7 +117,7 @@ const ReleasesPage = () => {
                             <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                         </div>
                         <div className="my-2">
-                            <button onClick={()=>navigate('/create-release')} className='btn btn-neutral bg-[#18181B] 3 h-9 btn-sm w-full'><PlusIcon className="w-5 h-5"/> Create Release</button>
+                            <button onClick={()=>navigate('/create-release')} className='btn btn-neutral bg-[#18181B] h-9 btn-sm w-full'><PlusIcon className="w-5 h-5"/> Create Release</button>
                         </div>
                     </div>
                 </div>
