@@ -36,7 +36,7 @@ const UserHomePage = () => {
     return (
         <div className="md:flex md:h-full">
             {showPopup && <PopUp visible={showPopup} onClose={handleClosePopup} />}
-            <div className='h-full md:basis-3/4 overflow-y-auto p-2 bg-[#FCFCFC] md:pt-16'>
+            <div className='h-full md:basis-3/4 overflow-y-auto px-3 bg-[#FCFCFC] md:pt-16'>
                 <h3 className='font-semibold text-xl pb-2 text-[#252525]'>Dashboard</h3>
                 <div className='home_banner_image'>
                     <div className='h-full'>
@@ -62,7 +62,7 @@ const UserHomePage = () => {
             <MainNoticesMobile/>
 
             {/* Notification Div Desktop _______________________________*/}
-            <div style={sideBarShadow} className="md:basis-1/4 hidden md:block bg-white md:pt-16 px-2">
+            <div style={sideBarShadow} className="md:basis-1/4 hidden md:block bg-white md:pt-16 px-3">
                 <h3 className='font-semibold text-xl pb-2'>Notices</h3>
                 <MainNotices/>
                 <AdvertisementNotices/>

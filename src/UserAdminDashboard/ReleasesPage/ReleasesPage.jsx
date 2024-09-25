@@ -2,7 +2,7 @@
 
 import { ArrowsUpDownIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { BellAlertIcon, DocumentCheckIcon } from "@heroicons/react/24/outline";
-import { Button, Drawer, Dropdown } from "antd";
+import { Button, Divider, Drawer, Dropdown } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -74,11 +74,8 @@ const ReleasesPage = () => {
         setOpen(false);
     };
 
-
-
     const location = useLocation();
     const currentPath = location.pathname;
-
 
     const activeLink = (to , currentPath) => {
         return currentPath.startsWith(to)
@@ -108,23 +105,23 @@ const ReleasesPage = () => {
 
     return (
         <div className="md:flex md:h-full">
-            <div className='h-full md:basis-3/4 overflow-y-auto md:border-r'>
-                <div className="md:pt-16 px-2">
+            <div className='h-full md:basis-3/4 overflow-y-auto md:pt-16 px-3'>
+                <div className="">
                     <h3 className='font-semibold text-xl text-[#252525]'>Releases</h3>
                     {/* Search and Create Release Section ______________________________________________________________________________ */}
-                    <div className="md:flex md:justify-between md:items-center border-b">
-                        <div className="my-2">
+                    <div className="md:flex md:justify-between md:items-center">
+                        <div className="mt-2">
                             <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                         </div>
-                        <div className="my-2">
+                        <div className="mt-2">
                             <button onClick={()=>navigate('/create-release')} className='btn btn-neutral bg-[#18181B] h-9 btn-sm w-full'><PlusIcon className="w-5 h-5"/> Create Release</button>
                         </div>
                     </div>
                 </div>
 
-                
+                <Divider/>
                 {/* Show Release Section ____________________________________________ */}
-                <main className="mt-3 p-2">
+                <main className="mt-3">
                     <div className="flex justify-between">
                         {/* Desktop Div _____________________________________ */}
                         <div className="hidden md:block">
@@ -168,10 +165,8 @@ const ReleasesPage = () => {
 
 
             {/* Sideber Div  _______________________________*/}
-            <div style={sideBarShadow} className="md:basis-1/4 overflow-y-auto hidden md:block">
-                <div className='md:pt-16 px-2'>
+            <div style={sideBarShadow} className="md:basis-1/4 overflow-y-auto hidden md:block px-3 md:pt-16">
                 <h3 className='font-semibold text-xl'>Notices</h3>
-                </div>
                 <ActionRequiredRelease/>
             </div>
 

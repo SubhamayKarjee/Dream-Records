@@ -1,3 +1,4 @@
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -8,7 +9,6 @@ const ActionRequiredLabels = ({onClose}) => {
 
     const { userNameIdRoll } = useContext(AuthContext);
 
-    const [noData, setNoData] = useState(false)
     const [labels, setLabels] = useState();
 
     useEffect( () => {
@@ -16,9 +16,6 @@ const ActionRequiredLabels = ({onClose}) => {
             .then( res => {
               if(res.status == 200){
                 setLabels(res.data.data);
-                if(res.data.data.length === 0){
-                    setNoData(true)
-                }
               }
             })
             .catch(er => console.log(er));
@@ -31,20 +28,33 @@ const ActionRequiredLabels = ({onClose}) => {
         <div>
             {
                 labels && labels.map(l => 
-                    <div className="m-2" onClick={onClose} key={l._id}>
+                    <div className="mt-1" onClick={onClose} key={l._id}>
                         <Link to={`/labels/${l._id}`}>
-                            <div className="p-2 bg-slate-200 rounded-md relative">
-                                <div style={{width: '100%', height: '100px'}} className='overflow-hidden rounded-md'>
-                                    <img className="" src={l.imgUrl} alt={l.imgUrl} />
+                            <div className="p-2 bg-[#F2F2F2] rounded-md">
+                                <div className='flex gap-2'>
+                                    <img style={{width: '80px', height: '50px',}} className='rounded-md' src={l.imgUrl} alt={l.imgUrl} />
+                                    <div className="flex flex-col justify-between">
+                                        <h4 className="font-semibold">{l.labelName}</h4>
+                                        {
+                                            l.status === 'Rejected' &&
+                                            <div className="flex items-center">
+                                                <ExclamationTriangleIcon className="h-3 w-3 text-[#FF7050] me-1"/>
+                                                <p className="text-xs font-semibold text-[#FF7050]">{l.status}</p>
+                                            </div>
+                                        }
+                                        {
+                                            l.status === 'Locked' &&
+                                            <div className="flex items-center">
+                                                <ExclamationTriangleIcon className="h-3 w-3 text-[#71717A] me-1"/>
+                                                <p className="text-xs font-semibold text-[#71717A]">{l.status}</p>
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
-                                <p className="bg-red-500 text-sm rounded-md px-2 font-bold absolute top-4 right-4">{l.status}</p>
                             </div>
                         </Link>
                     </div>
                 )
-            }
-            {
-                noData && <div className="m-2 flex justify-center items-center p-3 bg-slate-100 rounded-md my-2"><p className="font-bold text-slate-600">NO Notification Yet!</p></div>
             }
         </div>
     );

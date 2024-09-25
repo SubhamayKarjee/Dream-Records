@@ -1,4 +1,4 @@
-import { Empty, Image, Pagination } from "antd";
+import { Divider, Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -80,14 +80,14 @@ const UserArtistPage = () => {
 
     return (
         <div className="md:flex md:h-full">
-            <div className='h-full md:basis-3/4 overflow-y-auto md:pt-16 p-2 bg-[#FCFCFC]'>
+            <div className='h-full md:basis-3/4 overflow-y-auto md:pt-16 px-3 bg-[#FCFCFC]'>
                 <h3 className='font-semibold text-xl text-[#252525]'>Artists</h3>
                   {/* Search and Create Artist Section ______________________________________________________________________________ */}
                   <div className="md:flex md:justify-between md:items-center">
-                      <div className="my-2">
+                      <div className="mt-2">
                           <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                       </div>
-                      <div className="my-2">
+                      <div className="mt-2">
                           <button onClick={()=>document.getElementById('create_artist_modal').showModal()} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/>Create Artist</button>
                       </div>
                   </div>
@@ -99,8 +99,9 @@ const UserArtistPage = () => {
                       </dialog>
                       {/* Create Artist form with Modal End _______________________________________________________________________ */}
 
+                    <Divider/>
                   {/* Artist page Title and Total Artist_____________________________________________________________________________ */}
-                  <div className="flex justify-between items-center py-2">
+                  <div className="flex justify-between items-center">
                       <h4 className="font-semibold text-lg text-[#252525]">Profiles</h4>
                       <div className="flex justify-between items-center gap-2">
                         <div className="flex items-center">
@@ -110,7 +111,7 @@ const UserArtistPage = () => {
                         <div><span className="text-sm font-bold">{artistData?.length} Out Of {totalItems}</span> </div>
                       </div>
                   </div>
-                
+
                 {/* Show All Artist Data __________________________________________________________________________________________________ */}
                 <main className="my-2">
                   <div className="grid cols sm:grid-cols-2 md:grid-cols-4 gap-3">
@@ -179,7 +180,7 @@ const UserArtistPage = () => {
 
 
             {/* Blog Post Div  _______________________________*/}
-            <div style={sideBarShadow} className="md:basis-1/4 hidden md:block md:pt-16 px-2">
+            <div style={sideBarShadow} className="md:basis-1/4 hidden md:block md:pt-16 px-3">
               <h3 className='font-semibold text-xl pb-2'>Notices</h3>
                 <MainNotices/>
                 <AdvertisementNotices/>
