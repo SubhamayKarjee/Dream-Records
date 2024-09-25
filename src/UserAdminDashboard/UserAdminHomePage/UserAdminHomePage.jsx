@@ -174,11 +174,11 @@ const UserAdminHomePage = () => {
                                     <DocumentCheckIcon className="h-7 w-7 pe-2" />
                                     Releases
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/artist', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/artist'}>
+                                <NavLink style={() => activeLinkDynamic('/artist', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/artist/1/10'}>
                                     <UsersIcon className="h-7 w-7 pe-2" />
                                     Artists
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/labels', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/labels'}>
+                                <NavLink style={() => activeLinkDynamic('/labels', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/labels/All/1/10'}>
                                     <TagIcon className="h-7 w-7 pe-2" />    
                                     Labels
                                 </NavLink>

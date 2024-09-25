@@ -1,4 +1,5 @@
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
+import { Empty } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -65,7 +66,7 @@ const ActionRequiredRelease = ({onClose}) => {
                 )
             }
             {
-                noData && <div className="m-2 flex justify-center items-center p-3 bg-slate-100 rounded-md my-2"><p className="font-bold text-slate-600">NO Notification Yet!</p></div>
+                noData && <Empty description={false} />
             }
         </div>
     );

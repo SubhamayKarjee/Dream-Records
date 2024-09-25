@@ -1,0 +1,15 @@
+#audioPlayerDiv  {
+    height: 100%;
+}
+#audioPlayerDiv .rhap_container  {
+    height: 100%;
+    border-radius: 20px;
+    background-color: #e0e0e0a3;
+}
+#audioPlayerDiv .rhap_main {
+    display: flex;
+    flex-direction: column-reverse;
+}
+#audioPlayerDiv .rhap_main .rhap_controls-section .rhap_additional-controls{
+    display: none;
+}

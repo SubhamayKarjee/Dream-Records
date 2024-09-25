@@ -1,16 +1,25 @@
-import { ChatBubbleBottomCenterTextIcon, CheckBadgeIcon, ClockIcon, PencilIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import { Image, Popconfirm } from "antd";
+import { CheckBadgeIcon, ClockIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { Divider, Image, Popconfirm } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
 import fallbackImage from "../../../assets/fallbackImage.jpg"
 import toast from "react-hot-toast";
+import { DocumentMagnifyingGlassIcon, ExclamationTriangleIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
+import './SingleReleasePage.css'
+
 
 const SingleReleasePage = () => {
 
     const {id} = useParams();
     const navigate = useNavigate()
+    
+
+
 
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState()
@@ -55,96 +64,134 @@ const SingleReleasePage = () => {
         return <LoadingComponentsInsidePage/>
     }
 
+    
+
 
     return (
-        <div className="md:flex md:h-full">
-            {
-                data?.actionRequired && 
-                <div className="block md:hidden">
-                    <div className="p-2 bg-red-200 rounded-md">
-                        <p className="text-sm font-semibold">{data.actionRequired}</p>
-                    </div>
-                </div>
-            }
-            <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2'>
-                {
-                  loading ? <LoadingComponentsInsidePage/> :
-                  <div>
-                    <div className="md:flex p-4 bg-neutral rounded-lg">
-                        <div>
-                            <Image
-                                width={200}
-                                height={200}
-                                className="rounded-lg"
-                                src={data?.imgUrl}
-                                preview={true}
-                                alt="artist-image"
-                            />
-                        </div>
-                        <div className="md:ps-4 grow">
-                            <div className="md:flex justify-between">
+        <div className="md:h-full">
+            <div className='h-full overflow-y-auto'>
+                <div className="pt-16 px-2">
+                    <h3 className='font-semibold text-xl text-[#252525]'>Release Details</h3>
+                    {/* Single Release page hero Section____________________________ */}
+                    {
+                    loading ? <LoadingComponentsInsidePage/> :
+                    <div className="pt-3 px-1">
+                        <div className="flex flex-col md:flex-row gap-2">
+                            <div className="flex-1 flex gap-2">
                                 <div>
-                                    <h2 className="text-white font-bold text-lg">{data?.releaseTitle}</h2>
-                                    <p className="text-white text-sm">{data?.userName}</p>
-                                    <p className="text-white text-sm">ID: {data?._id}</p>
+                                    <div style={{borderRadius: '20px'}} className="hidden md:block overflow-hidden">
+                                        <Image
+                                            width={194}
+                                            height={176}
+                                            style={{borderRadius: '20px'}}
+                                            src={data?.imgUrl}
+                                            preview={true}
+                                            alt="artist-image"
+                                        />
+                                    </div>
+                                    <div className="block md:hidden">
+                                        <Image
+                                            width={143.3}
+                                            height={130}
+                                            style={{borderRadius: '20px'}}
+                                            src={data?.imgUrl}
+                                            preview={true}
+                                            alt="artist-image"
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    {
-                                        data?.status === 'Pending' &&
-                                        <span className="bg-yellow-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {data?.status}</span>
-                                    }
-                                    {
-                                        data?.status === 'Approved' &&
-                                        <span className="bg-green-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><CheckBadgeIcon className="w-4 h-4 me-1"/> {data?.status}</span>
-                                    }
-                                    {
-                                        data?.status === 'Rejected' &&
-                                        <span className="bg-red-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data?.status}</span>
-                                    }
-                                    {
-                                        data?.status === 'Action Required' && 
+
+                                <div className="flex flex-col justify-between mb-2">
+                                    <div>
+                                        <h2 className="font-bold text-lg">{data?.releaseTitle}</h2>
+                                        {
+                                           data?.actionRequired && <p className="text-xs p-1 bg-[#F2F2F2] rounded-md">{data.actionRequired}</p>
+                                        }
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        {
+                                            data?.status === 'Pending' &&
+                                                <div className="flex items-center">
+                                                    <ClockIcon className="h-3 w-3 text-[#FEB951] me-1"/>
+                                                    <p className="text-xs font-semibold text-[#FEB951]">{data.status}</p>
+                                                </div>
+                                        }
+                                        {
+                                            data?.status === 'Approved' &&
+                                                <div className="flex items-center">
+                                                    <CheckBadgeIcon className="h-3 w-3 text-[#39C616] me-1"/>
+                                                    <p className="text-xs font-semibold text-[#39C616]">{data.status}</p>
+                                                </div>
+                                        }
+                                        {
+                                            data?.status === 'Action Required' &&
+                                                <div className="flex items-center">
+                                                    <ExclamationTriangleIcon className="h-3 w-3 text-[#71717A] me-1"/>
+                                                    <p className="text-xs font-semibold text-[#71717A]">{data.status}</p>
+                                                </div>
+                                        }
+                                        {
+                                            data?.status === 'Takedown' &&
+                                                <div className="flex items-center">
+                                                    <ExclamationTriangleIcon className="h-3 w-3 text-[#FF7050] me-1"/>
+                                                    <p className="text-xs font-semibold text-[#FF7050]">{data.status}</p>
+                                                </div>
+                                        }
+                                        {
+                                            data?.status === 'Review' &&
+                                                <div className="flex items-center">
+                                                    <DocumentMagnifyingGlassIcon className="h-3 w-3 text-[#39B5FB] me-1"/>
+                                                    <p className="text-xs font-semibold text-[#39B5FB]">{data.status}</p>
+                                                </div>
+                                        }
                                         <div>
-                                            <span className="bg-red-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {data?.status}</span>
-                                            <div style={{cursor: 'pointer'}} onClick={() => handleNavigate(data?._id)} className="flex items-center p-1 mt-2 bg-cyan-500 rounded-md shadow">
-                                                <PencilIcon className="h-3 w-3 text-white me-1"/>
-                                                <p className="text-xs font-semibold text-white">Edit</p>
-                                            </div>
-                                            <Popconfirm
-                                                title="Delete"
-                                                placement="leftTop"
-                                                className="z-1000"
-                                                description="Are you sure to Delete Release?"
-                                                onConfirm={confirm}
-                                                onCancel={cancel}
-                                                okText="Yes"
-                                                cancelText="No"
-                                                >
-                                                <span className="bg-red-400 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><TrashIcon className="w-4 h-4 me-1"/> Delete</span>
-                                            </Popconfirm>
+                                            {
+                                                data?.status === 'Action Required' && 
+                                                <div className="flex items-center gap-2">
+                                                    <PencilSquareIcon style={{cursor: 'pointer'}} onClick={() => handleNavigate(data?._id)} className="h-4 w-4"/>
+                                                    <Popconfirm
+                                                        title="Delete"
+                                                        placement="leftTop"
+                                                        className="z-1000"
+                                                        description="Are you sure to Delete Release?"
+                                                        onConfirm={confirm}
+                                                        onCancel={cancel}
+                                                        okText="Yes"
+                                                        cancelText="No"
+                                                        >
+                                                        <TrashIcon style={{cursor: 'pointer'}} className="w-4 h-4 me-1"/>
+                                                    </Popconfirm>
+                                                </div>
+                                            }
                                         </div>
-                                    }
+                                    </div>
                                 </div>
                             </div>
-                        </div>                                 
-                  </div>
+                            <div className="md:flex-1">
+                                <div id="audioPlayerDiv">
+                                    <AudioPlayer
+                                        style={{height: '100%'}}
+                                        src={data?.audioUrl}
+                                        onPlay={e => console.log(e)}
+                                        // other props here
+                                    />
+                                </div>
+                            </div>                                 
+                        </div>
 
-                    <div className="p-2 bg-[#EF4136] rounded-md my-2 shadow">
-                        <p className="text-sm pb-2 font-bold text-white">Audio</p>
-                        <audio controls src={data?.audioUrl}></audio>
-                    </div> 
-
-                    <div className="border p-2 rounded-lg my-4 shadow">
-                        <div className="my-3">
-                            <p className="text-xs font-bold">Artist Details</p>
-                            <div className=" p-2 bg-slate-100 rounded-md">
+                        <Divider/>
+                        {/* Single Release page Second Section Artist and Labels____________________________ */}
+                        <div className="flex gap-2 flex-col md:flex-row mt-3">
+                            <div className="md:flex-1">
+                                <p className="text-sm font-semibold text-[#768298]">Artist Details</p>
                                 {
                                     data?.artist && data?.artist?.map(a => 
-                                        <div key={a._id} className="flex my-2">
+                                        <div key={a._id} className="flex my-1 items-center">
                                             <div>
                                                 <Image
-                                                    width={35}
-                                                    height={35}
-                                                    className="rounded-md"
+                                                    width={48}
+                                                    height={48}
+                                                    className="rounded-full"
                                                     src={a?.imgUrl}
                                                     preview={true}
                                                     fallback={fallbackImage}
@@ -152,139 +199,105 @@ const SingleReleasePage = () => {
                                                 />
                                             </div>
                                             <div className="ms-2">
-                                                <h2 className="font-bold">{a?.artistName}</h2>
-                                                <p className="text-xs">{a?.userName}</p>
+                                                <h2 className="text-md">{a?.artistName}</h2>
                                             </div>
                                         </div>
                                     )
                                 }
                             </div>
-                        </div>
-                        <div className="my-3">
-                            <p className="text-xs font-bold">Labels Details</p>
-                            <div className=" p-2 bg-slate-100 rounded-md">
-                                {
-                                    data?.labels && data?.labels?.map((l) => 
-                                        <div key={l._id}>
-                                            <div className="flex my-2">
-                                                <div>
-                                                    <Image
-                                                        width={35}
-                                                        height={35}
-                                                        className="rounded-md"
-                                                        src={l?.imgUrl}
-                                                        preview={true}
-                                                        fallback={fallbackImage}
-                                                        alt={l.labelName}
-                                                    />
+                            <div className="md:flex-1">
+                                <p className="text-sm font-semibold text-[#768298]">Labels Details</p>
+                                    {
+                                        data?.labels && data?.labels?.map((l) => 
+                                            <div key={l._id}>
+                                                <div className="flex my-1">
+                                                    <div>
+                                                        <Image
+                                                            width={48}
+                                                            height={48}
+                                                            className="rounded-full"
+                                                            src={l?.imgUrl}
+                                                            preview={true}
+                                                            fallback={fallbackImage}
+                                                            alt={l.labelName}
+                                                        />
+                                                    </div>
+                                                    <div className="ms-2">
+                                                        <h2 className="font-bold">{l?.labelName}</h2>
+                                                        <div className="flex items-center">
+                                                            <CheckBadgeIcon className="h-3 w-3 text-[#39C616] me-1"/>
+                                                            <p className="text-xs font-semibold text-[#39C616]">{l.status}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="ms-2">
-                                                    <h2 className="font-bold">{l?.labelName}</h2>
-                                                    <p className="text-xs">{l?.userName}</p>
-                                                </div>
                                             </div>
-                                        </div>
-                                    )
-                                }
+                                        )
+                                    }
                             </div>
                         </div>
 
-                        <div className="my-3">
-                            <p className="text-xs font-bold">Featuring Details</p>
-                            <div className=" p-2 bg-slate-100 rounded-md">
-                                {
-                                    data?.featuring && data?.featuring?.map(f => 
-                                        <div key={f._id} className="flex my-2">
-                                            <div>
-                                                <Image
-                                                    width={35}
-                                                    height={35}
-                                                    className="rounded-md"
-                                                    src={f?.imgUrl}
-                                                    preview={true}
-                                                    fallback={fallbackImage}
-                                                    alt={f.artistName}
-                                                />
-                                            </div>
-                                            <div className="ms-2">
-                                                <h2 className="font-bold">{f?.artistName}</h2>
-                                                <p className="text-xs">ID: {f?.userName}</p>
-                                            </div>
-                                        </div>
-                                    )
-                                }
+                        {/* Other Details about Release _________________________________________ */}
+                        <div className="pt-2">
+                            <h4 className="font-bold text-lg">Other Details</h4>
+
+                            <div className="grid grid-cols-2 pt-2 gap-2">
+                                <div>
+                                    <p className="font-semibold text-sm text-[#768298]">Authors Name:</p>
+                                    {
+                                        data?.authors && data?.authors?.map((a, index)=> <span className="font-semibold me-2" key={index}>{a}</span>)
+                                    }
+                                </div>
+                                <div>
+                                    <p className="font-semibold text-sm text-[#768298]">Composer Name:</p>
+                                    {
+                                        data?.composer && data?.composer?.map((c, index)=> <span className="font-semibold me-2" key={index}>{c}</span>)
+                                    }
+                                </div>
+                                <div>
+                                    <p className="font-semibold text-sm text-[#768298]">Genre:</p>
+                                    <p className="font-semibold">{data?.genre}</p>
+                                </div>
+                                <div>
+                                    <p className="font-semibold text-sm text-[#768298]">Album Name:</p>
+                                    <p className="font-semibold">{data?.albumName}</p>
+                                </div>
+                                <div>
+                                    <p className="font-semibold text-sm text-[#768298]">P Line:</p>
+                                    <p className="font-semibold">{data?.pLine}</p>
+                                </div>
+                                <div>
+                                    <p className="font-semibold text-sm text-[#768298]">C Line:</p>
+                                    <p className="font-semibold">{data?.cLine}</p>
+                                </div>
+                                <div>
+                                    <p className="font-semibold text-sm text-[#768298]">Format:</p>
+                                    <p className="font-semibold">{data?.format}</p>
+                                </div>
+                                <div>
+                                    <p className="font-semibold text-sm text-[#768298]">Lyrics Language:</p>
+                                    <p className="font-semibold">{data?.lyricsLanguage}</p>
+                                </div>
+                                <div>
+                                    <p className="font-semibold text-sm text-[#768298]">Release Date:</p>
+                                    <p className="font-semibold">{data?.releaseDate}</p>
+                                </div>
+                                <div>
+                                    <p className="font-semibold text-sm text-[#768298]">UPC:</p>
+                                    <p className="font-semibold">{data?.UPC}</p>
+                                </div>
+                                <div>
+                                    <p className="font-semibold text-sm text-[#768298]">ISRC:</p>
+                                    <p className="font-semibold">{data?.ISRC}</p>
+                                </div>
+                            </div>
+
+                            
                             </div>
                         </div>
-                    </div>
-
-                    <div className="overflow-x-auto">
-                        <p className="font-bold border-b">Other Details</p>
-                        <table className="table table-zebra">
-                            <tbody>
-                                {/* row 0 */}
-                                <tr>
-                                    <td>Authors Name:</td>
-                                    <td>
-                                        {
-                                            data?.authors && data?.authors?.map((a, index)=> <span className="mx-1 px-2 py-1 bg-slate-200 rounded-md" key={index}>{a}</span>)
-                                        }
-                                    </td>
-                                </tr>
-                                {/* row 1 */}
-                                <tr><td>Album Name:</td><td>{data?.albumName}</td></tr>
-                                {/* row 2 */}
-                                <tr><td>Genre:</td><td>{data?.genre}</td></tr>
-                                {/* row 3 */}
-                                <tr><td>P Line:</td><td>{data?.pLine}</td></tr>
-                                {/* row 4 */}
-                                <tr><td>C Line:</td><td>{data?.cLine}</td></tr>
-                                {/* row 5 */}
-                                <tr>
-                                    <td>Composer Name:</td>
-                                    <td>
-                                        {
-                                            data?.composer && data?.composer?.map((c, index)=> <span className="mx-1 px-2 py-1 bg-slate-200 rounded-md" key={index}>{c}</span>)
-                                        }
-                                    </td>
-                                </tr>
-                                {/* row 6 */}
-                                <tr><td>Format:</td><td>{data?.format}</td></tr>
-                                {/* row 7 */}
-                                <tr><td>Lyrics Language:</td><td>{data?.lyricsLanguage}</td></tr>
-                                {/* row 8 */}
-                                <tr><td>Release Date:</td><td>{data?.releaseDate}</td></tr>
-                                {/* row 9 */}
-                                <tr><td>UPC:</td><td>{data?.UPC}</td></tr>
-                                {/* row 10 */}
-                                <tr><td>ISRC:</td><td>{data?.ISRC}</td></tr>
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                }
-            </div>
-
-
-            {/* Sideber Div  _______________________________*/}
-            <div className="md:basis-1/4 hidden md:block">
-                <div className='p-2'>
-                    <h4 className='flex items-center font-bold text-slate-500'> <ChatBubbleBottomCenterTextIcon className='w-5 h-5 me-2 text-slate-500'/>Notice</h4>
-                    <div className="my-2">
-                        {
-                            data?.actionRequired && 
-                            <div className="p-2 bg-red-200 rounded-md">
-                                <p className="text-sm font-semibold">{data.actionRequired}</p>
-                            </div>
-                        }
-                        {
-                            !data?.actionRequired && 
-                            <div className="p-2 bg-slate-200 rounded-md">
-                                <p className="px-2 py-4 text-slate-600 rounded-md">No Notice Yet</p>
-                            </div>
-                        }
-                    </div>
+                    }
                 </div>
             </div>
+
         </div>
     );
 };
