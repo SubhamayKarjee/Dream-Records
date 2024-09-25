@@ -70,7 +70,7 @@ const SingleReleasePage = () => {
     return (
         <div className="md:h-full">
             <div className='h-full overflow-y-auto'>
-                <div className="pt-16 px-2">
+                <div className="md:pt-16 px-2">
                     <h3 className='font-semibold text-xl text-[#252525]'>Release Details</h3>
                     {/* Single Release page hero Section____________________________ */}
                     {

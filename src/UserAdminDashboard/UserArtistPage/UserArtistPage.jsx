@@ -118,13 +118,13 @@ const UserArtistPage = () => {
                 
                 {/* Show All Artist Data __________________________________________________________________________________________________ */}
                 <main className="my-2">
-                  <div className="grid gap-3 grid-cols-4">
+                  <div className="grid cols sm:grid-cols-2 md:grid-cols-4 gap-3">
                       {
                         fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                       }
                       {
                         !fetchLoading && artistData?.map((data) => 
-                          <div style={{cursor: 'pointer'}} onClick={() => navigate(`/artist/${data._id}`)} key={data._id} className="">
+                          <div style={{cursor: 'pointer'}} onClick={() => navigate(`/artist/${data._id}/All/1/6`)} key={data._id} className="">
                             <div className="">
                                   <Image
                                     width={'100%'}

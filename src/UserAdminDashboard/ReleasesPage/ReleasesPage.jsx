@@ -131,7 +131,7 @@ const ReleasesPage = () => {
                             <div className="h-10 px-[5px] py-1 flex items-center p-1 border rounded-md">
                                 <NavLink style={() => activeLink('/releases/All', currentPath)} to={'/releases/All/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">All</NavLink>
                                 <NavLink style={() => activeLink('/releases/Pending', currentPath)} to={'/releases/Pending/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Pending</NavLink>
-                                <NavLink style={() => activeLink('/releases/Review', currentPath)} to={'/releases/Review/1/8'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Review</NavLink>
+                                <NavLink style={() => activeLink('/releases/Review', currentPath)} to={'/releases/Review/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Review</NavLink>
                                 <NavLink style={() => activeLink('/releases/Approved', currentPath)} to={'/releases/Approved/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Approved</NavLink>
                                 <NavLink style={() => activeLink('/releases/Action', currentPath)} to={'/releases/Action Required/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Action Required</NavLink>
                                 <NavLink style={() => activeLink('/releases/TakeDown', currentPath)} to={'/releases/TakeDown/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Takedown</NavLink>

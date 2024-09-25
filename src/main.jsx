@@ -275,7 +275,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserArtistPage/></ProtectUserRoute></Suspense>
       },
       {
-        path: '/artist/:id',
+        path: '/artist/:id/:status/:pageNumber/:perPageRelease',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><DetailsSingleArtist/></ProtectUserRoute></Suspense>
       },
       {

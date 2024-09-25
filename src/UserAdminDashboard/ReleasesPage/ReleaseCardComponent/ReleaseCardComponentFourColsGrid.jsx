@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import './ReleaseCardComponent.css'
 
 // eslint-disable-next-line react/prop-types
-const ReleaseCardComponent = ({releaseData, totalItems, fetchLoading, currentPage, handlePageChange, itemPerPage}) => {
+const ReleaseCardComponentFourColsGrid = ({releaseData, totalItems, fetchLoading, currentPage, handlePageChange, itemPerPage}) => {
 
     const navigate = useNavigate('')
     const handleNavigate = (e) => {
@@ -15,7 +15,7 @@ const ReleaseCardComponent = ({releaseData, totalItems, fetchLoading, currentPag
 
     return (
         <div className="my-5">
-            <div className="grid cols md:grid-cols-3 sm:grid-cols-2 gap-3">
+            <div className="grid cols md:grid-cols-4 sm:grid-cols-2 gap-3">
                 {
                     // eslint-disable-next-line react/prop-types
                     releaseData && releaseData.map(d => 
@@ -73,7 +73,7 @@ const ReleaseCardComponent = ({releaseData, totalItems, fetchLoading, currentPag
                     !totalItems && !fetchLoading && <Empty className="pt-8" />
                 }
                 {
-                    totalItems > 6 && !fetchLoading && <div className="flex justify-center items-center my-4">
+                    totalItems > 8 && !fetchLoading && <div className="flex justify-center items-center my-4">
                         <Pagination 
                         defaultCurrent={currentPage} 
                         total={totalItems}
@@ -87,4 +87,4 @@ const ReleaseCardComponent = ({releaseData, totalItems, fetchLoading, currentPag
     );
 };
 
-export default ReleaseCardComponent;
+export default ReleaseCardComponentFourColsGrid;
