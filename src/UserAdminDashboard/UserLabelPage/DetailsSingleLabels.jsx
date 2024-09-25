@@ -1,22 +1,23 @@
-import { ChatBubbleBottomCenterTextIcon, CheckBadgeIcon, ClockIcon, LockClosedIcon, PencilSquareIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import { Image, Popconfirm, Skeleton } from "antd";
+import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon, PencilSquareIcon, TrashIcon, } from "@heroicons/react/24/solid";
+import { Button, Dropdown, Image, Popconfirm, Skeleton } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import fallbackImage from "../../assets/fallbackImage.jpg"
-import ReleaseCardComponent from "../ReleasesPage/ReleaseCardComponent/ReleaseCardComponent";
 import youtubeImg from '../../assets/social-icon/youtube.png';
 import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
 import UpdateLabels from "./UpdateLabels";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
+import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
+import ReleaseCardComponentFourColsGrid from "../ReleasesPage/ReleaseCardComponent/ReleaseCardComponentFourColsGrid";
 
 const DetailsSingleLabels = () => {
 
     const navigate = useNavigate('')
     const { refatchLabelsData } = useContext(AuthContext);
 
-    const {id} = useParams();
+    const {id, status, pageNumber, perPageLabels} = useParams();
 
     const [imgUrl, setImgUrl] = useState('');
     const [imgKey, setImgKey] = useState('');
@@ -36,10 +37,7 @@ const DetailsSingleLabels = () => {
 
 
     // Paginatin and Search State __________________________________________________
-    const [releaseStatus, setReleaseStatus] = useState('All')
     const [totalItems, setTotalItems] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(9);
     const [searchText, setSearchText] = useState('');
 
     const [releaseData, setReleaseData] = useState();
@@ -47,10 +45,9 @@ const DetailsSingleLabels = () => {
 
     // Get Release List ______________________________________________________________
     useEffect(() => {
-        setItemPerPage(9)
         // Calculate Pagination and Fetch__________________________________________________
         setFetchLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/labels/${id}?page=${currentPage}&limit=${itemPerPage}&status=${releaseStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/labels/${id}?page=${pageNumber}&limit=${perPageLabels}&status=${status}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -59,27 +56,20 @@ const DetailsSingleLabels = () => {
               }
             })
             .catch(er => console.log(er));
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage, releaseStatus]);
+    }, [ status, pageNumber, perPageLabels, id]);
 
     const handleSearch = (e) => {
         setSearchText(e)
     }
 
-    const handleStatus = (e) => {
-        setCurrentPage(1)
-        setReleaseStatus(e)
-    }
-
     const handlePageChange = (page) => {
-        setCurrentPage(page)
+        navigate(`/labels/${id}/${status}/${page}/${pageNumber}`)
     };
 
     const handleKeyPress = (event) => {
-        setItemPerPage(50)
         if (event.key === 'Enter') {
           setFetchLoading(true);
-          axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/labels/search/${id}?status=${releaseStatus}&search=${searchText}`)
+          axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/labels/search/${id}?status=${status}&search=${searchText}`)
             .then( res => {
               if(res.status == 200){
                 setFetchLoading(false);
@@ -105,6 +95,29 @@ const DetailsSingleLabels = () => {
           .catch(er => console.log(er));
     }
 
+
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+    const activeLink = (to , currentPath) => {
+        return currentPath.startsWith(to)
+        ? { backgroundColor: '#F1F5F9'} // Active styles
+        : {};
+    }
+    const items = [
+        { key: '1',label: (<a rel="noopener noreferrer" href={`/labels/${id}/All/1/8`}>All</a>),},
+        { key: '2',label: (<a rel="noopener noreferrer" href={`/labels/${id}/Pending/1/8`}>Pending</a>),},
+        { key: '3',label: (<a rel="noopener noreferrer" href={`/labels/${id}/Review/1/8`}>Review</a>),},
+        { key: '4',label: (<a rel="noopener noreferrer" href={`/labels/${id}/Approved/1/8`}>Approved</a>),},
+        { key: '5',label: (<a rel="noopener noreferrer" href={`/labels/${id}/Action Required/8`}>Action Required</a>),},
+        { key: '6',label: (<a rel="noopener noreferrer" href={`/labels/${id}/Takedown/1/8`}>Takedown</a>),},
+    ];
+    const inputStyle ={
+        height: '36px',
+        border: '1px solid #E2E8F0',
+        minWidth: '200px'
+    }
+
     const cancel = () => {
       return;
     };
@@ -114,45 +127,108 @@ const DetailsSingleLabels = () => {
     }
 
     return (
-        <div className="md:flex md:h-full">
-            <div className="h-full md:basis-3/4 overflow-y-auto md:border-r p-2">
-                
+        <div className="md:h-full">
+            <div className="md:h-full overflow-y-auto md:border-r px-3 md:pt-16">
+                <h3 className='font-semibold text-xl text-[#252525]'>Label Details</h3>
                 {
                     labelsFetchLoading && 
                     <Skeleton
                         className="py-4"
                         avatar
                         paragraph={{
-                        rows: 2,
+                        rows: 4,
                         }}
                     />
                 }
                 {
                     labels && 
-                    <div className="md:flex justify-between my-3 rounded-md border relative">
-                        {
-                            !labelsFetchLoading && labels?.status === 'Rejected' &&
-                            <div className="absolute top-1 right-2 flex items-center gap-2 bg-white py-1 px-2 rounded-md">
-                                <Popconfirm
-                                    title="Delete"
-                                    placement="leftTop"
-                                    className="z-1000"
-                                    description="Are you sure to Delete Labelse?"
-                                    onConfirm={() => confirm(labels._id, labels.imgKey)}
-                                    onCancel={cancel}
-                                    okText="Yes"
-                                    cancelText="No"
-                                    >
-                                    <TrashIcon style={{cursor: 'pointer'}} className="w-5 h-5 text-red-500"/>
-                                </Popconfirm>
+                    <div className="md:flex justify-between">
+                        <div className="md:flex-1 flex flex-col md:flex-row gap-2 pt-2">
+                            <Image
+                            width={194}
+                            height={176}
+                            className="rounded-lg"
+                            src={labels.imgUrl}
+                            fallback={fallbackImage}
+                            />
+                            <div className="flex flex-col justify-between">
+                                <div>
+                                    <h2 className="font-bold">{labels.labelName}</h2>
+                                    {
+                                        labels?.youtubeChannelLink && 
+                                        <a href={labels?.youtubeChannelLink} target="_blank" rel="noopener noreferrer"><img src={youtubeImg} alt="youtueImg" /></a>
+                                    }
+                                    {
+                                        labels?.description &&
+                                        <div className="pt-2">
+                                            <p className="text-sm text-[#71717A]">Description:</p>
+                                            <p className="text-sm text-[#71717A]">{labels.description}</p>
+                                        </div>
+                                    }
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    {
+                                        labels.status === 'Pending' &&
+                                            <div className="flex items-center">
+                                                <ClockIcon className="h-3 w-3 text-[#FEB951] me-1"/>
+                                                <p className="text-xs font-semibold text-[#FEB951]">{labels.status}</p>
+                                            </div>
+                                    }
+                                    {
+                                        labels.status === 'Approved' &&
+                                        <div className="flex items-center">
+                                            <CheckBadgeIcon className="h-3 w-3 text-[#39C616] me-1"/>
+                                            <p className="text-xs font-semibold text-[#39C616]">{labels.status}</p>
+                                        </div>
+                                    }
+                                    {
+                                        labels.status === 'Rejected' &&
+                                        <div className="flex items-center">
+                                            <ExclamationTriangleIcon className="h-3 w-3 text-[#FF7050] me-1"/>
+                                            <p className="text-xs font-semibold text-[#FF7050]">{labels.status}</p>
+                                        </div>
+                                    }
+                                    {
+                                        labels.status === 'Locked' &&
+                                        <div className="flex items-center">
+                                            <ExclamationTriangleIcon className="h-3 w-3 text-[#71717A] me-1"/>
+                                            <p className="text-xs font-semibold text-[#71717A]">{labels.status}</p>
+                                        </div>
+                                    }
+                                    
+                                </div>
                             </div>
-                        }
-                        {
-                            !labelsFetchLoading && labels?.status === 'Approved' &&
-                            <div className="absolute top-1 right-2 flex items-center gap-2 bg-white py-1 px-2 rounded-md">
-                                <PencilSquareIcon onClick={()=>document.getElementById('labelsUpdate').showModal()} style={{cursor: 'pointer'}} className="w-5 h-5 text-salate-500"/>
-                            </div>
-                        }
+                        </div>
+                        <div className="">
+                            {
+                                !labelsFetchLoading && labels?.status === 'Rejected' &&
+                                <div className="flex items-center gap-2 bg-white py-1 px-2 rounded-md">
+                                    <Popconfirm
+                                        title="Delete"
+                                        placement="leftTop"
+                                        className="z-1000"
+                                        description="Are you sure to Delete Labelse?"
+                                        onConfirm={() => confirm(labels._id, labels.imgKey)}
+                                        onCancel={cancel}
+                                        okText="Yes"
+                                        cancelText="No"
+                                        >
+                                        <button className="btn btn-sm w-full">
+                                            <TrashIcon style={{cursor: 'pointer'}} className="w-5 h-5"/>
+                                            Delete
+                                        </button>
+                                    </Popconfirm>
+                                </div>
+                            }
+                            {
+                                !labelsFetchLoading && labels?.status === 'Approved' &&
+                                <div className="flex items-center gap-2 bg-white py-1 px-2 rounded-md">
+                                    <button className="btn btn-sm w-full">
+                                        <PencilSquareIcon onClick={()=>document.getElementById('labelsUpdate').showModal()} style={{cursor: 'pointer'}} className="w-5 h-5 text-salate-500"/>
+                                        Edit Labels Details
+                                    </button>
+                                </div>
+                            }
                             <dialog id="labelsUpdate" className="modal">
                                 <div className="modal-box">
                                     <form method="dialog">
@@ -162,92 +238,48 @@ const DetailsSingleLabels = () => {
                                     <UpdateLabels imgUrl={imgUrl} imgKey={imgKey} labels={labels}/>
                                 </div>
                             </dialog>
-                        <div className="md:flex-1 flex p-2">
-                            <Image
-                            width={100}
-                            height={100}
-                            className="rounded-lg"
-                            src={labels.imgUrl}
-                            fallback={fallbackImage}
-                            />
-                            <div className="ps-2">
-                                <h2 className="font-bold">{labels.labelName}</h2>
-                                <p className="text-sm text-slate-400">{labels?.userName}</p>
-                                {
-                                    labels.status === 'Pending' &&
-                                    <span className="bg-yellow-500 my-1 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {labels.status}</span>
-                                }
-                                {
-                                    labels.status === 'Approved' &&
-                                    <span className="bg-green-500 my-1 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><CheckBadgeIcon className="w-4 h-4 me-1"/> {labels.status}</span>
-                                }
-                                {
-                                    labels.status === 'Rejected' &&
-                                    <span className="bg-red-400 my-1 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {labels.status}</span>
-                                }
-                                {
-                                    labels.status === 'Locked' &&
-                                    <span className="bg-slate-200 my-1 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><LockClosedIcon className="w-4 h-4 me-1"/> {labels.status}</span>
-                                }
-                            </div>
-                        </div>
-                        <div className="md:flex-1 p-2">
-                            <p className="text-sm font-bold border-b text-slate-500">Labels Other Detais</p>
-                            {
-                                labels?.youtubeChannelLink && <a href={labels.youtubeChannelLink} target="_blank" className="flex items-center">
-                                    <img className="me-2" src={youtubeImg} alt={youtubeImg} />
-                                    {labels.youtubeChannelLink}
-                                </a>
-                            }
-                            {
-                                labels?.description &&
-                                <p className="text-sm text-slate-600">{labels.description}</p>
-                            }
                         </div>
                     </div>
                 }
                 {/* Release Card _______________________________________________________________ */}
-                <main>
-                    {/* Search and Create Release Section ______________________________________________________________________________ */}
-                    <div className="md:flex md:justify-between md:items-center bg-slate-50 py-2 px-2 rounded-lg">
-                        <div className="my-2">
-                            <input type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm rounded-full input-bordered w-full"/>
+                <main className="mt-3">
+                    <p className="font-semibold pb-2">Releases under this Label</p>
+                    <div>
+                        <div className="flex justify-between">
+                            {/* Desktop Div _____________________________________ */}
+                            <div className="hidden md:block">
+                                <div className="h-10 px-[5px] py-1 flex items-center p-1 border rounded-md">
+                                    <NavLink style={() => activeLink(`/labels/${id}/All`, currentPath)} to={`/labels/${id}/All/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">All</NavLink>
+                                    <NavLink style={() => activeLink(`/labels/${id}/Pending`, currentPath)} to={`/labels/${id}/Pending/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Pending</NavLink>
+                                    <NavLink style={() => activeLink(`/labels/${id}/Review`, currentPath)} to={`/labels/${id}/Review/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Review</NavLink>
+                                    <NavLink style={() => activeLink(`/labels/${id}/Approved`, currentPath)} to={`/labels/${id}/Approved/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Approved</NavLink>
+                                    <NavLink style={() => activeLink(`/labels/${id}/Action`, currentPath)} to={`/labels/${id}/Action Required/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Action Required</NavLink>
+                                    <NavLink style={() => activeLink(`/labels/${id}/TakeDown`, currentPath)} to={`/labels/${id}/TakeDown/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Takedown</NavLink>
+                                </div>
+                            </div>
+                            {/* Mobile Div _____________________________________ */}
+                            <div className="block md:hidden">
+                                <Dropdown
+                                    menu={{items,}}
+                                    placement="bottomLeft"
+                                    className="h-10"
+                                >
+                                    <Button className="text-md font-semibold flex items-center gap-2">{status} <ArrowsUpDownIcon className="w-4 h-4"/></Button>
+                                </Dropdown>
+                            </div>
+
+                            <div className="">
+                                <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
+                            </div>
                         </div>
                     </div>
-                    <p className="font-bold text-slate-500 border-b">Releases under this Labels</p>
-                    <div className="my-3">
-                        <button onClick={() => handleStatus('All')} className="btn btn-sm btn-neutral m-1">All</button>
-                        <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral m-1">Pending</button>
-                        <button onClick={() => handleStatus('Review')} className="btn btn-sm btn-neutral m-1">Review</button>
-                        <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral m-1">Approved</button>
-                        <button onClick={() => handleStatus('Action Required')} className="btn btn-sm btn-neutral mx-1">Action Required</button>
-                        <button onClick={() => handleStatus('Takedown')} className="btn btn-sm btn-neutral mx-1">Takedown</button>
-                    </div>
+
                     {
                         fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
-                    <ReleaseCardComponent itemPerPage={itemPerPage} releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={currentPage} handlePageChange={handlePageChange}/>
+                    <ReleaseCardComponentFourColsGrid itemPerPage={perPageLabels} releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={pageNumber} handlePageChange={handlePageChange}/>
                 </main>
-            </div>
-
-            {/* Sideber Div  _______________________________*/}
-            <div className="md:basis-1/4 p-2">
-                <div className='p-2 border-b'>
-                    <h4 className='flex items-center font-bold text-slate-500'> <ChatBubbleBottomCenterTextIcon className='w-5 h-5 me-2 text-slate-500'/>Notice</h4>
-                </div>
-                {
-                    labels?.actionRequired && 
-                    <div className="p-2 bg-red-200 rounded-md">
-                        <p className="text-sm font-semibold">{labels.actionRequired}</p>
-                    </div>
-                }
-                {
-                    !labels?.actionRequired && 
-                    <div className="p-2 bg-slate-200 rounded-md">
-                        <p className="px-2 py-4 text-slate-600 rounded-md">No Notice Yet</p>
-                    </div>
-                }
-            </div>
+            </div>            
         </div>
     );
 };

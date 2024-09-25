@@ -283,7 +283,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserLabelsPage/></ProtectUserRoute></Suspense>
       },
       {
-        path: '/labels/:id',
+        path: '/labels/:id/:status/:pageNumber/:perPageLabels',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><DetailsSingleLabels/></ProtectUserRoute></Suspense>
       },
       {

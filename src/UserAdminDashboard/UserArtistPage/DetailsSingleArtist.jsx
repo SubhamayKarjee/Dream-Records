@@ -75,7 +75,7 @@ const DetailsSingleArtist = () => {
     }
 
     const handlePageChange = (page) => {
-        navigate(`/artist/${id}/${status}/${page}/6`)
+        navigate(`/artist/${id}/${status}/${page}/8`)
       };
 
     const handleKeyPress = (event) => {
@@ -117,12 +117,12 @@ const DetailsSingleArtist = () => {
         : {};
     }
     const items = [
-        { key: '1',label: (<a rel="noopener noreferrer" href={`/artist/${id}/All/1/6`}>All</a>),},
-        { key: '2',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Pending/1/6`}>Pending</a>),},
-        { key: '3',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Review/1/6`}>Review</a>),},
-        { key: '4',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Approved/1/6`}>Approved</a>),},
-        { key: '5',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Action Required/16`}>Action Required</a>),},
-        { key: '6',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Takedown/1/6`}>Takedown</a>),},
+        { key: '1',label: (<a rel="noopener noreferrer" href={`/artist/${id}/All/1/8`}>All</a>),},
+        { key: '2',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Pending/1/8`}>Pending</a>),},
+        { key: '3',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Review/1/8`}>Review</a>),},
+        { key: '4',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Approved/1/8`}>Approved</a>),},
+        { key: '5',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Action Required/8`}>Action Required</a>),},
+        { key: '6',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Takedown/1/8`}>Takedown</a>),},
     ];
     const inputStyle ={
         height: '36px',
@@ -239,18 +239,17 @@ const DetailsSingleArtist = () => {
                 {/* Release Card _______________________________________________________________ */}
                 <main className="pt-3">
                     <p className="font-semibold pb-2">Releases under this Artist</p>
-
                     <div>
                         <div className="flex justify-between">
                             {/* Desktop Div _____________________________________ */}
                             <div className="hidden md:block">
                                 <div className="h-10 px-[5px] py-1 flex items-center p-1 border rounded-md">
-                                    <NavLink style={() => activeLink(`/artist/${id}/All`, currentPath)} to={`/artist/${id}/All/1/6`} className="px-[12px] py-[6px] rounded text-sm font-semibold">All</NavLink>
-                                    <NavLink style={() => activeLink(`/artist/${id}/Pending`, currentPath)} to={`/artist/${id}/Pending/1/6`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Pending</NavLink>
+                                    <NavLink style={() => activeLink(`/artist/${id}/All`, currentPath)} to={`/artist/${id}/All/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">All</NavLink>
+                                    <NavLink style={() => activeLink(`/artist/${id}/Pending`, currentPath)} to={`/artist/${id}/Pending/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Pending</NavLink>
                                     <NavLink style={() => activeLink(`/artist/${id}/Review`, currentPath)} to={`/artist/${id}/Review/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Review</NavLink>
-                                    <NavLink style={() => activeLink(`/artist/${id}/Approved`, currentPath)} to={`/artist/${id}/Approved/1/6`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Approved</NavLink>
-                                    <NavLink style={() => activeLink(`/artist/${id}/Action`, currentPath)} to={`/artist/${id}/Action Required/1/6`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Action Required</NavLink>
-                                    <NavLink style={() => activeLink(`/artist/${id}/TakeDown`, currentPath)} to={`/artist/${id}/TakeDown/1/6`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Takedown</NavLink>
+                                    <NavLink style={() => activeLink(`/artist/${id}/Approved`, currentPath)} to={`/artist/${id}/Approved/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Approved</NavLink>
+                                    <NavLink style={() => activeLink(`/artist/${id}/Action`, currentPath)} to={`/artist/${id}/Action Required/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Action Required</NavLink>
+                                    <NavLink style={() => activeLink(`/artist/${id}/TakeDown`, currentPath)} to={`/artist/${id}/TakeDown/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Takedown</NavLink>
                                 </div>
                             </div>
                             {/* Mobile Div _____________________________________ */}

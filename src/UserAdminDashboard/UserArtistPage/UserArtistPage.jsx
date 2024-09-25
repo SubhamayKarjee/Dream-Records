@@ -120,7 +120,7 @@ const UserArtistPage = () => {
                       }
                       {
                         !fetchLoading && artistData?.map((data) => 
-                          <div style={{cursor: 'pointer'}} onClick={() => navigate(`/artist/${data._id}/All/1/6`)} key={data._id} className="">
+                          <div style={{cursor: 'pointer'}} onClick={() => navigate(`/artist/${data._id}/All/1/8`)} key={data._id} className="">
                             <div className="">
                                   <Image
                                     width={'100%'}

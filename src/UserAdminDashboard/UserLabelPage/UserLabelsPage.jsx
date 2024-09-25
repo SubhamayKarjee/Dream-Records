@@ -155,7 +155,7 @@ const UserLabelsPage = () => {
                     <div className="grid grid-cols sm:grid-cols-2 md:grid-cols-3 gap-3 py-4">
                       {
                         !fetchLoading && labelsData?.map((data) => 
-                          <div style={{cursor: 'pointer'}} onClick={() => navigate(`/labels/${data._id}`)} key={data._id} className="">
+                          <div style={{cursor: 'pointer'}} onClick={() => navigate(`/labels/${data._id}/All/1/8`)} key={data._id} className="">
                             <div style={{borderRadius: '24px', height: '265px'}} className="p-1 border">
                                   <Image
                                     width={'100%'}
