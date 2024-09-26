@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
-import { CheckBadgeIcon, ClockIcon, CurrencyRupeeIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
+import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
+import { CurrencyRupeeIcon } from "@heroicons/react/24/outline";
 import { DatePicker, Empty, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 
-const WithdrawalList = ({id, text}) => {
+const WithdrawalList = ({id}) => {
 
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
@@ -49,56 +50,97 @@ const WithdrawalList = ({id, text}) => {
 
 
     return (
-        <div className="my-5">
-            <div className="p-2 border my-2 bg-slate-100 mb-4">
+        <div className="">
+            <div className="">
                 <p className="text-sm font-bold text-slate-500">Filter by YEAR</p>
                 <DatePicker className="payment_details" onChange={onChange} picker="year" />
             </div>
-            <div>
+
+
                 {fetchLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-md"></span></div>}
-                {
-                    !fetchLoading && withdrawalData?.map(data => 
-                        <div className="p-3 rounded-lg my-1 border" key={data._id}>
-                            <div className="md:flex justify-between">
-                                <div>
-                                    <p className="text-green-500"> {text} || <span className="font-bold text-slate-600">{data?.withdrawalDate}/{data?.withdrawalMonth}/{data?.withdrawalYear} || {data?.withdrawalTime}</span> </p>
-                                    <p>ID: {data?._id}</p>
-                                    {
-                                        data?.status === 'Approved' && <p className="text-sm font-bold text-slate-500">Your payment on {data.updatedDate} has been processed</p> 
-                                    }
-                                </div>
-                                <div className="">
-                                    <p className="font-bold text-lg md:pe-3 flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/> {data?.balance?.amount}</p>
-                                    {
-                                        data?.status === 'Pending' &&
-                                            <div className="flex items-center p-1 bg-[#ffae00] rounded-md shadow">
-                                                <ClockIcon className="h-3 w-3 text-white me-1"/>
-                                                <p className="text-xs font-semibold text-white">{data.status}</p>
+                <div className="overflow-x-auto">
+                    <table className="table">
+                        {/* head */}
+                        <thead>
+                            <tr className="">
+                                <th className="text-md">Title</th>
+                                <th className="text-md">Date</th>
+                                <th className="text-md">Status</th>
+                                <th className="text-md">Ammount</th>
+                                <th className="text-md text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {/* row 1 */}
+                        {
+                            withdrawalData && withdrawalData.map(data => 
+                                <>
+                                    <tr className="hover">
+                                        <td className="font-semibold text-sm text-[#09090B]">Withdrawal Requested !</td>
+                                        <td className="font-semibold text-sm text-[#09090B]">{data?.withdrawalMonth}/{data?.withdrawalYear}</td>
+                                        <td className="font-semibold text-sm text-[#09090B]">
+                                        {
+                                            data?.status === 'Pending' &&
+                                                <div className="flex items-center p-1">
+                                                    <ClockIcon className="h-3 w-3 me-1"/>
+                                                    <p className="text-sm font-semibold">{data.status}</p>
+                                                </div>
+                                        }
+                                        {
+                                            data?.status === 'Approved' &&
+                                                <div className="flex items-center p-1">
+                                                    <CheckBadgeIcon className="h-3 w-3 me-1"/>
+                                                    <p className="text-sm font-semibold">{data.status}</p>
+                                                </div>
+                                        }
+                                        {
+                                            data?.status === 'Rejected' &&
+                                                <div className="flex items-center p-1">
+                                                    <ExclamationTriangleIcon className="h-3 w-3me-1"/>
+                                                    <p className="text-sm font-semibold">{data.status}</p>
+                                                </div>
+                                        }
+                                        </td>
+                                        <td className="font-semibold text-sm text-[#09090B]">
+                                            <div className="flex items center gap-1">
+                                                 <CurrencyRupeeIcon className="w-5 h-5"/><p className="font-semibold text-sm text-[#09090B]">{data?.balance?.amount}</p>
                                             </div>
-                                    }
-                                    {
-                                        data?.status === 'Approved' &&
-                                            <div className="flex items-center p-1 bg-[#00c90d] rounded-md shadow">
-                                                <CheckBadgeIcon className="h-3 w-3 text-white me-1"/>
-                                                <p className="text-xs font-semibold text-white">{data.status}</p>
-                                            </div>
-                                    }
-                                    {
-                                        data?.status === 'Rejected' &&
-                                            <div className="flex items-center p-1 bg-red-700 rounded-md shadow">
-                                                <ExclamationTriangleIcon className="h-3 w-3 text-white me-1"/>
-                                                <p className="text-xs font-semibold text-white">{data.status}</p>
-                                            </div>
-                                    }
-                                </div>
-                            </div>
-                            {
-                                data?.rejectResoan && <p className="p-2 text-sm mt-2 bg-red-100 font-bold rounded-md">{data.rejectResoan}</p>
-                            }
-                        </div>
-                    )
-                }
-            </div>
+                                        </td>
+                                        <td className="font-semibold text-sm text-[#09090B]">
+                                            <button className="btn btn-sm w-full">View Details</button>
+                                        </td>
+                                        {/* {
+                                            role == 'User' &&
+                                            <td className="font-semibold text-[#09090B]">
+                                                <button className="btn btn-sm w-full">View Details</button>
+                                            </td>
+                                        }
+                                        {
+                                            role !== 'User' &&
+                                            <td className="flex items-center justify-between gap-2">
+                                                <button className="btn btn-sm w-full">View Details</button>
+                                                <Popconfirm
+                                                    title="Delete"
+                                                    placement="leftTop"
+                                                    className="z-1000"
+                                                    description="Are you sure to Delete Payment?"
+                                                    onConfirm={() => confirm(data._id, data)}
+                                                    onCancel={cancel}
+                                                    okText="Yes"
+                                                    cancelText="No"
+                                                    >
+                                                    <TrashIcon style={{cursor: 'pointer'}} className="w-4 h-4 me-2 text-red-500 absolute top-2 right-3"/>
+                                                </Popconfirm>
+                                            </td>
+                                        } */}
+                                    </tr>
+                                </>
+                            )
+                        }                        
+                        </tbody>
+                    </table>
+                </div>
+            
             <div className="pt-6">
                 {
                     !totalItems && !fetchLoading && <Empty className="pt-8" />

@@ -79,7 +79,7 @@ const PaymentDetails = ({id, role}) => {
 
     return (
         <div className="">
-            <div className="p-2">
+            <div className="">
                 <p className="text-sm font-bold text-slate-500">Filter by YEAR</p>
                 <DatePicker className="payment_details" onChange={onChange} picker="year" />
             </div>
@@ -106,7 +106,11 @@ const PaymentDetails = ({id, role}) => {
                                         <td className="font-semibold text-sm text-[#09090B] hidden md:block">Successfully Get Payments</td>
                                         <td className="font-semibold text-sm text-[#09090B]">{data?.month} {data?.year}</td>
                                         <td className="font-semibold text-sm text-[#09090B]">{data?.paymentReportDate}</td>
-                                        <td className="font-semibold text-sm text-[#09090B] flex items-center gap-1"><CurrencyRupeeIcon className="w-5 h-5"/>{data?.amount}.00</td>
+                                        <td className="font-semibold text-sm text-[#09090B]">
+                                            <div className="flex items-center">
+                                                <CurrencyRupeeIcon className="w-5 h-5"/><p className="font-semibold text-sm text-[#09090B]">{data?.amount}.00</p>
+                                            </div>
+                                        </td>
                                         {
                                             role == 'User' &&
                                             <td className="font-semibold text-[#09090B]">
@@ -138,11 +142,6 @@ const PaymentDetails = ({id, role}) => {
                         </tbody>
                     </table>
                 </div>
-
-
-
-
-
 
             <div className="pt-6">
                 {
