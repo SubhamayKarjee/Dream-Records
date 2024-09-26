@@ -295,7 +295,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><WalletPage/></ProtectUserRoute></Suspense>,
       },
       {
-        path: '/claim-release',
+        path: '/claim-release/:status/:pageNumber/:perPageRights',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><ClaimReleasePage/></ProtectUserRoute></Suspense>,
       },
       {

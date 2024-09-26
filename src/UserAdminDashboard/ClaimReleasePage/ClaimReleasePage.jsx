@@ -1,9 +1,11 @@
+import { ArrowsUpDownIcon, DocumentCheckIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import { Empty, Image, Modal, Pagination, Select } from 'antd';
+import { Button, Divider, Dropdown, Empty, Image, Modal, Pagination, Select } from 'antd';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import { AuthContext } from '../UserAdminHomePage/UserAdminHomePage';
 
@@ -12,6 +14,8 @@ const ClaimReleasePage = () => {
 
 
     const { userNameIdRoll } = useContext(AuthContext);
+    const {status, pageNumber, perPageRights} = useParams();
+    const navigate = useNavigate()
 
     // Claim Option Handle ________________________________________________________
     const [claimOption, setClaimOption] = useState('');
@@ -96,22 +100,19 @@ const ClaimReleasePage = () => {
                 setReFetch(r)
                 setRelease([])
                 setClaimOption('')
-                toast.success('Successfully Submited')
+                setIsModalOpen(false);
+                toast.success('Successfully Submited');
             }
         })
     }
 
 
     const [totalItems, setTotalItems] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage] = useState(12);
-
     const [claimData, setClaimData] = useState()
     const [loading, setLoading] = useState(false);
-    const [claimStatus, setClaimStatus] = useState('All');
     useEffect(() => {
         setLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release/users-claim/${userNameIdRoll[1]}?page=${currentPage}&limit=${itemPerPage}&status=${claimStatus}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release/users-claim/${userNameIdRoll[1]}?page=${pageNumber}&limit=${perPageRights}&status=${status}`)
         .then(res => {
             if(res.status === 200){
                 setLoading(false)
@@ -119,131 +120,196 @@ const ClaimReleasePage = () => {
                 setTotalItems(res.data.dataCount);
             }
         })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[currentPage, claimStatus, userNameIdRoll, reFetch])
+    },[perPageRights, pageNumber, userNameIdRoll, reFetch, status])
 
     const handlePageChange = (page) => {
-        setCurrentPage(page)
+        navigate(`/claim-release/${status}/${page}/8`)
     };
 
-    const handleStatus = (e) => {
-        setCurrentPage(1)
-        setClaimStatus(e)
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {          
+          console.log(event);
+        }
+    };
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const inputStyle ={
+        height: '36px',
+        border: '1px solid #E2E8F0',
+        minWidth: '300px'
     }
 
+    const items = [
+        { key: '1',label: (<a rel="noopener noreferrer" href={'/claim-release/All/1/8'}>All</a>),},
+        { key: '2',label: (<a rel="noopener noreferrer" href={'/claim-release/Pending/1/8'}>Pending</a>),},
+        { key: '4',label: (<a rel="noopener noreferrer" href={'/claim-release/Solved/1/8'}>Solved</a>),},
+        { key: '5',label: (<a rel="noopener noreferrer" href={'/claim-release/Rejected/1/8'}>Rejected</a>),},
+    ];
+
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+    const activeLink = (to , currentPath) => {
+        return currentPath.startsWith(to)
+        ? { backgroundColor: '#F1F5F9'} // Active styles
+        : {};
+    }
 
 
 
     return (
         <div className="md:h-full">
-            <div className='h-full overflow-y-auto p-2'>
-                <h2 className='font-bold text-slate-500 my-2'>Rights Manager</h2>
-                <form onSubmit={handleSubmit(onSubmit)} className='border rounded-md p-2 shadow'>
+            <div className='h-full overflow-y-auto px-3 bg-[#FCFCFC] md:pt-16 custom-scrollbar'>
+                <h3 className='font-bold text-xl text-[#252525]'>Rights Manager</h3>
 
-                    <p className="text-sm font-semibold text-slate-500 ms-2">Rights Issues <span className="text-red-500">*</span></p>
-                    <Select
-                        showSearch
-                        className="w-full rounded-full"
-                        placeholder="Select Claim Type"
-                        onChange={e => setClaimOption(e)}
-                        options={[
-                            {value: 'Release claim',label: 'Release claim',},
-                            {value: 'Manual claim',label: 'Manual claim',}, 
-                            {value: 'Takedown video',label: 'Takedown video',}, 
-                            {value: 'Audio Fingerprinting',label: 'Audio Fingerprinting',}, 
-                        ]}
-                    />
-                    {
-                        claimOptionErr && <span className='text-red-600 pt-2 block'>{claimOptionErr}</span>
-                    }
-
-                    {
-                        claimOption && 
-                        <div>
-                            {/* Release Select Option ______________________________________________________________ */}
-                            <div className="p-2 border rounded-md mt-3">
-                                <p className="text-sm font-semibold text-slate-500 ms-2">Select Release <span className="text-red-500">*</span></p>
-                                {
-                                    release && release?.map(data => 
-                                        <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                                            <div className="flex items-center">
-                                                    <Image
-                                                    width={35}
-                                                    height={35}
-                                                    className="rounded-lg"
-                                                    src={data?.imgUrl}
-                                                    fallback={fallbackImage}
-                                                    />
-                                                <div className="ps-2">
-                                                <h2 className="font-bold text-sm">{data?.releaseTitle}</h2>
-                                                <p className="text-xs text-slate-400">ID: {data?._id}</p>
-                                                </div>
-                                            </div>
-                                            <span style={{cursor: 'pointer'}} onClick={() => removeRelease(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
-                                        </div>
-                                    )
-                                }
-                                <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Release</span>
-                                    <Modal title="Search/Select Release" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
-                                        <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">Select Release</p>
-                                        <div>
-                                            <input type="text" placeholder="Search" onChange={e => handleSearch(e.target.value)} className="input input-sm rounded-full input-bordered w-full"/>
-                                            {
-                                                fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
-                                            }
-                                            {
-                                            releaseData?.map((data) => 
-                                                <div onClick={() => handleRelease(data)} key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
-                                                    <div style={{cursor: 'pointer'}} onClick={handleCancel2} className="w-full">
-                                                        <div className="flex items-center">
-                                                            <Image
-                                                                width={55}
-                                                                height={55}
-                                                                className="rounded-lg"
-                                                                src={data.imgUrl}
-                                                                fallback={fallbackImage}
-                                                            />
-                                                        <div className="ps-2">
-                                                            <h2 className="font-bold">{data.releaseTitle}</h2>
-                                                            <p className="text-sm text-slate-400">ID: {data._id}</p>
-                                                        </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )
-                                            }
-                                            {
-                                            !totalItems && !fetchLoading && <Empty className="pt-12" />
-                                            }
-                                        </div>
-                                    </Modal>
-                                {errorMessageRelease && <span className='text-red-600 pt-2 block'>{errorMessageRelease}</span>}
-                            </div>
+                <div className="md:flex md:justify-between md:items-center">
+                    <div className="mt-2">
+                        <input type="text" style={inputStyle} onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
+                    </div>
+                    <div className="mt-2">
+                        <button onClick={showModal} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/> Create Label</button>
+                    </div>
+                </div>
+                    {/* Create Claim form with Modal Start _______________________________________________________________________ */}
+                    <Modal title="Basic Modal" open={isModalOpen} onCancel={handleCancel} footer={[]}>
+                            <form onSubmit={handleSubmit(onSubmit)} className=''>
+                            <p className="text-sm font-semibold text-slate-500 ms-2">Rights Issues <span className="text-red-500">*</span></p>
+                            <Select
+                                showSearch
+                                className="w-full rounded-full"
+                                placeholder="Select Claim Type"
+                                onChange={e => setClaimOption(e)}
+                                options={[
+                                    {value: 'Release claim',label: 'Release claim',},
+                                    {value: 'Manual claim',label: 'Manual claim',}, 
+                                    {value: 'Takedown video',label: 'Takedown video',}, 
+                                    {value: 'Audio Fingerprinting',label: 'Audio Fingerprinting',}, 
+                                ]}
+                            />
+                            {
+                                claimOptionErr && <span className='text-red-600 pt-2 block'>{claimOptionErr}</span>
+                            }
 
                             {
-                                claimOption != 'Audio Fingerprinting' && 
+                                claimOption && 
                                 <div>
-                                    <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Paste infringing link <span className="text-red-500">*</span></p>
-                                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("claimLink", { required: true})}/>
-                                    {errors.claimLink && <span className='text-red-600 pt-2 block'>Claim Link Required</span>}
+                                    {/* Release Select Option ______________________________________________________________ */}
+                                    <div className="p-2 border rounded-md mt-3">
+                                        <p className="text-sm font-semibold text-slate-500 ms-2">Select Release <span className="text-red-500">*</span></p>
+                                        {
+                                            release && release?.map(data => 
+                                                <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                                    <div className="flex items-center">
+                                                            <Image
+                                                            width={35}
+                                                            height={35}
+                                                            className="rounded-lg"
+                                                            src={data?.imgUrl}
+                                                            fallback={fallbackImage}
+                                                            />
+                                                        <div className="ps-2">
+                                                        <h2 className="font-bold text-sm">{data?.releaseTitle}</h2>
+                                                        <p className="text-xs text-slate-400">ID: {data?._id}</p>
+                                                        </div>
+                                                    </div>
+                                                    <span style={{cursor: 'pointer'}} onClick={() => removeRelease(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
+                                                </div>
+                                            )
+                                        }
+                                        <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Release</span>
+                                            <Modal title="Search/Select Release" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
+                                                <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">Select Release</p>
+                                                <div>
+                                                    <input type="text" placeholder="Search" onChange={e => handleSearch(e.target.value)} className="input input-sm rounded-full input-bordered w-full"/>
+                                                    {
+                                                        fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
+                                                    }
+                                                    {
+                                                    releaseData?.map((data) => 
+                                                        <div onClick={() => handleRelease(data)} key={data._id} className="flex items-center justify-between p-1 my-1 rounded-md">
+                                                            <div style={{cursor: 'pointer'}} onClick={handleCancel2} className="w-full">
+                                                                <div className="flex items-center">
+                                                                    <Image
+                                                                        width={55}
+                                                                        height={55}
+                                                                        className="rounded-lg"
+                                                                        src={data.imgUrl}
+                                                                        fallback={fallbackImage}
+                                                                    />
+                                                                <div className="ps-2">
+                                                                    <h2 className="font-bold">{data.releaseTitle}</h2>
+                                                                    <p className="text-sm text-slate-400">ID: {data._id}</p>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                    }
+                                                    {
+                                                    !totalItems && !fetchLoading && <Empty className="pt-12" />
+                                                    }
+                                                </div>
+                                            </Modal>
+                                        {errorMessageRelease && <span className='text-red-600 pt-2 block'>{errorMessageRelease}</span>}
+                                    </div>
+
+                                    {
+                                        claimOption != 'Audio Fingerprinting' && 
+                                        <div>
+                                            <p className="my-1 text-sm font-semibold text-slate-500 ms-2">Paste infringing link <span className="text-red-500">*</span></p>
+                                            <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("claimLink", { required: true})}/>
+                                            {errors.claimLink && <span className='text-red-600 pt-2 block'>Claim Link Required</span>}
+                                        </div>
+                                    }
+                                    <input className='btn btn-sm rounded-full bg-info mt-4' type="submit" value="Submit" />
                                 </div>
                             }
-                            <input className='btn btn-sm rounded-full bg-info mt-4' type="submit" value="Submit" />
+                        </form>
+                    </Modal>
+                    {/* Create Claim form with Modal End _______________________________________________________________________ */}
+                <Divider/>
+
+
+                <div className="flex justify-between">
+                    {/* Desktop Div _____________________________________ */}
+                    <div className="hidden md:block">
+                        <div className="h-10 px-[5px] py-1 flex items-center p-1 border rounded-md">
+                            <NavLink style={() => activeLink('/claim-release/All', currentPath)} to={'/claim-release/All/1/8'} className="px-[12px] py-[6px] rounded text-sm font-semibold">All</NavLink>
+                            <NavLink style={() => activeLink('/claim-release/Pending', currentPath)} to={'/claim-release/Pending/1/8'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Pending</NavLink>
+                            <NavLink style={() => activeLink('/claim-release/Solved', currentPath)} to={'/claim-release/Solved/1/8'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Solved</NavLink>
+                            <NavLink style={() => activeLink('/claim-release/Rejected', currentPath)} to={'/claim-release/Rejected/1/8'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Rejected</NavLink>
                         </div>
-                    }
+                    </div>
+                    {/* Mobile Div _____________________________________ */}
+                    <div className="block md:hidden">
+                        <Dropdown
+                            menu={{items,}}
+                            placement="bottomLeft"
+                            className="h-10"
+                        >
+                            <Button className="text-md font-semibold flex items-center gap-2">{status} <ArrowsUpDownIcon className="w-4 h-4"/></Button>
+                        </Dropdown>
+                    </div>
 
+                    <div className="flex justify-between items-center gap-2">
+                        <div className="flex items-center">
+                            <DocumentCheckIcon className="w-4 h-4 me-1 text-slate-500"/>
+                            <span className="text-sm">Rights Manager Count</span>
+                        </div>
+                        <div><span className="text-sm font-bold">{claimData?.length} Out of {totalItems}</span> </div>
+                    </div>
+                </div>
 
-                </form>
 
                 <div className='my-3'>
-                    <h2 className='font-bold border-b text-slate-500'>Claim History...</h2>
                     <div>
-                        <div className="my-2">
-                            <button onClick={() => handleStatus('All')} className="btn btn-sm btn-neutral m-1">All</button>
-                            <button onClick={() => handleStatus('Pending')} className="btn btn-sm btn-neutral mx-1">Pending</button>
-                            <button onClick={() => handleStatus('Solved')} className="btn btn-sm btn-neutral mx-1">Solved</button>
-                            <button onClick={() => handleStatus('Rejected')} className="btn btn-sm btn-neutral mx-1">Rejected</button>
-                        </div>
                         {
                             loading && <div className='flex justify-center items-center'><span className="loading loading-spinner loading-md me-2"></span></div>
                         }
@@ -312,9 +378,9 @@ const ClaimReleasePage = () => {
                         {
                             totalItems > 12 && !loading && <div className="flex justify-center items-center my-4">
                                 <Pagination 
-                                defaultCurrent={currentPage} 
+                                defaultCurrent={pageNumber} 
                                 total={totalItems}
-                                pageSize={itemPerPage}
+                                pageSize={perPageRights}
                                 onChange={handlePageChange}
                                 /> 
                             </div>

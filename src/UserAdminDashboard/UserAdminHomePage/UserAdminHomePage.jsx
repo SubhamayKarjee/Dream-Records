@@ -190,7 +190,7 @@ const UserAdminHomePage = () => {
                                     <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                     Wallet
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/claim-release', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/claim-release'}>
+                                <NavLink style={() => activeLinkDynamic('/claim-release', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/claim-release/All/1/8'}>
                                     <InformationCircleIcon className="h-7 w-7 pe-2" />
                                     Rights manager
                                 </NavLink>
@@ -296,7 +296,7 @@ const UserAdminHomePage = () => {
                                                     <CurrencyDollarIcon className="h-7 w-7 pe-2" />
                                                     Wallet
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/claim-release'}>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/claim-release/All/1/8'}>
                                                     <InformationCircleIcon className="h-7 w-7 pe-2" />
                                                     Rights manager
                                                 </NavLink>
