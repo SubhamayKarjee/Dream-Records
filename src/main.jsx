@@ -287,7 +287,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><DetailsSingleLabels/></ProtectUserRoute></Suspense>
       },
       {
-        path: '/analytics',
+        path: '/analytics/:pageNumber/:perPageAnalytics',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><AnalyticsPage/></ProtectUserRoute></Suspense>,
       },
       {

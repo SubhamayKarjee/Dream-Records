@@ -182,7 +182,7 @@ const UserAdminHomePage = () => {
                                     <TagIcon className="h-7 w-7 pe-2" />    
                                     Labels
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/analytics', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/analytics'}>
+                                <NavLink style={() => activeLinkDynamic('/analytics', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/analytics/1/12'}>
                                     <ChartPieIcon className="h-7 w-7 pe-2" />
                                     Analytics
                                 </NavLink>
@@ -288,7 +288,7 @@ const UserAdminHomePage = () => {
                                                     <TagIcon className="h-7 w-7 pe-2" />    
                                                     Labels
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/analytics'}>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/analytics/1/8'}>
                                                     <ChartPieIcon className="h-7 w-7 pe-2" />
                                                     Analytics
                                                 </NavLink>
