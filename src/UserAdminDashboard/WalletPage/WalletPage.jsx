@@ -137,8 +137,8 @@ const WalletPage = () => {
 
     return (
         <WalletPageContext.Provider value={contextValue}>
-        <div className="md:flex overflow-y-auto h-full">
-            <div className='h-full md:basis-3/4 overflow-y-auto px-3 bg-[#FCFCFC] md:pt-16'> 
+        <div className="md:flex h-full">
+            <div className='h-full md:basis-3/4 overflow-y-auto px-3 bg-[#FCFCFC] md:pt-16 custom-scrollbar'> 
                 <h3 className='font-bold text-xl pb-2 text-[#252525]'>Wallet</h3>
                     <div>
                         <div className="pt-1">

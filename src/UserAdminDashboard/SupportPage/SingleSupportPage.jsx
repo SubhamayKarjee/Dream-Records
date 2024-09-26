@@ -23,7 +23,7 @@ const SingleSupportPage = () => {
 
 
     return (
-        <div className="mt-16 mx-2 h-screen overflow-y-auto">
+        <div className="mt-16 mx-2 h-screen overflow-y-auto custom-scrollbar">
             {
                 loading && <div className='flex justify-center items-center'><span className="loading loading-spinner loading-md me-2"></span></div>
             }

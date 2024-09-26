@@ -80,7 +80,7 @@ const UserArtistPage = () => {
 
     return (
         <div className="md:flex md:h-full">
-            <div className='h-full md:basis-3/4 overflow-y-auto md:pt-16 px-3 bg-[#FCFCFC]'>
+            <div className='h-full md:basis-3/4 overflow-y-auto md:pt-16 px-3 bg-[#FCFCFC] custom-scrollbar'>
                 <h3 className='font-semibold text-xl text-[#252525]'>Artists</h3>
                   {/* Search and Create Artist Section ______________________________________________________________________________ */}
                   <div className="md:flex md:justify-between md:items-center">

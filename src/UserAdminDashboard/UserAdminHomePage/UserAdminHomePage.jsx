@@ -154,15 +154,15 @@ const UserAdminHomePage = () => {
                                 <h1 className='text-xl font-extrabold'>Dream Records</h1>
                                 <p className='text-sm'>Sell your music worldwide.</p>
                                 <div className='pt-3'>
-                                    <Link to={'/create-release'}>
-                                        <button style={{width: '90%'}} className='btn text-white md:text-sm lg:text-lg font-semibold btn-neutral bg-[#252525]'>
+                                    <Link to={'/create-release'} className='w-full'>
+                                        <button style={{width: '90%'}} className='btn text-white md:text-sm lg:text-lg font-semibold btn-neutral bg-[#252525] w-full'>
                                         + Create
                                         </button>
                                     </Link>
                                 </div>
                             </div>
                         </div>
-                        <div  className='mt-8 first_layoutIssue'>
+                        <div  className='mt-8 first_layoutIssue custom-scrollbar'>
                              {/* __________________________________________________________________________________________________________ */}
                             {/* Admin All Nav Link ________________________________________________________________________________________ */}
                             <div className='py-2'> 

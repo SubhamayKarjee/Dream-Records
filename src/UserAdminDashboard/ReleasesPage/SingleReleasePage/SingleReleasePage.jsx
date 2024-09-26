@@ -63,7 +63,7 @@ const SingleReleasePage = () => {
 
     return (
         <div className="md:h-full">
-            <div className='h-full overflow-y-auto'>
+            <div className='h-full overflow-y-auto custom-scrollbar'>
                 <div className="md:pt-16 px-3">
                     <h3 className='font-bold text-xl text-[#252525]'>Release Details</h3>
                     {/* Single Release page hero Section____________________________ */}

@@ -141,7 +141,7 @@ const DetailsSingleArtist = () => {
 
     return (
         <div className="md:h-full">
-            <div className="h-full overflow-y-auto px-3 md:pt-16">
+            <div className="h-full overflow-y-auto px-3 md:pt-16 custom-scrollbar">
                 <h3 className='font-bold text-xl text-[#252525]'>Artist Details</h3>
                 {
                     artistFetchLoading == true && 

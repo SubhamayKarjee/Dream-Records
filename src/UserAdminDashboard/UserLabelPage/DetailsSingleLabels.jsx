@@ -129,7 +129,7 @@ const DetailsSingleLabels = () => {
 
     return (
         <div className="md:h-full">
-            <div className="md:h-full overflow-y-auto md:border-r px-3 md:pt-16">
+            <div className="md:h-full overflow-y-auto md:border-r px-3 md:pt-16 custom-scrollbar">
                 <h3 className='font-bold text-xl text-[#252525]'>Label Details</h3>
                 {
                     labelsFetchLoading && 

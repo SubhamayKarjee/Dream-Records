@@ -96,7 +96,7 @@ const UserLabelsPage = () => {
 
     return (
         <div className="md:flex md:h-full">
-            <div className='h-full md:basis-3/4 overflow-y-auto md:border-r px-3 md:pt-16'>
+            <div className='h-full md:basis-3/4 overflow-y-auto md:border-r px-3 md:pt-16 custom-scrollbar'>
               <h3 className='font-bold text-xl text-[#252525]'>Labels</h3>
                 {/* Search and Create Labels Section ______________________________________________________________________________ */}
                 <div className="md:flex md:justify-between md:items-center">
@@ -225,7 +225,7 @@ const UserLabelsPage = () => {
             </div>
 
             {/* Sidebar Div  _______________________________*/}
-            <div style={sideBarShadow} className="md:basis-1/4 overflow-y-auto hidden md:block md:pt-16 px-3">
+            <div style={sideBarShadow} className="md:basis-1/4 overflow-y-auto hidden md:block md:pt-16 px-3 custom-scrollbar">
               <h3 className='font-semibold text-xl pb-1'>Notices</h3>
                 <ActionRequiredLabels/>
             </div>

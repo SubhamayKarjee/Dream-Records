@@ -134,7 +134,7 @@ const UpdateProfileInformation = () => {
     }
 
     return (
-        <div className="md:h-full overflow-y-auto p-2 md:pt-16">
+        <div className="md:h-full overflow-y-auto p-2 md:pt-16 custom-scrollbar">
             <h3 className='font-semibold text-xl pb-2 text-[#252525]'>Edit Personal Info</h3>
             <div className="p-5 rounded-lg border">
                 <div className="">

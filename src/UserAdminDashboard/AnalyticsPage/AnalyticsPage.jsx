@@ -17,7 +17,7 @@ const AnalyticsPage = () => {
 
     return (
         <div className="md:flex md:h-full">
-            <div className='h-full md:basis-3/4 overflow-y-auto px-3 bg-[#FCFCFC] md:pt-16'>
+            <div className='h-full md:basis-3/4 overflow-y-auto px-3 bg-[#FCFCFC] md:pt-16 custom-scrollbar'>
                 <h3 className='font-bold text-xl pb-2 text-[#252525]'>Analytics</h3>
                 <AnalyticsReportList id={userNameIdRoll[1]} role={role} link={link}/>
             </div>

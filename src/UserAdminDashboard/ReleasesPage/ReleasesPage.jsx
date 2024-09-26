@@ -105,7 +105,7 @@ const ReleasesPage = () => {
 
     return (
         <div className="md:flex md:h-full">
-            <div className='h-full md:basis-3/4 overflow-y-auto md:pt-16 px-3'>
+            <div className='h-full md:basis-3/4 overflow-y-auto md:pt-16 px-3 custom-scrollbar'>
                 <div className="">
                     <h3 className='font-bold text-xl text-[#252525]'>Releases</h3>
                     {/* Search and Create Release Section ______________________________________________________________________________ */}
@@ -165,7 +165,7 @@ const ReleasesPage = () => {
 
 
             {/* Sideber Div  _______________________________*/}
-            <div style={sideBarShadow} className="md:basis-1/4 overflow-y-auto hidden md:block px-3 md:pt-16">
+            <div style={sideBarShadow} className="md:basis-1/4 overflow-y-auto hidden md:block px-3 md:pt-16 custom-scrollbar">
                 <h3 className='font-semibold text-xl'>Notices</h3>
                 <ActionRequiredRelease/>
             </div>

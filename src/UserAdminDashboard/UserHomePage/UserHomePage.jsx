@@ -36,7 +36,7 @@ const UserHomePage = () => {
     return (
         <div className="md:flex md:h-full">
             {showPopup && <PopUp visible={showPopup} onClose={handleClosePopup} />}
-            <div className='h-full md:basis-3/4 overflow-y-auto px-3 bg-[#FCFCFC] md:pt-16'>
+            <div className='h-full md:basis-3/4 overflow-y-auto px-3 bg-[#FCFCFC] md:pt-16 custom-scrollbar'>
                 <h3 className='font-bold text-xl pb-2 text-[#252525]'>Dashboard</h3>
                 <div className='home_banner_image'>
                     <div className='h-full'>
