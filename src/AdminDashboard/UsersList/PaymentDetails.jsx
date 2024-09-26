@@ -1,10 +1,11 @@
-import { CurrencyRupeeIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { CurrencyRupeeIcon } from "@heroicons/react/24/outline";
+import { TrashIcon } from "@heroicons/react/24/solid";
 import { DatePicker, Empty, Pagination, Popconfirm } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-const PaymentDetails = ({id, text, role}) => {
+const PaymentDetails = ({id, role}) => {
     // Paginatin and Search State __________________________________________________
     const [totalItems, setTotalItems] = useState();
     const [currentPage, setCurrentPage] = useState(1);
@@ -77,40 +78,72 @@ const PaymentDetails = ({id, text, role}) => {
     };
 
     return (
-        <div className="my-5">
-            <div className="p-2 border my-2 bg-slate-100 mb-4">
+        <div className="">
+            <div className="p-2">
                 <p className="text-sm font-bold text-slate-500">Filter by YEAR</p>
                 <DatePicker className="payment_details" onChange={onChange} picker="year" />
             </div>
-            <div>
+            
                 {fetchLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-md"></span></div>}
-                {
-                    !fetchLoading && paymentData?.map(data => 
-                        <div className="p-2 rounded-lg my-1 border relative" key={data._id}>
-                            <p className="text-green-500">{text} || <span className="font-bold text-slate-600">{data?.date}/{data?.month}/{data?.year} || {data?.time}</span></p>
-                            <div className="flex items-center justify-between">
-                                <p className="flex items-center">Payment made based on <span className="font-bold text-slate-600 ms-2">{data.paymentReportDate}</span></p>
-                                <p className="font-bold text-lg md:pe-3 flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/> {data?.amount}</p>
-                            </div>
-                            {
-                                role !== 'User' &&
-                                    <Popconfirm
-                                        title="Delete"
-                                        placement="leftTop"
-                                        className="z-1000"
-                                        description="Are you sure to Delete Payment?"
-                                        onConfirm={() => confirm(data._id, data)}
-                                        onCancel={cancel}
-                                        okText="Yes"
-                                        cancelText="No"
-                                        >
-                                        <TrashIcon style={{cursor: 'pointer'}} className="w-4 h-4 me-2 text-red-500 absolute top-2 right-3"/>
-                                    </Popconfirm>
-                            }
-                        </div>
-                    )
-                }
-            </div>
+                <div className="overflow-x-auto">
+                    <table className="table">
+                        {/* head */}
+                        <thead>
+                            <tr>
+                                <th className="text-md hidden md:block">Title</th>
+                                <th className="text-md">Payment Date</th>
+                                <th className="text-md">Based on</th>
+                                <th className="text-md">Ammount</th>
+                                <th className="text-md text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {/* row 1 */}
+                        {
+                            paymentData && paymentData.map(data => 
+                                <>
+                                    <tr className="hover">
+                                        <td className="font-semibold text-sm text-[#09090B] hidden md:block">Successfully Get Payments</td>
+                                        <td className="font-semibold text-sm text-[#09090B]">{data?.month} {data?.year}</td>
+                                        <td className="font-semibold text-sm text-[#09090B]">{data?.paymentReportDate}</td>
+                                        <td className="font-semibold text-sm text-[#09090B] flex items-center gap-1"><CurrencyRupeeIcon className="w-5 h-5"/>{data?.amount}.00</td>
+                                        {
+                                            role == 'User' &&
+                                            <td className="font-semibold text-[#09090B]">
+                                                <button className="btn btn-sm w-full">View Details</button>
+                                            </td>
+                                        }
+                                        {
+                                            role !== 'User' &&
+                                            <td className="flex items-center justify-between gap-2">
+                                                <button className="btn btn-sm w-full">View Details</button>
+                                                <Popconfirm
+                                                    title="Delete"
+                                                    placement="leftTop"
+                                                    className="z-1000"
+                                                    description="Are you sure to Delete Payment?"
+                                                    onConfirm={() => confirm(data._id, data)}
+                                                    onCancel={cancel}
+                                                    okText="Yes"
+                                                    cancelText="No"
+                                                    >
+                                                    <TrashIcon style={{cursor: 'pointer'}} className="w-4 h-4 me-2 text-red-500 absolute top-2 right-3"/>
+                                                </Popconfirm>
+                                            </td>
+                                        }
+                                    </tr>
+                                </>
+                            )
+                        }                        
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+
+
+
             <div className="pt-6">
                 {
                     !totalItems && !fetchLoading && <Empty className="pt-8" />

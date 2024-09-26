@@ -179,7 +179,7 @@ const WalletPage = () => {
                     </dialog>
                 </div>  
 
-                <Divider className=""/>
+                <Divider/>
 
                 <div className="md:flex items-center justify-between">
                 {
@@ -220,7 +220,7 @@ const WalletPage = () => {
             </div>
             
             <div>
-                <Tabs className="mt-3" defaultActiveKey="1" items={items} />                
+                <Tabs itemActiveColor={{color: 'red'}} className="mt-3" defaultActiveKey="1" items={items} />                
             </div>
         </div>
         </WalletPageContext.Provider>

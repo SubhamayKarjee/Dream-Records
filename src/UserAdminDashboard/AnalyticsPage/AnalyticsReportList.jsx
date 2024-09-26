@@ -99,9 +99,9 @@ const AnalyticsReportList = ({id, link, role}) => {
                             reportList && reportList.map(r => 
                                 <>
                                     <tr className="hover">
-                                        <td className="font-semibold text-[#09090B] hidden md:block">Analytics Report</td>
-                                        <td className="font-semibold text-[#09090B]">{r.month} {r.year}</td>
-                                        <td className="font-semibold text-[#09090B]">{r.reportDate}</td>
+                                        <td className="font-semibold text-sm text-[#09090B] hidden md:block">Analytics Report</td>
+                                        <td className="font-semibold text-sm text-[#09090B]">{r.month} {r.year}</td>
+                                        <td className="font-semibold text-sm text-[#09090B]">{r.reportDate}</td>
                                         {
                                             role == 'User' &&
                                             <td className="font-semibold text-[#09090B]">
