@@ -20,6 +20,7 @@ const PaymentDetails = ({id, role}) => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/${id}?page=${currentPage}&limit=${itemPerPage}`)
         .then(res => {
             setPaymentData(res.data.data);
+            console.log(res.data.data);
             setTotalItems(res.data.dataCount)
             setFetchLoading(false)
         })
@@ -114,13 +115,13 @@ const PaymentDetails = ({id, role}) => {
                                         {
                                             role == 'User' &&
                                             <td className="font-semibold text-[#09090B]">
-                                                <button className="btn btn-sm w-full">View Details</button>
+                                                <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm w-full">View Details</button>
                                             </td>
                                         }
                                         {
                                             role !== 'User' &&
                                             <td className="flex items-center justify-between gap-2">
-                                                <button className="btn btn-sm w-full">View Details</button>
+                                                <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm w-full">View Details</button>
                                                 <Popconfirm
                                                     title="Delete"
                                                     placement="leftTop"
@@ -135,6 +136,38 @@ const PaymentDetails = ({id, role}) => {
                                                 </Popconfirm>
                                             </td>
                                         }
+                                        <dialog id={data._id} className="modal">
+                                            <div className="modal-box">
+                                                <form method="dialog">
+                                                {/* if there is a button in form, it will close the modal */}
+                                                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                </form>
+                                                    <h3 className="font-bold text-xl text-[#020617]">Payment Details</h3>
+                                                    <p className="text-sm text-[#64748B]">Transaction Details or Rejection Details</p>
+                                                    <div className="py-3">
+                                                        <p className="text-5xl font-bold text-center">{data.amount}</p>
+                                                        <p className="text-center">Completed</p>
+                                                    </div>
+                                                    <div className="grid grid-cols gap-2">
+                                                        <div>
+                                                            <p className="text-sm text-[#020617]">Title</p>
+                                                            <p className="text-sm text-[#71717A]">Successfully Get Payments</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-sm text-[#020617]">ID</p>
+                                                            <p className="text-sm text-[#71717A]">{data._id}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-sm text-[#020617]">Payment Based On</p>
+                                                            <p className="text-sm text-[#71717A]">{data.paymentReportDate}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-sm text-[#020617]">Payment Date & Time</p>
+                                                            <p className="text-sm text-[#71717A]">{data.date} {data.month} {data.year} || {data.time}</p>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </dialog>
                                     </tr>
                                 </>
                             )
