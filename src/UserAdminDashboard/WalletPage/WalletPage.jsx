@@ -1,10 +1,9 @@
 import { CurrencyRupeeIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { Modal, Tabs, Tooltip } from "antd";
+import { Divider, Modal, Tabs, Tooltip } from "antd";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import PaymentDetails from "../../AdminDashboard/UsersList/PaymentDetails";
-import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import BankAccountCreateForm from "./BankAccountCreateForm";
 import WithdrawalForm from "./WithdrawalForm";
@@ -133,8 +132,60 @@ const WalletPage = () => {
         <WalletPageContext.Provider value={contextValue}>
         <div className="overflow-y-auto h-full px-3 pt-16">
             <h3 className='font-bold text-xl pb-2 text-[#252525]'>Wallet</h3>
-            <div className="md:flex justify-between items-center p-2 border rounded-md">
-                <p className="font-bold text-lg py-1 px-3 border rounded-md flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/>{userData?.balance?.amount ? userData.balance.amount : 0}</p>
+                <div>
+                    <div className="pt-1">
+                        {
+                            bankData.length === 0 &&
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-2">
+                                <div>
+                                    <h2 className="font-semibold text-sm">Add Bank Details</h2>
+                                    <p className="text-sm text-[#71717A]">Dont&apos;t Have Bank Account Yet! Please Add Bank Account Then You can Withdrawal</p>
+                                </div>
+                                <button onClick={()=>document.getElementById('add_bank_info_modal').showModal()} className="btn btn-sm btn-neutral bg-[#18181B] h-9">Add Bank Acccount</button>
+                            </div> 
+                        }
+                        {
+                            bankData && bankData.map(d => 
+                                <div key={d._id} className="rounded-md border p-2 relative">
+                                    <h2 className="font-bold mt-3 text-slate-600">{d.bank_name}</h2>
+                                    <div className="border rounded-md p-2 bg-slate-50">
+                                        <p className="text-sm font-bold text-slate-600">Account Holder: {d.account_holder_name}</p>
+                                        <p className="text-sm font-bold text-slate-600">Account Number: {d.account_number}</p>
+                                        <p className="text-sm font-bold text-slate-600">Branch Name: {d.branch_name}</p>
+                                        <p className="text-sm font-bold text-slate-600">IFSC: {d.IFSC}</p>
+                                        <p className="text-sm font-bold text-slate-600">Swift Code: {d.swift_code}</p>
+                                    </div>
+                                    <div className="absolute top-2 right-2 flex items-center">
+                                        {
+                                            deleteLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                                        }
+                                        <Tooltip placement="left" title="Delete Bank Account">
+                                            <TrashIcon onClick={() => deleteBankInfo(d._id)} style={{cursor: 'pointer'}} className="w-5 h-5 font-bold text-red-600"/>
+                                        </Tooltip>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </div>
+                    
+                    <dialog id="add_bank_info_modal" className="modal">
+                        <div className="modal-box">
+                            <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                            </form>
+                            <BankAccountCreateForm/>
+                        </div>
+                    </dialog>
+                </div>  
+
+                <Divider className=""/>
+
+                <div className="md:flex items-center justify-between">
+                {
+                    bankInfoLoading ? <div className="skeleton h-9 w-24 rounded-md"></div> :
+                    <p className="font-bold text-lg py-1 px-3 border rounded-md flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/>{userData?.balance?.amount ? userData.balance.amount : 0}</p>
+                }
                 {
                     activePaymentMonth && !paymentMonthLoading ?
                     <div>
@@ -167,53 +218,7 @@ const WalletPage = () => {
                     <WithdrawalForm/>
                 </Modal>
             </div>
-            <div>
-                <div className="mt-3">
-                    {
-                        bankInfoLoading && <LoadingComponentsInsidePage/>
-                    }
-                    {
-                        bankData.length === 0 &&
-                        <div className="bg-slate-100 rounded-md p-3">
-                            <h2 className="font-bold text-slate-600">Add Bank Details</h2>
-                            <p className="text-sm font-bold text-slate-500">Dont&apos;t Have Bank Account Yet! Please Add Bank Account Then You can Withdrawal</p>
-                            <button onClick={()=>document.getElementById('add_bank_info_modal').showModal()} className="btn btn-sm btn-neutral mt-2">Add Bank Acccount</button>
-                        </div> 
-                    }
-                    {
-                        bankData && bankData.map(d => 
-                            <div key={d._id} className="rounded-md border p-2 relative">
-                                <h2 className="font-bold mt-3 text-slate-600">{d.bank_name}</h2>
-                                <div className="border rounded-md p-2 bg-slate-50">
-                                    <p className="text-sm font-bold text-slate-600">Account Holder: {d.account_holder_name}</p>
-                                    <p className="text-sm font-bold text-slate-600">Account Number: {d.account_number}</p>
-                                    <p className="text-sm font-bold text-slate-600">Branch Name: {d.branch_name}</p>
-                                    <p className="text-sm font-bold text-slate-600">IFSC: {d.IFSC}</p>
-                                    <p className="text-sm font-bold text-slate-600">Swift Code: {d.swift_code}</p>
-                                </div>
-                                <div className="absolute top-2 right-2 flex items-center">
-                                    {
-                                        deleteLoading && <span className="block loading loading-spinner loading-md me-2"></span>
-                                    }
-                                    <Tooltip placement="left" title="Delete Bank Account">
-                                        <TrashIcon onClick={() => deleteBankInfo(d._id)} style={{cursor: 'pointer'}} className="w-5 h-5 font-bold text-red-600"/>
-                                    </Tooltip>
-                                </div>
-                            </div>
-                        )
-                    }
-                </div>
-                
-                <dialog id="add_bank_info_modal" className="modal">
-                    <div className="modal-box">
-                        <form method="dialog">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                        </form>
-                        <BankAccountCreateForm/>
-                    </div>
-                </dialog>
-            </div>
+            
             <div>
                 <Tabs className="mt-3" defaultActiveKey="1" items={items} />                
             </div>
