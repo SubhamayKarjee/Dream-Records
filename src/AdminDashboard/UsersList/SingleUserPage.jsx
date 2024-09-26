@@ -52,7 +52,7 @@ const SingleUserPage = () => {
         {
           key: '5',
           label: 'Analytics',
-          children: <AnalyticsReportList id={id} role={role} text={"Successsfully send Analytics Reports form Dream Record!"}/>
+          children: <AnalyticsReportList id={id} role={role} link={`/admin-dashboard/user/${id}/analytics`}/>
         },
     ];
 
