@@ -131,8 +131,8 @@ const WalletPage = () => {
 
     return (
         <WalletPageContext.Provider value={contextValue}>
-        <div className="overflow-y-auto h-full p-2">
-            <h2 className="font-bold mt-2 text-slate-600">Available Balance</h2>
+        <div className="overflow-y-auto h-full px-3 pt-16">
+            <h3 className='font-bold text-xl pb-2 text-[#252525]'>Wallet</h3>
             <div className="md:flex justify-between items-center p-2 border rounded-md">
                 <p className="font-bold text-lg py-1 px-3 border rounded-md flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/>{userData?.balance?.amount ? userData.balance.amount : 0}</p>
                 {

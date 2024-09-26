@@ -102,7 +102,7 @@ const UserArtistPage = () => {
                     <Divider/>
                   {/* Artist page Title and Total Artist_____________________________________________________________________________ */}
                   <div className="flex justify-between items-center">
-                      <h4 className="font-semibold text-lg text-[#252525]">Profiles</h4>
+                      <h4 className="font-bold text-lg text-[#252525]">Profiles</h4>
                       <div className="flex justify-between items-center gap-2">
                         <div className="flex items-center">
                             <DocumentCheckIcon className="w-4 h-4 me-1 text-slate-500"/>

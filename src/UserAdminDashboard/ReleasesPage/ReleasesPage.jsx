@@ -107,7 +107,7 @@ const ReleasesPage = () => {
         <div className="md:flex md:h-full">
             <div className='h-full md:basis-3/4 overflow-y-auto md:pt-16 px-3'>
                 <div className="">
-                    <h3 className='font-semibold text-xl text-[#252525]'>Releases</h3>
+                    <h3 className='font-bold text-xl text-[#252525]'>Releases</h3>
                     {/* Search and Create Release Section ______________________________________________________________________________ */}
                     <div className="md:flex md:justify-between md:items-center">
                         <div className="mt-2">

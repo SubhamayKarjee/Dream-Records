@@ -176,7 +176,7 @@ const SupportPage = () => {
 
     return (
         <div className='md:pt-16 p-2 overflow-y-auto h-full'>
-            <h3 className='font-semibold text-xl text-[#252525]'>Support</h3>
+            <h3 className='font-bold text-xl text-[#252525]'>Support</h3>
             <div className='flex items-center justify-between py-2'>
                 <input style={inputStyle} type="text" className='input input-sm border w-80' placeholder='Type & Enter to Search'/>
                 <button onClick={showModal} className='btn btn-sm btn-neutral flex items-center bg-[#18181B] w-40 h-9'> <PlusIcon className='w-4 h-4'/> Create</button>
