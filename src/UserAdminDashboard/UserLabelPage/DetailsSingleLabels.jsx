@@ -28,6 +28,7 @@ const DetailsSingleLabels = () => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/single-labels/${id}`)
         .then(res => {
             setLabels(res.data.data[0]);
+            console.log(res.data.data[0]);
             setLabelsFetchLoading(false)
             setImgUrl(res.data.data[0]?.imgUrl);
             setImgKey(res.data.data[0]?.key);
@@ -157,6 +158,10 @@ const DetailsSingleLabels = () => {
                                     {
                                         labels?.youtubeChannelLink && 
                                         <a href={labels?.youtubeChannelLink} target="_blank" rel="noopener noreferrer"><img src={youtubeImg} alt="youtueImg" /></a>
+                                    }
+                                    {
+                                        labels?.actionRequired && 
+                                        <div className="text-sm bg-red-200 p-1 rounded-md mt-1">{labels?.actionRequired}</div>
                                     }
                                     {
                                         labels?.description &&
