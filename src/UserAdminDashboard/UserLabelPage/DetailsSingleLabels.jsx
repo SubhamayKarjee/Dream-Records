@@ -161,7 +161,7 @@ const DetailsSingleLabels = () => {
                                     }
                                     {
                                         labels?.actionRequired && 
-                                        <div className="text-sm bg-red-200 p-1 rounded-md mt-1">{labels?.actionRequired}</div>
+                                        <div className="text-xs bg-red-200 p-1 rounded-md mt-1">{labels?.actionRequired}</div>
                                     }
                                     {
                                         labels?.description &&
