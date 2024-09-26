@@ -52,7 +52,6 @@ const PaymentDetails = ({id, role}) => {
         .then(res => {
             if(res.status === 200){
             const preData = res.data.data;
-            console.log('preData', preData);
             if(preData.balance){
                 const preAmount = preData.balance.amount;
                 const newAmount = parseInt(preAmount) - parseInt(data.amount);

@@ -22,6 +22,7 @@ const WithdrawalList = ({id}) => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/withdrawal/${id}?page=${currentPage}&limit=${itemPerPage}`)
         .then(res => {
             setWithdrawalData(res.data.data);
+            console.log(res.data.data);
             setTotalItems(res.data.dataCount)
             setFetchLoading(false)
         })
@@ -107,32 +108,74 @@ const WithdrawalList = ({id}) => {
                                             </div>
                                         </td>
                                         <td className="font-semibold text-sm text-[#09090B]">
-                                            <button className="btn btn-sm w-full">View Details</button>
+                                            <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm w-full">View Details</button>
                                         </td>
-                                        {/* {
-                                            role == 'User' &&
-                                            <td className="font-semibold text-[#09090B]">
-                                                <button className="btn btn-sm w-full">View Details</button>
-                                            </td>
-                                        }
-                                        {
-                                            role !== 'User' &&
-                                            <td className="flex items-center justify-between gap-2">
-                                                <button className="btn btn-sm w-full">View Details</button>
-                                                <Popconfirm
-                                                    title="Delete"
-                                                    placement="leftTop"
-                                                    className="z-1000"
-                                                    description="Are you sure to Delete Payment?"
-                                                    onConfirm={() => confirm(data._id, data)}
-                                                    onCancel={cancel}
-                                                    okText="Yes"
-                                                    cancelText="No"
-                                                    >
-                                                    <TrashIcon style={{cursor: 'pointer'}} className="w-4 h-4 me-2 text-red-500 absolute top-2 right-3"/>
-                                                </Popconfirm>
-                                            </td>
-                                        } */}
+
+                                        <dialog id={data._id} className="modal">
+                                            <div className="modal-box">
+                                                <form method="dialog">
+                                                {/* if there is a button in form, it will close the modal */}
+                                                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                </form>
+                                                    <h3 className="font-bold text-xl text-[#020617]">Withdrawal Details</h3>
+                                                    <p className="text-sm text-[#64748B]">Transaction Details or Rejection Details</p>
+                                                    <div className="py-3">
+                                                        <p className="text-5xl font-bold text-center">{data.withdrawalAmount}</p>
+                                                        <div className="flex justify-center">
+                                                            {
+                                                                data?.status === 'Pending' &&
+                                                                    <div className="flex items-center p-1">
+                                                                        <ClockIcon className="h-3 w-3 me-1 text-[#FEB951]"/>
+                                                                        <p className="text-sm font-semibold text-[#FEB951]">{data.status}</p>
+                                                                    </div>
+                                                            }
+                                                            {
+                                                                data?.status === 'Approved' &&
+                                                                    <div className="flex items-center p-1">
+                                                                        <CheckBadgeIcon className="h-3 w-3 me-1 text-[#39C616]"/>
+                                                                        <p className="text-sm font-semibold text-[#39C616]">{data.status}</p>
+                                                                    </div>
+                                                            }
+                                                            {
+                                                                data?.status === 'Rejected' &&
+                                                                    <div className="flex items-center p-1">
+                                                                        <ExclamationTriangleIcon className="h-3 w-3me-1 text-[#71717A]"/>
+                                                                        <p className="text-sm font-semibold text-[#71717A]">{data.status}</p>
+                                                                    </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols gap-2">
+                                                        <div>
+                                                            <p className="text-sm text-[#020617]">Title</p>
+                                                            {
+                                                                data?.status === 'Pending' &&
+                                                                <p className="text-sm text-[#71717A]">Withdrawal Pending</p>
+                                                            }
+                                                            {
+                                                                data?.status === 'Approved' &&
+                                                                <p className="text-sm text-[#71717A]">Successfully Completed Withdrawal</p>
+                                                            }
+                                                            {
+                                                                data?.status === 'Rejected' &&
+                                                                <p className="text-sm text-[#71717A]">Withdrawal Rejected</p>
+                                                            }
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-sm text-[#020617]">ID</p>
+                                                            <p className="text-sm text-[#71717A]">{data._id}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-sm text-[#020617]">Withdrawal Requested On</p>
+                                                            <p className="text-sm text-[#71717A]">{data.withdrawalDate} {data.withdrawalMonth} {data.withdrawalYear}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-sm text-[#020617]">WithDrawal Proceed Date</p>
+                                                            <p className="text-sm text-[#71717A]"></p>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </dialog>
                                     </tr>
                                 </>
                             )
