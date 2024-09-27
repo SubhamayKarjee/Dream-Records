@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import { CurrencyRupeeIcon } from "@heroicons/react/24/outline";
+import { CurrencyRupeeIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { DatePicker, Empty, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -22,7 +22,6 @@ const WithdrawalList = ({id}) => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/withdrawal/${id}?page=${currentPage}&limit=${itemPerPage}`)
         .then(res => {
             setWithdrawalData(res.data.data);
-            console.log(res.data.data);
             setTotalItems(res.data.dataCount)
             setFetchLoading(false)
         })
@@ -97,7 +96,7 @@ const WithdrawalList = ({id}) => {
                                         {
                                             data?.status === 'Rejected' &&
                                                 <div className="flex items-center p-1">
-                                                    <ExclamationTriangleIcon className="h-3 w-3me-1"/>
+                                                    <ExclamationTriangleIcon className="h-3 w-3 me-1"/>
                                                     <p className="text-sm font-semibold">{data.status}</p>
                                                 </div>
                                         }
@@ -139,7 +138,7 @@ const WithdrawalList = ({id}) => {
                                                             {
                                                                 data?.status === 'Rejected' &&
                                                                     <div className="flex items-center p-1">
-                                                                        <ExclamationTriangleIcon className="h-3 w-3me-1 text-[#71717A]"/>
+                                                                        <ExclamationTriangleIcon className="h-3 w-3 me-1 text-[#71717A]"/>
                                                                         <p className="text-sm font-semibold text-[#71717A]">{data.status}</p>
                                                                     </div>
                                                             }
@@ -166,13 +165,23 @@ const WithdrawalList = ({id}) => {
                                                             <p className="text-sm text-[#71717A]">{data._id}</p>
                                                         </div>
                                                         <div>
-                                                            <p className="text-sm text-[#020617]">Withdrawal Requested On</p>
-                                                            <p className="text-sm text-[#71717A]">{data.withdrawalDate} {data.withdrawalMonth} {data.withdrawalYear}</p>
+                                                            <p className="text-sm text-[#020617]">To</p>
+                                                            <p className="text-sm text-[#71717A]">***********{data.bankInfo.account_number.toString().slice(-4)} {data?.bankInfo?.bank_name}</p>
                                                         </div>
                                                         <div>
-                                                            <p className="text-sm text-[#020617]">WithDrawal Proceed Date</p>
-                                                            <p className="text-sm text-[#71717A]"></p>
+                                                            <p className="text-sm text-[#020617]">Date and Time</p>
+                                                            <p className="text-sm text-[#71717A]">{data.withdrawalDate} {data.withdrawalMonth} {data.withdrawalYear}</p>
                                                         </div>
+                                                        {
+                                                            data?.rejectResoan && 
+                                                            <div className="p-2 my-2 rounded-md bg-[#F1F1F1] flex gap-2">
+                                                                <QuestionMarkCircleIcon className="w-5 h-5"/>
+                                                                <div>
+                                                                    <p className="text-sm font-semibold text-[#252525]">Rejection Reason</p>
+                                                                    <p className="text-sm text-[#71717A]">{data.rejectResoan}</p>
+                                                                </div>
+                                                            </div>
+                                                        }
                                                     </div>
                                             </div>
                                         </dialog>
