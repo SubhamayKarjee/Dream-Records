@@ -268,7 +268,7 @@ const ClaimReleasePage = () => {
                                             {errors.claimLink && <span className='text-red-600 pt-2 block'>Claim Link Required</span>}
                                         </div>
                                     }
-                                    <input className='btn btn-sm rounded-full bg-info mt-4' type="submit" value="Submit" />
+                                    <input className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9 mt-4' type="submit" value="Submit" />
                                 </div>
                             }
                         </form>
