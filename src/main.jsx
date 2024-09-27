@@ -16,6 +16,7 @@ import ProtectUserRoute from './ProtectRoute/ProtectUserRoute';
 import ChatSupport from './AdminDashboard/AdminSupportPage/ChatSupport';
 import CallSupport from './AdminDashboard/AdminSupportPage/CallSupport';
 import SetNewPassword from './Authentication/LogIn/SetNewPassword';
+import CreateArtistPage from './UserAdminDashboard/UserArtistPage/CreateArtistPage';
 
 
 
@@ -273,6 +274,10 @@ const router = createBrowserRouter([
       {
         path: '/artist/:pageNumber/:perPageArtist',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserArtistPage/></ProtectUserRoute></Suspense>
+      },
+      {
+        path: '/create-artist',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><CreateArtistPage/></ProtectUserRoute></Suspense>
       },
       {
         path: '/artist/:id/:status/:pageNumber/:perPageArtist',

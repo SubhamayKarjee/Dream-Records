@@ -3,7 +3,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
-import CreateArtistForm from "./CreateArtistForm";
+// import CreateArtistForm from "./CreateArtistForm";
 import './UserArtistPage.css'
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import MainNotices from "../UserCommonComponent/MainNotices";
@@ -88,15 +88,15 @@ const UserArtistPage = () => {
                           <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                       </div>
                       <div className="mt-2">
-                          <button onClick={()=>document.getElementById('create_artist_modal').showModal()} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/>Create Artist</button>
+                          <button onClick={()=>navigate('/create-artist')} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/>Create Artist</button>
                       </div>
                   </div>
                       {/* Create Artist form with Modal Start _______________________________________________________________________ */}
-                      <dialog id="create_artist_modal" className="modal"> 
+                      {/* <dialog id="create_artist_modal" className="modal"> 
                           <div className="modal-box">
                             <CreateArtistForm/>
                           </div>
-                      </dialog>
+                      </dialog> */}
                       {/* Create Artist form with Modal End _______________________________________________________________________ */}
 
                     <Divider/>
