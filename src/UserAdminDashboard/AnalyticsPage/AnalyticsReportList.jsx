@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const AnalyticsReportList = ({id, link, role}) => {
-    
+
     const navigate = useNavigate();
     const {pageNumber, perPageAnalytics} = useParams();
 
@@ -101,30 +101,9 @@ const AnalyticsReportList = ({id, link, role}) => {
                                         <td className="font-semibold text-sm text-[#09090B] hidden md:block">Analytics Report</td>
                                         <td className="font-semibold text-sm text-[#09090B]">{r.month} {r.year}</td>
                                         <td className="font-semibold text-sm text-[#09090B]">{r.reportDate}</td>
-                                        {
-                                            role == 'User' &&
-                                            <td className="font-semibold text-[#09090B]">
-                                                <a className="px-2 py-1 bg-slate-100 border rounded-md flex items-center justify-center font-bold" href={r.fileUrl} download={r.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2 hidden md:block"/> Download</a>
-                                            </td>
-                                        }
-                                        {
-                                            role !== 'User' &&
-                                            <td className="flex items-center justify-between gap-2">
-                                                <a className="px-2 py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={r.fileUrl} download={r.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
-                                                    <Popconfirm
-                                                        title="Delete"
-                                                        placement="leftTop"
-                                                        className="z-1000"
-                                                        description="Are you sure to Delete Report?"
-                                                        onConfirm={() => confirm(r._id, r)}
-                                                        onCancel={cancel}
-                                                        okText="Yes"
-                                                        cancelText="No"
-                                                        >
-                                                        <TrashIcon style={{cursor: 'pointer'}} className="w-5 h-5 ms-2"/>
-                                                    </Popconfirm>
-                                            </td>
-                                        }
+                                        <td className="font-semibold text-[#09090B]">
+                                            <a className="px-2 py-1 bg-slate-100 border rounded-md flex items-center justify-center font-bold" href={r.fileUrl} download={r.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2 hidden md:block"/> Download</a>
+                                        </td>
                                     </tr>
                                 </>
                             )

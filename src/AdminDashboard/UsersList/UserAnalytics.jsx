@@ -101,9 +101,9 @@ const UserAnalytics = ({id}) => {
                                 <>
                                     <tr className="hover">
                                         <td className="font-semibold text-sm text-[#09090B] hidden md:block">Analytics Report</td>
-                                        <td className="font-semibold text-sm text-[#09090B]">{r.month} {r.year}</td>
+                                        <td className="font-semibold text-sm text-[#09090B]">{r.month.slice(0,3)} {r.year}</td>
                                         <td className="font-semibold text-sm text-[#09090B]">{r.reportDate}</td>
-                                        <td className="flex items-center justify-between gap-2">
+                                        <td className="flex items-center justify-end gap-2">
                                             <a className="px-2 py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={r.fileUrl} download={r.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
                                                 <Popconfirm
                                                     title="Delete"
