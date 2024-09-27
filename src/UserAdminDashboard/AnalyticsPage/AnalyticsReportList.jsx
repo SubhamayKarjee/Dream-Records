@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ArrowDownTrayIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { DatePicker, Divider, Empty, Pagination, Popconfirm } from "antd";
+import { ArrowDownTrayIcon,} from "@heroicons/react/24/solid";
+import { DatePicker, Divider, Empty, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-const AnalyticsReportList = ({id, link, role}) => {
+const AnalyticsReportList = ({id, link}) => {
 
     const navigate = useNavigate();
     const {pageNumber, perPageAnalytics} = useParams();
@@ -47,28 +47,6 @@ const AnalyticsReportList = ({id, link, role}) => {
                 setFetchLoading(false)
             })
         }
-    };
-
-    const confirm = (id, data) => {
-        setFetchLoading(true)
-        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/reports/delete-report/${id}`)
-        .then(res => {
-            if(res.status === 200){
-                axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/reports/delete-file?key=${data.key}`)
-                .then(res => {
-                    if(res.status === 200){
-                        const load = reload + 1;
-                        setReload(load)
-                        setFetchLoading(false)
-                    }
-                })
-            }
-        })
-        
-    }
-
-    const cancel = () => {
-        return;
     };
 
 
