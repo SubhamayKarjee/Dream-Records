@@ -1,5 +1,5 @@
 import { ArrowsUpDownIcon, DocumentCheckIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon, LinkIcon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Button, Divider, Dropdown, Empty, Image, Modal, Pagination, Select } from 'antd';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
@@ -174,7 +174,7 @@ const ClaimReleasePage = () => {
                         <input type="text" style={inputStyle} onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                     </div>
                     <div className="mt-2">
-                        <button onClick={showModal} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/> Create Label</button>
+                        <button onClick={showModal} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/> Create Claim</button>
                     </div>
                 </div>
                     {/* Create Claim form with Modal Start _______________________________________________________________________ */}
@@ -315,60 +315,56 @@ const ClaimReleasePage = () => {
                         }
                         {
                             claimData && claimData.map(data => 
-                                <div className='p-2 my-1 rounded-md border md:flex justify-between' key={data._id}>
-                                    <div className='grow m-2'>
-                                        <p>Submited Request <span className="font-bold text-slate-500">{data.date} {data.month} {data.year} || {data.time}</span></p>
-                                        <p className='font-bold'>{data.claimOption}</p>
-
-                                            <div className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                                                <div className="flex items-center">
-                                                        <Image
-                                                        width={35}
-                                                        height={35}
-                                                        className="rounded-lg"
-                                                        src={data?.release?.imgUrl}
-                                                        fallback={fallbackImage}
-                                                        />
-                                                    <div className="ps-2">
+                                <div className='p-2 mb-2 rounded-md  bg-[#F2F2F2]' key={data._id}>
+                                    <div className=''>
+                                        <p className='text-sm mb-1'>{data.claimOption}</p>
+                                            <div className="flex gap-2 mb-2">
+                                                    <Image
+                                                    width={88}
+                                                    height={83}
+                                                    className="rounded-lg"
+                                                    src={data?.release?.imgUrl}
+                                                    fallback={fallbackImage}
+                                                    />
+                                                <div className="ps-2">
                                                     <h2 className="font-bold text-sm">{data?.release?.releaseTitle}</h2>
-                                                    <p className="text-xs text-slate-400">ID: {data?.release?._id}</p>
+                                                    <p className="text-xs text-slate-400">UPC: {data?.release?.UPC}</p>
+                                                    <div className='flex items-center gap-2'>
+                                                        <LinkIcon className='w-5 h-5'/>
+                                                        <a href={data.claimLink} target='_blank' className='text-info'>{data.claimLink}</a>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                        <a href={data.claimLink} target='_blank' className='text-info'>{data.claimLink}</a>
                                         {
                                             data?.actionRequired &&
-                                            <p className="p-2 rounded-md bg-red-200">{data.actionRequired}</p>
+                                            <p className="p-2 rounded-md bg-white text-sm">{data.actionRequired}</p>
                                         }
-                                    </div>
-                                    {
-                                        data.status === 'Pending' &&
-                                        <div>
-                                            <div className="flex items-center p-1 bg-[#ffae00] rounded-md shadow">
-                                                <ClockIcon className="h-3 w-3 text-white me-1"/>
-                                                <p className="text-xs font-semibold text-white">{data.status}</p>
-                                            </div>
+                                        <div className='flex items-center justify-between my-1'>
+                                            {
+                                                data.status === 'Pending' &&
+                                                    <div className="flex items-center">
+                                                        <ClockIcon className="h-3 w-3 text-[#FEB951] me-1"/>
+                                                        <p className="text-xs font-semibold text-[#FEB951]">{data.status}</p>
+                                                    </div>
+                                            }
+                                            {
+                                                data.status === 'Solved' &&
+                                                    <div className="flex items-center">
+                                                        <CheckBadgeIcon className="h-3 w-3 text-[#39C616] me-1"/>
+                                                        <p className="text-xs font-semibold text-[#39C616]">{data.status}</p>
+                                                    </div>
+                                            }
+                                            {
+                                                data.status === 'Rejected' &&
+                                                    <div className="flex items-center">
+                                                        <ExclamationTriangleIcon className="h-3 w-3 text-[#71717A] me-1"/>
+                                                        <p className="text-xs font-semibold text-[#71717A]">{data.status}</p>
+                                                    </div>
+                                            }
+                                            <p className='text-sm text-[#71717A]'>{data.date} {data.month} {data.year}  {data.time}</p>
                                         </div>
-                                    }
-                                    {
-                                        data.status === 'Solved' &&
-                                        <div>
-                                            <div className="flex items-center p-1 bg-[#00c90d] rounded-md shadow">
-                                                <CheckBadgeIcon className="h-3 w-3 text-white me-1"/>
-                                                <p className="text-xs font-semibold text-white">{data.status}</p>
-                                            </div>
-                                        </div>
-                                    }
-                                    {
-                                        data.status === 'Rejected' &&
-                                        <div>
-                                            <div className="flex items-center p-1 bg-red-300 rounded-md shadow">
-                                                <ExclamationTriangleIcon className="h-3 w-3 text-white me-1"/>
-                                                <p className="text-xs font-semibold text-white">{data.status}</p>
-                                            </div>
-                                        </div>
-                                    }
+                                    </div>                                
                                 </div>
                             )
                         }
