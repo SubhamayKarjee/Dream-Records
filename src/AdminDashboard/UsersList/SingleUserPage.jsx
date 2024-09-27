@@ -3,11 +3,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
-import AnalyticsReportList from "../../UserAdminDashboard/AnalyticsPage/AnalyticsReportList";
 import WithdrawalList from "../../UserAdminDashboard/WalletPage/WithdrawalList";
 import UserArtistPageForAdmin from "../AdminArtistPage/UserArtistPageForAdmin";
 import UserLabelsPage from "../AdminLabelsPage/UserLabelsPage";
 import PaymentDetails from "./PaymentDetails";
+import UserAnalytics from "./UserAnalytics";
 
 const SingleUserPage = () => {
     const {id} = useParams();
@@ -52,7 +52,7 @@ const SingleUserPage = () => {
         {
           key: '5',
           label: 'Analytics',
-          children: <AnalyticsReportList id={id} role={role} link={`/admin-dashboard/user/${id}/analytics`}/>
+          children: <UserAnalytics id={id}/>
         },
     ];
 
