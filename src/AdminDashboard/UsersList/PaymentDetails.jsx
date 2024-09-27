@@ -104,7 +104,7 @@ const PaymentDetails = ({id, role}) => {
                                 <>
                                     <tr className="hover">
                                         <td className="font-semibold text-sm text-[#09090B] hidden md:block">Successfully Get Payments</td>
-                                        <td className="font-semibold text-sm text-[#09090B]">{data?.month} {data?.year}</td>
+                                        <td className="font-semibold text-sm text-[#09090B]">{data?.month.slice(0,3)} {data?.year}</td>
                                         <td className="font-semibold text-sm text-[#09090B]">{data?.paymentReportDate}</td>
                                         <td className="font-semibold text-sm text-[#09090B]">
                                             <div className="flex items-center">
@@ -113,26 +113,28 @@ const PaymentDetails = ({id, role}) => {
                                         </td>
                                         {
                                             role == 'User' &&
-                                            <td className="font-semibold text-[#09090B]">
-                                                <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm w-full">View Details</button>
+                                            <td className="font-semibold flex justify-end text-[#09090B]">
+                                                <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm">View Details</button>
                                             </td>
                                         }
                                         {
                                             role !== 'User' &&
-                                            <td className="flex items-center justify-between gap-2">
-                                                <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm w-full">View Details</button>
-                                                <Popconfirm
-                                                    title="Delete"
-                                                    placement="leftTop"
-                                                    className="z-1000"
-                                                    description="Are you sure to Delete Payment?"
-                                                    onConfirm={() => confirm(data._id, data)}
-                                                    onCancel={cancel}
-                                                    okText="Yes"
-                                                    cancelText="No"
-                                                    >
-                                                    <TrashIcon style={{cursor: 'pointer'}} className="w-4 h-4 me-2 text-red-500 absolute top-2 right-3"/>
-                                                </Popconfirm>
+                                            <td className="flex items-center justify-end gap-2">
+                                                <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm">View Details</button>
+                                                <div>
+                                                    <Popconfirm
+                                                        title="Delete"
+                                                        placement="leftTop"
+                                                        // className="z-1000"
+                                                        description="Are you sure to Delete Payment?"
+                                                        onConfirm={() => confirm(data._id, data)}
+                                                        onCancel={cancel}
+                                                        okText="Yes"
+                                                        cancelText="No"
+                                                        >
+                                                        <TrashIcon style={{cursor: 'pointer'}} className="w-5 h-5"/>
+                                                    </Popconfirm>
+                                                </div>
                                             </td>
                                         }
                                         <dialog id={data._id} className="modal">

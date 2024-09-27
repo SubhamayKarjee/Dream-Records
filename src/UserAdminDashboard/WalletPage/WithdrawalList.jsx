@@ -77,7 +77,7 @@ const WithdrawalList = ({id}) => {
                                 <>
                                     <tr className="hover">
                                         <td className="font-semibold text-sm text-[#09090B]">Withdrawal Requested !</td>
-                                        <td className="font-semibold text-sm text-[#09090B]">{data?.withdrawalMonth}/{data?.withdrawalYear}</td>
+                                        <td className="font-semibold text-sm text-[#09090B]">{data?.withdrawalMonth.slice(0,3)} {data?.withdrawalYear}</td>
                                         <td className="font-semibold text-sm text-[#09090B]">
                                         {
                                             data?.status === 'Pending' &&
@@ -106,8 +106,8 @@ const WithdrawalList = ({id}) => {
                                                  <CurrencyRupeeIcon className="w-5 h-5"/><p className="font-semibold text-sm text-[#09090B]">{data?.balance?.amount}</p>
                                             </div>
                                         </td>
-                                        <td className="font-semibold text-sm text-[#09090B]">
-                                            <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm w-full">View Details</button>
+                                        <td className="flex justify-end">
+                                            <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm">View Details</button>
                                         </td>
 
                                         <dialog id={data._id} className="modal">
