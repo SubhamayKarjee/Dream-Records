@@ -123,7 +123,7 @@ const UpdateArtistPage = () => {
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <p className="mt-3 text-sm font-semibold text-[#09090B]">Artist Name <span className="text-red-500">*</span></p> 
-                    <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Enter Artist Name" {...register("artistName", { required: true})} />
+                    <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Enter Artist Name" {...register("artistName", { required: true})} disabled />
                     <p className="text-xs text-[#71717A] mt-1">This is the tittle that will be displayed as artist’s profile image.</p>
                     {errors.artistName && <span className='text-red-600 pt-2 block'>Artist Name Required</span>}
                     <p className="mt-3 text-sm font-semibold text-[#09090B]">Instagram</p> 

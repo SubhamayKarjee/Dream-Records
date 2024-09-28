@@ -11,12 +11,9 @@ import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
-import UpdateArtistForm from "./UpdateArtistForm";
-import { createContext } from 'react';
 import { ArrowsUpDownIcon, TrashIcon } from "@heroicons/react/24/outline";
 import ReleaseCardComponentFourColsGrid from "../ReleasesPage/ReleaseCardComponent/ReleaseCardComponentFourColsGrid";
 
-export const UpdateRefetch = createContext();
 
 const DetailsSingleArtist = () => {
 
@@ -26,12 +23,7 @@ const DetailsSingleArtist = () => {
     const [totalItems, setTotalItems] = useState()
     const [artist, setArtist] = useState();
     const [artistFetchLoading, setArtistFetchLoading] = useState(false);
-    const [artistDataRefatch, setArtistDataRefatch] = useState(1)
 
-    const contextValue = {
-        artistDataRefatch,
-        setArtistDataRefatch
-    }
     useEffect( () => {
         setArtistFetchLoading(true)
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/single-artist/${id}`)
@@ -39,7 +31,7 @@ const DetailsSingleArtist = () => {
             setArtist(res.data.data[0]);
             setArtistFetchLoading(false)
         })
-    }, [artistDataRefatch, id])
+    }, [id])
 
     // Paginatin and Search State __________________________________________________
     const [searchText, setSearchText] = useState('');
@@ -66,8 +58,7 @@ const DetailsSingleArtist = () => {
               }
             })
             .catch(er => console.log(er));
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [pageNumber, status]);
+      }, [pageNumber, status, id]);
 
     const handleSearch = (e) => {
         setSearchText(e)
@@ -221,17 +212,6 @@ const DetailsSingleArtist = () => {
                                     </div>
 
                                 }
-                                <dialog id="artistUpdate" className="modal">
-                                    <div className="modal-box">
-                                        <form method="dialog">
-                                        {/* if there is a button in form, it will close the modal */}
-                                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                                        </form>
-                                        <UpdateRefetch.Provider value={contextValue}>
-                                            <UpdateArtistForm artist={artist} imgUrl={artist?.imgUrl} imgKey={artist?.key } artistDataRefatch={artistDataRefatch} forArtistDataRefatch={setArtistDataRefatch}/>
-                                        </UpdateRefetch.Provider>
-                                    </div>
-                                </dialog>
                         </div>
                     </div>
                 }

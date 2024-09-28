@@ -65,7 +65,7 @@ const UpdateLabelPage = () => {
             setUploadedImage({imgUrl, key})
         }
         let formData;
-        if(label.status === 'Approved'){
+        if(label.data.data[0].status === 'Approved'){
             formData = {...data, ...uploadedImage};
         }else{
             formData = {...data, ...uploadedImage, status, actionRequird};
@@ -124,7 +124,7 @@ const UpdateLabelPage = () => {
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <p className="mt-3 text-sm font-semibold text-[#09090B]">Label Name <span className="text-red-500">*</span></p> 
-                    <input style={inputStyle} type="text" className="input input-sm w-full" {...register("labelName", { required: true})}/>
+                    <input style={inputStyle} type="text" className="input input-sm w-full" {...register("labelName", { required: true})} disabled/>
                     {errors.labelName && <span className='text-red-600 pt-2 block'>Label Name Required</span>}
                     {/* Youtube Channel Link ___________________ */}
                     <p className="mt-3 text-sm font-semibold text-[#09090B]">Youtube Channel Link<span className="text-red-500">*</span></p> 
