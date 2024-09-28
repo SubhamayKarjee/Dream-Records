@@ -178,7 +178,7 @@ const UserAdminHomePage = () => {
                                     <UsersIcon className="h-7 w-7 pe-2" />
                                     Artists
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/labels', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/labels/All/1/8'}>
+                                <NavLink style={() => activeLinkDynamic('/labels', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/labels/All/1/6'}>
                                     <TagIcon className="h-7 w-7 pe-2" />    
                                     Labels
                                 </NavLink>
