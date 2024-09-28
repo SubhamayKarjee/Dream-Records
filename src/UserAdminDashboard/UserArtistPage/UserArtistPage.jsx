@@ -91,13 +91,6 @@ const UserArtistPage = () => {
                           <button onClick={()=>navigate('/create-artist')} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/>Create Artist</button>
                       </div>
                   </div>
-                      {/* Create Artist form with Modal Start _______________________________________________________________________ */}
-                      {/* <dialog id="create_artist_modal" className="modal"> 
-                          <div className="modal-box">
-                            <CreateArtistForm/>
-                          </div>
-                      </dialog> */}
-                      {/* Create Artist form with Modal End _______________________________________________________________________ */}
 
                     <Divider/>
                   {/* Artist page Title and Total Artist_____________________________________________________________________________ */}
@@ -114,10 +107,10 @@ const UserArtistPage = () => {
 
                 {/* Show All Artist Data __________________________________________________________________________________________________ */}
                 <main className="my-2">
+                  {
+                    fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
+                  }
                   <div className="grid cols sm:grid-cols-2 md:grid-cols-4 gap-3">
-                      {
-                        fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
-                      }
                       {
                         !fetchLoading && artistData?.map((data) => 
                           <div style={{cursor: 'pointer'}} onClick={() => navigate(`/artist/${data._id}/All/1/8`)} key={data._id} className="">
