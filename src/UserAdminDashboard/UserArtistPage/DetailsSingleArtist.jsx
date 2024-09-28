@@ -92,7 +92,7 @@ const DetailsSingleArtist = () => {
             if(res.status == 200){
                 setDeleteLoading(false)
                 toast.success('Deleted the Artist');
-                navigate('/artist')
+                navigate('/artist/1/8')
             }
         })
         .catch(er => console.log(er));
@@ -205,7 +205,7 @@ const DetailsSingleArtist = () => {
                                                     okText="Yes"
                                                     cancelText="No"
                                                     >
-                                                    <TrashIcon className="h-5 w-5 "/>
+                                                    <TrashIcon style={{cursor: 'pointer'}} className="h-5 w-5 "/>
                                                 </Popconfirm>
                                         </div>
                                         </div>

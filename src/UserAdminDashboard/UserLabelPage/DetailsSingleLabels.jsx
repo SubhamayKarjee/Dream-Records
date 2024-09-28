@@ -78,8 +78,8 @@ const DetailsSingleLabels = () => {
           .then( res => {
             if(res.status == 200){
                 setDeleteLoading(false)
-                navigate('/labels');
                 toast.success('Deleted the Labels')
+                navigate('/labels/All/1/6');
             }
           })
           .catch(er => console.log(er));
