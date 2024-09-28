@@ -1,26 +1,19 @@
 import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon, PencilSquareIcon, TrashIcon, } from "@heroicons/react/24/solid";
 import { Button, Dropdown, Image, Popconfirm, Skeleton } from "antd";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import fallbackImage from "../../assets/fallbackImage.jpg"
 import youtubeImg from '../../assets/social-icon/youtube.png';
 import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
-import UpdateLabels from "./UpdateLabels";
-import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 import ReleaseCardComponentFourColsGrid from "../ReleasesPage/ReleaseCardComponent/ReleaseCardComponentFourColsGrid";
 
 const DetailsSingleLabels = () => {
 
     const navigate = useNavigate('')
-    const { refatchLabelsData } = useContext(AuthContext);
-
     const {id, status, pageNumber, perPageLabels} = useParams();
-
-    const [imgUrl, setImgUrl] = useState('');
-    const [imgKey, setImgKey] = useState('');
     const [labels, setLabels] = useState();
     const [labelsFetchLoading, setLabelsFetchLoading] = useState(false);
     useEffect( () => {
@@ -28,13 +21,9 @@ const DetailsSingleLabels = () => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/single-labels/${id}`)
         .then(res => {
             setLabels(res.data.data[0]);
-            console.log(res.data.data[0]);
             setLabelsFetchLoading(false)
-            setImgUrl(res.data.data[0]?.imgUrl);
-            setImgKey(res.data.data[0]?.key);
         })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refatchLabelsData])
+    }, [id])
 
 
     // Paginatin and Search State __________________________________________________
@@ -234,15 +223,6 @@ const DetailsSingleLabels = () => {
                                     </button>
                                 </div>
                             }
-                            <dialog id="labelsUpdate" className="modal">
-                                <div className="modal-box">
-                                    <form method="dialog">
-                                    {/* if there is a button in form, it will close the modal */}
-                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                                    </form>
-                                    <UpdateLabels imgUrl={imgUrl} imgKey={imgKey} labels={labels}/>
-                                </div>
-                            </dialog>
                         </div>
                     </div>
                 }
