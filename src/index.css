@@ -31,7 +31,23 @@
   background-color: #666; /* Hover thumb background color */
 }
 
-
+#fileInputDiv {
+  width: 100%;
+  height: 145px;
+  border: 1px dashed #71717A;
+  border-radius: 12px;
+  position: relative;
+}
+#fileInputStyle {
+  width: 100%;
+  height: 145px;
+  border-radius: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
 
 
 

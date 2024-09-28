@@ -10,10 +10,12 @@ import MainNoticesMobile from "../UserCommonComponent/MainNoticesMobile";
 import { GlobeAmericasIcon } from "@heroicons/react/24/solid";
 import './UserArtistPage.css'
 import uploadIcon from '../../assets/common-icons/uploadIcon.png'
+import { useNavigate } from "react-router-dom";
 
 const CreateArtistPage = () => {
 
     const { userNameIdRoll } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const [errorMessage, setErrorMessage] = useState('');
     const [upLoadLoading, setUploadLoading] = useState(false);
@@ -73,6 +75,8 @@ const CreateArtistPage = () => {
                 setUploadedImageLink('');
                 setUploadedImage()
                 setSubmitLoading(false);
+                navigate('/artist/1/8')
+                
               }
           })
           .catch(er => console.log(er))
@@ -96,22 +100,19 @@ const CreateArtistPage = () => {
             <div className='h-full md:basis-3/4 overflow-y-auto px-3 bg-[#FCFCFC] md:pt-16 custom-scrollbar'>
                 <h3 className='font-bold text-xl pb-2 text-[#252525]'>Create New Artist</h3>
                 <div className="pt-1">
-                  <p className="text-sm font-semibold">Artist’s Details</p>
-                  <p className="text-sm text-[#71717A]">Update your Artist’s all details below</p>
+                    <p className="text-sm font-semibold">Artist’s Details</p>
+                    <p className="text-sm text-[#71717A]">Update your Artist’s all details below</p>
                 </div>
                 <Divider/>
                 <div>
-                  {/* Modal Body and Form for create Artist______________________________________________ */}
-                  <div>
-                      <div className="">
-
+                    <div className="">
                         <p className="text-sm font-semibold text-[#09090B] pb-3">Upload Artist Image</p>
                         <div id="fileInputDiv" className="flex items-center justify-center bg-[#F2F2F2]">
                             <div>
                                 <img className="mx-auto" src={uploadIcon} alt="" />
                                 <p className="text-[#71717A] py-2">Drop your image to upload</p>
                             </div>
-                            <input type="file" accept="image/*" id="fileInput" name='image' onChange={e => artistImageUpload(e.target.files)} />
+                            <input type="file" accept="image/*" id="fileInputStyle" name='image' onChange={e => artistImageUpload(e.target.files)} />
                         </div>
                         {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
                         {
@@ -123,8 +124,7 @@ const CreateArtistPage = () => {
                             <img style={{height: '48px', width: '48px', borderRadius: '8px'}} src={uploadedImageLink} alt="" />
                           </div>
                         }
-                      
-                      </div>
+                    </div>
                       {/* _________________________________ */}
                       <form onSubmit={handleSubmit(onSubmit)}>
                           <p className="mt-3 text-sm font-semibold text-[#09090B]">Artist Name <span className="text-red-500">*</span></p> 
@@ -139,22 +139,21 @@ const CreateArtistPage = () => {
                           <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Apple Profile URL" {...register("appleId")}/>
                           <p className="mt-3 text-sm font-semibold text-[#09090B]">Facebook</p> 
                           <label style={inputStyle} className="input input-sm flex items-center gap-2">
-                            <GlobeAmericasIcon className="w-4 h-4 text-slate-500"/>
-                            <input type="text" className="grow" placeholder="Facebook Profile URL" {...register("facebook")}/>
+                              <GlobeAmericasIcon className="w-4 h-4 text-slate-500"/>
+                              <input type="text" className="grow" placeholder="Facebook Profile URL" {...register("facebook")}/>
                           </label>
                           <div className="flex items-center mt-3">
-                          <p className="text-sm text-sm font-semibold text-[#09090B]">Youtube Channel</p> <span className="text-xs">(YouTube OAC Request)</span>
+                              <p className="text-sm text-sm font-semibold text-[#09090B]">Youtube Channel</p> <span className="text-xs">(YouTube OAC Request)</span>
                           </div>
-                          <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Youtube Channel Profile URL" {...register("youtube")}/>
+                              <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Youtube Channel Profile URL" {...register("youtube")}/>
                           <div className="flex items-center ">
-                            {
-                                submitLoading && <span className="block loading loading-spinner loading-md me-2"></span>
-                            }
-                            <input type="submit" className="btn btn-sm btn-neutral px-6 h-9 my-3" value="Create" />
+                              {
+                                  submitLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                              }
+                              <input type="submit" className="btn btn-sm btn-neutral px-6 h-9 my-3" value="Create Artist" />
                           </div>
                       </form>
-                  </div>
-              </div>
+                </div>
             </div>
 
             {/* Notification Div Mobile _______________________________*/}

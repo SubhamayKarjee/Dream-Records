@@ -17,6 +17,7 @@ import ChatSupport from './AdminDashboard/AdminSupportPage/ChatSupport';
 import CallSupport from './AdminDashboard/AdminSupportPage/CallSupport';
 import SetNewPassword from './Authentication/LogIn/SetNewPassword';
 import CreateArtistPage from './UserAdminDashboard/UserArtistPage/CreateArtistPage';
+import UpdateArtistPage from './UserAdminDashboard/UserArtistPage/UpdateArtistPage';
 
 
 
@@ -278,6 +279,11 @@ const router = createBrowserRouter([
       {
         path: '/create-artist',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><CreateArtistPage/></ProtectUserRoute></Suspense>
+      },
+      {
+        path: '/update-artist/:id',
+        loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/single-artist/${params.id}`),
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UpdateArtistPage/></ProtectUserRoute></Suspense>
       },
       {
         path: '/artist/:id/:status/:pageNumber/:perPageArtist',

@@ -39,8 +39,7 @@ const DetailsSingleArtist = () => {
             setArtist(res.data.data[0]);
             setArtistFetchLoading(false)
         })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [artistDataRefatch])
+    }, [artistDataRefatch, id])
 
     // Paginatin and Search State __________________________________________________
     const [searchText, setSearchText] = useState('');
@@ -196,14 +195,14 @@ const DetailsSingleArtist = () => {
                         <div className="">
                                 {
                                     totalReleaseCount > 0 &&
-                                    <button onClick={()=>document.getElementById('artistUpdate').showModal()} className="btn btn-sm px-3 items-center"><PencilSquareIcon className="w-4 h-4 text-slate-700"/>Edit Atrist Details</button>
+                                    <button onClick={()=>navigate(`/update-artist/${artist._id}`)} className="btn btn-sm px-3 items-center"><PencilSquareIcon className="w-4 h-4 text-slate-700"/>Edit Atrist Details</button>
 
                                 }
                                 {
                                     totalReleaseCount < 1 &&
                                     <div style={{display: `${hideDeleteButton}`}}>
                                         <div className="flex items-center gap-2">
-                                            <button onClick={()=>document.getElementById('artistUpdate').showModal()}  className="btn btn-sm "><PencilSquareIcon className="w-4 h-4 text-slate-700"/>Edit Artist Details</button>
+                                            <button onClick={()=>navigate(`/update-artist/${artist._id}`)}  className="btn btn-sm "><PencilSquareIcon className="w-4 h-4 text-slate-700"/>Edit Artist Details</button>
                                             <div>
                                                 <Popconfirm
                                                     title="Delete"
