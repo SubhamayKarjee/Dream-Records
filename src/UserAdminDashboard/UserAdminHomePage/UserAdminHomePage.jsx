@@ -7,11 +7,11 @@ import {
     DocumentCheckIcon,
     UsersIcon,
     ChartPieIcon,
-    UserCircleIcon,
     CurrencyDollarIcon,
     RectangleGroupIcon,
     TagIcon,
     InformationCircleIcon,
+    UserIcon,
  } from '@heroicons/react/24/outline'
 import { useEffect, useState } from 'react';
 import { Drawer, Image } from 'antd';
@@ -199,7 +199,7 @@ const UserAdminHomePage = () => {
                                     Support
                                 </NavLink>
                                 <NavLink style={() => activeLinkDynamic('/account', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/account'}>
-                                    <UserCircleIcon className="h-7 w-7 pe-2" />
+                                    <UserIcon className="h-7 w-7 pe-2" />
                                     Account
                                 </NavLink>
                             </div>
@@ -305,7 +305,7 @@ const UserAdminHomePage = () => {
                                                     Support
                                                 </NavLink>
                                                 <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/account'}>
-                                                    <UserCircleIcon className="h-7 w-7 pe-2" />
+                                                    <UserIcon className="h-7 w-7 pe-2" />
                                                     Account
                                                 </NavLink>
                                             </div>
