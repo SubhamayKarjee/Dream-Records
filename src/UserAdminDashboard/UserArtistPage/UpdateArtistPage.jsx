@@ -145,11 +145,9 @@ const UpdateArtistPage = () => {
                         {
                             submitLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                         }
-                        <input type="submit" className="btn btn-sm btn-neutral px-6 h-9 my-3" value="Updated Artist" />
+                        <input type="submit" className="btn btn-sm btn-neutral px-6 h-9 my-3 bg-[#18181B]" value="Updated Artist" />
                     </div>
                 </form>
-
-                
             </div>
 
 

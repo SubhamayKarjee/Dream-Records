@@ -18,6 +18,7 @@ import CallSupport from './AdminDashboard/AdminSupportPage/CallSupport';
 import SetNewPassword from './Authentication/LogIn/SetNewPassword';
 import CreateArtistPage from './UserAdminDashboard/UserArtistPage/CreateArtistPage';
 import UpdateArtistPage from './UserAdminDashboard/UserArtistPage/UpdateArtistPage';
+import CreateLabelPage from './UserAdminDashboard/UserLabelPage/CreateLabelPage';
 
 
 
@@ -272,6 +273,7 @@ const router = createBrowserRouter([
           },
         ]
       },
+      // Artist Page Link __________________________________________________________________________
       {
         path: '/artist/:pageNumber/:perPageArtist',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserArtistPage/></ProtectUserRoute></Suspense>
@@ -289,9 +291,14 @@ const router = createBrowserRouter([
         path: '/artist/:id/:status/:pageNumber/:perPageArtist',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><DetailsSingleArtist/></ProtectUserRoute></Suspense>
       },
+      // Label Page Link __________________________________________________________________________
       {
         path: '/labels/:status/:pageNumber/:perPageLabels',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserLabelsPage/></ProtectUserRoute></Suspense>
+      },
+      {
+        path: '/create-labels',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><CreateLabelPage/></ProtectUserRoute></Suspense>
       },
       {
         path: '/labels/:id/:status/:pageNumber/:perPageLabels',

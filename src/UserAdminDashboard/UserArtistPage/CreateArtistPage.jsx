@@ -50,7 +50,6 @@ const CreateArtistPage = () => {
       axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/upload-artist-img', formData)
           .then(res => {
               if(res.status == 200){
-                console.log(res.data.data);
                 setUploadedImageLink(res.data.data.imgUrl);
                 setUploadedImage(res.data.data);
                 setUploadLoading(false);
@@ -150,12 +149,11 @@ const CreateArtistPage = () => {
                               {
                                   submitLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                               }
-                              <input type="submit" className="btn btn-sm btn-neutral px-6 h-9 my-3" value="Create Artist" />
+                              <input type="submit" className="btn btn-sm btn-neutral px-6 h-9 my-3 bg-[#18181B]" value="Create Artist" />
                           </div>
                       </form>
                 </div>
             </div>
-
             {/* Notification Div Mobile _______________________________*/}
             <MainNoticesMobile/>
 

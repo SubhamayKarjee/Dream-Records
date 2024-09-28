@@ -117,30 +117,28 @@ const CreateLabelsForm = () => {
                               </div>
                                   {/* _________________________________ */}
                                   <form onSubmit={handleSubmit(onSubmit)}>
-                                        <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label Name <span className="text-red-500">*</span></p> 
-                                        <input type="text" className="input rounded-full input-bordered w-full" {...register("labelName", { required: true})}/>
-                                        {errors.labelName && <span className='text-red-600 pt-2 block'>Label Name Required</span>}
-
-                                        <div className="border rounded-lg p-2 my-3">
-                                            {/* Youtube Channel Link ___________________ */}
-                                            <p className="mt-2 text-sm font-semibold text-slate-500 ms-2">Youtube Channel Link<span className="text-red-500">*</span></p> 
-                                            <label className="input input-bordered rounded-full input-sm flex items-center gap-2">
-                                            <GlobeAmericasIcon className="w-4 h-4 text-slate-500"/>
-                                            <input type="text" className="grow" {...register("youtubeChannelLink", { required: true})}/>
-                                            </label>
-                                            {errors.youtubeChannelLink && <span className='text-red-600 pt-2 block'>YouTube Channel Link Required</span>}
-                                            {/* Description ____________________________ */}
-                                            <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Description</p>
-                                            <textarea className="textarea textarea-bordered w-full" {...register("description")} placeholder="Description"></textarea>
-                                        </div>
-
-                                        <div className="flex items-center py-3">
-                                        {
-                                            submitLoading && <span className="block loading loading-spinner loading-md me-2"></span>
-                                        }
-                                        <input type="submit" className="btn btn-sm rounded-full btn-neutral" value="Create" />
-                                        </div>
-                                    </form>
+                                      <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label Name <span className="text-red-500">*</span></p> 
+                                      <input type="text" className="input rounded-full input-bordered w-full" {...register("labelName", { required: true})}/>
+                                      {errors.labelName && <span className='text-red-600 pt-2 block'>Label Name Required</span>}
+                                      <div className="border rounded-lg p-2 my-3">
+                                          {/* Youtube Channel Link ___________________ */}
+                                          <p className="mt-2 text-sm font-semibold text-slate-500 ms-2">Youtube Channel Link<span className="text-red-500">*</span></p> 
+                                          <label className="input input-bordered rounded-full input-sm flex items-center gap-2">
+                                          <GlobeAmericasIcon className="w-4 h-4 text-slate-500"/>
+                                          <input type="text" className="grow" {...register("youtubeChannelLink", { required: true})}/>
+                                          </label>
+                                          {errors.youtubeChannelLink && <span className='text-red-600 pt-2 block'>YouTube Channel Link Required</span>}
+                                          {/* Description ____________________________ */}
+                                          <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Description</p>
+                                          <textarea className="textarea textarea-bordered w-full" {...register("description")} placeholder="Description"></textarea>
+                                      </div>
+                                      <div className="flex items-center py-3">
+                                          {
+                                              submitLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                                          }
+                                          <input type="submit" className="btn btn-sm rounded-full btn-neutral" value="Create" />
+                                      </div>
+                                  </form>
                               </div>
                           </div>
                         }

@@ -104,7 +104,7 @@ const UserLabelsPage = () => {
                         <input type="text" style={inputStyle} onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                     </div>
                     <div className="mt-2">
-                        <button onClick={()=>document.getElementById('create_labels_modal').showModal()} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/> Create Label</button>
+                        <button onClick={()=>navigate(`/create-labels`)} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/> Create Label</button>
                     </div>
                 </div>
                     {/* Create Labels form with Modal Start _______________________________________________________________________ */}
