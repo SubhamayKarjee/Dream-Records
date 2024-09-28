@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate,} from "react-router-dom";
+import { useLoaderData, useNavigate, useParams,} from "react-router-dom";
 import { GlobeAmericasIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import {  useState } from "react";
@@ -14,6 +14,7 @@ import uploadIcon from '../../assets/common-icons/uploadIcon.png'
 const UpdateArtistPage = () => {
 
 
+    const {id} = useParams();
     const navigate = useNavigate()
     const artist = useLoaderData();
     const imgUrl = artist?.data?.data[0].imgUrl;
@@ -59,7 +60,6 @@ const UpdateArtistPage = () => {
     
     const onSubmit = async (data) => {
         setSubmitLoading(true)
-        const id = artist.data.data[0]._id;
         const formData = {...data, ...uploadedImage};
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/artist/update-artist/${id}`, formData)
             .then(res => {

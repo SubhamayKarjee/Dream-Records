@@ -3,7 +3,6 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
-import CreateLabelsForm from "./CreateLabelsForm";
 import fallbackImage from "../../assets/fallbackImage.jpg"
 import ActionRequiredLabels from "./ActionRequiredLabels";
 import { ArrowsUpDownIcon, DocumentCheckIcon, ExclamationTriangleIcon, PlusIcon, BellAlertIcon, CheckBadgeIcon, ClockIcon } from "@heroicons/react/24/outline";
@@ -27,9 +26,9 @@ const UserLabelsPage = () => {
       axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/${userNameIdRoll[1]}?page=${pageNumber}&limit=${perPageLabels}&status=${status}`)
           .then( res => {
             if(res.status == 200){
-              setFetchLoading(false);
               setTotalItems(res.data.dataCount);
               setLabelsData(res.data.data);
+              setFetchLoading(false);
             }
           })
           .catch(er => console.log(er));
@@ -107,14 +106,6 @@ const UserLabelsPage = () => {
                         <button onClick={()=>navigate(`/create-labels`)} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/> Create Label</button>
                     </div>
                 </div>
-                    {/* Create Labels form with Modal Start _______________________________________________________________________ */}
-                    <dialog id="create_labels_modal" className="modal"> 
-                        <div className="modal-box">
-                            <CreateLabelsForm/>
-                        </div>
-                    </dialog>
-                    {/* Create Labels form with Modal End _______________________________________________________________________ */}
-
                 <Divider/>
                 {/* Main Div ______________________________________________Labels list */}
                 <main className="">

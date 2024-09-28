@@ -228,8 +228,8 @@ const DetailsSingleLabels = () => {
                             {
                                 !labelsFetchLoading && labels?.status === 'Approved' &&
                                 <div className="flex items-center gap-2 bg-white py-1 px-2 rounded-md">
-                                    <button className="btn btn-sm w-full">
-                                        <PencilSquareIcon onClick={()=>document.getElementById('labelsUpdate').showModal()} style={{cursor: 'pointer'}} className="w-5 h-5 text-salate-500"/>
+                                    <button  onClick={()=>navigate(`/update-labels/${labels._id}`)} className="btn btn-sm w-full">
+                                        <PencilSquareIcon style={{cursor: 'pointer'}} className="w-5 h-5 text-salate-500"/>
                                         Edit Labels Details
                                     </button>
                                 </div>

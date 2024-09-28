@@ -19,6 +19,7 @@ import SetNewPassword from './Authentication/LogIn/SetNewPassword';
 import CreateArtistPage from './UserAdminDashboard/UserArtistPage/CreateArtistPage';
 import UpdateArtistPage from './UserAdminDashboard/UserArtistPage/UpdateArtistPage';
 import CreateLabelPage from './UserAdminDashboard/UserLabelPage/CreateLabelPage';
+import UpdateLabelPage from './UserAdminDashboard/UserLabelPage/UpdateLabelPage';
 
 
 
@@ -299,6 +300,11 @@ const router = createBrowserRouter([
       {
         path: '/create-labels',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><CreateLabelPage/></ProtectUserRoute></Suspense>
+      },
+      {
+        path: '/update-labels/:id',
+        loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/single-labels/${params.id}`),
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UpdateLabelPage/></ProtectUserRoute></Suspense>
       },
       {
         path: '/labels/:id/:status/:pageNumber/:perPageLabels',
