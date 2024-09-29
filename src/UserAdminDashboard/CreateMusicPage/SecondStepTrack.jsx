@@ -1,5 +1,5 @@
-import { MagnifyingGlassIcon, PlusIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Image, Modal, Select } from "antd";
+import { PlusIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Divider, Image, Modal, Select, Steps } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -10,8 +10,9 @@ import LabelsList from "./labelsListComponent/LabelsList";
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import { ReleaseContext } from "./CreateMusicPage";
 import axios from "axios";
-import FeaturingComponent from "./FeaturingComponent/FeaturingComponent";
+// import FeaturingComponent from "./FeaturingComponent/FeaturingComponent";
 import toast from "react-hot-toast";
+import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 
 const SecondStepTrack = () => {
 
@@ -22,9 +23,12 @@ const SecondStepTrack = () => {
         lyricsLanguage, setLyricsLanguage,
         composer, setComposer,
         authors, setAuthors,
+        format,setFormat
     } = useContext(ReleaseContext);
 
-    const { artist, setArtist, labels, setLabels, featuring, setFeaturing } = useContext(AuthContext);
+    const { artist, setArtist, labels, setLabels, featuring, } = useContext(AuthContext);
+
+    // setFeaturing
 
 
     const navigate = useNavigate('');
@@ -42,27 +46,27 @@ const SecondStepTrack = () => {
     const [reFetchLabels, setRefetchLabels] = useState(1)
 
     // Modal Function For Featuring __________________________________
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = () => {
-        const re = reFetchArtist + 1;
-        setRefetchArtist(re)
-        setIsModalOpen(true);
-    };
-    const handleOk = () => {
-        const re = reFetchArtist + 1;
-        setRefetchArtist(re)
-        setIsModalOpen(false);
-    };
-    const handleCancel = () => {
-        const re = reFetchArtist + 1;
-        setRefetchArtist(re)
-        setIsModalOpen(false);
-    };
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    // const showModal = () => {
+    //     const re = reFetchArtist + 1;
+    //     setRefetchArtist(re)
+    //     setIsModalOpen(true);
+    // };
+    // const handleOk = () => {
+    //     const re = reFetchArtist + 1;
+    //     setRefetchArtist(re)
+    //     setIsModalOpen(false);
+    // };
+    // const handleCancel = () => {
+    //     const re = reFetchArtist + 1;
+    //     setRefetchArtist(re)
+    //     setIsModalOpen(false);
+    // };
 
-    const removeFeaturing = (id) => {
-        const deleteFeaturing = featuring.filter(a => a._id !== id);
-        setFeaturing(deleteFeaturing)
-    }
+    // const removeFeaturing = (id) => {
+    //     const deleteFeaturing = featuring.filter(a => a._id !== id);
+    //     setFeaturing(deleteFeaturing)
+    // }
 
     // Modal Function For Artist __________________________________
     const [errorMessageArtist, setErrorMessageArtist] = useState('');
@@ -209,7 +213,7 @@ const SecondStepTrack = () => {
 
     // Handle Audio State _______________________________________
     const [errorMessageAudio, setErrorMessageAudio] = useState('');
-
+    const [formateErr, setFormateErr] = useState('')
     // FROM SUBMIT FUNCTION_______________________________________
     // eslint-disable-next-line no-unused-vars
     const { register, handleSubmit, formState: { errors }} = useForm({
@@ -223,6 +227,12 @@ const SecondStepTrack = () => {
         setLanguageErr('');
         setComposerErr('');
         setAuthorsErr('');
+        setFormateErr('')
+
+        if(!format){
+            setFormateErr('Please Select Formate')
+            return;
+        }
 
         if(!artist){
             setErrorMessageArtist('Artist Required')
@@ -308,19 +318,55 @@ const SecondStepTrack = () => {
         .catch(er => console.log(er));
     }
 
+    const steps = [
+        {title: 'Basic'},
+        {title: 'Tracks'},
+        {title: 'Date'},
+    ];
+    const inputStyle = {
+        height: '36px',
+        border: '1px solid #E2E8F0'
+    }
+
 
     return (
         <div>
-            <ul style={{width: '100%'}} className="steps">
-                <li data-content="✓" className="step step-info font-bold">Basic</li>
-                <li className="step step-info font-bold">Tracks</li>
-                <li data-content="3" className="step font-bold">Date</li>
-            </ul>
-            <div className="py-3">
-                <h2 className="text-lg font-semibold text-slate-500 px-2">Tracks</h2>
+            <div className="px-3">
+                <Steps navArrowColor='black' current={1} items={steps} /> 
+            </div>
+
+            <div className="pt-4">
+                <p className="text-lg font-semibold">Upload Track</p>
+                <p className="text-sm text-[#71717A]">Update your account settings. Set your preferred language and timezone.</p>
+            </div>
+            <Divider/>
+            <div className="">
+                <p className="mt-3 mb-1 text-sm font-semibold text-[#09090B]">Format <span className="text-red-500">*</span></p>
+                    <Select
+                        showSearch
+                        placeholder='Select Format'
+                        size="h-9"
+                        className="mb-2"
+                        style={{
+                            width: '100%',
+                        }}
+                        onChange={e => setFormat(e)}
+                        options={[
+                            {label: 'Single', value: 'Single'},
+                            {label: 'Album', value: 'Album'},
+                        ]}
+                    />
+                    {
+                        formateErr && <span className='text-red-600 pt-2 block'>{formateErr}</span>
+                    }
+
+
+
+
+
                 {/* Audio Upload ____________________ */}
-                <div className="p-3 border rounded-lg">
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Upload <span className="text-red-500">*</span></p>
+                <div className="">
+                    <p className="mt-3 mb-1 text-sm font-semibold text-[#09090B]">Upload <span className="text-red-500">*</span></p>
                     {
                         audioData && 
                             <div className="my-3">
@@ -333,25 +379,23 @@ const SecondStepTrack = () => {
                                 </div>
                             </div>
                     }
-                    <div className="my-1">
-                        <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2 py-1 rounded-md">Audio Formate Only Allow WAV</span>
-                    </div>
                     <div className="flex items-center ">
                         {
                             uploadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                         }
-                        <input type="file" accept=".wav" id="fileInput" name='audio' onChange={releaseAudioUpload} />                        
+                        <input type="file" accept=".wav" id="audioUpload" name='audio' onChange={releaseAudioUpload} />   
                     </div>
+                    <p className="text-sm text-[#71717A]">Audio Formate Only Allow WAV</p>                     
                     {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
                     {errorMessageAudio && <p className="font-bold text-red-500">{errorMessageAudio}</p>}
                 </div>
                 
-                <form onSubmit={handleSubmit(onSubmit)} className="p-3 border mt-2 rounded-lg">
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Album Name <span className="text-red-500">*</span></p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("albumName", { required: true})}/>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <p className="mt-3 mb-1 text-sm font-semibold text-[#09090B]">Album Name <span className="text-red-500">*</span></p>
+                    <input style={inputStyle} type="text" className="input input-sm w-full mt-1" placeholder="Enter the Album name here" {...register("albumName", { required: true})}/>
                     {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>} 
                     {/* Select Featuring ___________________________________ */}
-                    <div className="p-2 border rounded-md mt-3">
+                    {/* <div className="p-2 border rounded-md mt-3">
                         <p className="text-sm font-semibold text-slate-500 ms-2">Featuring</p>
                         {
                             featuring && featuring.map(data => 
@@ -381,10 +425,13 @@ const SecondStepTrack = () => {
                                     <FeaturingComponent handleCancel={handleCancel} reFetchArtist={reFetchArtist}/>
                                 </div>
                             </Modal>
-                    </div>
+                    </div> */}
+
+
                     {/* Author Input ___________________________________ */}
                     <div className="p-3 border rounded-md mt-3">
-                        <p className="text-sm font-semibold text-slate-500 ms-2">Author <span className="text-red-500">*</span></p>
+                        <p className="mb-2 text-sm font-semibold text-[#09090B]">Author Details</p>
+                        <p className="mb-1 text-sm font-semibold text-[#09090B]">Author <span className="text-red-500">*</span></p>
                         <div className="my-2">
                             {
                                 authors && authors.map((a, index) => <div key={index} className="flex items-center justify-between my-1 mx-1 py-1 px-3 bg-slate-200 rounded-md">
@@ -394,28 +441,25 @@ const SecondStepTrack = () => {
                                 )
                             }
                         </div>
-                        <div className="md:flex">
-                            <div className="md:grow me-2 md:flex itmems-center gap-2">
-                                <div className="md:flex-1">
-                                    <input type="text" placeholder="First Name" id="authorFirstName" onChange={e => setAuthorFirstNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                        <div className="grid grids-col md:grid-cols-2 items-center gap-2">
+                                <div>
+                                    <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="First Name" id="authorFirstName" onChange={e => setAuthorFirstNameValue(e.target.value)}/>
                                     {authorFirstNameErr && <span className='text-red-600 pt-2 block text-sm'>{authorFirstNameErr}</span>}
                                 </div>
-                                <div className="md:flex-1">
-                                    <input type="text" placeholder="Last Name" id="authorLastName" onChange={e => setAuthorLastNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                <div>
+                                    <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Last Name" id="authorLastName" onChange={e => setAuthorLastNameValue(e.target.value)}/>
                                     {authorLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{authorLastNameErr}</span>}
                                 </div>
-                            </div>
-                            <span style={{width: '150px'}} onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1"><PlusIcon className="w-4 h-4 text-white font-bold"/> Add Author</span>
                         </div>
+                        <button onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1 bg-[#18181B] w-full mt-3"><PlusIcon className="w-4 h-4 text-white font-bold"/>Add New Author</button>
+                        {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
                     </div>
-                    {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
 
                     {/* Select Language ____________________ */}
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Lyrics language <span className="text-red-500">*</span></p>
+                    <p className="mb-1 text-sm font-semibold text-[#09090B] mt-3">Lyrics language <span className="text-red-500">*</span></p>
                     <Select
                         showSearch
-                        size="large"
-                        className="w-full rounded-full text-normal"
+                        className="w-full h-9 text-normal"
                         placeholder="Select Language"
                         defaultValue={lyricsLanguage}
                         optionFilterProp="children"
@@ -426,8 +470,8 @@ const SecondStepTrack = () => {
                     {languageErr && <span className='text-red-600 pt-2 block'>{languageErr}</span>}
 
                     {/* Artist Select Option ______________________________________________________________ */}
-                    <div className="p-2 border rounded-md mt-3">
-                        <p className="text-sm font-semibold text-slate-500 ms-2">Artist <span className="text-red-500">*</span></p>
+                    <div className="">
+                        <p className="mb-1 text-sm font-semibold text-[#09090B] mt-3">Artist <span className="text-red-500">*</span></p>
                         {
                             artist && artist.map(data => 
                                 <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
@@ -449,7 +493,11 @@ const SecondStepTrack = () => {
                             )
                         }
 
-                        <span onClick={showModal1} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Artist</span>
+                        <div onClick={showModal1} style={{cursor: 'pointer'}} className="h-9 w-full border rounded-md px-3 flex items-center justify-between">
+                            <span className="text-sm text-[#9c9c9c]">Add Artist</span>
+                            <ArrowsUpDownIcon className="h-4 w-4 text-[#9c9c9c]"/>
+                        </div>
+
                             <Modal title="Search/Select Artist" className='relative' open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
                                 <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Artist</p>
                                 <div>
@@ -460,9 +508,14 @@ const SecondStepTrack = () => {
                         {errorMessageArtist && <span className='text-red-600 pt-2 block'>{errorMessageArtist}</span>}
                     </div>
 
+
+
+
+
+
                     {/* Label Select Option ______________________________________________________________ */}
-                    <div className="p-2 border rounded-md mt-3">
-                        <p className="text-sm font-semibold text-slate-500 ms-2">Label <span className="text-red-500">*</span></p>
+                    <div className="">
+                        <p className="mb-1 text-sm font-semibold text-[#09090B] mt-3">Label <span className="text-red-500">*</span></p>
                         {
                             labels && labels.map(data => 
                                 <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
@@ -483,7 +536,11 @@ const SecondStepTrack = () => {
                                 </div>
                             )
                         }
-                        <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Labels</span>
+                        <div onClick={showModal2} style={{cursor: 'pointer'}} className="h-9 w-full border rounded-md px-3 flex items-center justify-between">
+                            <span className="text-sm text-[#9c9c9c]">Add Labels</span>
+                            <ArrowsUpDownIcon className="h-4 w-4 text-[#9c9c9c]"/>
+                        </div>
+                        {/* <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Labels</span> */}
                             <Modal title="Search/Select Label" className="relative" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
                                 <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">Select Label</p>
                                 <div>
@@ -494,9 +551,14 @@ const SecondStepTrack = () => {
                         {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}
                     </div>
 
+
+
+
+
                     {/* Add Composer Input ____________________ */}
                     <div className="p-3 border rounded-md mt-3">
-                        <p className="text-sm font-semibold text-slate-500 ms-2">Composer <span className="text-red-500">*</span></p>
+                        <p className="mb-2 text-sm font-semibold text-[#09090B]">Composer Details</p>
+                        <p className="mb-1 text-sm font-semibold text-[#09090B]">Composer <span className="text-red-500">*</span></p>
                         <div className="my-2">
                             {
                                 composer && composer.map((c, index) => <div key={index} className="flex items-center justify-between my-1 mx-1 py-1 px-3 bg-slate-200 rounded-md">
@@ -506,31 +568,28 @@ const SecondStepTrack = () => {
                                 )
                             }
                         </div>
-                        <div className="md:flex">
-                            <div className="md:grow me-2 md:flex itmems-center gap-2">
-                                <div className="md:flex-1">
-                                    <input type="text" placeholder="First Name" id="composerFirstName" onChange={e => setComposerFirstNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
-                                    {composerFirstNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerFirstNameErr}</span>}
-                                </div>
-                                <div className="md:flex-1">
-                                    <input type="text" placeholder="Last Name" id="composerLastName" onChange={e => setComposerLastNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
-                                    {composerLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerLastNameErr}</span>}
-                                </div>
+                        <div className="grid grids-col md:grid-cols-2 items-center gap-2">
+                            <div>
+                                <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="First Name" id="composerFirstName" onChange={e => setComposerFirstNameValue(e.target.value)}/>
+                                {composerFirstNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerFirstNameErr}</span>}
                             </div>
-                            <span style={{width: '150px'}} onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1"><PlusIcon className="w-4 h-4 text-white font-bold"/> Add Composer</span>
+                            <div>
+                                <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Last Name" id="composerLastName" onChange={e => setComposerLastNameValue(e.target.value)}/>
+                                {composerLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerLastNameErr}</span>}
+                            </div>
                         </div>
+                        <span  onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1 bg-[#18181B] w-full mt-3"><PlusIcon className="w-4 h-4 text-white font-bold"/> Add New Composer</span>
+                        {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
                     </div>
-                    {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
+                    
 
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">ISRC</p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("ISRC")}/>
-                    <div className="mt-1">
-                        <span className="text-xs bg-slate-100 text-slate-500 font-bold mx-2 px-2 py-1 rounded-md">(if released before ISRC required otherwise optional)</span>
-                    </div>
+                    <p className="mb-1 text-sm font-semibold text-[#09090B]">ISRC</p>
+                    <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="" {...register("ISRC")}/>
+                    <p className="text-xs text-[#71717A] mt-1">(if released before ISRC required otherwise optional)</p>
 
                     <div className="my-4 flex justify-between">
-                        <button onClick={() => navigate('/create-release')} className="btn btn-sm px-6 btn-neutral rounded-full">Previus</button>
-                        <input type="submit" value={'Next'} className="btn btn-sm px-6 btn-accent rounded-full" />
+                        <button onClick={() => navigate('/create-release')} className="btn btn-sm px-6">Previous</button>
+                        <input type="submit" value={'Next'} className="btn btn-sm my-4 px-6 h-9 btn-neutral bg-[#18181B]" />
                     </div>
                 </form>
             </div>

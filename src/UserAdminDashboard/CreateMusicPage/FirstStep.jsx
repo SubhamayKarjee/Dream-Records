@@ -15,9 +15,7 @@ const FirstStep = () => {
         genre, setGenre,
         uploadedImageLink, setUploadedImageLink, 
         uploadedImage, setUploadedImage,
-        format,
     } = useContext(ReleaseContext);
-    // setFormat
 
     const navigate = useNavigate('');
     
@@ -37,6 +35,7 @@ const FirstStep = () => {
     const releaseImageUpload = (event) => {
         setErrorMessage('')
         setUploadLoading(true)
+        console.log(event.target);
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
@@ -83,23 +82,18 @@ const FirstStep = () => {
 
     const [genreError, setGenreError] = useState('')
 
-    const [formateErr, setFormateErr] = useState('')
+    
 
     const { register, handleSubmit, formState: { errors }} = useForm({
         defaultValues: firstStep
     });
     const onSubmit = (data) => {
-        setFormateErr('')
         if(!genre){
             setGenreError('Genre Required')
             return;
         }
-        if(!format){
-            setFormateErr('Please Select Formate')
-            return;
-        }
         if(uploadedImage){
-            const formData = {...data, ...uploadedImage, genre, format};
+            const formData = {...data, ...uploadedImage, genre,};
             setReleaseFormData(formData);
             setFirstStep(data);
             navigate('/create-release/tracks')
@@ -122,7 +116,7 @@ const FirstStep = () => {
     return (
         <div>
             <div className="px-3">
-                <Steps navArrowColor='black' current={0} items={steps} /> 
+                <Steps current={0} items={steps} /> 
             </div>
 
             <div className="pt-4">
@@ -137,7 +131,7 @@ const FirstStep = () => {
                         <img className="mx-auto" src={uploadIcon} alt="" />
                         <p className="text-[#71717A] py-2">Drop your image to upload</p>
                     </div>
-                    <input type="file" accept=".jpeg, .JPG, .jpg" id="fileInputStyle" name='image' onChange={e => releaseImageUpload(e.target.files)} />
+                    <input type="file" accept=".jpeg, .JPG, .jpg" id="fileInputStyle" name='image' onChange={e => releaseImageUpload(e)} />
                 </div>
                 {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
                 {
@@ -185,24 +179,7 @@ const FirstStep = () => {
                     {errors.cLine && <span className='text-red-600 pt-2 block'>© line Required</span>}
 
 
-                    {/* <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Format <span className="text-red-500">*</span></p>
-                    <Select
-                        showSearch
-                        placeholder='Select Format'
-                        size="large"
-                        className="mb-2"
-                        style={{
-                            width: '100%',
-                        }}
-                        onChange={e => setFormat(e)}
-                        options={[
-                            {label: 'Single', value: 'Single'},
-                            {label: 'Album', value: 'Album'},
-                        ]}
-                    /> */}
-                    {
-                        formateErr && <span className='text-red-600 pt-2 block'>{formateErr}</span>
-                    }
+                    
 
                     <p className="mt-3 text-sm font-semibold text-[#09090B]">UPC</p>
                     <input style={inputStyle} type="text" className="input input-sm w-full mt-1" placeholder="Enter the UPC number here" {...register("UPC")}/>
