@@ -1,0 +1,11 @@
+#audioUpload[type=file]::file-selector-button {
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+#audioUpload{
+    padding: 4px;
+    border: 1px solid gainsboro;
+    border-radius: 6px;
+    
+}

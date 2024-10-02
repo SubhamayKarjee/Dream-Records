@@ -1,5 +1,5 @@
-import { MagnifyingGlassIcon, PlusIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Image, Modal, Select } from "antd";
+import {  PlusIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Divider, Image, Modal, Select, Steps } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,9 @@ import LabelsList from "../../CreateMusicPage/labelsListComponent/LabelsList";
 import fallbackImage from '../../../assets/fallbackImage.jpg'
 import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
 import toast from "react-hot-toast";
-import FeaturingComponent from "../../CreateMusicPage/FeaturingComponent/FeaturingComponent";
+// import FeaturingComponent from "../../CreateMusicPage/FeaturingComponent/FeaturingComponent";
+import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
+import './EditReleaseCss.css'
 
 
 const EditReleaseSecondStep = () => {
@@ -23,7 +25,12 @@ const EditReleaseSecondStep = () => {
     };
 
     const { releaseFormData, setReleaseFormData, preReleaseData } = useContext(EditReleaseContext);
-    const { artist, setArtist, labels, setLabels, featuring, setFeaturing } = useContext(AuthContext);
+    const { artist, setArtist, labels, setLabels, setFeaturing } = useContext(AuthContext);
+
+    // featuring,
+
+    const [format, setFormat] = useState(preReleaseData.format);
+    // const [formatErr, setFormatErr] = useState();
 
     const [audioData, setAudioData] = useState();
     const [lyricsLanguage, setLyricsLanguage] = useState();
@@ -55,21 +62,21 @@ const EditReleaseSecondStep = () => {
     },[])
 
     // Modal Function For Featuring __________________________________
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    // const showModal = () => {
+    //     setIsModalOpen(true);
+    // };
+    // const handleOk = () => {
+    //     setIsModalOpen(false);
+    // };
+    // const handleCancel = () => {
+    //     setIsModalOpen(false);
+    // };
 
-    const removeFeaturing = (id) => {
-        const deleteFeaturing = featuring.filter(a => a._id !== id);
-        setFeaturing(deleteFeaturing)
-    }
+    // const removeFeaturing = (id) => {
+    //     const deleteFeaturing = featuring.filter(a => a._id !== id);
+    //     setFeaturing(deleteFeaturing)
+    // }
 
     // Modal Function For Artist __________________________________
     const [errorMessageArtist, setErrorMessageArtist] = useState('');
@@ -123,7 +130,6 @@ const EditReleaseSecondStep = () => {
     const [authorsErr, setAuthorsErr] = useState('')
 
     const handleAuthorValue = () => {
-
         setAuthorFirstNameErr('');
         setAuthorLastNameErr('')
         if(!authorFirstNameValue){
@@ -155,6 +161,9 @@ const EditReleaseSecondStep = () => {
     const handleDeleteAuthor = (name) => {
         const removeName = authors.filter(item => item !== name);
         setAuthors(removeName)
+        if(removeName.length === 0){
+            setAuthors('')
+        }
     }
 
     // Handle Composer Input Value________________________________________
@@ -165,7 +174,6 @@ const EditReleaseSecondStep = () => {
     const [composerErr, setComposerErr] = useState();
 
     const handleComposerValue = () => {
-
         setComposerFirstNameErr('');
         setComposerLastNameErr('')
         if(!composerFirstNameValue){
@@ -173,7 +181,7 @@ const EditReleaseSecondStep = () => {
             return;
         }
         if(!composerLastNameValue){
-            setComposerLastNameErr('Last Name Required')
+            setComposerFirstNameErr('Last Name Required')
             return;
         }
         if(composer){
@@ -198,6 +206,9 @@ const EditReleaseSecondStep = () => {
     const handleDeleteComposer = (name) => {
         const removeName = composer.filter(item => item !== name);
         setComposer(removeName)
+        if(removeName.length === 0){
+            setComposer('')
+        }
     }
 
 
@@ -220,35 +231,100 @@ const EditReleaseSecondStep = () => {
         setComposerErr('');
         setAuthorsErr('');
 
-        if(!artist){
-            setErrorMessageArtist('Artist Required')
-            return;
-        }
-        if(!labels){
-            setErrorMessageLabels('Labels Required')
-            return;
-        }
         if(!audioData){
             setErrorMessageAudio('Audio Required')
             return;
         }
+        // Author Error Handle ____________________________________________
+        let authorDetails;
+        if(!authors){
+            if(!authorFirstNameValue){
+                setAuthorsErr('Author First Name and Last Name Required')
+                return;
+            }
+            if(!authorLastNameValue){
+                setAuthorsErr('Author First Name and Last Name Required')
+                return;
+            }
+            if(authorFirstNameValue && authorLastNameValue){
+                const authorName = `${authorFirstNameValue} ${authorLastNameValue}`;
+                const authorArr = [authorName]
+                setAuthors(authorArr)
+                authorDetails = authorArr;
+                document.getElementById('authorFirstName').value = '';
+                document.getElementById('authorLastName').value = '';
+                setAuthorFirstNameValue('')
+                setAuthorLastNameValue('')
+            }
+        }
+        if(authors){
+            if(authorFirstNameValue && authorLastNameValue){
+                    const firstLastName = `${authorFirstNameValue} ${authorLastNameValue}`
+                    const addName = [...authors, firstLastName,];
+                    authorDetails = addName;
+                    setAuthors(addName)
+                    document.getElementById('authorFirstName').value = '';
+                    document.getElementById('authorLastName').value = '';
+                    setAuthorFirstNameValue('')
+                    setAuthorLastNameValue('')
+            }else{
+                authorDetails = [...authors]
+            }
+        }
+        // Composer Error Handle ____________________________________________
+        let composerDetails;
+        if(!composer){
+            if(!composerFirstNameValue){
+                setComposerErr('Composer First Name and Last Name Required')
+                return;
+            }
+            if(!composerLastNameValue){
+                setComposerErr('Composer First Name and Last Name Required')
+                return;
+            }
+            if(composerFirstNameValue && composerLastNameValue){
+                const composerName = `${composerFirstNameValue} ${composerLastNameValue}`;
+                const composerArr = [composerName]
+                setComposer(composerArr)
+                composerDetails = composerArr;
+                document.getElementById('composerFirstName').value = '';
+                document.getElementById('composerLastName').value = '';
+                setComposerFirstNameValue('');
+                setComposerLastNameValue('');
+            }
+        }
+        if(composer){
+            if(composerFirstNameValue && composerLastNameValue){
+                const firstLastName = `${composerFirstNameValue} ${composerLastNameValue}`
+                const addName = [...composer, firstLastName,];
+                composerDetails = addName;
+                setComposer(addName)
+                document.getElementById('composerFirstName').value = '';
+                document.getElementById('composerLastName').value = '';
+                setComposerFirstNameValue('');
+                setComposerLastNameValue('');
+            }else{
+                composerDetails = [...composer]
+            }
+        }
+        // Lyrics Language Error Handle ___________________________________
         if(!lyricsLanguage){
             setLanguageErr('Language Required')
             return;
         }
-        if(!composer){
-            setComposerErr('Composer Name Required')
+        // Artist Error Handle ____________________________________________
+        if(!artist){
+            setErrorMessageArtist('Artist Required')
+            return;
         }
-        if(!authors){
-            setAuthorsErr('Author Name Required')
-        }
-        if(!releaseFormData){
-            navigate('/create-release')
-            toast.error('You have to feel First Step after that you can Go Next Step')
+        // Labels Error Handle ____________________________________________
+        if(!labels){
+            setErrorMessageLabels('Labels Required')
             return;
         }
 
-        const d = {...data, ...releaseFormData, ...audioData, lyricsLanguage, artist, labels, featuring, composer, authors}
+        const d = {...data, ...releaseFormData, ...audioData, lyricsLanguage, artist, labels, composer: composerDetails, authors: authorDetails, format}
+        // featuring,
         setReleaseFormData(d)
         navigate('/releases/edit/third-step')
     };
@@ -301,81 +377,128 @@ const EditReleaseSecondStep = () => {
         .catch(er => console.log(er));
     }
 
+
+    const steps = [
+        {title: 'Basic'},
+        {title: 'Tracks'},
+        {title: 'Date'},
+    ];
+    const inputStyle = {
+        height: '36px',
+        border: '1px solid #E2E8F0'
+    }
+    
+
+
     return (
         <div>
-            <ul style={{width: '100%'}} className="steps">
-                <li data-content="✓" className="step step-info font-bold">Basic</li>
-                <li className="step step-info font-bold">Tracks</li>
-                <li data-content="3" className="step font-bold">Date</li>
-            </ul>
-            <div className="py-3">
-                <h2 className="text-lg font-semibold text-slate-500 px-2">Tracks</h2>
+            <div className="px-3">
+                <Steps current={1} items={steps} /> 
+            </div>
 
-                <div className="p-3 border rounded-lg">
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Upload <span className="text-red-500">*</span></p>
-                    {
-                        audioData && 
-                            <div className="my-3">
-                                <div className="flex justify-between items-center">
-                                    <div>
-                                        <p>{audioData.audioName}</p>
-                                        <audio controls src={audioData.audioUrl}></audio>
-                                    </div>
-                                    <button onClick={() => handleDeleteAudio(audioData.key)}><TrashIcon className="w-6 h-6"/></button>
+            <div className="pt-4">
+                <p className="text-lg font-semibold">Update Track</p>
+                <p className="text-sm text-[#71717A]">Update your account settings. Set your preferred language and timezone.</p>
+            </div>
+            <Divider/>
+
+            <div>
+                <p className="mt-3 mb-1 text-sm font-semibold text-[#09090B]">Format <span className="text-red-500">*</span></p>
+                    <Select
+                        showSearch
+                        defaultValue={format}
+                        size="h-9"
+                        className="mb-2"
+                        style={{
+                            width: '100%',
+                        }}
+                        onChange={e => setFormat(e)}
+                        options={[
+                            {label: 'Single', value: 'Single'},
+                            {label: 'Album', value: 'Album'},
+                        ]}
+                    />
+                    {/* {
+                        formateErr && <span className='text-red-600 pt-2 block'>{formateErr}</span>
+                    } */}
+            </div>
+
+            {/* Audio Upload ____________________ */}
+            <div className="">
+                <p className="mt-3 mb-1 text-sm font-semibold text-[#09090B]">Upload <span className="text-red-500">*</span></p>
+                {
+                    audioData && 
+                        <div className="my-3">
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <p>{audioData.audioName}</p>
+                                    <audio controls src={audioData.audioUrl}></audio>
                                 </div>
+                                <button onClick={() => handleDeleteAudio(audioData.key)}><TrashIcon className="w-6 h-6"/></button>
                             </div>
+                        </div>
+                }
+                <div className="flex items-center ">
+                    {
+                        uploadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                     }
-                    <div className="my-1">
-                        <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2 py-1 rounded-md">Audio Format Only Allow WAV</span>
-                    </div>
-                    <div className="flex items-center ">
-                        {
-                            uploadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
-                        }
-                        <input type="file" accept=".wev" id="fileInput" name='audio' onChange={releaseAudioUpload} />                        
-                    </div>
-                    {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
-                    {errorMessageAudio && <p className="font-bold text-red-500">{errorMessageAudio}</p>}
+                    <input type="file" accept=".wav" id="audioUpload" name='audio' onChange={releaseAudioUpload} />   
                 </div>
+                <p className="text-sm text-[#71717A]">Audio Formate Only Allow WAV</p>                     
+                {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
+                {errorMessageAudio && <p className="font-bold text-red-500">{errorMessageAudio}</p>}
+            </div>
+
+
+
+
+
+
+            <div className="py-2">
                 
-                <form onSubmit={handleSubmit(onSubmit)} className="p-3 border mt-2 rounded-lg">
-                    
-                <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Album Name <span className="text-red-500">*</span></p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("albumName", { required: true})}/>
+                
+                <form onSubmit={handleSubmit(onSubmit)}>
+                <p className="mt-3 mb-1 text-sm font-semibold text-[#09090B]">Album Name <span className="text-red-500">*</span></p>
+                    <input style={inputStyle} type="text" className="input input-sm w-full mt-1" placeholder="Enter the Album name here" {...register("albumName", { required: true})}/>
                     {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>} 
                     {/* Select Featuring ___________________________________ */}
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Featuring</p>
-                    {
-                        featuring && featuring.map(data => 
-                            <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                                <div className="flex items-center">
-                                        <Image
-                                        width={35}
-                                        height={35}
-                                        className="rounded-lg"
-                                        src={data.imgUrl}
-                                        fallback={fallbackImage}
-                                        />
-                                    <div className="ps-2">
-                                    <h2 className="font-bold text-sm">{data.artistName}</h2>
-                                    <p className="text-xs text-slate-400">ID: {data._id}</p>
+                    {/* <div className="p-2 border rounded-md mt-3">
+                        <p className="text-sm font-semibold text-slate-500 ms-2">Featuring</p>
+                        {
+                            featuring && featuring.map(data => 
+                                <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                    <div className="flex items-center">
+                                            <Image
+                                            width={35}
+                                            height={35}
+                                            className="rounded-lg"
+                                            src={data.imgUrl}
+                                            fallback={fallbackImage}
+                                            />
+                                        <div className="ps-2">
+                                        <h2 className="font-bold text-sm">{data.artistName}</h2>
+                                        <p className="text-xs text-slate-400">ID: {data._id}</p>
+                                        </div>
                                     </div>
+                                    <span className="me-2" style={{cursor: 'pointer'}} onClick={() => removeFeaturing(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                                 </div>
-                                <span className="me-2" style={{cursor: 'pointer'}} onClick={() => removeFeaturing(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
-                            </div>
-                        )
-                    }
-                    <span onClick={showModal} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/>Add Featuring</span>
-                        <Modal title="Search/Select Featuring" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
-                            <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
-                            <div>
-                                <FeaturingComponent handleCancel={handleCancel}/>
-                            </div>
-                        </Modal>
+                            )
+                        }
+                        <span onClick={showModal} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/>Add Featuring</span>
+                            <Modal title="Search/Select Featuring"className="relative" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                                <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
+                                <div>
+                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/artist" target={'_blank'}>Add Featuring</a>
+                                    <FeaturingComponent handleCancel={handleCancel} reFetchArtist={reFetchArtist}/>
+                                </div>
+                            </Modal>
+                    </div> */}
+
 
                     {/* Author Input ___________________________________ */}
                     <div className="p-3 border rounded-md mt-3">
-                        <p className="text-sm font-semibold text-slate-500 ms-2">Author <span className="text-red-500">*</span></p>
+                        <p className="mb-2 text-sm font-semibold text-[#09090B]">Author Details</p>
+                        <p className="mb-1 text-sm font-semibold text-[#09090B]">Author <span className="text-red-500">*</span></p>
                         <div className="my-2">
                             {
                                 authors && authors.map((a, index) => <div key={index} className="flex items-center justify-between my-1 mx-1 py-1 px-3 bg-slate-200 rounded-md">
@@ -385,30 +508,27 @@ const EditReleaseSecondStep = () => {
                                 )
                             }
                         </div>
-                        <div className="md:flex">
-                            <div className="md:grow me-2 md:flex itmems-center gap-2">
-                                <div className="md:flex-1">
-                                    <input type="text" placeholder="First Name" id="authorFirstName" onChange={e => setAuthorFirstNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                        <div className="grid grids-col md:grid-cols-2 items-center gap-2">
+                                <div>
+                                    <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="First Name" id="authorFirstName" onChange={e => setAuthorFirstNameValue(e.target.value)}/>
                                     {authorFirstNameErr && <span className='text-red-600 pt-2 block text-sm'>{authorFirstNameErr}</span>}
                                 </div>
-                                <div className="md:flex-1">
-                                    <input type="text" placeholder="Last Name" id="authorLastName" onChange={e => setAuthorLastNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
+                                <div>
+                                    <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Last Name" id="authorLastName" onChange={e => setAuthorLastNameValue(e.target.value)}/>
                                     {authorLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{authorLastNameErr}</span>}
                                 </div>
-                            </div>
-                            {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
-                            <span style={{width: '150px'}} onClick={handleAuthorValue} className="btn btn-sm btn-neutral my-1"><PlusIcon className="w-4 h-4 text-white font-bold"/> Add Author</span>
                         </div>
+                        <span onClick={() => handleAuthorValue()} className="btn btn-sm btn-neutral my-1 bg-[#18181B] w-full mt-3"><PlusIcon className="w-4 h-4 text-white font-bold"/>Add New Author</span>
+                        {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
                     </div>
 
                     {/* Select Language ____________________ */}
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Lyrics language <span className="text-red-500">*</span></p>
+                    <p className="mb-1 text-sm font-semibold text-[#09090B] mt-3">Lyrics language <span className="text-red-500">*</span></p>
                     <Select
                         showSearch
-                        size="large"
-                        className="w-full rounded-full"
-                        value={lyricsLanguage}
+                        className="w-full h-9 text-normal"
                         placeholder="Select Language"
+                        defaultValue={lyricsLanguage}
                         optionFilterProp="children"
                         onChange={onChange}
                         filterOption={filterOption}
@@ -417,71 +537,86 @@ const EditReleaseSecondStep = () => {
                     {languageErr && <span className='text-red-600 pt-2 block'>{languageErr}</span>}
 
                     {/* Artist Select Option ______________________________________________________________ */}
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Artist <span className="text-red-500">*</span></p>
-                    {
-                        artist && artist.map(data => 
-                            <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                                <div className="flex items-center">
-                                        <Image
-                                        width={35}
-                                        height={35}
-                                        className="rounded-lg"
-                                        src={data.imgUrl}
-                                        fallback={fallbackImage}
-                                        />
-                                    <div className="ps-2">
-                                    <h2 className="font-bold text-sm">{data.artistName}</h2>
-                                    <p className="text-xs text-slate-400">ID: {data._id}</p>
+                    <div className="">
+                        <p className="mb-1 text-sm font-semibold text-[#09090B] mt-3">Artist <span className="text-red-500">*</span></p>
+                        {
+                            artist && artist.map(data => 
+                                <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                    <div className="flex items-center">
+                                            <Image
+                                            width={35}
+                                            height={35}
+                                            className="rounded-lg"
+                                            src={data.imgUrl}
+                                            fallback={fallbackImage}
+                                            />
+                                        <div className="ps-2">
+                                        <h2 className="font-bold text-sm">{data.artistName}</h2>
+                                        <p className="text-xs text-slate-400">ID: {data._id}</p>
+                                        </div>
                                     </div>
+                                    <span style={{cursor: 'pointer'}} onClick={() => removeArtist(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                                 </div>
-                                <span style={{cursor: 'pointer'}} onClick={() => removeArtist(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
-                            </div>
-                        )
-                    }
+                            )
+                        }
 
-                    <span onClick={showModal1} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Artist</span>
-                        <Modal title="Search/Select Artist" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
-                            <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Artist</p>
-                            <div>
-                                <ArtistList handleCancel={handleCancel1}/>
-                            </div>
-                        </Modal>
-                    {errorMessageArtist && <span className='text-red-600 pt-2 block'>{errorMessageArtist}</span>}
+                        <div onClick={showModal1} style={{cursor: 'pointer'}} className="h-9 w-full border rounded-md px-3 flex items-center justify-between">
+                            <span className="text-sm text-[#9c9c9c]">Add Artist</span>
+                            <ArrowsUpDownIcon className="h-4 w-4 text-[#9c9c9c]"/>
+                        </div>
+
+                            <Modal title="Search/Select Artist" className='relative' open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
+                                <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Artist</p>
+                                <div>
+                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/artist" target={'_blank'}>Add Artist</a>
+                                    <ArtistList handleCancel={handleCancel1} />
+                                </div>
+                            </Modal>
+                        {errorMessageArtist && <span className='text-red-600 pt-2 block'>{errorMessageArtist}</span>}
+                    </div>
 
                     {/* Label Select Option ______________________________________________________________ */}
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">Label <span className="text-red-500">*</span></p>
-                    {
-                        labels && labels.map(data => 
-                            <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                                <div className="flex items-center">
-                                        <Image
-                                        width={35}
-                                        height={35}
-                                        className="rounded-lg"
-                                        src={data.imgUrl}
-                                        fallback={fallbackImage}
-                                        />
-                                    <div className="ps-2">
-                                    <h2 className="font-bold text-sm">{data.labelName}</h2>
-                                    <p className="text-xs text-slate-400">ID: {data._id}</p>
+                    <div className="">
+                        <p className="mb-1 text-sm font-semibold text-[#09090B] mt-3">Label <span className="text-red-500">*</span></p>
+                        {
+                            labels && labels.map(data => 
+                                <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                    <div className="flex items-center">
+                                            <Image
+                                            width={35}
+                                            height={35}
+                                            className="rounded-lg"
+                                            src={data.imgUrl}
+                                            fallback={fallbackImage}
+                                            />
+                                        <div className="ps-2">
+                                        <h2 className="font-bold text-sm">{data.labelName}</h2>
+                                        <p className="text-xs text-slate-400">ID: {data._id}</p>
+                                        </div>
                                     </div>
+                                    <span style={{cursor: 'pointer'}} onClick={() => removeLabels(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
                                 </div>
-                                <span style={{cursor: 'pointer'}} onClick={() => removeLabels(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
-                            </div>
-                        )
-                    }
-                    <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Labels</span>
-                        <Modal title="Search/Select Label" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
-                            <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Label</p>
-                            <div>
-                                <LabelsList handleCancel={handleCancel2}/>
-                            </div>
-                        </Modal>
-                    {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}
+                            )
+                        }
+                        <div onClick={showModal2} style={{cursor: 'pointer'}} className="h-9 w-full border rounded-md px-3 flex items-center justify-between">
+                            <span className="text-sm text-[#9c9c9c]">Add Labels</span>
+                            <ArrowsUpDownIcon className="h-4 w-4 text-[#9c9c9c]"/>
+                        </div>
+                        {/* <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Labels</span> */}
+                            <Modal title="Search/Select Label" className="relative" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
+                                <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">Select Label</p>
+                                <div>
+                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/labels" target={'_blank'}>Add Labels</a>
+                                    <LabelsList handleCancel={handleCancel2}/>
+                                </div>
+                            </Modal>
+                        {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}
+                    </div>
 
                     {/* Add Composer Input ____________________ */}
                     <div className="p-3 border rounded-md mt-3">
-                        <p className="text-sm font-semibold text-slate-500 ms-2">Composer <span className="text-red-500">*</span></p>
+                        <p className="mb-2 text-sm font-semibold text-[#09090B]">Composer Details</p>
+                        <p className="mb-1 text-sm font-semibold text-[#09090B]">Composer <span className="text-red-500">*</span></p>
                         <div className="my-2">
                             {
                                 composer && composer.map((c, index) => <div key={index} className="flex items-center justify-between my-1 mx-1 py-1 px-3 bg-slate-200 rounded-md">
@@ -491,31 +626,28 @@ const EditReleaseSecondStep = () => {
                                 )
                             }
                         </div>
-                        <div className="md:flex">
-                            <div className="md:grow me-2 md:flex itmems-center gap-2">
-                                <div className="md:flex-1">
-                                    <input type="text" placeholder="First Name" id="composerFirstName" onChange={e => setComposerFirstNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
-                                    {composerFirstNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerFirstNameErr}</span>}
-                                </div>
-                                <div className="md:flex-1">
-                                    <input type="text" placeholder="Last Name" id="composerLastName" onChange={e => setComposerLastNameValue(e.target.value)} className="input input-bordered input-sm w-full my-1"/>
-                                    {composerLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerLastNameErr}</span>}
-                                </div>
+                        <div className="grid grids-col md:grid-cols-2 items-center gap-2">
+                            <div>
+                                <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="First Name" id="composerFirstName" onChange={e => setComposerFirstNameValue(e.target.value)}/>
+                                {composerFirstNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerFirstNameErr}</span>}
                             </div>
-                            {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
-                            <span style={{width: '150px'}} onClick={handleComposerValue} className="btn btn-sm btn-neutral my-1"><PlusIcon className="w-4 h-4 text-white font-bold"/> Add Composer</span>
+                            <div>
+                                <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Last Name" id="composerLastName" onChange={e => setComposerLastNameValue(e.target.value)}/>
+                                {composerLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{composerLastNameErr}</span>}
+                            </div>
                         </div>
+                        <span  onClick={ () => handleComposerValue()} className="btn btn-sm btn-neutral my-1 bg-[#18181B] w-full mt-3"><PlusIcon className="w-4 h-4 text-white font-bold"/> Add New Composer</span>
+                        {composerErr && <span className='text-red-600 pt-2 block text-sm'>{composerErr}</span>}
                     </div>
+                    
 
-                    <p className="mt-3 text-sm font-semibold text-slate-500 ms-2">ISRC</p>
-                    <input type="text" placeholder="" className="input rounded-full input-bordered w-full" {...register("ISRC")}/>
-                    <div className="mt-1">
-                        <span className="text-xs bg-slate-100 text-slate-500 font-bold mx-2 px-2 py-1 rounded-md">(if released before ISRC required otherwise optional)</span>
-                    </div>
+                    <p className="mb-1 text-sm font-semibold text-[#09090B]">ISRC</p>
+                    <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="" {...register("ISRC")}/>
+                    <p className="text-xs text-[#71717A] mt-1">(if released before ISRC required otherwise optional)</p>
 
                     <div className="my-4 flex justify-between items-center">
-                        <button onClick={handleGoBack} className="btn btn-sm px-6 btn-neutral rounded-full">Previus</button>
-                        <input type="submit" value={'Next'} className="btn btn-sm px-6 btn-accent rounded-full" />
+                        <span onClick={handleGoBack} className="btn btn-sm px-6">Previus</span>
+                        <input type="submit" value={'Next'} className="btn btn-sm px-6 h-9 btn-neutral bg-[#18181B]" />
                     </div>
                 </form>
             </div>
