@@ -274,21 +274,6 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                 authorDetails = [...authors]
             }
         }
-        // Lyrics Language Error Handle ___________________________________
-        if(!lyricsLanguage){
-            setLanguageErr('Language Required')
-            return;
-        }
-        // Artist Error Handle ____________________________________________
-        if(!artist){
-            setErrorMessageArtist('Artist Required')
-            return;
-        }
-        // Labels Error Handle ____________________________________________
-        if(!labels){
-            setErrorMessageLabels('Labels Required')
-            return;
-        }
         // Composer Error Handle ____________________________________________
         let composerDetails;
         if(!composer){
@@ -326,6 +311,22 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                 composerDetails = [...composer]
             }
         }
+        // Lyrics Language Error Handle ___________________________________
+        if(!lyricsLanguage){
+            setLanguageErr('Language Required')
+            return;
+        }
+        // Artist Error Handle ____________________________________________
+        if(!artist){
+            setErrorMessageArtist('Artist Required')
+            return;
+        }
+        // Labels Error Handle ____________________________________________
+        if(!labels){
+            setErrorMessageLabels('Labels Required')
+            return;
+        }
+        
         
         if(format === 'Single'){
             const d = [{...data, ...audioData, lyricsLanguage, artist, labels, featuring, composer: composerDetails, format, authors: authorDetails}]
@@ -426,7 +427,7 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                     {errorMessageAudio && <p className="font-bold text-red-500">{errorMessageAudio}</p>}
                 </div>
                 
-                <form onSubmit={() =>handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <p className="mt-3 mb-1 text-sm font-semibold text-[#09090B]">Album Name <span className="text-red-500">*</span></p>
                     <input style={inputStyle} type="text" className="input input-sm w-full mt-1" placeholder="Enter the Album name here" {...register("albumName", { required: true})}/>
                     {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>} 
