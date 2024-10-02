@@ -20,14 +20,21 @@ const EditReleaseSecondStep = () => {
 
     const navigate = useNavigate('');
 
-    const handleGoBack = () => {
-        navigate(-1)
-    };
-
+    
     const { releaseFormData, setReleaseFormData, preReleaseData } = useContext(EditReleaseContext);
     const { artist, setArtist, labels, setLabels, setFeaturing } = useContext(AuthContext);
-
+    
+    const handleGoBack = () => {
+        navigate(`/releases/edit/${preReleaseData._id}`)
+    };
     // featuring,
+
+    useEffect( () => {
+        if(!preReleaseData){
+            navigate(`/releases/All/1/6`)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     const [format, setFormat] = useState(preReleaseData.format);
     // const [formatErr, setFormatErr] = useState();

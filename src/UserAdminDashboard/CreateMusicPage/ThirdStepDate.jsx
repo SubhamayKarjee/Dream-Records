@@ -2,6 +2,7 @@ import { DatePicker, Divider, Steps } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { EditReleaseContext } from "../ReleasesPage/EditReleasePage/EditReleaseMainPage";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import { ReleaseContext } from "./CreateMusicPage";
 
@@ -24,7 +25,16 @@ const ThirdStepDate = () => {
         setArtist, setLabels, setFeaturing 
     } = useContext(AuthContext);
 
+    const { preReleaseData } = useContext(EditReleaseContext);
+
     const navigate = useNavigate();
+
+    useEffect( () => {
+        if(!preReleaseData){
+            navigate(`/releases/All/1/6`)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     useEffect(() => {
         if(!firstStep){
@@ -57,7 +67,7 @@ const ThirdStepDate = () => {
             return
         }
 
-        const status = 'Pending'
+        const status = 'ReSubmitted'
         const masterUserId = userNameIdRoll[1];
         const userName = userNameIdRoll[0];
         const firstAndThird = {...firstStep, releaseDate, status, masterUserId, userName };

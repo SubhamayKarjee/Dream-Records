@@ -270,7 +270,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/releases/edit/thanks',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SuccessPage link={'/releases'} heading={'Successfully Updated the Release'} text={'We will review your release very soon. Please Go to the Release page and check your Release Status'}/></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SuccessPage link={'/releases/ReSubmitted/1/6'} heading={'Successfully Updated the Release'} text={'We will review your release very soon. Please Go to the Release page and check your Release Status'}/></Suspense>,
           },
         ]
       },
