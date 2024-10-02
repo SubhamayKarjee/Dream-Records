@@ -488,7 +488,7 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                                     {authorLastNameErr && <span className='text-red-600 pt-2 block text-sm'>{authorLastNameErr}</span>}
                                 </div>
                         </div>
-                        <button onClick={() => handleAuthorValue()} className="btn btn-sm btn-neutral my-1 bg-[#18181B] w-full mt-3"><PlusIcon className="w-4 h-4 text-white font-bold"/>Add New Author</button>
+                        <span onClick={() => handleAuthorValue()} className="btn btn-sm btn-neutral my-1 bg-[#18181B] w-full mt-3"><PlusIcon className="w-4 h-4 text-white font-bold"/>Add New Author</span>
                         {authorsErr && <span className='text-red-600 pt-2 block text-sm'>{authorsErr}</span>}
                     </div>
 
