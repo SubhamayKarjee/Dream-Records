@@ -28,6 +28,7 @@ const SecondStepTrack = () => {
         if(!firstStep){
             navigate('/create-release')
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const next = () => {

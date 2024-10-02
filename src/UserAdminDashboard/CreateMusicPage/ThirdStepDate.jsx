@@ -33,6 +33,7 @@ const ThirdStepDate = () => {
         if(firstStep && !secondStep){
             navigate('/create-release/tracks')
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const [releaseDate, setReleaseDate] = useState(null);
