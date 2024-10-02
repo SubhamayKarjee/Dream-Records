@@ -1,4 +1,4 @@
-import { DatePicker, Spin } from "antd";
+import { DatePicker, Divider, Spin, Steps } from "antd";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -51,30 +51,39 @@ const EditReleaseThirdStep = () => {
             .catch(er => console.log(er))        
     }
 
+    const steps = [
+        {title: 'Basic'},
+        {title: 'Tracks'},
+        {title: 'Date'},
+    ];
+
     return (
         <div>
-            <ul style={{width: '100%'}} className="steps">
-                <li data-content="✓" className="step step-info font-bold">Basic</li>
-                <li  data-content="✓" className="step step-info font-bold">Tracks</li>
-                <li  data-content="✓" className="step step-info font-bold">date</li>
-            </ul>
+            <div className="px-3">
+                <Steps current={2} items={steps} /> 
+            </div>
+
+            <div className="pt-4">
+                <p className="text-lg font-semibold">Pick a Release Date</p>
+                <p className="text-sm text-[#71717A]">Choose your preferred Track Release Date</p>
+            </div>
+            <Divider/>
 
             <div className="p-3 my-6">
-                <p className="mt-3 text-sm font-semibold text-slate-500">Release Date <span className="text-red-500">*</span></p>
-                <DatePicker onChange={onChange} disabledDate={disabledDate}/>
+                <DatePicker style={{minWidth: '208px'}} onChange={onChange} disabledDate={disabledDate}/>
                 {
                     error && <p className="text-red-500">{error}</p>
                 }
                 {
                     releaseFormDataError && <p className="text-red-500">{releaseFormDataError}</p>
                 }
-                <div className="flex items-center my-3 justify-between">
-                    <button onClick={() => navigate('/releases/edit/second-step')} className="btn btn-sm px-6 btn-neutral rounded-full me-2">Previus</button> 
+                <div className="flex items-center gap-4 my-5">
+                    <button onClick={() => navigate('/releases/edit/second-step')} className="btn btn-sm px-6 h-9">Previus</button> 
                     <div>
                         {
                             loading && <Spin size="small" className="me-2"/>
                         }
-                        <button className="btn btn-sm btn-info rounded-full px-4" onClick={handleSubmit}>Submit</button>                       
+                        <button className="btn btn-sm px-6 h-9 btn-neutral bg-[#18181B]" onClick={handleSubmit}>Submit</button>                       
                     </div>
                 </div>
             </div>
