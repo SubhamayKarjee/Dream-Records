@@ -20,8 +20,6 @@ import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 const UploadTracks = ({setIsTrackUploadModal}) => {
 
     const { 
-        // releaseFormData, 
-        // setReleaseFormData,
         secondStep,
         setSecondStep,
         audioData, setAudioData,
@@ -259,12 +257,10 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
             }
         }
         if(authors){
-            console.log('author');
             if(authorFirstNameValue && authorLastNameValue){
                     const firstLastName = `${authorFirstNameValue} ${authorLastNameValue}`
                     const addName = [...authors, firstLastName,];
                     authorDetails = addName;
-                    console.log('authordetails,', authorDetails);
                     setAuthors(addName)
                     document.getElementById('authorFirstName').value = '';
                     document.getElementById('authorLastName').value = '';
@@ -297,7 +293,6 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
             }
         }
         if(composer){
-            console.log('author');
             if(composerFirstNameValue && composerLastNameValue){
                 const firstLastName = `${composerFirstNameValue} ${composerLastNameValue}`
                 const addName = [...composer, firstLastName,];
@@ -336,7 +331,6 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
         if(format === 'Album'){
             const d = {...data, ...audioData, lyricsLanguage, artist, labels, featuring, composer: composerDetails, format, authors: authorDetails}
             secondStep.push(d)
-            console.log(d);
             setArtist()
             setLabels([])
             setAuthors([])

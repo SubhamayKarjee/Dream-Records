@@ -1,6 +1,6 @@
 import { ArrowTopRightOnSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Divider, Modal, Select, Steps } from "antd";
-import { useContext,  useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { ReleaseContext } from "./CreateMusicPage";
@@ -16,13 +16,19 @@ const SecondStepTrack = () => {
         secondStep, setSecondStep
     } = useContext(ReleaseContext);
     
-    const [formateErr, setFormateErr] = useState('')
+    const [formateErr, setFormateErr] = useState('');
 
     const steps = [
         {title: 'Basic'},
         {title: 'Tracks'},
         {title: 'Date'},
     ];
+
+    useEffect(() => {
+        if(!firstStep){
+            navigate('/create-release')
+        }
+    },[])
 
     const next = () => {
         setFormateErr();
@@ -73,7 +79,7 @@ const SecondStepTrack = () => {
                 <p className="mt-3 mb-1 text-sm font-semibold text-[#09090B]">Format <span className="text-red-500">*</span></p>
                     <Select
                         showSearch
-                        defaultValue="Single"
+                        defaultValue={format}
                         size="h-9"
                         className="mb-2"
                         style={{
@@ -90,14 +96,15 @@ const SecondStepTrack = () => {
                     }
 
                     {
-                        format !== 'Album' &&
+                        format === 'Single' &&
                         <UploadTracks/>
                     }
+                    
 
                     {
                         format === 'Album' && secondStep && 
                         secondStep.map((data, index) => <>
-                            <div className="p-2 rounded-md my-1 flex items-center justify-between bg-[#F4F4F5CC]">
+                            <div key={index} className="p-2 rounded-md my-1 flex items-center justify-between bg-[#F4F4F5CC]">
                                 <div className="flex items-center gap-2 md:gap-4">
                                     <p className="text-sm font-semibold"> Track {index + 1}</p>
                                     <p className="text-sm font-semibold">{data.albumName}</p>
@@ -199,9 +206,9 @@ const SecondStepTrack = () => {
                     {
                         format === 'Album' &&
                         <>
-                            <button className="btn btn-sm w-full my-4 btn-neutral bg-[#18181B]" onClick={showModal}>
+                            <span className="btn btn-sm w-full my-4 btn-neutral bg-[#18181B]" onClick={showModal}>
                                 Add Tracks
-                            </button>
+                            </span>
                             <Modal title="Tracks" width={600} open={isTrackUploadModal} onOk={handleOk} onCancel={handleCancel} footer={[]}>
                                 <UploadTracks setIsTrackUploadModal={setIsTrackUploadModal}/>
                             </Modal>

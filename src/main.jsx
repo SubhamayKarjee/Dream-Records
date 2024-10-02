@@ -246,7 +246,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/create-release/thenks',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SuccessPage link={'/releases'} heading={'Successfully Created the Release'} text={'We will review your release very soon. Please Go to the Release page and check your Release Status'}/></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><SuccessPage link={'/releases/Pending/1/6'} heading={'Successfully Created the Release'} text={'We will review your release very soon. Please Go to the Release page and check your Release Status'}/></Suspense>,
           }
           
         ]

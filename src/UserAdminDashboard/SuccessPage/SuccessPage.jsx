@@ -16,7 +16,7 @@ const SuccessPage = ({link, heading, text}) => {
                 title={heading}
                 subTitle={text}
                 extra={[
-                    <button className="btn btn-sm btn-info rounded-full" onClick={() => handleNavigate(link)} type="primary" key="console">
+                    <button className="btn btn-sm my-4 px-6 h-9 btn-neutral bg-[#18181B]" onClick={() => handleNavigate(link)} type="primary" key="console">
                         Check Your Release Status
                     </button>
                 ]}

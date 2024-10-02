@@ -10,7 +10,6 @@ import uploadIcon from '../../assets/common-icons/uploadIcon.png'
 const FirstStep = () => {
 
     const { 
-        // setReleaseFormData, 
         firstStep, setFirstStep, 
         genre, setGenre,
         uploadedImageLink, setUploadedImageLink, 
@@ -35,7 +34,6 @@ const FirstStep = () => {
     const releaseImageUpload = (event) => {
         setErrorMessage('')
         setUploadLoading(true)
-        console.log(event.target);
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
@@ -93,8 +91,8 @@ const FirstStep = () => {
             return;
         }
         if(uploadedImage){
-            const formData = {...data, ...uploadedImage, genre,};
-            setFirstStep(formData);
+            const margeData = {...data, ...uploadedImage, genre,};
+            setFirstStep(margeData);
             navigate('/create-release/tracks')
         }else{
             setErrorMessage('Please Upload Art Image. Art Image Required');
