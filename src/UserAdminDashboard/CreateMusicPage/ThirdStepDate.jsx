@@ -65,8 +65,8 @@ const ThirdStepDate = () => {
                     setSecondStep();
                     setAudioData();
                     setLyricsLanguage();
-                    setComposer();
-                    setAuthors();
+                    setComposer(null);
+                    setAuthors(null);
                     setUploadedImageLink();
                     setUploadedImage();
                 }

@@ -13,13 +13,13 @@ const CreateMusicPage = () => {
     const [releaseFormData, setReleaseFormData] = useState()
 
     const [firstStep, setFirstStep] = useState();
-    const [secondStep, setSecondStep] = useState();
+    const [secondStep, setSecondStep] = useState([]);
     const [artist, setArtist] = useState();
     const [labels, setLabels] = useState();
     const [audioData, setAudioData] = useState();
     const [lyricsLanguage, setLyricsLanguage] = useState();
-    const [composer, setComposer] = useState(null);
-    const [authors, setAuthors] = useState(null);
+    const [composer, setComposer] = useState();
+    const [authors, setAuthors] = useState();
     const [featuring, setFeaturing] = useState();
     const [genre, setGenre] = useState();
     const [uploadedImageLink, setUploadedImageLink] = useState('');
@@ -43,8 +43,6 @@ const CreateMusicPage = () => {
         uploadedImage, setUploadedImage,
         format, setFormat
     }
-
-
    
     const sideBarShadow = {
         boxShadow: '-2px 2px 18px 0px #EFEFEF',
