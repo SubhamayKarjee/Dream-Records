@@ -38,7 +38,7 @@ const EditReleaseThirdStep = () => {
             return;
         }
         const actionRequired = '';
-        const status = 'Pending'
+        const status = 'ReSubmitted'
         const data = {...releaseFormData, releaseDate, status, actionRequired }
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/update-release/${releaseId}`, data)
             .then(res => {

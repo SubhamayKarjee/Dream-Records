@@ -113,6 +113,7 @@ const DetailsSingleArtist = () => {
         { key: '4',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Approved/1/8`}>Approved</a>),},
         { key: '5',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Action Required/8`}>Action Required</a>),},
         { key: '6',label: (<a rel="noopener noreferrer" href={`/artist/${id}/Takedown/1/8`}>Takedown</a>),},
+        { key: '6',label: (<a rel="noopener noreferrer" href={`/artist/${id}/ReSubmitted/1/8`}>ReSubmitted</a>),},
     ];
     const inputStyle ={
         height: '36px',
@@ -229,6 +230,7 @@ const DetailsSingleArtist = () => {
                                     <NavLink style={() => activeLink(`/artist/${id}/Approved`, currentPath)} to={`/artist/${id}/Approved/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Approved</NavLink>
                                     <NavLink style={() => activeLink(`/artist/${id}/Action`, currentPath)} to={`/artist/${id}/Action Required/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Action Required</NavLink>
                                     <NavLink style={() => activeLink(`/artist/${id}/TakeDown`, currentPath)} to={`/artist/${id}/TakeDown/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Takedown</NavLink>
+                                    <NavLink style={() => activeLink(`/artist/${id}/ReSubmitted`, currentPath)} to={`/artist/${id}/ReSubmitted/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">ReSubmitted</NavLink>
                                 </div>
                             </div>
                             {/* Mobile Div _____________________________________ */}

@@ -204,6 +204,7 @@ const SingleArtistForAdmin = () => {
                         <button onClick={() => handleStatus('Approved')} className="btn btn-sm btn-neutral m-1">Approved</button>
                         <button onClick={() => handleStatus('Action Required')} className="btn btn-sm btn-neutral m-1">Action Required</button>
                         <button onClick={() => handleStatus('Takedown')} className="btn btn-sm btn-neutral m-1">Takedown</button>
+                        <button onClick={() => handleStatus('ReSubmitted')} className="btn btn-sm btn-neutral m-1">ReSubmitted</button>
                     </div>
                     {
                         fetchLoading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>

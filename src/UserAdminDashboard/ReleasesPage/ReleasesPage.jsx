@@ -100,6 +100,7 @@ const ReleasesPage = () => {
         { key: '4',label: (<a rel="noopener noreferrer" href={'/releases/Approved/1/6'}>Approved</a>),},
         { key: '5',label: (<a rel="noopener noreferrer" href={'/releases/Action Required/1/6'}>Action Required</a>),},
         { key: '6',label: (<a rel="noopener noreferrer" href={'/releases/Takedown/1/6'}>Takedown</a>),},
+        { key: '6',label: (<a rel="noopener noreferrer" href={'/releases/ReSubmitted/1/6'}>ReSubmitted</a>),},
     ];
 
 
@@ -124,7 +125,7 @@ const ReleasesPage = () => {
                 <main className="mt-3">
                     <div className="flex justify-between">
                         {/* Desktop Div _____________________________________ */}
-                        <div className="hidden md:block">
+                        <div className="hidden lg:block">
                             <div className="h-10 px-[5px] py-1 flex items-center p-1 border rounded-md">
                                 <NavLink style={() => activeLink('/releases/All', currentPath)} to={'/releases/All/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">All</NavLink>
                                 <NavLink style={() => activeLink('/releases/Pending', currentPath)} to={'/releases/Pending/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Pending</NavLink>
@@ -132,10 +133,11 @@ const ReleasesPage = () => {
                                 <NavLink style={() => activeLink('/releases/Approved', currentPath)} to={'/releases/Approved/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Approved</NavLink>
                                 <NavLink style={() => activeLink('/releases/Action', currentPath)} to={'/releases/Action Required/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Action Required</NavLink>
                                 <NavLink style={() => activeLink('/releases/TakeDown', currentPath)} to={'/releases/TakeDown/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Takedown</NavLink>
+                                <NavLink style={() => activeLink('/releases/ReSubmitted', currentPath)} to={'/releases/ReSubmitted/1/6'} className="px-[12px] py-[6px] rounded text-sm font-semibold">ReSubmitted</NavLink>
                             </div>
                         </div>
                         {/* Mobile Div _____________________________________ */}
-                        <div className="block md:hidden">
+                        <div className="block lg:hidden">
                             <Dropdown
                                 menu={{items,}}
                                 placement="bottomLeft"
@@ -148,9 +150,9 @@ const ReleasesPage = () => {
                         <div className="flex justify-between items-center gap-2">
                             <div className="flex items-center">
                                 <DocumentCheckIcon className="w-4 h-4 me-1 text-slate-500"/>
-                                <span className="text-sm">Release Count</span>
+                                <span className="text-sm">Releases</span>
                             </div>
-                            <div><span className="text-sm font-bold">{releaseData?.length} Out of {totalItems}</span> </div>
+                            <div><span className="text-sm font-bold">{releaseData?.length}</span> </div>
                         </div>
                         
                     </div>

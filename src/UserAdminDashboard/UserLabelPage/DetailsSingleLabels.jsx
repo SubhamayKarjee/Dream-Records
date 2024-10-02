@@ -101,6 +101,7 @@ const DetailsSingleLabels = () => {
         { key: '4',label: (<a rel="noopener noreferrer" href={`/labels/${id}/Approved/1/8`}>Approved</a>),},
         { key: '5',label: (<a rel="noopener noreferrer" href={`/labels/${id}/Action Required/8`}>Action Required</a>),},
         { key: '6',label: (<a rel="noopener noreferrer" href={`/labels/${id}/Takedown/1/8`}>Takedown</a>),},
+        { key: '6',label: (<a rel="noopener noreferrer" href={`/labels/${id}/ReSubmitted/1/8`}>ReSubmitted</a>),},
     ];
     const inputStyle ={
         height: '36px',
@@ -240,6 +241,7 @@ const DetailsSingleLabels = () => {
                                     <NavLink style={() => activeLink(`/labels/${id}/Approved`, currentPath)} to={`/labels/${id}/Approved/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Approved</NavLink>
                                     <NavLink style={() => activeLink(`/labels/${id}/Action`, currentPath)} to={`/labels/${id}/Action Required/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Action Required</NavLink>
                                     <NavLink style={() => activeLink(`/labels/${id}/TakeDown`, currentPath)} to={`/labels/${id}/TakeDown/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">Takedown</NavLink>
+                                    <NavLink style={() => activeLink(`/labels/${id}/ReSubmitted`, currentPath)} to={`/labels/${id}/ReSubmitted/1/8`} className="px-[12px] py-[6px] rounded text-sm font-semibold">ReSubmitted</NavLink>
                                 </div>
                             </div>
                             {/* Mobile Div _____________________________________ */}

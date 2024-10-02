@@ -67,7 +67,7 @@ const ThirdStepDate = () => {
             return
         }
 
-        const status = 'ReSubmitted'
+        const status = 'Pending'
         const masterUserId = userNameIdRoll[1];
         const userName = userNameIdRoll[0];
         const firstAndThird = {...firstStep, releaseDate, status, masterUserId, userName };
