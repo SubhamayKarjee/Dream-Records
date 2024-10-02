@@ -128,6 +128,10 @@ const AdminSingleReleasePage = () => {
                                         <span className="bg-yellow-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {releaseData?.status}</span>
                                     }
                                     {
+                                        releaseData?.status === 'ReSubmitted' &&
+                                        <span className="bg-yellow-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><ClockIcon className="w-4 h-4 me-1"/> {releaseData?.status}</span>
+                                    }
+                                    {
                                         releaseData?.status === 'Approved' &&
                                         <span className="bg-green-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><CheckBadgeIcon className="w-4 h-4 me-1"/> {releaseData?.status}</span>
                                     }

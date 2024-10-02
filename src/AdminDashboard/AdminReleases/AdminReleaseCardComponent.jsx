@@ -36,6 +36,13 @@ const AdminReleaseCardComponent = ({releaseData, totalItems, fetchLoading, curre
                                     </div>
                                 }
                                 {
+                                    d.status === 'ReSubmitted' &&
+                                    <div className="flex items-center p-1 music_status bg-[#ffae00] rounded-md shadow">
+                                        <ClockIcon className="h-3 w-3 text-white me-1"/>
+                                        <p className="text-xs font-semibold text-white">{d.status}</p>
+                                    </div>
+                                }
+                                {
                                     d.status === 'Approved' &&
                                     <div className="flex items-center p-1 music_status bg-[#00c90d] rounded-md shadow">
                                         <CheckBadgeIcon className="h-3 w-3 text-white me-1"/>

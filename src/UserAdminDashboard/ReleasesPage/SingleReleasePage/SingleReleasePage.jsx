@@ -111,6 +111,13 @@ const SingleReleasePage = () => {
                                                 </div>
                                         }
                                         {
+                                            data?.status === 'ReSubmitted' &&
+                                                <div className="flex items-center">
+                                                    <ClockIcon className="h-3 w-3 text-[#FEB951] me-1"/>
+                                                    <p className="text-xs font-semibold text-[#FEB951]">{data.status}</p>
+                                                </div>
+                                        }
+                                        {
                                             data?.status === 'Approved' &&
                                                 <div className="flex items-center">
                                                     <CheckBadgeIcon className="h-3 w-3 text-[#39C616] me-1"/>

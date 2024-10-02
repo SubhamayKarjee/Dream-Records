@@ -34,6 +34,13 @@ const ReleaseCardComponent = ({releaseData, totalItems, fetchLoading, currentPag
                                                 </div>
                                         }
                                         {
+                                            d.status === 'ReSubmitted' &&
+                                                <div className="flex items-center">
+                                                    <ClockIcon className="h-3 w-3 text-[#FEB951] me-1"/>
+                                                    <p className="text-xs font-semibold text-[#FEB951]">{d.status}</p>
+                                                </div>
+                                        }
+                                        {
                                             d.status === 'Approved' &&
                                                 <div className="flex items-center">
                                                     <CheckBadgeIcon className="h-3 w-3 text-[#39C616] me-1"/>
