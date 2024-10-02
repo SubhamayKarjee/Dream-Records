@@ -1,10 +1,11 @@
-import { BellAlertIcon, BellIcon } from "@heroicons/react/24/solid";
-import { Drawer, Result } from "antd";
+import { Result } from "antd";
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
-import ActionRequiredRelease from "../ActionRequiredRelease";
+import AdvertisementNotices from "../../UserCommonComponent/AdvertisementNotices";
+import MainNotices from "../../UserCommonComponent/MainNotices";
+import MainNoticesMobile from "../../UserCommonComponent/MainNoticesMobile";
 
 export const EditReleaseContext = createContext();
 
@@ -47,22 +48,20 @@ const EditReleaseMainPage = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const [open, setOpen] = useState(false);
-    const showDrawer = () => {
-        setOpen(true);
-    };
-    const onClose = () => {
-        setOpen(false);
-    };
+ 
 
     if(loading){
         return <LoadingComponentsInsidePage/>
+    }
+
+    const sideBarShadow = {
+        boxShadow: '-2px 2px 18px 0px #EFEFEF',
     }
     
 
     return (
         <div className="md:flex md:h-full">
-            <div className='h-full md:basis-3/4 overflow-y-auto md:border-r p-2'>
+            <div className='h-full md:basis-3/4 overflow-y-auto px-3 md:pt-16 custom-scrollbar'>
                 {/* <div>
                     <button><Link className="px-2 py-1 font-semibold text-sm text-slate-500 flex items-center inline bg-slate-200 rounded-md" to={'/'}><ChevronLeftIcon className="w-4 h-4 me-1 font-bold"/>Back</Link></button>
                 </div> */}
@@ -82,19 +81,15 @@ const EditReleaseMainPage = () => {
                 </EditReleaseContext.Provider>
             </div>
 
-            {/* Blog Post Div  _______________________________*/}
-            <div className="md:basis-1/4 hidden md:block">
-                <div className='p-2 border-b'>
-                    <h4 className='flex items-center font-bold text-lg text-slate-500'> <BellIcon className='w-6 h-6 me-2 text-slate-500'/> Notification</h4>
-                    <ActionRequiredRelease onClose={onClose}/>
-                </div>
-            </div>
+            {/* Notification Div Mobile _______________________________*/}
+            <MainNoticesMobile/>
 
-            {/* Sideber Div Mobile _______________________________*/}
-            <BellAlertIcon onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer'/>
-            <Drawer className='bg-white' title="Notification" onClose={onClose} open={open}>
-                <ActionRequiredRelease onClose={onClose}/>
-            </Drawer>
+            {/* Notification Div Desktop _______________________________*/}
+            <div style={sideBarShadow} className="md:basis-1/4 hidden md:block bg-white md:pt-16 px-3">
+                <h3 className='font-semibold text-xl pb-2'>Notices</h3>
+                <MainNotices/>
+                <AdvertisementNotices/>
+            </div>
         </div>
     );
 };
