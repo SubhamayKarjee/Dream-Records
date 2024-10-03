@@ -10,7 +10,7 @@ import LabelsList from "../labelsListComponent/LabelsList";
 import fallbackImage from '../../../assets/fallbackImage.jpg'
 import { ReleaseContext } from "../CreateMusicPage";
 import axios from "axios";
-// import FeaturingComponent from "./FeaturingComponent/FeaturingComponent";
+import FeaturingComponent from "../FeaturingComponent/FeaturingComponent";
 import toast from "react-hot-toast";
 import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 
@@ -30,7 +30,7 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
         format
     } = useContext(ReleaseContext);
 
-    const { artist, setArtist, labels, setLabels, featuring, } = useContext(AuthContext);
+    const { artist, setArtist, labels, setLabels, featuring, setFeaturing } = useContext(AuthContext);
 
 
     const navigate = useNavigate('');
@@ -48,27 +48,27 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
     const [reFetchLabels, setRefetchLabels] = useState(1)
 
     // Modal Function For Featuring __________________________________
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-    // const showModal = () => {
-    //     const re = reFetchArtist + 1;
-    //     setRefetchArtist(re)
-    //     setIsModalOpen(true);
-    // };
-    // const handleOk = () => {
-    //     const re = reFetchArtist + 1;
-    //     setRefetchArtist(re)
-    //     setIsModalOpen(false);
-    // };
-    // const handleCancel = () => {
-    //     const re = reFetchArtist + 1;
-    //     setRefetchArtist(re)
-    //     setIsModalOpen(false);
-    // };
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = () => {
+        const re = reFetchArtist + 1;
+        setRefetchArtist(re)
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        const re = reFetchArtist + 1;
+        setRefetchArtist(re)
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        const re = reFetchArtist + 1;
+        setRefetchArtist(re)
+        setIsModalOpen(false);
+    };
 
-    // const removeFeaturing = (id) => {
-    //     const deleteFeaturing = featuring.filter(a => a._id !== id);
-    //     setFeaturing(deleteFeaturing)
-    // }
+    const removeFeaturing = (id) => {
+        const deleteFeaturing = featuring.filter(a => a._id !== id);
+        setFeaturing(deleteFeaturing)
+    }
 
     // Modal Function For Artist __________________________________
     const [errorMessageArtist, setErrorMessageArtist] = useState('');
@@ -322,7 +322,6 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
             return;
         }
         
-        
         if(format === 'Single'){
             const d = [{...data, ...audioData, lyricsLanguage, artist, labels, featuring, composer: composerDetails, format, authors: authorDetails}]
             setSecondStep(d)
@@ -425,40 +424,7 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                     <p className="mt-3 mb-1 text-sm font-semibold text-[#09090B]">Album Name <span className="text-red-500">*</span></p>
                     <input style={inputStyle} type="text" className="input input-sm w-full mt-1" placeholder="Enter the Album name here" {...register("albumName", { required: true})}/>
                     {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>} 
-                    {/* Select Featuring ___________________________________ */}
-                    {/* <div className="p-2 border rounded-md mt-3">
-                        <p className="text-sm font-semibold text-slate-500 ms-2">Featuring</p>
-                        {
-                            featuring && featuring.map(data => 
-                                <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
-                                    <div className="flex items-center">
-                                            <Image
-                                            width={35}
-                                            height={35}
-                                            className="rounded-lg"
-                                            src={data.imgUrl}
-                                            fallback={fallbackImage}
-                                            />
-                                        <div className="ps-2">
-                                        <h2 className="font-bold text-sm">{data.artistName}</h2>
-                                        <p className="text-xs text-slate-400">ID: {data._id}</p>
-                                        </div>
-                                    </div>
-                                    <span className="me-2" style={{cursor: 'pointer'}} onClick={() => removeFeaturing(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
-                                </div>
-                            )
-                        }
-                        <span onClick={showModal} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-4 h-4 text-slate-400"/>Add Featuring</span>
-                            <Modal title="Search/Select Featuring"className="relative" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
-                                <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
-                                <div>
-                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/artist" target={'_blank'}>Add Featuring</a>
-                                    <FeaturingComponent handleCancel={handleCancel} reFetchArtist={reFetchArtist}/>
-                                </div>
-                            </Modal>
-                    </div> */}
-
-
+                    
                     {/* Author Input ___________________________________ */}
                     <div className="p-3 border rounded-md mt-3">
                         <p className="mb-2 text-sm font-semibold text-[#09090B]">Author Details</p>
@@ -566,7 +532,6 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                             <span className="text-sm text-[#9c9c9c]">Add Labels</span>
                             <ArrowsUpDownIcon className="h-4 w-4 text-[#9c9c9c]"/>
                         </div>
-                        {/* <span onClick={showModal2} style={{cursor: 'pointer', width: '180px'}} className="btn btn-sm btn-neutral rounded-full mt-3"><MagnifyingGlassIcon className="w-5 h-5 text-slate-400"/>Add Labels</span> */}
                             <Modal title="Search/Select Label" className="relative" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
                                 <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">Select Label</p>
                                 <div>
@@ -575,6 +540,42 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                                 </div>
                             </Modal>
                         {errorMessageLabels && <span className='text-red-600 pt-2 block'>{errorMessageLabels}</span>}
+                    </div>
+
+                    {/* Select Featuring ___________________________________ */}
+                    <div className="">
+                        <p className="mb-1 text-sm font-semibold text-[#09090B] mt-3">Featuring</p>
+                        {
+                            featuring && featuring.map(data => 
+                                <div key={data._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-lg bg-slate-100">
+                                    <div className="flex items-center">
+                                            <Image
+                                            width={35}
+                                            height={35}
+                                            className="rounded-lg"
+                                            src={data.imgUrl}
+                                            fallback={fallbackImage}
+                                            />
+                                        <div className="ps-2">
+                                        <h2 className="font-bold text-sm">{data.artistName}</h2>
+                                        <p className="text-xs text-slate-400">ID: {data._id}</p>
+                                        </div>
+                                    </div>
+                                    <span className="me-2" style={{cursor: 'pointer'}} onClick={() => removeFeaturing(data._id)}><XMarkIcon className="w-5 h-5 text-red-500"/></span>
+                                </div>
+                            )
+                        }
+                        <div onClick={showModal} style={{cursor: 'pointer'}} className="h-9 w-full border rounded-md px-3 flex items-center justify-between">
+                            <span className="text-sm text-[#9c9c9c]">Add Featuring</span>
+                            <ArrowsUpDownIcon className="h-4 w-4 text-[#9c9c9c]"/>
+                        </div>
+                            <Modal title="Search/Select Featuring"className="relative" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                                <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Featuring</p>
+                                <div>
+                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/artist" target={'_blank'}>Add Featuring</a>
+                                    <FeaturingComponent handleCancel={handleCancel} reFetchArtist={reFetchArtist}/>
+                                </div>
+                            </Modal>
                     </div>
 
                     {/* Add Composer Input ____________________ */}
