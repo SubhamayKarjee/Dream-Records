@@ -182,8 +182,8 @@ const SingleReleasePage = () => {
 
                         <Divider/>
                         {/* Single Release page Second Section Artist and Labels____________________________ */}
-                        <div className="flex gap-2 flex-col md:flex-row mt-3">
-                            <div className="md:flex-1">
+                        <div className="grid grid-cols md:grid-cols-3 gap-2 mt-3">
+                            <div>
                                 <p className="text-sm font-semibold text-[#768298]">Artist Details</p>
                                 {
                                     data?.artist && data?.artist?.map(a => 
@@ -206,7 +206,30 @@ const SingleReleasePage = () => {
                                     )
                                 }
                             </div>
-                            <div className="md:flex-1">
+                            <div>
+                                <p className="text-sm font-semibold text-[#768298]">Featuring Details</p>
+                                {
+                                    data?.featuring && data?.featuring?.map(a => 
+                                        <div key={a._id} className="flex my-1 items-center">
+                                            <div>
+                                                <Image
+                                                    width={48}
+                                                    height={48}
+                                                    className="rounded-full"
+                                                    src={a?.imgUrl}
+                                                    preview={true}
+                                                    fallback={fallbackImage}
+                                                    alt={a.artistName}
+                                                />
+                                            </div>
+                                            <div className="ms-2">
+                                                <h2 className="text-md">{a?.artistName}</h2>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                            <div>
                                 <p className="text-sm font-semibold text-[#768298]">Labels Details</p>
                                     {
                                         data?.labels && data?.labels?.map((l) => 
