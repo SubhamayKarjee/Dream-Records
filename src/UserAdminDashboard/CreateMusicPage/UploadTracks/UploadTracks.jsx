@@ -312,12 +312,12 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
             return;
         }
         // Artist Error Handle ____________________________________________
-        if(!artist){
+        if(artist.length === 0){
             setErrorMessageArtist('Artist Required')
             return;
         }
         // Labels Error Handle ____________________________________________
-        if(!labels){
+        if(labels.length === 0){
             setErrorMessageLabels('Labels Required')
             return;
         }

@@ -79,9 +79,9 @@ const UserAdminHomePage = () => {
 
 
     // State for Labels and Artist for Create Release ___________________________
-    const [artist, setArtist] = useState();
-    const [labels, setLabels] = useState();
-    const [featuring, setFeaturing] = useState();
+    const [artist, setArtist] = useState([]);
+    const [labels, setLabels] = useState([]);
+    const [featuring, setFeaturing] = useState([]);
 
     // Refetch API Data Handle ___________________________________________________
     const [refatchArtistData, setRefatchArtistData] = useState(1)
