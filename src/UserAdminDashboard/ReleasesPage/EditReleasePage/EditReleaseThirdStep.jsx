@@ -1,5 +1,5 @@
 import { DatePicker, Divider, Spin, Steps } from "antd";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { EditReleaseContext } from "./EditReleaseMainPage";
@@ -8,12 +8,19 @@ import { EditReleaseContext } from "./EditReleaseMainPage";
 const EditReleaseThirdStep = () => {
 
     const [releaseFormDataError, setReleaseFormDataError] = useState('')
-    const { releaseFormData, releaseId, setReleaseFormData } = useContext(EditReleaseContext);
+    const { releaseFormData, releaseId, setReleaseFormData, preReleaseData } = useContext(EditReleaseContext);
 
     const navigate = useNavigate()
 
     const [releaseDate, setReleaseDate] = useState(null);
-    const [error, setError] = useState('')
+    const [error, setError] = useState('');
+
+    useEffect( () => {
+        if(!preReleaseData){
+            navigate(`/releases/All/1/6`)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     const disabledDate = (current) => {
         const today = new Date();

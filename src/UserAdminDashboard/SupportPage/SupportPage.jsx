@@ -175,7 +175,7 @@ const SupportPage = () => {
 
 
     return (
-        <div className='md:pt-16 p-2 overflow-y-auto h-full custom-scrollbar'>
+        <div className='md:pt-16 px-3 overflow-y-auto h-full custom-scrollbar'>
             <h3 className='font-bold text-xl text-[#252525]'>Support</h3>
             <div className='flex items-center justify-between py-2'>
                 <input style={inputStyle} type="text" className='input input-sm border w-80' placeholder='Type & Enter to Search'/>
@@ -211,12 +211,13 @@ const SupportPage = () => {
 
 
             </div>
-            <Divider className='my-2'/>
+            <Divider/>
             <div className='pt-2 flex justify-between items-center'>
                 <div className='h-10 px-[5px] py-1 flex items-center p-1 border rounded-md'>
                     <button className='bg-[#F1F5F9] px-[12px] py-[6px] rounded text-sm font-semibold'>All</button>
                     <button className='px-[12px] py-[6px] rounded text-sm font-semibold'>Pending</button>
-                    <button className='px-[12px] py-[6px] rounded text-sm font-semibold'>Solved</button>
+                    <button className='px-[12px] py-[6px] rounded text-sm font-semibold'>Open</button>
+                    <button className='px-[12px] py-[6px] rounded text-sm font-semibold'>Closed</button>
                 </div>
                 <div>
                     <DatePicker className="" onChange={onChange} picker="year" />
@@ -224,16 +225,16 @@ const SupportPage = () => {
             </div>
 
             <div className='mt-2'>
-                <div className="p-2">
-                    <div className='border rounded-lg p-3 mb-3'>
+                <div className="flex flex-col gap-2">
+                    <div className='border rounded-md shadow-sm p-3 hover:bg-[#E4E5EA]'>
                         <h4 className='font-bold text-[#252525]'>title</h4>
                         <p className='text-[#252525]'>text Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam unde corrupti maiores perspiciatis vero dolores.</p>
                     </div>
-                    <div className='border rounded-lg p-3 mb-3'>
+                    <div className='border rounded-md p-3 hover:bg-[#E4E5EA]'>
                         <h4 className='font-bold text-[#252525]'>title</h4>
                         <p className='text-[#252525]'>text Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam unde corrupti maiores perspiciatis vero dolores.</p>
                     </div>
-                    <div className='border rounded-lg p-3 mb-3'>
+                    <div className='border rounded-md p-3 hover:bg-[#E4E5EA]'>
                         <h4 className='font-bold text-[#252525]'>title</h4>
                         <p className='text-[#252525]'>text Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam unde corrupti maiores perspiciatis vero dolores.</p>
                     </div>
