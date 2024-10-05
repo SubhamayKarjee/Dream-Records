@@ -194,7 +194,7 @@ const UserAdminHomePage = () => {
                                     <InformationCircleIcon className="h-7 w-7 pe-2" />
                                     Rights manager
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/support', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/support'}>
+                                <NavLink style={() => activeLinkDynamic('/support', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/support/All/1/8'}>
                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                     Support
                                 </NavLink>
@@ -300,7 +300,7 @@ const UserAdminHomePage = () => {
                                                     <InformationCircleIcon className="h-7 w-7 pe-2" />
                                                     Rights manager
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/support'}>
+                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/support/All/1/8'}>
                                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                                     Support
                                                 </NavLink>

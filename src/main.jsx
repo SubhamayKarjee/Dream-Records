@@ -21,6 +21,12 @@ import UpdateArtistPage from './UserAdminDashboard/UserArtistPage/UpdateArtistPa
 import CreateLabelPage from './UserAdminDashboard/UserLabelPage/CreateLabelPage';
 import UpdateLabelPage from './UserAdminDashboard/UserLabelPage/UpdateLabelPage';
 
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import ru from 'javascript-time-ago/locale/ru'
+TimeAgo.addDefaultLocale(en)
+TimeAgo.addLocale(ru)
+
 
 
 
@@ -323,7 +329,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><ClaimReleasePage/></ProtectUserRoute></Suspense>,
       },
       {
-        path: '/support',
+        path: '/support/:status/:pageNumber/:perPageSupport',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><SupportPage/></ProtectUserRoute></Suspense>,
       },
       {

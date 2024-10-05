@@ -1,35 +1,34 @@
-import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
-import { ArrowDownTrayIcon} from "@heroicons/react/24/solid";
+import { ArrowUpTrayIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { ArrowDownTrayIcon, TrashIcon} from "@heroicons/react/24/solid";
 import { Divider } from "antd";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
+import ReactTimeAgo from "react-time-ago";
+import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 
 const SingleSupportPage = () => {
 
     const {id} = useParams();
+    const {userNameIdRoll} = useContext(AuthContext);
     
-
     const [supportData, setSupportData] = useState();
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/single/${id}`)
+        axios.get(`http://localhost:5000/common/api/v1/ticket/single-data/${id}`)
         .then(res => {
         if(res.status === 200){
             setLoading(false)
             setSupportData(res.data.data[0]);
+            console.log(res.data.data);
         }
     })
     },[id])
 
-
-
-
     const [attachment, setAttachment] = useState();
     const [upLoadLoading, setUploadLoading] = useState(false);
-
     const attachmentUpload = (e) => {
         setUploadLoading(true)
         const file = e[0];
@@ -46,35 +45,55 @@ const SingleSupportPage = () => {
         })
     }
 
-
     const [supportText, setSupportText] = useState();
     const [supportTextErr, setSupportTextErr] = useState();
     const [supportSendLoading, setSupportSendLoading] = useState(false);
+    const [supportSendCheck, setSupportSendCheck] = useState(true)
 
-    const handleSupportFormSend = () => {
-        setSupportSendLoading(true)
+    const handleSupportFormSend = (id) => {
+        setSupportSendCheck(false)
         setSupportTextErr('');
         if(!supportText){
             setSupportTextErr('Support Text Required');
             return;
         }
-        const now = new Date();
-        const date = now.getDate().toLocaleString();
-        const month = now.toLocaleString('default', { month: 'long' });
-        const year = now.getFullYear();
-        const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
-
-        const status = 'Pending'
-        const data = {supportText, date, month, year, time,  status, attachment}
-        axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support`, data)
+        const date = new Date();
+        const userName = userNameIdRoll[0]
+        const data = {message: supportText, date, attachment, userName }
+        supportData.issue.push(data)
+        console.log(supportData);
+        setSupportText('')
+        axios.put(`http://localhost:5000/common/api/v1/ticket/update-ticket/${id}`, supportData)
         .then(res => {
             if(res.status === 200){
                 document.getElementById('text_box').value = ''
                 setSupportSendLoading(false)
-                toast.success('Your Request Submited!')
+                setSupportSendCheck(true)
+                toast.success('Your Message Submited!')
+                console.log(res.data);
+            }else{
+                setSupportSendCheck(false)
             }
         })
     }
+
+
+    const deleteTicket = (id) => {
+        axios.delete(`http://localhost:5000/common/api/v1/ticket/delete/${id}`)
+        .then(res => {
+            if(res.status == 200){
+                toast.success('Deleted the Ticket')
+            }
+        })
+    }
+
+    const messagesEndRef = useRef(true);
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+    useEffect(() => {
+        scrollToBottom();
+    }, [supportSendCheck, messagesEndRef]);
 
 
     return (
@@ -85,28 +104,43 @@ const SingleSupportPage = () => {
             <div style={{height: '100%'}} className='md:pt-16 px-3 '>
                 <div className='bg-white h-[10%]'>
                     <div className="flex justify-between items-center">
-                        <h2 className="text-md md:text-xl font-bold">Support Title <span className="text-xs md:text-sm font-semibold border px-2 py-1">{supportData?.status}</span></h2>
-                        <p>{supportData?.date} {supportData?.month.slice(0,3)} {supportData?.year} || {supportData?.time}</p>
+                        <h2 className="text-md md:text-xl font-bold flex items-center gap-2">{supportData?.title} <span className="text-xs md:text-sm font-semibold border px-2 py-1">{supportData?.status}</span> <TrashIcon onClick={() => deleteTicket(supportData?._id)} className='h-5 w-5 cursor-pointer'/></h2>
+                        <p>{supportData?.date.slice(0,10)}</p>
                     </div>
-                    <p className="font-bold text-sm">User Name</p>
+                    <p className="font-bold text-sm">{supportData?.userName}</p>
                     <Divider className="h-2 my-2"/>
                 </div>
 
              
-                <div className='h-[60%] overflow-y-auto p-2'>
-                    <div className="flex flex-col gap-2 mx-2">
-                        <div className="p-4 rounded-md bg-[#E8E8E8]">
-                            <p className='text-sm text-[#252525]'>{supportData?.supportText} Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, numquam? Ex vero quod cum deserunt doloremque architecto, consectetur eveniet accusantium. </p>
-                            {
-                                supportData?.attachment &&
-                                <div className='p-2 border rounded-md mt-2'>
-                                    <p className='text-sm text-slate-500'>Attachment</p>
-                                    <a className="px-2 text-sm py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={supportData?.attachment?.fileUrl} download={supportData?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
-                                </div>
-                            }
-                        </div>
-                        
-                    </div>
+                <div className='h-[60%] overflow-y-auto p-2 flex flex-col gap-2 mx-2' id="parentDiv">
+                    {
+                        supportData?.issue && supportData.issue.map((d,index) =>
+                            <div key={index} className="p-4 rounded-md bg-[#E8E8E8] relative">
+                                <ReactTimeAgo className="text-xs absolute top-2 right-2" date={Date.parse(d.date)}/> 
+                                <p className='text-sm text-[#252525]'>{d?.message}</p>
+                                {
+                                    d?.attachment &&
+                                    <div className='p-2 border rounded-md mt-2'>
+                                        <p className='text-sm text-slate-500'>Attachment</p>
+                                        <a className="px-2 text-sm py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={d?.attachment?.fileUrl} download={d?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
+                                    </div>
+                                }
+                            </div>
+                        )
+                    }  
+                        {
+                            supportSendCheck == true ?
+                            <div className="flex items-center justify-end">
+                                <CheckIcon className="w-4 h-4 text-info"/>
+                                <CheckIcon className="w-4 h-4 ms-[-6px] text-info"/>
+                            </div> :
+                            <div className="flex items-center justify-end">
+                                <CheckIcon className="w-4 h-4"/>
+                                <CheckIcon className="w-4 h-4 ms-[-6px]"/>
+                            </div> 
+                        }
+
+                        <div ref={messagesEndRef}></div>
                 </div>
                 <div className=' h-[28%] md:h-[28%] lg:h-[28%] rounded-lg border-t-2 border-l-2 border-r-2 p-3 mt-2'>
                     <div>
@@ -128,7 +162,7 @@ const SingleSupportPage = () => {
                                 {
                                     supportSendLoading && <span className="loading loading-spinner loading-md me-2"></span>
                                 }
-                                <button onClick={handleSupportFormSend} className='btn btn-sm btn-neutral bg-[#0F172A] px-6 h-9 w-full'>Send Message <ArrowUpTrayIcon className='h-4 w-4'/></button>
+                                <button onClick={() => handleSupportFormSend(supportData._id)} className='btn btn-sm btn-neutral bg-[#0F172A] px-6 h-9 w-full'>Send Message <ArrowUpTrayIcon className='h-4 w-4'/></button>
                             </div>
                         </div>
                     </div>

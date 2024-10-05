@@ -1,23 +1,26 @@
-import { DatePicker, Divider, Modal, Select, Tabs } from 'antd';
+import { Button, DatePicker, Divider, Dropdown, Empty, Modal } from 'antd';
 import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../UserAdminHomePage/UserAdminHomePage';
-import PhoneInput from 'react-phone-number-input';
+// import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css'
-import ChartSupport from './ChartSupport';
-import CallSupport from './CallSupport';
-import { PlusIcon } from '@heroicons/react/24/solid';
+// import ChartSupport from './ChartSupport';
+// import CallSupport from './CallSupport';
+import { ArrowsUpDownIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { useForm } from 'react-hook-form';
 import './SupportPage.css'
+import { NavLink, useLocation, useParams } from 'react-router-dom';
+import ReactTimeAgo from 'react-time-ago'
+
 
 
 
 const SupportPage = () => {
 
     const {userNameIdRoll} = useContext(AuthContext);
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const [attachment, setAttachment] = useState();
     const [upLoadLoading, setUploadLoading] = useState(false);
@@ -28,129 +31,27 @@ const SupportPage = () => {
         const formData = new FormData();
         formData.append('file', file);
         if(attachment){
-            axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/delete-file?key=${attachment.key}`)
+            // axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/delete-ticket-file?key=${attachment.key}`)
+            axios.delete(`http://localhost:5000/common/api/v1/ticket/delete-ticket-file?key=${attachment.key}`)
         }
-        axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/upload-file`, formData)
-        .then(res => {
-            setUploadLoading(false);
-            setAttachment(res.data.data)
-            toast.success('File Uploaded')
-        })
-    }
-
-
-
-    const [supportText, setSupportText] = useState();
-    const [supportTextErr, setSupportTextErr] = useState();
-    const [supportSendLoading, setSupportSendLoading] = useState(false);
-    
-
-    const handleSupportFormSend = () => {
-        setSupportSendLoading(true)
-        setSupportTextErr('');
-        if(!supportText){
-            setSupportTextErr('Support Text Required');
-            return;
-        }
-        const now = new Date();
-        const date = now.getDate().toLocaleString();
-        const month = now.toLocaleString('default', { month: 'long' });
-        const year = now.getFullYear();
-        const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
-
-        const masterUserId = userNameIdRoll[1]
-        const userName = userNameIdRoll[0]
-        const status = 'Pending'
-        const data = {supportText, masterUserId, date, month, year, time, userName, status, attachment}
-        axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support`, data)
+        // axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/upload-ticket-file`, formData)
+        axios.post(`http://localhost:5000/common/api/v1/ticket/upload-ticket-file`, formData)
         .then(res => {
             if(res.status === 200){
-                document.getElementById('text_box').value = ''
-                setSupportSendLoading(false)
-                toast.success('Your Request Submited!')
+                setUploadLoading(false);
+                setAttachment(res.data.data)
+                toast.success('File Uploaded')
+            }else{
+                setUploadLoading(false);
+                toast.error('Please Try Again')
             }
         })
     }
 
-    const items = [
-        {
-          key: '1',
-          label: 'Chat Support',
-          children: <ChartSupport id={userNameIdRoll[1]}/>,
-        },
-        {
-          key: '2',
-          label: 'Call Support',
-          children: <CallSupport id={userNameIdRoll[1]}/>,
-        },
-    ];
-
-
-    // Select Category_____________________________________________
-    const [category, setCategory] = useState();
-    const [categoryErr, setCategoryErr] = useState('')
-    const selectCategory = (value) => {
-        setCategory(value)
-    }    
     
-    // Handle Lyrics Language Select Input _________________________
-    const [language, setLanguage] = useState();
-    const [languageErr, setLanguageErr] = useState('')
-    const selectLanguage = (value) => {
-        setLanguage(value)
-    };
 
-    // Phone Number Input ___________________________________________
-    const [value, setValue] = useState();
-    const [valueErr, setValueErr] = useState('')
-
-    const [callReqLoading, setCallReqLoading] = useState(false)
-    const handlePhoneCallRequest = () => {
-        setLanguageErr('')
-        setCategoryErr('')
-        setValueErr('')
-        setCallReqLoading(true)
-        if(!category){
-            setCategoryErr('Please Select Category')
-            return;
-        }
-        if(!language){
-            setLanguageErr('Please Select Language')
-            return;
-        }
-        if(!value){
-            setValueErr('Please Enter your Phone number')
-        }
-        const now = new Date();
-        const date = now.getDate().toLocaleString();
-        const month = now.toLocaleString('default', { month: 'long' });
-        const year = now.getFullYear();
-        const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
-
-        const masterUserId = userNameIdRoll[1]
-        const userName = userNameIdRoll[0]
-        const status = 'Pending'
-        const data = {category, language, phoneNumber: value, masterUserId, date, month, year, time, userName, status}
-        axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/call-support`, data)
-        .then(res => {
-            if(res.status === 200){
-                setCallReqLoading(false);
-                setValue('')
-                toast.success('Your Request Submited!')
-            }
-        })
-    }
-
-    const inputStyle ={
-        height: '36px',
-        border: '1px solid #E2E8F0'
-    }
-
-    const onChange = (date, dateString) => {
-        console.log(date, dateString);
-    };
-
-
+    // Create Ticket Modal __________________________________
+    const {pageNumber, status, perPageSupport} = useParams();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
@@ -162,23 +63,107 @@ const SupportPage = () => {
         setIsModalOpen(false);
     };
 
-    const { register, handleSubmit, formState: { errors }} = useForm();
-    const onSubmit = async (data) => {
+    const [loading, setLoading] = useState(true)
+    const [supportData, setSupportData] = useState();
+    const [totalItems, setTotalItems] = useState()
+    useEffect( () => {
+        setLoading(true)
+        axios.get(`http://localhost:5000/common/api/v1/ticket/user-ticket-list/${userNameIdRoll[1]}?page=${pageNumber}&limit=${perPageSupport}&status=${status}`)
+        .then(res => {
+            setSupportData(res.data.data);
+            setTotalItems(res.data.dataCount)
+            setLoading(false)
+        })
+    },[userNameIdRoll, pageNumber, perPageSupport, status])
 
+    const { register, handleSubmit, reset, formState: { errors }} = useForm();
+    const onSubmit = async (data) => {
         try {
-            console.log(data);
+            const title = data.title;
+            const firstText = data.text;
+            const masterUserId = userNameIdRoll[1]
+            const userName = userNameIdRoll[0]
+            const status = 'Pending';
+            const date = new Date();
+            const issue = [{message: firstText, attachment, date, userName}];
+            const formData = {title, issue, status, date, firstText, masterUserId, userName}
+            axios.post('http://localhost:5000/common/api/v1/ticket', formData)
+            .then(res => {
+                if(res.status == 200){
+                    toast.success('Succesfully Created The Ticket');
+                    reset();
+                    setAttachment()
+                    setIsModalOpen(false)
+                }
+            })
         } catch (error) {
             console.log(error);
         }
         
     }
 
+    const [searchText, setSearchText] = useState()
+    const handleKeyPress = (event) => {
+        console.log(`http://localhost:5000/common/api/v1/ticket/search-ticket/${userNameIdRoll[1]}?status=${status}&search=${searchText}`);
+        if (event.key === 'Enter') {
+          setLoading(true);
+          axios.get(`http://localhost:5000/common/api/v1/ticket/search-ticket/${userNameIdRoll[1]}?status=${status}&search=${searchText}`)
+            .then( res => {
+              if(res.status == 200){
+                setLoading(false);
+                setSupportData(res.data.data);
+                console.log(res.data.data);
+              }
+            })
+            .catch(er => console.log(er));
+        }
+        setLoading(false)
+    };
+
+    const onChange = (date, dateString) => {
+        console.log('date', date, 'iii', dateString);
+        setLoading(true)
+        // search-by-year
+        axios.get(`http://localhost:5000/common/api/v1/ticket/search-by-year/${userNameIdRoll[1]}?search=${dateString}`)
+        .then(res => {
+            if(res.status == 200){
+                setSupportData(res.data.data)
+                setTotalItems(res.data.dataCount)
+                setLoading(false)
+            }
+        })
+    };
+
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+    const activeLink = (to , currentPath) => {
+        return currentPath.startsWith(to)
+        ? { backgroundColor: '#F1F5F9'} // Active styles
+        : {};
+    }
+
+    const inputStyle ={
+        height: '36px',
+        border: '1px solid #E2E8F0'
+    }
+
+
+    const items = [
+        { key: '1',label: (<a rel="noopener noreferrer" href={'/support/All/1/8'}>All</a>),},
+        { key: '2',label: (<a rel="noopener noreferrer" href={'/support/Pending/1/8'}>Pending</a>),},
+        { key: '4',label: (<a rel="noopener noreferrer" href={'/support/Open/1/8'}>Open</a>),},
+        { key: '5',label: (<a rel="noopener noreferrer" href={'/support/Closed/1/8'}>Closed</a>),},
+    ];
+
+
 
     return (
         <div className='md:pt-16 px-3 overflow-y-auto h-full custom-scrollbar'>
             <h3 className='font-bold text-xl text-[#252525]'>Support</h3>
+            {/* <ReactTimeAgo date={dateTime}/> */}
             <div className='flex items-center justify-between py-2'>
-                <input style={inputStyle} type="text" className='input input-sm border w-80' placeholder='Type & Enter to Search'/>
+                <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => setSearchText(e.target.value)} className='input input-sm border w-80' placeholder='Type & Enter to Search'/>
                 <button onClick={showModal} className='btn btn-sm btn-neutral flex items-center bg-[#18181B] w-40 h-9'> <PlusIcon className='w-4 h-4'/> Create</button>
 
                 <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
@@ -213,119 +198,51 @@ const SupportPage = () => {
             </div>
             <Divider/>
             <div className='pt-2 flex justify-between items-center'>
-                <div className='h-10 px-[5px] py-1 flex items-center p-1 border rounded-md'>
-                    <button className='bg-[#F1F5F9] px-[12px] py-[6px] rounded text-sm font-semibold'>All</button>
-                    <button className='px-[12px] py-[6px] rounded text-sm font-semibold'>Pending</button>
-                    <button className='px-[12px] py-[6px] rounded text-sm font-semibold'>Open</button>
-                    <button className='px-[12px] py-[6px] rounded text-sm font-semibold'>Closed</button>
+                <div className="hidden md:block">
+                    <div className="h-10 px-[5px] py-1 flex items-center p-1 border rounded-md">
+                        <NavLink style={() => activeLink('/support/All', currentPath)} to={'/support/All/1/8'} className="px-[12px] py-[6px] rounded text-sm font-semibold">All</NavLink>
+                        <NavLink style={() => activeLink('/support/Pending', currentPath)} to={'/support/Pending/1/8'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Pending</NavLink>
+                        <NavLink style={() => activeLink('/support/Open', currentPath)} to={'/support/Open/1/8'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Open</NavLink>
+                        <NavLink style={() => activeLink('/support/Closed', currentPath)} to={'/support/Closed/1/8'} className="px-[12px] py-[6px] rounded text-sm font-semibold">Closed</NavLink>
+                    </div>
+                </div>
+                {/* Mobile Div _____________________________________ */}
+                <div className="block md:hidden">
+                    <Dropdown
+                        menu={{items}}
+                        placement="bottomLeft"
+                        className="h-10"
+                    >
+                        <Button className="text-md font-semibold flex items-center gap-2">{status} <ArrowsUpDownIcon className="w-4 h-4"/></Button>
+                    </Dropdown>
                 </div>
                 <div>
                     <DatePicker className="" onChange={onChange} picker="year" />
                 </div>
             </div>
 
-            <div className='mt-2'>
+            <div className='mt-4'>
                 <div className="flex flex-col gap-2">
-                    <div className='border rounded-md shadow-sm p-3 hover:bg-[#E4E5EA]'>
-                        <h4 className='font-bold text-[#252525]'>title</h4>
-                        <p className='text-[#252525]'>text Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam unde corrupti maiores perspiciatis vero dolores.</p>
-                    </div>
-                    <div className='border rounded-md p-3 hover:bg-[#E4E5EA]'>
-                        <h4 className='font-bold text-[#252525]'>title</h4>
-                        <p className='text-[#252525]'>text Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam unde corrupti maiores perspiciatis vero dolores.</p>
-                    </div>
-                    <div className='border rounded-md p-3 hover:bg-[#E4E5EA]'>
-                        <h4 className='font-bold text-[#252525]'>title</h4>
-                        <p className='text-[#252525]'>text Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam unde corrupti maiores perspiciatis vero dolores.</p>
-                    </div>
-                </div>
-            </div>
-
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-
-            <div className='my-3 p-3 md:p-4 border rounded-lg md:flex justify-between'>
-                <div className='flex-1 m-2'>
-                    <p className='font-bold text-sm text-slate-500 mb-2'>Support Box</p>
-                    <textarea id='text_box' onChange={e => setSupportText(e.target.value)} className="textarea textarea-bordered w-full md:h-40" placeholder="If you have a complaint or opinion about something. Please write here!"></textarea>
                     {
-                        supportTextErr && <p className='text-sm text-red-500 mb-2'>{supportTextErr}</p>
+                        loading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
-                    <p className='font-bold text-sm text-slate-500 mb-2'>Attachment</p>
-                    <div className="flex items-center ">
-                        {
-                            upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
-                        }
-                        <input type="file" id="fileInput" name='image' onChange={e => attachmentUpload(e.target.files)} />
-                    </div>
-                    {/* {errorMessage && <p className="font-bold text-sm text-red-500">{errorMessage}</p>} */}
-                    <div className='flex items-center mt-2'>
-                        {
-                            supportSendLoading && <span className="loading loading-spinner loading-md me-2"></span>
-                        }
-                        <button onClick={handleSupportFormSend} className='btn btn-sm rounded-full bg-info px-4'>Submit</button>
-                    </div>
+                    {
+                        supportData && supportData.map(data => 
+                            <div key={data._id} onClick={() => navigate(`/support/${data._id}`)} className='border rounded-md shadow-sm p-3 hover:bg-[#E4E5EA] cursor-pointer'>
+                                <div className='flex items-center justify-between gap-2'>
+                                    <h4 className='font-bold text-[#252525]'>{data.title}</h4>
+                                    <ReactTimeAgo date={Date.parse(data.date)}/> 
+                                </div>
+                                <p className='text-[#252525]'>{data.firstText.slice(0,100)}..</p>
+                            </div>
+                        )
+                    }
+
+                    {
+                        !totalItems && !loading && <Empty className="pt-8" />
+                    }
+                    
                 </div>
-                <div className='flex-1 m-2 p-2 bg-slate-200 rounded-md'>
-                    <div>
-                        <h2 className='font-bold text-slate-500 border-b'>Phone Call Request</h2>
-
-                        <p className="mt-3 text-sm font-semibold text-slate-500">Select Category <span className="text-red-500">*</span></p>
-                        <Select
-                            showSearch
-                            className="w-full rounded-full"
-                            placeholder="Select Category"
-                            onChange={selectCategory}
-                            options={[
-                                {value: 'Release',label: 'Release',},
-                                {value: 'Artist',label: 'Artist',},
-                                {value: 'Labels',label: 'Labels',},
-                                {value: 'Analytics',label: 'Analytics',},
-                                {value: 'Wallet',label: 'Wallet',},
-                                {value: 'Account',label: 'Account',},
-                            ]}
-                        />
-                        {categoryErr && <span className='text-red-600 pt-2 block'>{categoryErr}</span>}
-
-                        <p className="mt-3 text-sm font-semibold text-slate-500">Select language <span className="text-red-500">*</span></p>
-                        <Select
-                            showSearch
-                            className="w-full rounded-full"
-                            placeholder="Select Language"
-                            onChange={selectLanguage}
-                            options={[
-                                {value: 'Bangla',label: 'Bangla',},
-                                {value: 'Hindi',label: 'Hindi',},
-                            ]}
-                        />
-                        {languageErr && <span className='text-red-600 pt-2 block'>{languageErr}</span>}
-
-                        <p className="mt-3 text-sm font-semibold text-slate-500">Please Enter Phone Number <span className="text-red-500">*</span></p>
-                        <PhoneInput
-                            placeholder="Enter phone number"
-                            className='mb-3'
-                            value={value}
-                            onChange={setValue}
-                            defaultCountry="IN"
-                        />
-                        {valueErr && <span className='text-red-600 pt-2 block'>{valueErr}</span>}
-
-                        <div className='flex items-center'>
-                            {
-                                callReqLoading && <span className="loading loading-spinner loading-md me-2"></span>
-                            }
-                            <button onClick={handlePhoneCallRequest} className='btn btn-sm rounded-full px-4 btn-info'>Submit</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className='p-2'>
-                <h2 className='text-slate-500 font-semibold'>Support History...</h2>
-                <Tabs defaultActiveKey="1" items={items} />
             </div>
         </div>
     );
