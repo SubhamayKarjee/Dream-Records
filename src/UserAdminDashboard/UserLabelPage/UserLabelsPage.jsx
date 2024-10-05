@@ -3,9 +3,9 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
-import fallbackImage from "../../assets/fallbackImage.jpg"
 import ActionRequiredLabels from "./ActionRequiredLabels";
 import { ArrowsUpDownIcon, DocumentCheckIcon, ExclamationTriangleIcon, PlusIcon, BellAlertIcon, CheckBadgeIcon, ClockIcon } from "@heroicons/react/24/outline";
+import fallbackImageLabel from '../../assets/fallbackImage/fallback-labels.png'
 
 const UserLabelsPage = () => {
 
@@ -154,7 +154,7 @@ const UserLabelsPage = () => {
                                     style={{borderRadius: '20px'}}
                                     src={data.imgUrl}
                                     preview={false}
-                                    fallback={fallbackImage}
+                                    fallback={fallbackImageLabel}
                                   />
                               <div className="ps-2 pt-1">
                                 <h2 className="font-bold">{data.labelName}</h2>

@@ -4,10 +4,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import fallbackImage from "../../assets/fallbackImage.jpg"
 import youtubeImg from '../../assets/social-icon/youtube.png';
 import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
 import AdminReleaseCardComponent from "../AdminReleases/AdminReleaseCardComponent";
+import fallbackImageLabels from '../../assets/fallbackImage/fallback-labels.png'
 
 const UpdateLabelsComponent = () => {
 
@@ -200,7 +200,7 @@ const UpdateLabelsComponent = () => {
                         height={120}
                         className="rounded-lg"
                         src={labels.imgUrl}
-                        fallback={fallbackImage}
+                        fallback={fallbackImageLabels}
                         />
                         <div className="ps-2">
                             <h2 className="font-bold">{labels.labelName}</h2>

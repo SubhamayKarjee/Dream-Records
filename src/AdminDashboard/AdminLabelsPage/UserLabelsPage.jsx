@@ -3,8 +3,7 @@ import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import fallbackImage from "../../assets/fallbackImage.jpg"
-
+import fallbackImageLabels from '../../assets/fallbackImage/fallback-labels.png'
 
 // eslint-disable-next-line react/prop-types
 const UserLabelsPage = ({userId}) => {
@@ -117,7 +116,8 @@ const UserLabelsPage = ({userId}) => {
                                   height={55}
                                   className="rounded-lg"
                                   src={data.imgUrl}
-                                  fallback={fallbackImage}
+                                  fallback={fallbackImageLabels}
+                                  preview={false}
                                 />
                             <div className="ps-2">
                               <h2 className="font-bold">{data.labelName}</h2>

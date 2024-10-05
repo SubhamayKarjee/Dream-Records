@@ -4,11 +4,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
-import fallbackImage from "../../assets/fallbackImage.jpg"
 import youtubeImg from '../../assets/social-icon/youtube.png';
 import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
 import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 import ReleaseCardComponentFourColsGrid from "../ReleasesPage/ReleaseCardComponent/ReleaseCardComponentFourColsGrid";
+import fallbackImageLabel from '../../assets/fallbackImage/fallback-labels.png'
 
 const DetailsSingleLabels = () => {
 
@@ -136,11 +136,11 @@ const DetailsSingleLabels = () => {
                     <div className="md:flex justify-between">
                         <div className="md:flex-1 flex flex-col md:flex-row gap-2 pt-2">
                             <Image
-                            width={194}
+                            width={200}
                             height={176}
                             className="rounded-lg"
                             src={labels.imgUrl}
-                            fallback={fallbackImage}
+                            fallback={fallbackImageLabel}
                             />
                             <div className="flex flex-col justify-between">
                                 <div>

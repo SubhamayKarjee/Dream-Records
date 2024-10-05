@@ -3,8 +3,8 @@ import { Empty, Image, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import fallbackImage from "../../assets/fallbackImage.jpg"
 // import UpdateLabelsComponent from "./UpdateLabelsComponent";
+import fallbackImageLabels from '../../assets/fallbackImage/fallback-labels.png'
 
 const AdminLabelsPage = () => {
 
@@ -112,7 +112,8 @@ const AdminLabelsPage = () => {
                                   height={55}
                                   className="rounded-lg"
                                   src={data.imgUrl}
-                                  fallback={fallbackImage}
+                                  fallback={fallbackImageLabels}
+                                  preview={false}
                                 />
                             <div className="ps-2">
                               <h2 className="font-bold">{data.labelName}</h2>
