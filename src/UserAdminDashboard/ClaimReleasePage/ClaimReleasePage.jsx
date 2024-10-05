@@ -126,9 +126,16 @@ const ClaimReleasePage = () => {
         navigate(`/claim-release/${status}/${page}/8`)
     };
 
+    const [searchText, setSearchText] = useState();
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {          
-          console.log(event);
+        setLoading(true)
+          axios.get(`http://localhost:5000/common/api/v1/claim-release/search/${userNameIdRoll[1]}?status=${status}&search=${searchText}`)
+            .then(res => {
+                setClaimData(res.data.data);
+                setTotalItems(res.data.dataCount)
+                setLoading(false)
+            })
         }
     };
 
@@ -171,7 +178,7 @@ const ClaimReleasePage = () => {
 
                 <div className="md:flex md:justify-between md:items-center">
                     <div className="mt-2">
-                        <input type="text" style={inputStyle} onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
+                        <input type="text" style={inputStyle} onKeyPress={handleKeyPress} onChange={e => setSearchText(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                     </div>
                     <div className="mt-2">
                         <button onClick={showModal} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/> Create Claim</button>
