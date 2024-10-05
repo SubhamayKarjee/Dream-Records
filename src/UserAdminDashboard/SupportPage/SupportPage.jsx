@@ -63,7 +63,8 @@ const SupportPage = () => {
 
     const [loading, setLoading] = useState(true)
     const [supportData, setSupportData] = useState();
-    const [totalItems, setTotalItems] = useState()
+    const [totalItems, setTotalItems] = useState();
+    const [reFetch, setReFetch] = useState(1)
     useEffect( () => {
         setLoading(true)
         axios.get(`http://localhost:5000/common/api/v1/ticket/ticket-list/${userNameIdRoll[1]}?page=${pageNumber}&limit=${perPageSupport}&status=${status}`)
@@ -92,6 +93,8 @@ const SupportPage = () => {
                     reset();
                     setAttachment()
                     setIsModalOpen(false)
+                    const r = reFetch + 1;
+                    setReFetch(r)
                 }
             })
         } catch (error) {

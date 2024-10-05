@@ -13,6 +13,7 @@ const SingleSupportPage = () => {
     const {id} = useParams();
     const {userNameIdRoll} = useContext(AuthContext);
     
+    const [reFetch, setReFetch] = useState()
     const [supportData, setSupportData] = useState();
     const [loading, setLoading] = useState(false)
     useEffect(() => {
@@ -22,10 +23,9 @@ const SingleSupportPage = () => {
         if(res.status === 200){
             setLoading(false)
             setSupportData(res.data.data[0]);
-            console.log(res.data.data);
         }
     })
-    },[id])
+    },[id, reFetch])
 
     const [attachment, setAttachment] = useState();
     const [upLoadLoading, setUploadLoading] = useState(false);
@@ -61,7 +61,6 @@ const SingleSupportPage = () => {
         const userName = userNameIdRoll[0]
         const data = {message: supportText, date, attachment, userName }
         supportData.issue.push(data)
-        console.log(supportData);
         setSupportText('')
         axios.put(`http://localhost:5000/common/api/v1/ticket/update-ticket/${id}`, supportData)
         .then(res => {
@@ -70,7 +69,8 @@ const SingleSupportPage = () => {
                 setSupportSendLoading(false)
                 setSupportSendCheck(true)
                 toast.success('Your Message Submited!')
-                console.log(res.data);
+                const r = reFetch + 1;
+                setReFetch(r)
             }else{
                 setSupportSendCheck(false)
             }
@@ -95,6 +95,17 @@ const SingleSupportPage = () => {
         scrollToBottom();
     }, [supportSendCheck, messagesEndRef]);
 
+    const adminColor = {
+        backgroundColor: '#F9F9F9',
+        marginRight: '2rem',
+        border: '1px solid #E8E8E8'
+    }
+    const userColor = {
+        backgroundColor: '#E8E8E8',
+        marginLeft: '2rem',
+        border: '1px solid #E8E8E8'
+    }
+
 
     return (
         <div className="h-screen overflow-y-auto custom-scrollbar">
@@ -111,62 +122,100 @@ const SingleSupportPage = () => {
                     <Divider className="h-2 my-2"/>
                 </div>
 
-             
-                <div className='h-[60%] overflow-y-auto p-2 flex flex-col gap-2 mx-2' id="parentDiv">
-                    {
-                        supportData?.issue && supportData.issue.map((d,index) =>
-                            <div key={index} className="p-4 rounded-md bg-[#E8E8E8] relative">
-                                <ReactTimeAgo className="text-xs absolute top-2 right-2" date={Date.parse(d.date)}/> 
-                                <p className='text-sm text-[#252525]'>{d?.message}</p>
-                                {
-                                    d?.attachment &&
-                                    <div className='p-2 border rounded-md mt-2'>
-                                        <p className='text-sm text-slate-500'>Attachment</p>
-                                        <a className="px-2 text-sm py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={d?.attachment?.fileUrl} download={d?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
-                                    </div>
-                                }
-                            </div>
-                        )
-                    }  
+                {
+                    supportData?.status !== 'Closed' &&
+                    <div className='h-[60%] overflow-y-auto p-2 flex flex-col gap-2 mx-2' id="parentDiv">
                         {
-                            supportSendCheck == true ?
-                            <div className="flex items-center justify-end">
-                                <CheckIcon className="w-4 h-4 text-info"/>
-                                <CheckIcon className="w-4 h-4 ms-[-6px] text-info"/>
-                            </div> :
-                            <div className="flex items-center justify-end">
-                                <CheckIcon className="w-4 h-4"/>
-                                <CheckIcon className="w-4 h-4 ms-[-6px]"/>
-                            </div> 
-                        }
-
-                        <div ref={messagesEndRef}></div>
-                </div>
-                <div className=' h-[28%] md:h-[28%] lg:h-[28%] rounded-lg border-t-2 border-l-2 border-r-2 p-3 mt-2'>
-                    <div>
-                        <div className="h-[70%]">
-                            <textarea id='text_box' onChange={e => setSupportText(e.target.value)} className="textarea textarea-bordered w-full h-[100%] border-none focus:outline-none" placeholder="If you have a complaint or opinion about something. Please write here!"></textarea>
+                            supportData?.issue && supportData.issue.map((d,index) =>
+                                <div key={index} style={d.userName === userNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md bg-[#E8E8E8] relative">
+                                    <ReactTimeAgo className="text-xs absolute top-2 right-2" date={Date.parse(d.date)}/> 
+                                    <p className='text-sm text-[#252525]'>{d?.message}</p>
+                                    {
+                                        d?.attachment &&
+                                        <div className='p-2 border rounded-md mt-2'>
+                                            <p className='text-sm text-slate-500'>Attachment</p>
+                                            <a className="px-2 text-sm py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={d?.attachment?.fileUrl} download={d?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
+                                        </div>
+                                    }
+                                </div>
+                            )
+                        }  
                             {
-                                supportTextErr && <p className='text-sm text-red-500 mb-2'>{supportTextErr}</p>
+                                supportSendCheck == true ?
+                                <div className="flex items-center justify-end">
+                                    <CheckIcon className="w-4 h-4 text-info"/>
+                                    <CheckIcon className="w-4 h-4 ms-[-6px] text-info"/>
+                                </div> :
+                                <div className="flex items-center justify-end">
+                                    <CheckIcon className="w-4 h-4"/>
+                                    <CheckIcon className="w-4 h-4 ms-[-6px]"/>
+                                </div> 
                             }
-                        </div>
-                        <div className="flex justify-between items-center h-[30%] pb-2">
-                            <div className="flex items-center ">
+
+                            <div ref={messagesEndRef}></div>
+                    </div>
+                }
+                {
+                    supportData?.status === 'Closed' &&
+                    <div className='h-[85%] overflow-y-auto p-2 flex flex-col gap-2 mx-2' id="parentDiv">
+                        {
+                            supportData?.issue && supportData.issue.map((d,index) =>
+                                <div key={index} style={d.userName === userNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md bg-[#E8E8E8] relative">
+                                    <ReactTimeAgo className="text-xs absolute top-2 right-2" date={Date.parse(d.date)}/> 
+                                    <p className='text-sm text-[#252525]'>{d?.message}</p>
+                                    {
+                                        d?.attachment &&
+                                        <div className='p-2 border rounded-md mt-2'>
+                                            <p className='text-sm text-slate-500'>Attachment</p>
+                                            <a className="px-2 text-sm py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={d?.attachment?.fileUrl} download={d?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
+                                        </div>
+                                    }
+                                </div>
+                            )
+                        }  
+                            {
+                                supportSendCheck == true ?
+                                <div className="flex items-center justify-end">
+                                    <CheckIcon className="w-4 h-4 text-info"/>
+                                    <CheckIcon className="w-4 h-4 ms-[-6px] text-info"/>
+                                </div> :
+                                <div className="flex items-center justify-end">
+                                    <CheckIcon className="w-4 h-4"/>
+                                    <CheckIcon className="w-4 h-4 ms-[-6px]"/>
+                                </div> 
+                            }
+
+                            <div ref={messagesEndRef}></div>
+                    </div>
+                }
+                {
+                    supportData?.status !== 'Closed' &&
+                    <div className=' h-[28%] md:h-[28%] lg:h-[28%] rounded-lg border-t-2 border-l-2 border-r-2 p-3 mt-2'>
+                        <div>
+                            <div className="h-[70%]">
+                                <textarea id='text_box' onChange={e => setSupportText(e.target.value)} className="textarea textarea-bordered w-full h-[100%] border-none focus:outline-none" placeholder="If you have a complaint or opinion about something. Please write here!"></textarea>
                                 {
-                                    upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                                    supportTextErr && <p className='text-sm text-red-500 mb-2'>{supportTextErr}</p>
                                 }
-                                <input type="file" id="fileInput" className="w-[150px] sm:w-[100%] md:w-[100%]" name='image' onChange={e => attachmentUpload(e.target.files)} />
                             </div>
-                            {/* {errorMessage && <p className="font-bold text-sm text-red-500">{errorMessage}</p>} */}
-                            <div className='flex items-center'>
-                                {
-                                    supportSendLoading && <span className="loading loading-spinner loading-md me-2"></span>
-                                }
-                                <button onClick={() => handleSupportFormSend(supportData._id)} className='btn btn-sm btn-neutral bg-[#0F172A] px-6 h-9 w-full'>Send Message <ArrowUpTrayIcon className='h-4 w-4'/></button>
+                            <div className="flex justify-between items-center h-[30%] pb-2">
+                                <div className="flex items-center ">
+                                    {
+                                        upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
+                                    }
+                                    <input type="file" id="fileInput" className="w-[150px] sm:w-[100%] md:w-[100%]" name='image' onChange={e => attachmentUpload(e.target.files)} />
+                                </div>
+                                {/* {errorMessage && <p className="font-bold text-sm text-red-500">{errorMessage}</p>} */}
+                                <div className='flex items-center'>
+                                    {
+                                        supportSendLoading && <span className="loading loading-spinner loading-md me-2"></span>
+                                    }
+                                    <button onClick={() => handleSupportFormSend(supportData._id)} className='btn btn-sm btn-neutral bg-[#0F172A] px-6 h-9 w-full'>Send Message <ArrowUpTrayIcon className='h-4 w-4'/></button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     );
