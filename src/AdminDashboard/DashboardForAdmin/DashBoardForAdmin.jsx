@@ -133,7 +133,7 @@ const DashBoardForAdmin = () => {
                                     <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
                                     Rights manager
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/support', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/support/chat/1/10/All'}>
+                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/support', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/support/All/1/8'}>
                                     <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                     Support
                                 </NavLink>
@@ -204,7 +204,7 @@ const DashBoardForAdmin = () => {
                                                 <ExclamationTriangleIcon className="h-7 w-7 pe-2" />
                                                 Rights manager
                                             </NavLink>
-                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard//admin-dashboard/support', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/support/chat/1/10/All'}>
+                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard/admin-dashboard', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/support/All/1/8'}>
                                                 <RectangleGroupIcon className="h-7 w-7 pe-2" />
                                                 Support
                                             </NavLink>

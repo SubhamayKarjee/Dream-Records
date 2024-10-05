@@ -13,8 +13,8 @@ import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsIn
 import axios from 'axios';
 import ProtectAdminRoute from './ProtectRoute/ProtectAdminRoute';
 import ProtectUserRoute from './ProtectRoute/ProtectUserRoute';
-import ChatSupport from './AdminDashboard/AdminSupportPage/ChatSupport';
-import CallSupport from './AdminDashboard/AdminSupportPage/CallSupport';
+// import ChatSupport from './AdminDashboard/AdminSupportPage/ChatSupport';
+// import CallSupport from './AdminDashboard/AdminSupportPage/CallSupport';
 import SetNewPassword from './Authentication/LogIn/SetNewPassword';
 import CreateArtistPage from './UserAdminDashboard/UserArtistPage/CreateArtistPage';
 import UpdateArtistPage from './UserAdminDashboard/UserArtistPage/UpdateArtistPage';
@@ -186,18 +186,18 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminClaimReleasePage/></ProtectAdminRoute></Suspense>,
       },
       {
-        path: '/admin-dashboard/support',
+        path: '/admin-dashboard/support/:status/:pageNumber/:perPageSupport',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminSupportPage/></ProtectAdminRoute></Suspense>,
-        children: [ 
-          {
-            path: '/admin-dashboard/support/chat/:pageNumber/:perPageList/:status',
-            element: <ChatSupport/>
-          },
-          {
-            path: '/admin-dashboard/support/call/:pageNumber/:perPageList/:status',
-            element: <CallSupport/>
-          }
-        ]
+        // children: [ 
+        //   {
+        //     path: '/admin-dashboard/support/chat/:pageNumber/:perPageList/:status',
+        //     element: <ChatSupport/>
+        //   },
+        //   {
+        //     path: '/admin-dashboard/support/call/:pageNumber/:perPageList/:status',
+        //     element: <CallSupport/>
+        //   }
+        // ]
       },
       {
         path: '/admin-dashboard/support/:id',

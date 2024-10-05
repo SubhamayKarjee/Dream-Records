@@ -31,10 +31,8 @@ const SupportPage = () => {
         const formData = new FormData();
         formData.append('file', file);
         if(attachment){
-            // axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/delete-ticket-file?key=${attachment.key}`)
             axios.delete(`http://localhost:5000/common/api/v1/ticket/delete-ticket-file?key=${attachment.key}`)
         }
-        // axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/upload-ticket-file`, formData)
         axios.post(`http://localhost:5000/common/api/v1/ticket/upload-ticket-file`, formData)
         .then(res => {
             if(res.status === 200){
@@ -68,7 +66,7 @@ const SupportPage = () => {
     const [totalItems, setTotalItems] = useState()
     useEffect( () => {
         setLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/ticket/user-ticket-list/${userNameIdRoll[1]}?page=${pageNumber}&limit=${perPageSupport}&status=${status}`)
+        axios.get(`http://localhost:5000/common/api/v1/ticket/ticket-list/${userNameIdRoll[1]}?page=${pageNumber}&limit=${perPageSupport}&status=${status}`)
         .then(res => {
             setSupportData(res.data.data);
             setTotalItems(res.data.dataCount)
@@ -121,7 +119,6 @@ const SupportPage = () => {
     };
 
     const onChange = (date, dateString) => {
-        console.log('date', date, 'iii', dateString);
         setLoading(true)
         // search-by-year
         axios.get(`http://localhost:5000/common/api/v1/ticket/search-by-year/${userNameIdRoll[1]}?search=${dateString}`)
