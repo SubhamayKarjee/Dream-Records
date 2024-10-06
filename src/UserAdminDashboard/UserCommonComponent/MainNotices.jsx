@@ -23,10 +23,12 @@ const MainNotices = () => {
         <div>
             {
                 noticeData && noticeData.map(data => 
-                    <div key={data._id} className='flex bg-[#F2F2F2] rounded-md'>            
-                        <BellAlertIcon className='w-12 h-12 ps-1 '/>
+                    <div key={data._id} className='flex bg-[#F2F2F2] rounded-md my-2 p-2 gap-2'>  
+                        <div>
+                            <BellAlertIcon className='w-6 h-6'/>    
+                        </div>          
                         <div className=''>
-                            <div style={{cursor: 'pointer'}} onClick={() => navigate(`/notice/661089403281a4347e1d3498`)} className="p-2">
+                            <div style={{cursor: 'pointer'}} onClick={() => navigate(`/notice/661089403281a4347e1d3498`)} className="">
                                 <p className=" font-semibold text-[#252525]">{data?.noticeTitle}</p>
                                 <p className="text-[#71717A]">{data?.noticeDescription.slice(0, 50)}...</p>
                                 <div className='flex justify-between items-center pt-2'>
