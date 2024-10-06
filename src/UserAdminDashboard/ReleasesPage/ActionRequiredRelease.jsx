@@ -43,7 +43,7 @@ const ActionRequiredRelease = ({onClose}) => {
                             <img style={{width: '88px', height: '65px', borderRadius: '8px'}} src={d.imgUrl} alt="" />
                             <div className="">
                                 <div className="">
-                                    <h3 className="font-semibold text-[#252525]">{d.releaseTitle}</h3>
+                                    <h3 className="font-semibold text-[#252525]">{d.releaseTitle.slice(0,10)}..</h3>
                                     <p className="text-sm text-[#252525]">UPC {d.UPC}</p>
                                     {
                                         d.status === 'Action Required' &&

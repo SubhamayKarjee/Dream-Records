@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import ReactTimeAgo from "react-time-ago";
 import { AdminAuthContext } from "../DashboardForAdmin/DashBoardForAdmin";
+import './SupportAnsPage.css'
 
 const SupportAnsPage = () => {
 

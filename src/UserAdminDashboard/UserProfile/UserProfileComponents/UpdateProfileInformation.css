@@ -1,4 +1,4 @@
-input[type=file]::file-selector-button {
+#fileInput[type=file]::file-selector-button {
     cursor: pointer;
     border: none;
     border-radius: 4px;
