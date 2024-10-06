@@ -35,11 +35,18 @@ const UserArtistComponentForHomePage = () => {
             </div>
             <div className="flex gap-4 flex-wrap py-3">
                 <div>                
-                    <p style={{cursor: 'pointer', width: '90px', height: '78px', borderRadius: '12px'}} onClick={() => navigate('/artist')} className="outline-dashed outline-1 outline-slate-500 flex items-center justify-center"><UserPlusIcon className="w-10 h-10 text-slate-500"/></p>
+                    <p style={{cursor: 'pointer', width: '90px', height: '78px', borderRadius: '12px'}} onClick={() => navigate('/create-artist')} className="outline-dashed outline-1 outline-slate-500 flex items-center justify-center"><UserPlusIcon className="w-10 h-10 text-slate-500"/></p>
                     <p className="text-center pt-2 text-sm">Add New</p>
                 </div>
                 {
-                    loading && <div className="w-12 h-12 rounded-full bg-gray-300 animate-pulse"></div>
+                    loading && 
+                    <>
+                        <div className="skeleton h-[78px] w-[90px] rounded-[12px]"></div> 
+                        <div className="skeleton h-[78px] w-[90px] rounded-[12px]"></div> 
+                        <div className="skeleton h-[78px] w-[90px] rounded-[12px]"></div> 
+                        <div className="skeleton h-[78px] w-[90px] rounded-[12px]"></div> 
+                        <div className="skeleton h-[78px] w-[90px] rounded-[12px]"></div> 
+                    </>
                 }
                 {
                     artistData && artistData.map((data) =>
