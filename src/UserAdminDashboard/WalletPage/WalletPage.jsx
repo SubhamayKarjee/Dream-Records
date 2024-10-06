@@ -51,12 +51,6 @@ const WalletPage = () => {
 
             })
     },[])
-
-    useEffect(() => {
-        const currentDate = new Date();
-        const month = currentDate.toLocaleString('default', { month: 'long' });
-        console.log(month);
-    },[])
     
     useEffect(() => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`)
@@ -80,10 +74,8 @@ const WalletPage = () => {
                     setBankData(res.data.data);
                     if(res.data.data[0]){
                         setBankDataStatus(true)
-                        console.log('yes');
                     }else{
                         setBankDataStatus(false)
-                        console.log('no')
                     }
                     setBankInfoLoading(false)
                 }
@@ -227,7 +219,7 @@ const WalletPage = () => {
                 </div>
                 
                 <div>
-                    <Tabs itemActiveColor={{color: 'red'}} className="mt-3" defaultActiveKey="1" items={items} />                
+                    <Tabs className="mt-3" defaultActiveKey="1" items={items} />                
                 </div>
             </div>
 

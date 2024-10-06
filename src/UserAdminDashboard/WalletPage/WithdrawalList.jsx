@@ -58,7 +58,7 @@ const WithdrawalList = ({id}) => {
 
 
                 {fetchLoading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-md"></span></div>}
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto hidden lg:block">
                     <table className="table">
                         {/* head */}
                         <thead>
@@ -74,119 +74,245 @@ const WithdrawalList = ({id}) => {
                         {/* row 1 */}
                         {
                             withdrawalData && withdrawalData.map(data => 
-                                <>
-                                    <tr className="hover">
-                                        <td className="font-semibold text-sm text-[#09090B]">Withdrawal Requested !</td>
-                                        <td className="font-semibold text-sm text-[#09090B]">{data?.withdrawalMonth.slice(0,3)} {data?.withdrawalYear}</td>
-                                        <td className="font-semibold text-sm text-[#09090B]">
-                                        {
-                                            data?.status === 'Pending' &&
-                                                <div className="flex items-center p-1">
-                                                    <ClockIcon className="h-3 w-3 me-1"/>
-                                                    <p className="text-sm font-semibold">{data.status}</p>
-                                                </div>
-                                        }
-                                        {
-                                            data?.status === 'Approved' &&
-                                                <div className="flex items-center p-1">
-                                                    <CheckBadgeIcon className="h-3 w-3 me-1"/>
-                                                    <p className="text-sm font-semibold">{data.status}</p>
-                                                </div>
-                                        }
-                                        {
-                                            data?.status === 'Rejected' &&
-                                                <div className="flex items-center p-1">
-                                                    <ExclamationTriangleIcon className="h-3 w-3 me-1"/>
-                                                    <p className="text-sm font-semibold">{data.status}</p>
-                                                </div>
-                                        }
-                                        </td>
-                                        <td className="font-semibold text-sm text-[#09090B]">
-                                            <div className="flex items center gap-1">
-                                                 <CurrencyRupeeIcon className="w-5 h-5"/><p className="font-semibold text-sm text-[#09090B]">{data?.balance?.amount}</p>
+                                <tr key={data._id} className="hover">
+                                    <td className="font-semibold text-sm text-[#09090B]">Withdrawal Requested !</td>
+                                    <td className="font-semibold text-sm text-[#09090B]">{data?.withdrawalMonth.slice(0,3)} {data?.withdrawalYear}</td>
+                                    <td className="font-semibold text-sm text-[#09090B]">
+                                    {
+                                        data?.status === 'Pending' &&
+                                            <div className="flex items-center p-1">
+                                                <ClockIcon className="h-3 w-3 me-1"/>
+                                                <p className="text-sm font-semibold">{data.status}</p>
                                             </div>
-                                        </td>
-                                        <td className="flex justify-end">
-                                            <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm">View Details</button>
-                                        </td>
+                                    }
+                                    {
+                                        data?.status === 'Approved' &&
+                                            <div className="flex items-center p-1">
+                                                <CheckBadgeIcon className="h-3 w-3 me-1"/>
+                                                <p className="text-sm font-semibold">{data.status}</p>
+                                            </div>
+                                    }
+                                    {
+                                        data?.status === 'Rejected' &&
+                                            <div className="flex items-center p-1">
+                                                <ExclamationTriangleIcon className="h-3 w-3 me-1"/>
+                                                <p className="text-sm font-semibold">{data.status}</p>
+                                            </div>
+                                    }
+                                    </td>
+                                    <td className="font-semibold text-sm text-[#09090B]">
+                                        <div className="flex items center gap-1">
+                                             <CurrencyRupeeIcon className="w-5 h-5"/><p className="font-semibold text-sm text-[#09090B]">{data?.balance?.amount}</p>
+                                        </div>
+                                    </td>
+                                    <td className="flex justify-end">
+                                        <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm">View Details</button>
+                                    </td>
 
-                                        <dialog id={data._id} className="modal">
-                                            <div className="modal-box">
-                                                <form method="dialog">
-                                                {/* if there is a button in form, it will close the modal */}
-                                                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                                                </form>
-                                                    <h3 className="font-bold text-xl text-[#020617]">Withdrawal Details</h3>
-                                                    <p className="text-sm text-[#64748B]">Transaction Details or Rejection Details</p>
-                                                    <div className="py-3">
-                                                        <p className="text-5xl font-bold text-center">{data.withdrawalAmount}</p>
-                                                        <div className="flex justify-center">
-                                                            {
-                                                                data?.status === 'Pending' &&
-                                                                    <div className="flex items-center p-1">
-                                                                        <ClockIcon className="h-3 w-3 me-1 text-[#FEB951]"/>
-                                                                        <p className="text-sm font-semibold text-[#FEB951]">{data.status}</p>
-                                                                    </div>
-                                                            }
-                                                            {
-                                                                data?.status === 'Approved' &&
-                                                                    <div className="flex items-center p-1">
-                                                                        <CheckBadgeIcon className="h-3 w-3 me-1 text-[#39C616]"/>
-                                                                        <p className="text-sm font-semibold text-[#39C616]">{data.status}</p>
-                                                                    </div>
-                                                            }
-                                                            {
-                                                                data?.status === 'Rejected' &&
-                                                                    <div className="flex items-center p-1">
-                                                                        <ExclamationTriangleIcon className="h-3 w-3 me-1 text-[#71717A]"/>
-                                                                        <p className="text-sm font-semibold text-[#71717A]">{data.status}</p>
-                                                                    </div>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    <div className="grid grid-cols gap-2">
-                                                        <div>
-                                                            <p className="text-sm text-[#020617]">Title</p>
-                                                            {
-                                                                data?.status === 'Pending' &&
-                                                                <p className="text-sm text-[#71717A]">Withdrawal Pending</p>
-                                                            }
-                                                            {
-                                                                data?.status === 'Approved' &&
-                                                                <p className="text-sm text-[#71717A]">Successfully Completed Withdrawal</p>
-                                                            }
-                                                            {
-                                                                data?.status === 'Rejected' &&
-                                                                <p className="text-sm text-[#71717A]">Withdrawal Rejected</p>
-                                                            }
-                                                        </div>
-                                                        <div>
-                                                            <p className="text-sm text-[#020617]">ID</p>
-                                                            <p className="text-sm text-[#71717A]">{data._id}</p>
-                                                        </div>
-                                                        <div>
-                                                            <p className="text-sm text-[#020617]">To</p>
-                                                            <p className="text-sm text-[#71717A]">***********{data.bankInfo.account_number.toString().slice(-4)} {data?.bankInfo?.bank_name}</p>
-                                                        </div>
-                                                        <div>
-                                                            <p className="text-sm text-[#020617]">Date and Time</p>
-                                                            <p className="text-sm text-[#71717A]">{data.withdrawalDate} {data.withdrawalMonth} {data.withdrawalYear}</p>
-                                                        </div>
+                                    <dialog id={data._id} className="modal">
+                                        <div className="modal-box">
+                                            <form method="dialog">
+                                            {/* if there is a button in form, it will close the modal */}
+                                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                            </form>
+                                                <h3 className="font-bold text-xl text-[#020617]">Withdrawal Details</h3>
+                                                <p className="text-sm text-[#64748B]">Transaction Details or Rejection Details</p>
+                                                <div className="py-3">
+                                                    <p className="text-5xl font-bold text-center">{data.withdrawalAmount}</p>
+                                                    <div className="flex justify-center">
                                                         {
-                                                            data?.rejectResoan && 
-                                                            <div className="p-2 my-2 rounded-md bg-[#F1F1F1] flex gap-2">
-                                                                <QuestionMarkCircleIcon className="w-5 h-5"/>
-                                                                <div>
-                                                                    <p className="text-sm font-semibold text-[#252525]">Rejection Reason</p>
-                                                                    <p className="text-sm text-[#71717A]">{data.rejectResoan}</p>
+                                                            data?.status === 'Pending' &&
+                                                                <div className="flex items-center p-1">
+                                                                    <ClockIcon className="h-3 w-3 me-1 text-[#FEB951]"/>
+                                                                    <p className="text-sm font-semibold text-[#FEB951]">{data.status}</p>
                                                                 </div>
-                                                            </div>
+                                                        }
+                                                        {
+                                                            data?.status === 'Approved' &&
+                                                                <div className="flex items-center p-1">
+                                                                    <CheckBadgeIcon className="h-3 w-3 me-1 text-[#39C616]"/>
+                                                                    <p className="text-sm font-semibold text-[#39C616]">{data.status}</p>
+                                                                </div>
+                                                        }
+                                                        {
+                                                            data?.status === 'Rejected' &&
+                                                                <div className="flex items-center p-1">
+                                                                    <ExclamationTriangleIcon className="h-3 w-3 me-1 text-[#71717A]"/>
+                                                                    <p className="text-sm font-semibold text-[#71717A]">{data.status}</p>
+                                                                </div>
                                                         }
                                                     </div>
+                                                </div>
+                                                <div className="grid grid-cols gap-2">
+                                                    <div>
+                                                        <p className="text-sm text-[#020617]">Title</p>
+                                                        {
+                                                            data?.status === 'Pending' &&
+                                                            <p className="text-sm text-[#71717A]">Withdrawal Pending</p>
+                                                        }
+                                                        {
+                                                            data?.status === 'Approved' &&
+                                                            <p className="text-sm text-[#71717A]">Successfully Completed Withdrawal</p>
+                                                        }
+                                                        {
+                                                            data?.status === 'Rejected' &&
+                                                            <p className="text-sm text-[#71717A]">Withdrawal Rejected</p>
+                                                        }
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm text-[#020617]">ID</p>
+                                                        <p className="text-sm text-[#71717A]">{data._id}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm text-[#020617]">To</p>
+                                                        <p className="text-sm text-[#71717A]">***********{data.bankInfo.account_number.toString().slice(-4)} {data?.bankInfo?.bank_name}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm text-[#020617]">Date and Time</p>
+                                                        <p className="text-sm text-[#71717A]">{data.withdrawalDate} {data.withdrawalMonth} {data.withdrawalYear}</p>
+                                                    </div>
+                                                    {
+                                                        data?.rejectResoan && 
+                                                        <div className="p-2 my-2 rounded-md bg-[#F1F1F1] flex gap-2">
+                                                            <QuestionMarkCircleIcon className="w-5 h-5"/>
+                                                            <div>
+                                                                <p className="text-sm font-semibold text-[#252525]">Rejection Reason</p>
+                                                                <p className="text-sm text-[#71717A]">{data.rejectResoan}</p>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                        </div>
+                                    </dialog>
+                                </tr>
+                            )
+                        }                        
+                        </tbody>
+                    </table>
+                </div>
+                <div className="overflow-x-auto block lg:hidden">
+                    <table className="table">
+                        {/* head */}
+                        <thead>
+                            <tr className="">
+                                <th className="text-md">Status</th>
+                                <th className="text-md">Ammount</th>
+                                <th className="text-md text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {/* row 1 */}
+                        {
+                            withdrawalData && withdrawalData.map(data => 
+                                <tr key={data._id} className="hover">
+                                    <td className="font-semibold text-sm text-[#09090B]">
+                                    {
+                                        data?.status === 'Pending' &&
+                                            <div className="flex items-center p-1">
+                                                <ClockIcon className="h-3 w-3 me-1"/>
+                                                <p className="text-sm font-semibold">{data.status}</p>
                                             </div>
-                                        </dialog>
-                                    </tr>
-                                </>
+                                    }
+                                    {
+                                        data?.status === 'Approved' &&
+                                            <div className="flex items-center p-1">
+                                                <CheckBadgeIcon className="h-3 w-3 me-1"/>
+                                                <p className="text-sm font-semibold">{data.status}</p>
+                                            </div>
+                                    }
+                                    {
+                                        data?.status === 'Rejected' &&
+                                            <div className="flex items-center p-1">
+                                                <ExclamationTriangleIcon className="h-3 w-3 me-1"/>
+                                                <p className="text-sm font-semibold">{data.status}</p>
+                                            </div>
+                                    }
+                                    </td>
+                                    <td className="font-semibold text-sm text-[#09090B]">
+                                        <div className="flex items center gap-1">
+                                             <CurrencyRupeeIcon className="w-5 h-5"/><p className="font-semibold text-sm text-[#09090B]">{data?.balance?.amount}</p>
+                                        </div>
+                                    </td>
+                                    <td className="flex justify-end">
+                                        <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm">View Details</button>
+                                    </td>
+
+                                    <dialog id={data._id} className="modal">
+                                        <div className="modal-box">
+                                            <form method="dialog">
+                                            {/* if there is a button in form, it will close the modal */}
+                                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                            </form>
+                                                <h3 className="font-bold text-xl text-[#020617]">Withdrawal Details</h3>
+                                                <p className="text-sm text-[#64748B]">Transaction Details or Rejection Details</p>
+                                                <div className="py-3">
+                                                    <p className="text-5xl font-bold text-center">{data.withdrawalAmount}</p>
+                                                    <div className="flex justify-center">
+                                                        {
+                                                            data?.status === 'Pending' &&
+                                                                <div className="flex items-center p-1">
+                                                                    <ClockIcon className="h-3 w-3 me-1 text-[#FEB951]"/>
+                                                                    <p className="text-sm font-semibold text-[#FEB951]">{data.status}</p>
+                                                                </div>
+                                                        }
+                                                        {
+                                                            data?.status === 'Approved' &&
+                                                                <div className="flex items-center p-1">
+                                                                    <CheckBadgeIcon className="h-3 w-3 me-1 text-[#39C616]"/>
+                                                                    <p className="text-sm font-semibold text-[#39C616]">{data.status}</p>
+                                                                </div>
+                                                        }
+                                                        {
+                                                            data?.status === 'Rejected' &&
+                                                                <div className="flex items-center p-1">
+                                                                    <ExclamationTriangleIcon className="h-3 w-3 me-1 text-[#71717A]"/>
+                                                                    <p className="text-sm font-semibold text-[#71717A]">{data.status}</p>
+                                                                </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div className="grid grid-cols gap-2">
+                                                    <div>
+                                                        <p className="text-sm text-[#020617]">Title</p>
+                                                        {
+                                                            data?.status === 'Pending' &&
+                                                            <p className="text-sm text-[#71717A]">Withdrawal Pending</p>
+                                                        }
+                                                        {
+                                                            data?.status === 'Approved' &&
+                                                            <p className="text-sm text-[#71717A]">Successfully Completed Withdrawal</p>
+                                                        }
+                                                        {
+                                                            data?.status === 'Rejected' &&
+                                                            <p className="text-sm text-[#71717A]">Withdrawal Rejected</p>
+                                                        }
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm text-[#020617]">ID</p>
+                                                        <p className="text-sm text-[#71717A]">{data._id}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm text-[#020617]">To</p>
+                                                        <p className="text-sm text-[#71717A]">***********{data.bankInfo.account_number.toString().slice(-4)} {data?.bankInfo?.bank_name}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm text-[#020617]">Date and Time</p>
+                                                        <p className="text-sm text-[#71717A]">{data.withdrawalDate} {data.withdrawalMonth} {data.withdrawalYear}</p>
+                                                    </div>
+                                                    {
+                                                        data?.rejectResoan && 
+                                                        <div className="p-2 my-2 rounded-md bg-[#F1F1F1] flex gap-2">
+                                                            <QuestionMarkCircleIcon className="w-5 h-5"/>
+                                                            <div>
+                                                                <p className="text-sm font-semibold text-[#252525]">Rejection Reason</p>
+                                                                <p className="text-sm text-[#71717A]">{data.rejectResoan}</p>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                        </div>
+                                    </dialog>
+                                </tr>
                             )
                         }                        
                         </tbody>
