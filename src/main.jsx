@@ -24,6 +24,11 @@ import UpdateLabelPage from './UserAdminDashboard/UserLabelPage/UpdateLabelPage'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ru from 'javascript-time-ago/locale/ru'
+import AddGenreComponent from './AdminDashboard/AdminSetting/AddGenreComponent/AddGenreComponent';
+import AddLanguageComponent from './AdminDashboard/AdminSetting/AddLanguageComponent/AddLanguageComponent';
+import NoticeFromDreamRecord from './AdminDashboard/AdminSetting/NoticeFromDreamRecord/NoticeFromDreamRecord';
+import MonthlyBasedWithdraw from './AdminDashboard/AdminSetting/MonthlyBasedWithdraw/MonthlyBasedWithdraw';
+import AdvertismentComponent from './AdminDashboard/AdminSetting/AdvertismentComponent/AdvertismentComponent';
 TimeAgo.addDefaultLocale(en)
 TimeAgo.addLocale(ru)
 
@@ -206,6 +211,28 @@ const router = createBrowserRouter([
       {
         path: '/admin-dashboard/settings',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminSetting/></ProtectAdminRoute></Suspense>,
+        children: [
+          {
+            path: '/admin-dashboard/settings',
+            element: <AddGenreComponent/>
+          },
+          {
+            path: '/admin-dashboard/settings/language',
+            element: <AddLanguageComponent/>
+          },
+          {
+            path: '/admin-dashboard/settings/advertisment',
+            element: <AdvertismentComponent/>
+          },
+          {
+            path: '/admin-dashboard/settings/notice',
+            element: <NoticeFromDreamRecord/>
+          },
+          {
+            path: '/admin-dashboard/settings/withdraw',
+            element: <MonthlyBasedWithdraw/>
+          },
+        ]
       },
       {
         path: '/admin-dashboard/notice-details/:id',

@@ -14,7 +14,7 @@ const NoticeFromDreamRecord = () => {
     const [reFetch, setRefetch] = useState(1)
     useEffect(() => {
         setGetDataLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice/661089403281a4347e1d3498`)
+        axios.get(`http://localhost:5000/admin/api/v1/notice`)
         .then(res => {
             if(res.status === 200){
                 setGetDataLoading(false)
@@ -33,7 +33,7 @@ const NoticeFromDreamRecord = () => {
         const date = currentDate.slice(0,10)
         const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
         const formData = {...data, date, time}
-        axios.put(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice/661089403281a4347e1d3498`, formData)
+        axios.post(`http://localhost:5000/admin/api/v1/notice`, formData)
         .then(res => {
             if(res.status === 200){
                 const r = reFetch + 1;
@@ -70,11 +70,20 @@ const NoticeFromDreamRecord = () => {
                 </div>
             </form>
             <div>
-                <p className="text-slate-500 text-sm font-bold bg-white p-2 rounded-md">Current Notice {noticeData?.date} || {noticeData?.time}</p>
-                <div style={{cursor: 'pointer'}} onClick={() => navigate(`/admin-dashboard/notice-details/661089403281a4347e1d3498`)} className="p-2 border rounded-md">
-                    <p className="text-sm text-slate-500 font-bold">{noticeData?.noticeTitle}</p>
-                    <p className="text-xs text-slate-500">{noticeData?.noticeDescription.slice(0, 100)}...</p>
-                </div>
+                {
+                    noticeData && noticeData.map(data => 
+                        <div key={data._id} className='my-2'>
+                            <div style={{cursor: 'pointer'}} onClick={() => navigate(`/admin-dashboard/notice-details/661089403281a4347e1d3498`)} className="p-2 border rounded-md">
+                                <p className="text-sm text-slate-500 font-bold">{data?.noticeTitle}</p>
+                                <p className="text-xs text-slate-500">{data?.noticeDescription.slice(0, 100)}...</p>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm">{data?.date}</span>
+                                    <span className="text-sm">{data?.time}</span>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
             </div>
         </div>
     );

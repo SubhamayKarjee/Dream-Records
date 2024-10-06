@@ -72,7 +72,7 @@ const AddLanguageComponent = () => {
                 </form>
             </div>
             <p className="bg-slate-200 text-sm font-bold p-2 mt-2 rounded-md">Total Languages: {totalCount}</p>
-            <div style={{height: '200px'}} className="my-4 p-2 bg-white rounded-md overflow-y-auto">
+            <div className="my-4 p-2 bg-white rounded-md overflow-y-auto">
                 {
                     loading && <div className="flex justify-center items-center my-2"><span className="loading loading-spinner loading-sm me-2"></span></div>
                 }

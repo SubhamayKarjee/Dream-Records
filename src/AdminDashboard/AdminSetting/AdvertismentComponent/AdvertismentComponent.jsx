@@ -77,17 +77,17 @@ const AdvertismentComponent = () => {
                     {
                         getLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                     }
-                    <Image
-                        width={125}
-                        height={125}
-                        className="rounded-md"
-                        src={uploadedAdvertismentImg}
-                        fallback={fallbackImage}
-                        preview={false}
-                        alt="advertisment-image"
-                    />
-                    
-
+                    <div>
+                        <Image
+                            width={125}
+                            height={125}
+                            className="rounded-md"
+                            src={uploadedAdvertismentImg}
+                            fallback={fallbackImage}
+                            preview={false}
+                            alt="advertisment-image"
+                        />
+                    </div>
                     <div className="flex items-center justify-between">
                     <div className="flex items-center ">
                         {
