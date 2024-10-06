@@ -8,7 +8,7 @@ const MainNoticesMobile = () => {
 
     const [noticeData, setNoticeData] = useState();
     useEffect(() => {
-        axios.get(`http://localhost:5000/admin/api/v1/notice`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice`)
         .then(res => {
             if(res.status === 200){
                 setNoticeData(res.data.data)

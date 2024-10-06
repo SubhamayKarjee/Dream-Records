@@ -130,7 +130,7 @@ const ClaimReleasePage = () => {
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {          
         setLoading(true)
-          axios.get(`http://localhost:5000/common/api/v1/claim-release/search/${userNameIdRoll[1]}?status=${status}&search=${searchText}`)
+          axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release/search/${userNameIdRoll[1]}?status=${status}&search=${searchText}`)
             .then(res => {
                 setClaimData(res.data.data);
                 setTotalItems(res.data.dataCount)

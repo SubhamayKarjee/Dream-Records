@@ -12,7 +12,7 @@ const NoticeFromDreamRecord = () => {
     const [reFetch, setRefetch] = useState(1)
     useEffect(() => {
         setGetDataLoading(true)
-        axios.get(`http://localhost:5000/admin/api/v1/notice`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice`)
         .then(res => {
             if(res.status === 200){
                 setGetDataLoading(false)
@@ -31,7 +31,7 @@ const NoticeFromDreamRecord = () => {
         const date = currentDate.slice(0,10)
         const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
         const formData = {...data, date, time}
-        axios.post(`http://localhost:5000/admin/api/v1/notice`, formData)
+        axios.post(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice`, formData)
         .then(res => {
             if(res.status === 200){
                 const r = reFetch + 1;
@@ -43,7 +43,7 @@ const NoticeFromDreamRecord = () => {
     };
 
     const deleteNotice = (id) => {
-        axios.delete(`http://localhost:5000/admin/api/v1/notice/delete/${id}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice/delete/${id}`)
         .then(res => {
             if(res.status == 200){
                 toast.success('Deleted Notice');

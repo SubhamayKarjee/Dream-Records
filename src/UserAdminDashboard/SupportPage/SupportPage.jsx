@@ -31,9 +31,9 @@ const SupportPage = () => {
         const formData = new FormData();
         formData.append('file', file);
         if(attachment){
-            axios.delete(`http://localhost:5000/common/api/v1/ticket/delete-ticket-file?key=${attachment.key}`)
+            axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/delete-ticket-file?key=${attachment.key}`)
         }
-        axios.post(`http://localhost:5000/common/api/v1/ticket/upload-ticket-file`, formData)
+        axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/upload-ticket-file`, formData)
         .then(res => {
             if(res.status === 200){
                 setUploadLoading(false);
@@ -67,7 +67,7 @@ const SupportPage = () => {
     const [reFetch, setReFetch] = useState(1)
     useEffect( () => {
         setLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/ticket/ticket-list/${userNameIdRoll[1]}?page=${pageNumber}&limit=${perPageSupport}&status=${status}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/ticket-list/${userNameIdRoll[1]}?page=${pageNumber}&limit=${perPageSupport}&status=${status}`)
         .then(res => {
             setSupportData(res.data.data);
             setTotalItems(res.data.dataCount)
@@ -86,7 +86,7 @@ const SupportPage = () => {
             const date = new Date();
             const issue = [{message: firstText, attachment, date, userName}];
             const formData = {title, issue, status, date, firstText, masterUserId, userName}
-            axios.post('http://localhost:5000/common/api/v1/ticket', formData)
+            axios.post('https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket', formData)
             .then(res => {
                 if(res.status == 200){
                     toast.success('Succesfully Created The Ticket');
@@ -105,10 +105,10 @@ const SupportPage = () => {
 
     const [searchText, setSearchText] = useState()
     const handleKeyPress = (event) => {
-        console.log(`http://localhost:5000/common/api/v1/ticket/search-ticket/${userNameIdRoll[1]}?status=${status}&search=${searchText}`);
+        console.log(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/search-ticket/${userNameIdRoll[1]}?status=${status}&search=${searchText}`);
         if (event.key === 'Enter') {
           setLoading(true);
-          axios.get(`http://localhost:5000/common/api/v1/ticket/search-ticket/${userNameIdRoll[1]}?status=${status}&search=${searchText}`)
+          axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/search-ticket/${userNameIdRoll[1]}?status=${status}&search=${searchText}`)
             .then( res => {
               if(res.status == 200){
                 setLoading(false);
@@ -124,7 +124,7 @@ const SupportPage = () => {
     const onChange = (date, dateString) => {
         setLoading(true)
         // search-by-year
-        axios.get(`http://localhost:5000/common/api/v1/ticket/search-by-year/${userNameIdRoll[1]}?search=${dateString}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/search-by-year/${userNameIdRoll[1]}?search=${dateString}`)
         .then(res => {
             if(res.status == 200){
                 setSupportData(res.data.data)

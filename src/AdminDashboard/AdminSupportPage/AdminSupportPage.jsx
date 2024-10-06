@@ -16,7 +16,7 @@ const AdminSupportPage = () => {
     const [totalItems, setTotalItems] = useState()
     useEffect( () => {
         setLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/ticket/admin/ticket?page=${pageNumber}&limit=${perPageSupport}&status=${status}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/admin/ticket?page=${pageNumber}&limit=${perPageSupport}&status=${status}`)
         .then(res => {
             setSupportData(res.data.data);
             setTotalItems(res.data.dataCount)
@@ -28,7 +28,7 @@ const AdminSupportPage = () => {
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
           setLoading(true);
-          axios.get(`http://localhost:5000/common/api/v1/ticket/admin/search-ticket-title?status=${status}&search=${searchText}`)
+          axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/admin/search-ticket-title?status=${status}&search=${searchText}`)
             .then( res => {
               if(res.status == 200){
                 setLoading(false);
@@ -45,7 +45,7 @@ const AdminSupportPage = () => {
         console.log('date', date, 'iii', dateString);
         setLoading(true)
         // search-by-year
-        axios.get(`http://localhost:5000/common/api/v1/ticket/admin/search-ticket-year?search=${dateString}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/admin/search-ticket-year?search=${dateString}`)
         .then(res => {
             if(res.status == 200){
                 setSupportData(res.data.data)

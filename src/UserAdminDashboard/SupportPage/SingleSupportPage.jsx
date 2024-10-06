@@ -18,7 +18,7 @@ const SingleSupportPage = () => {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/ticket/single-data/${id}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/single-data/${id}`)
         .then(res => {
         if(res.status === 200){
             setLoading(false)
@@ -62,7 +62,7 @@ const SingleSupportPage = () => {
         const data = {message: supportText, date, attachment, userName }
         supportData.issue.push(data)
         setSupportText('')
-        axios.put(`http://localhost:5000/common/api/v1/ticket/update-ticket/${id}`, supportData)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/update-ticket/${id}`, supportData)
         .then(res => {
             if(res.status === 200){
                 document.getElementById('text_box').value = ''
@@ -79,7 +79,7 @@ const SingleSupportPage = () => {
 
 
     const deleteTicket = (id) => {
-        axios.delete(`http://localhost:5000/common/api/v1/ticket/delete/${id}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/delete/${id}`)
         .then(res => {
             if(res.status == 200){
                 toast.success('Deleted the Ticket')

@@ -18,7 +18,7 @@ const SupportAnsPage = () => {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
-        axios.get(`http://localhost:5000/common/api/v1/ticket/single-data/${id}`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/single-data/${id}`)
         .then(res => {
         if(res.status === 200){
             setLoading(false)
@@ -64,7 +64,7 @@ const SupportAnsPage = () => {
         supportData.issue.push(data)
         const newData = {...supportData, status: 'Open'}
         setSupportText('')
-        axios.put(`http://localhost:5000/common/api/v1/ticket/update-ticket/${id}`, newData)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/update-ticket/${id}`, newData)
         .then(res => {
             if(res.status === 200){
                 document.getElementById('text_box').value = ''
@@ -81,7 +81,7 @@ const SupportAnsPage = () => {
 
 
     const deleteTicket = (id) => {
-        axios.delete(`http://localhost:5000/common/api/v1/ticket/delete/${id}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/delete/${id}`)
         .then(res => {
             if(res.status == 200){
                 toast.success('Deleted the Ticket')
@@ -113,7 +113,7 @@ const SupportAnsPage = () => {
         const adminName = adminNameIdRoll[0];
         const newData = {...supportData, status: value, ansAdmin: adminName, closedDate: date}
         setSupportText('')
-        axios.put(`http://localhost:5000/common/api/v1/ticket/update-ticket/${id}`, newData)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/update-ticket/${id}`, newData)
         .then(res => {
             if(res.status === 200){
                 toast.success('Ticket Status Updated')

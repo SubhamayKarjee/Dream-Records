@@ -13,22 +13,14 @@ import LoadingComponentsInsidePage from './LoadingComponents/LoadingComponentsIn
 import axios from 'axios';
 import ProtectAdminRoute from './ProtectRoute/ProtectAdminRoute';
 import ProtectUserRoute from './ProtectRoute/ProtectUserRoute';
-// import ChatSupport from './AdminDashboard/AdminSupportPage/ChatSupport';
-// import CallSupport from './AdminDashboard/AdminSupportPage/CallSupport';
 import SetNewPassword from './Authentication/LogIn/SetNewPassword';
-import CreateArtistPage from './UserAdminDashboard/UserArtistPage/CreateArtistPage';
-import UpdateArtistPage from './UserAdminDashboard/UserArtistPage/UpdateArtistPage';
-import CreateLabelPage from './UserAdminDashboard/UserLabelPage/CreateLabelPage';
-import UpdateLabelPage from './UserAdminDashboard/UserLabelPage/UpdateLabelPage';
+
+
+
 
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ru from 'javascript-time-ago/locale/ru'
-import AddGenreComponent from './AdminDashboard/AdminSetting/AddGenreComponent/AddGenreComponent';
-import AddLanguageComponent from './AdminDashboard/AdminSetting/AddLanguageComponent/AddLanguageComponent';
-import NoticeFromDreamRecord from './AdminDashboard/AdminSetting/NoticeFromDreamRecord/NoticeFromDreamRecord';
-import MonthlyBasedWithdraw from './AdminDashboard/AdminSetting/MonthlyBasedWithdraw/MonthlyBasedWithdraw';
-import AdvertismentComponent from './AdminDashboard/AdminSetting/AdvertismentComponent/AdvertismentComponent';
 TimeAgo.addDefaultLocale(en)
 TimeAgo.addLocale(ru)
 
@@ -63,6 +55,11 @@ const SupportAnsPage = React.lazy(() => import('./AdminDashboard/AdminSupportPag
 // Admin Setting Route__________________________________________________________________
 const AdminSetting = React.lazy(() => import('./AdminDashboard/AdminSetting/AdminSetting'));
 const NoticeDetailsPage = React.lazy(() => import('./AdminDashboard/AdminSetting/NoticeFromDreamRecord/NoticeDetailsPage'));
+const AddGenreComponent = React.lazy(() => import('./AdminDashboard/AdminSetting/AddGenreComponent/AddGenreComponent'));
+const AddLanguageComponent = React.lazy(() => import('./AdminDashboard/AdminSetting/AddLanguageComponent/AddLanguageComponent'));
+const NoticeFromDreamRecord = React.lazy(() => import('./AdminDashboard/AdminSetting/NoticeFromDreamRecord/NoticeFromDreamRecord'));
+const MonthlyBasedWithdraw = React.lazy(() => import('./AdminDashboard/AdminSetting/MonthlyBasedWithdraw/MonthlyBasedWithdraw'));
+const AdvertismentComponent = React.lazy(() => import('./AdminDashboard/AdminSetting/AdvertismentComponent/AdvertismentComponent'));
 // User Dashboard Routes import_________________________________________________________
 // _____________________________________________________________________________________
 const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdminHomePage/UserAdminHomePage'));
@@ -85,9 +82,13 @@ const EditReleaseThirdStep = React.lazy(() => import('./UserAdminDashboard/Relea
 const SingleReleasePage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/SingleReleasePage/SingleReleasePage'));
 // Artist Route_________________________________________________________________________
 const UserArtistPage = React.lazy(() => import('./UserAdminDashboard/UserArtistPage/UserArtistPage'));
+const CreateArtistPage = React.lazy(() => import('./UserAdminDashboard/UserArtistPage/CreateArtistPage'));
+const UpdateArtistPage = React.lazy(() => import('./UserAdminDashboard/UserArtistPage/UpdateArtistPage'));
 const DetailsSingleArtist = React.lazy(() => import('./UserAdminDashboard/UserArtistPage/DetailsSingleArtist'));
 // Labels Route_________________________________________________________________________
 const UserLabelsPage = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/UserLabelsPage'));
+const CreateLabelPage = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/CreateLabelPage'));
+const UpdateLabelPage = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/UpdateLabelPage'));
 const DetailsSingleLabels = React.lazy(() => import('./UserAdminDashboard/UserLabelPage/DetailsSingleLabels'));
 // Wallet Route_________________________________________________________________________
 const WalletPage = React.lazy(() => import('./UserAdminDashboard/WalletPage/WalletPage'));
@@ -193,16 +194,6 @@ const router = createBrowserRouter([
       {
         path: '/admin-dashboard/support/:status/:pageNumber/:perPageSupport',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminSupportPage/></ProtectAdminRoute></Suspense>,
-        // children: [ 
-        //   {
-        //     path: '/admin-dashboard/support/chat/:pageNumber/:perPageList/:status',
-        //     element: <ChatSupport/>
-        //   },
-        //   {
-        //     path: '/admin-dashboard/support/call/:pageNumber/:perPageList/:status',
-        //     element: <CallSupport/>
-        //   }
-        // ]
       },
       {
         path: '/admin-dashboard/support/:id',
@@ -214,23 +205,23 @@ const router = createBrowserRouter([
         children: [
           {
             path: '/admin-dashboard/settings',
-            element: <AddGenreComponent/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AddGenreComponent/></Suspense>
           },
           {
             path: '/admin-dashboard/settings/language',
-            element: <AddLanguageComponent/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AddLanguageComponent/></Suspense>
           },
           {
             path: '/admin-dashboard/settings/advertisment',
-            element: <AdvertismentComponent/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><AdvertismentComponent/></Suspense>
           },
           {
             path: '/admin-dashboard/settings/notice',
-            element: <NoticeFromDreamRecord/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><NoticeFromDreamRecord/></Suspense>
           },
           {
             path: '/admin-dashboard/settings/withdraw',
-            element: <MonthlyBasedWithdraw/>
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><MonthlyBasedWithdraw/></Suspense>
           },
         ]
       },
