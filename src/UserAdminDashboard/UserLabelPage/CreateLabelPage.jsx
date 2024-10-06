@@ -1,6 +1,5 @@
 import { Divider } from 'antd';
 import uploadIcon from '../../assets/common-icons/uploadIcon.png'
-import AdvertisementNotices from '../UserCommonComponent/AdvertisementNotices';
 import MainNotices from '../UserCommonComponent/MainNotices';
 import MainNoticesMobile from '../UserCommonComponent/MainNoticesMobile';
 import axios from "axios";
@@ -154,7 +153,6 @@ const CreateLabelPage = () => {
             <div style={sideBarShadow} className="md:basis-1/4 hidden md:block bg-white md:pt-16 px-3">
                 <h3 className='font-semibold text-xl pb-2'>Notices</h3>
                 <MainNotices/>
-                <AdvertisementNotices/>
             </div>
         </div>
     );

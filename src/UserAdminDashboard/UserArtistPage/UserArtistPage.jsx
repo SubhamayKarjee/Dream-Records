@@ -7,7 +7,6 @@ import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import './UserArtistPage.css'
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import MainNotices from "../UserCommonComponent/MainNotices";
-import AdvertisementNotices from "../UserCommonComponent/AdvertisementNotices";
 import MainNoticesMobile from "../UserCommonComponent/MainNoticesMobile";
 import { DocumentCheckIcon, PlusIcon } from "@heroicons/react/24/outline";
 
@@ -176,7 +175,6 @@ const UserArtistPage = () => {
             <div style={sideBarShadow} className="md:basis-1/4 hidden md:block md:pt-16 px-3">
               <h3 className='font-semibold text-xl pb-2'>Notices</h3>
                 <MainNotices/>
-                <AdvertisementNotices/>
             </div>
 
             {/* Sideber Div Mobile _______________________________*/}

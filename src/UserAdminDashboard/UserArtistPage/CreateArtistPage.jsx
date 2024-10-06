@@ -4,7 +4,6 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
-import AdvertisementNotices from "../UserCommonComponent/AdvertisementNotices";
 import MainNotices from "../UserCommonComponent/MainNotices";
 import MainNoticesMobile from "../UserCommonComponent/MainNoticesMobile";
 import { GlobeAmericasIcon } from "@heroicons/react/24/solid";
@@ -161,7 +160,6 @@ const CreateArtistPage = () => {
             <div style={sideBarShadow} className="md:basis-1/4 hidden md:block bg-white md:pt-16 px-3">
                 <h3 className='font-semibold text-xl pb-2'>Notices</h3>
                 <MainNotices/>
-                <AdvertisementNotices/>
             </div>
         </div>
     );

@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 import { Divider } from "antd";
 import MainNoticesMobile from "../UserCommonComponent/MainNoticesMobile";
 import MainNotices from "../UserCommonComponent/MainNotices";
-import AdvertisementNotices from "../UserCommonComponent/AdvertisementNotices";
 import uploadIcon from '../../assets/common-icons/uploadIcon.png'
 
 
@@ -159,7 +158,6 @@ const UpdateArtistPage = () => {
             <div style={sideBarShadow} className="md:basis-1/4 hidden md:block bg-white md:pt-16 px-3">
                 <h3 className='font-semibold text-xl pb-2'>Notices</h3>
                 <MainNotices/>
-                <AdvertisementNotices/>
             </div>
         </div>
     );
