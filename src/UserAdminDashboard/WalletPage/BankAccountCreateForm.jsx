@@ -31,41 +31,47 @@ const BankAccountCreateForm = () => {
             setLoading(false)
         }
     }
+
+    const inputStyle = {
+        height: '36px',
+        border: '1px solid #E2E8F0',
+    }
+
     return (
         <div>
             {
                 addBnakSuccess === false && 
                 <div>
                     <h3 className="font-bold text-lg">Add Bank Account</h3>
-                    <div className="md:px-3 md:pt-2 border">
+                    <div className=" md:pt-2">
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <p className="flex items-center my-1 text-sm font-semibold text-slate-500 ms-2">Account Holder Name <span className="ms-1 text-red-500">*</span></p>
-                            <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("account_holder_name", { required: true})}/>
+                            <p className="mt-3 text-sm font-semibold text-[#09090B]">Account Holder Name <span className="text-red-500">*</span></p>
+                            <input type="text" style={{inputStyle}} className="mt-1 input input-sm w-full border-[#E2E8F0]" placeholder="Enter Account Holder Name" {...register("account_holder_name", { required: true})}/>
                             {errors.account_holder_name && <span className='text-red-600 pt-2 block text-sm'>Account Holder Name Required</span>}
 
-                            <p className="flex items-center mt-2 text-sm font-semibold text-slate-500 ms-2">Account Number <span className="ms-1 text-red-500">*</span></p>
-                            <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("account_number", { required: true})}/>
+                            <p className="mt-3 text-sm font-semibold text-[#09090B]">Account Number <span className="text-red-500">*</span></p>
+                            <input type="text" style={{inputStyle}} className="mt-1 input input-sm w-full border-[#E2E8F0]" placeholder="Enter Account Number" {...register("account_number", { required: true})}/>
                             {errors.account_number && <span className='text-red-600 pt-2 block text-sm'>Account Number Required</span>}
                             {
                                 accountNumberMatchErr && <span className='text-red-600 pt-2 block text-sm'>{accountNumberMatchErr}</span>
                             }
-                            <p className="flex items-center mt-2 text-sm font-semibold text-slate-500 ms-2">Retype Account Number <span className="ms-1 text-red-500">*</span></p>
-                            <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("match_account_number", { required: true})}/>
+                            <p className="mt-3 text-sm font-semibold text-[#09090B]">Retype Account Number <span className="text-red-500">*</span></p>
+                            <input type="text" style={{inputStyle}} className="mt-1 input input-sm w-full border-[#E2E8F0]" placeholder="Enter Retype Account Number" {...register("match_account_number", { required: true})}/>
                             {errors.match_account_number && <span className='text-red-600 pt-2 block text-sm'>Account Number Required</span>}
 
-                            <p className="flex items-center mt-2 text-sm font-semibold text-slate-500 ms-2">Bank Name <span className="ms-1 text-red-500">*</span></p>
-                            <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("bank_name", { required: true})}/>
+                            <p className="mt-3 text-sm font-semibold text-[#09090B]">Bank Name <span className="text-red-500">*</span></p>
+                            <input type="text" style={{inputStyle}} className="mt-1 input input-sm w-full border-[#E2E8F0]" placeholder="Enter Bank Name" {...register("bank_name", { required: true})}/>
                             {errors.bank_name && <span className='text-red-600 pt-2 block text-sm'>Bank Name Required</span>}
 
-                            <p className="mt-2 text-sm font-semibold text-slate-500 ms-2">IFSC</p>
-                            <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("IFSC")}/>
+                            <p className="mt-3 text-sm font-semibold text-[#09090B]">IFSC</p>
+                            <input type="text" style={{inputStyle}} className="mt-1 input input-sm w-full border-[#E2E8F0]" placeholder="Enter IFSC" {...register("IFSC")}/>
 
-                            <p className="flex items-center mt-2 text-sm font-semibold text-slate-500 ms-2">Branch Name <span className="ms-1 text-red-500">*</span></p>
-                            <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("branch_name", { required: true})}/>
+                            <p className="mt-3 text-sm font-semibold text-[#09090B]">Branch Name <span className="text-red-500">*</span></p>
+                            <input type="text" style={{inputStyle}} className="mt-1 input input-sm w-full border-[#E2E8F0]" placeholder="Enter Branch Name" {...register("branch_name", { required: true})}/>
                             {errors.branch_name && <span className='text-red-600 pt-2 block text-sm'>Branch Name Required</span>}
 
-                            <p className="mt-2 text-sm font-semibold text-slate-500 ms-2">Swift Code</p>
-                            <input type="text" className="input input-sm rounded-full input-bordered w-full" {...register("swift_code")}/>
+                            <p className="mt-3 text-sm font-semibold text-[#09090B]">Swift Code <span className="text-red-500">*</span></p>
+                            <input type="text" style={{inputStyle}} className="mt-1 input input-sm w-full border-[#E2E8F0]" placeholder="Enter Swift Code" {...register("swift_code")}/>
                             <div className="flex items-center my-4">
                                 {
                                     loading && <span className="block loading loading-spinner loading-md me-2"></span>
