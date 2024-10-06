@@ -7,7 +7,6 @@ import './UserHomePage.css';
 import PopUp from '../PopUP/PopUp';
 import { DocumentCheckIcon, PlusIcon } from '@heroicons/react/24/outline';
 import MainNotices from '../UserCommonComponent/MainNotices';
-import AdvertisementNotices from '../UserCommonComponent/AdvertisementNotices';
 import MainNoticesMobile from '../UserCommonComponent/MainNoticesMobile';
 import banarImage from '../../assets/user-home-page-image/dreamR-homeBanner.png'
 
@@ -67,10 +66,9 @@ const UserHomePage = () => {
             <MainNoticesMobile/>
 
             {/* Notification Div Desktop _______________________________*/}
-            <div style={sideBarShadow} className="md:basis-1/4 hidden md:block bg-white md:pt-16 px-3">
+            <div style={sideBarShadow} className="md:basis-1/4 hidden md:block bg-white md:pt-16 px-3 h-[100]">
                 <h3 className='font-semibold text-xl pb-2'>Notices</h3>
                 <MainNotices/>
-                <AdvertisementNotices/>
             </div>
         </div>
     );

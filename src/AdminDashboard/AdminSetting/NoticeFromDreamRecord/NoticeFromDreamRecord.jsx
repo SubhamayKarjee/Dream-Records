@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { TrashIcon } from "@heroicons/react/24/outline";
 
 const NoticeFromDreamRecord = () => {
-
-    const navigate = useNavigate()
 
     const [noticeData, setNoticeData] = useState();
     const [getDataLoading, setGetDataLoading] = useState(false)
@@ -44,6 +42,17 @@ const NoticeFromDreamRecord = () => {
         })
     };
 
+    const deleteNotice = (id) => {
+        axios.delete(`http://localhost:5000/admin/api/v1/notice/delete/${id}`)
+        .then(res => {
+            if(res.status == 200){
+                toast.success('Deleted Notice');
+                const r = reFetch + 1;
+                setRefetch(r)
+            }
+        })
+    }
+
     if(getDataLoading){
         return <LoadingComponentsInsidePage/>
     }
@@ -73,9 +82,12 @@ const NoticeFromDreamRecord = () => {
                 {
                     noticeData && noticeData.map(data => 
                         <div key={data._id} className='my-2'>
-                            <div style={{cursor: 'pointer'}} onClick={() => navigate(`/admin-dashboard/notice-details/661089403281a4347e1d3498`)} className="p-2 border rounded-md">
-                                <p className="text-sm text-slate-500 font-bold">{data?.noticeTitle}</p>
-                                <p className="text-xs text-slate-500">{data?.noticeDescription.slice(0, 100)}...</p>
+                            <div className="p-2 border rounded-md">
+                                <div className="flex justify-between">
+                                    <p className="text-sm text-slate-500 font-bold">{data?.noticeTitle}</p>
+                                    <TrashIcon className="w-5 h-5 cursor-pointer" onClick={() => deleteNotice(data._id)} />
+                                </div>
+                                    <p className="text-xs text-slate-500">{data?.noticeDescription.slice(0, 100)}...</p>
                                 <div className="flex justify-between items-center">
                                     <span className="text-sm">{data?.date}</span>
                                     <span className="text-sm">{data?.time}</span>
