@@ -3,15 +3,12 @@ import { Drawer, Image } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import fallbackImage from '../../assets/fallbackImage.jpg'
-import { useNavigate } from "react-router-dom";
 
 const MainNoticesMobile = () => {
 
-    const navigate = useNavigate()
-
     const [noticeData, setNoticeData] = useState();
     useEffect(() => {
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice/661089403281a4347e1d3498`)
+        axios.get(`http://localhost:5000/admin/api/v1/notice`)
         .then(res => {
             if(res.status === 200){
                 setNoticeData(res.data.data)
@@ -53,18 +50,24 @@ const MainNoticesMobile = () => {
                         alt="advertisment-image"
                     />
                 </div>
-                <div onClick={onClose} className='pt-2'>
-                    <div className='flex bg-[#F2F2F2] rounded-md'>
-                        <BellAlertIcon className='w-12 h-12 ps-1 '/>
-                        <div style={{cursor: 'pointer'}} onClick={() => navigate(`/notice/661089403281a4347e1d3498`)} className="p-2">
-                            <p className=" font-semibold text-[#252525]">{noticeData?.noticeTitle}</p>
-                            <p className="text-[#71717A]">{noticeData?.noticeDescription.slice(0, 50)}...</p>
-                            <div className='flex justify-between items-center pt-2'>
-                                <p className="text-sm text-[#71717A]">{noticeData?.date}</p>
-                                <p className="text-sm text-[#71717A]">{noticeData?.time}</p>
+                <div>
+                    {
+                        noticeData && noticeData.map(data => 
+                        <div key={data._key} className='pt-2'>
+                            <div className='flex bg-[#F2F2F2] rounded-md'>
+                                <BellAlertIcon className='w-12 h-12 ps-1 '/>
+                                <div style={{cursor: 'pointer'}} className="p-2">
+                                    <p className=" font-semibold text-[#252525]">{data?.noticeTitle}</p>
+                                    <p className="text-[#71717A]">{data?.noticeDescription.slice(0, 50)}...</p>
+                                    <div className='flex justify-between items-center pt-2'>
+                                        <p className="text-sm text-[#71717A]">{data?.date}</p>
+                                        <p className="text-sm text-[#71717A]">{data?.time}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        )
+                    }
                 </div>
             </Drawer>
         </div>
