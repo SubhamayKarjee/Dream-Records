@@ -57,21 +57,12 @@ const DashbardHomePage = () => {
     // Get Release List ______________________________________________________________
     useEffect(() => {
         setPendingSupportLoading(true)
-        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/chat-support-list?page=1&limit=2&status=Pending`)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/admin/ticket?page=1&limit=2&status=Pending`)
             .then( res => {
-              if(res.status == 200){
-                const chatCount = res.data.dataCount;
-                setPendingSupportLoading(false)
-                axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/support/call-support-list?page=1&limit=2&status=Pending`)
-                    .then( res => {
-                    if(res.status == 200){
-                        const total = parseInt(chatCount) + res.data.dataCount
-                        setPendingSupport(total);
-                        setPendingSupportLoading(false)
-                    }
-                    })
-                    .catch(er => console.log(er));
-                    }
+                if(res.status == 200) {
+                    setPendingSupport(res.data.dataCount)
+                    setPendingSupportLoading(false)
+                }
             })
             .catch(er => console.log(er));
         
