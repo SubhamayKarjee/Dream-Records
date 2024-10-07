@@ -33,7 +33,7 @@ const UserProfile = () => {
 
     return (
         <div className="md:h-full">
-            <div className='md:h-full overflow-y-auto md:border-r p-2 md:pt-16 custom-scrollbar'>
+            <div className='md:h-full overflow-y-auto md:border-r px-3 md:pt-16 custom-scrollbar'>
                 <h3 className='font-semibold text-xl pb-2 text-[#252525]'>My Account</h3>
                 <div className="p-5 rounded-lg border">
                     <div className='flex items-center'>
