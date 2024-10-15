@@ -61,7 +61,6 @@ const SignUp = () => {
         }
 
         const status = 'Approved';
-        console.log(data);
         const masterUserId = userData?.data?.data?._id;
         const userName = userData?.data?.data?.userName;
         const labelName = data?.labelName
@@ -72,11 +71,9 @@ const SignUp = () => {
                 if(res.status == 200){
                     const formData = {...data, country, state, phone: value}
                     delete formData.labelName
-                    console.log('label post');
                     axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, formData)
                         .then(res => {
                             if(res.status == 200){
-                                console.log('update user');
                                 navigate(`/set-password/${id}`);
                                 setLoading(false)
                             }
