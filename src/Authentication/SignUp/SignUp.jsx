@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
@@ -16,7 +16,8 @@ import './SignUp.css'
 const SignUp = () => {
     // Get Data From React Router Loader _______________
     const userData = useLoaderData();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const {id} = useParams()
 
     // Phone Number Input 
     const [value, setValue] = useState(userData?.data?.data?.phone);
@@ -59,20 +60,24 @@ const SignUp = () => {
             setStateError('Please select your State')
         }
 
-        const status = 'Approved'
-        const masterUserId = userData.data.data._id;
-        const userName = userData.data.data.userName;
-        const labelName = data.labelName
+        const status = 'Approved';
+        console.log(data);
+        const masterUserId = userData?.data?.data?._id;
+        const userName = userData?.data?.data?.userName;
+        const labelName = data?.labelName
         const labelData = { labelName, masterUserId, status, userName};
         axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/create-labels', labelData)
             .then(res => {
+                console.log(res);
                 if(res.status == 200){
                     const formData = {...data, country, state, phone: value}
                     delete formData.labelName
-                    axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userData.data.data._id}`, formData)
+                    console.log('label post');
+                    axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, formData)
                         .then(res => {
                             if(res.status == 200){
-                                navigate(`set-password/${userData.Data.data._id}`);
+                                console.log('update user');
+                                navigate(`/set-password/${id}`);
                                 setLoading(false)
                             }
                         })
@@ -191,9 +196,7 @@ const SignUp = () => {
                                         }
                                     </div>
                                     <div className="flex justify-center py-5">
-                                        {
-                                            !userData?.data ? <input className="btn btn-md btn-neutral w-full bg-[#0F172A]" type="submit" value={'Finish Setup'} disabled/> : <input className="btn btn-md btn-neutral w-full bg-[#0F172A]" type="submit" value={'Finish Setup'} />
-                                        }
+                                         <input className="btn btn-md btn-neutral w-full bg-[#0F172A]" type="submit" value={'Finish Setup'} />
                                     </div>
                                     <p>Finish your setup to upload your first Track</p>
 

@@ -45,13 +45,13 @@ const SetPassword = () => {
         
         if(data.password1 === data.password2){
             const password = data.password1;
-            const email = data.email
+            const email = userData?.data?.data?.email
             // _________________
             await createUserWithEmailAndPassword(email, password).then(res => {
                 const uid = res.user.uid
-                const userData = {openingDate, openingTime, uid};
+                const formData = {openingDate, openingTime, uid};
                 setLoadingHandle(true)
-                axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, userData).then( async res => {
+                axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, formData).then( async res => {
                     const displayName = `${data.userName}'__'${id}'__'${roll}`
                     if(res.status == 200){
                         setLoadingHandle(false);
