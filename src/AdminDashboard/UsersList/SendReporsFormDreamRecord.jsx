@@ -93,7 +93,7 @@ const SendReporsFormDreamRecord = ({id, isOpenModalReport, clickIdReport}) => {
                           <div className="p-2 bg-gradient-to-r from-slate-100 to-slate-50 rounded-md mb-2 shadow">
                             {
                               reportHistory && reportHistory.map((data) => <div key={data._id} className='flex items-center justify-between'>
-                                    <p key={data._id} className="text-base flex items-center subpixel-antialiased me-2">Report Based on {data.date} {data.month} {data.year}</p>
+                                    <p key={data._id} className="text-base flex items-center subpixel-antialiased me-2">Report Based on <span className="font-bold px-2">{data.reportDate}</span></p>
                                     <a className="px-2 bg-white border rounded-md flex items-center font-bold text-sm" href={data.fileUdatal} download={data.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
                                 </div>
                               )
