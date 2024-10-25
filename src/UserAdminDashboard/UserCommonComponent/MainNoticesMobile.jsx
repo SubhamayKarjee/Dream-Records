@@ -1,8 +1,9 @@
-import { BellAlertIcon } from "@heroicons/react/24/outline";
 import { Drawer, Image } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import bellIcon from '../../assets/common-icons/bell.png'
+
 
 const MainNoticesMobile = () => {
 
@@ -37,7 +38,8 @@ const MainNoticesMobile = () => {
 
     return (
         <div>
-            <BellAlertIcon onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer'/>
+            {/* <BellAlertIcon onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer'/> */}
+            <img onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer' src={bellIcon} alt={bellIcon} />
             <Drawer className='' title="Notification" onClose={onClose} open={open}>
                 <div onClick={onClose}>
                     <Image
@@ -55,7 +57,7 @@ const MainNoticesMobile = () => {
                         noticeData && noticeData.map(data => 
                             <div key={data._id} className='flex bg-[#F2F2F2] rounded-md my-2 p-2 gap-2' onClick={()=>document.getElementById(data._id).showModal()}>  
                             <div>
-                                <BellAlertIcon className='w-6 h-6'/>    
+                                <img src={bellIcon} alt={bellIcon} />  
                             </div>          
                             <div className=''>
                                 <div className="cursor-pointer">

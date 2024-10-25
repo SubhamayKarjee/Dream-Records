@@ -1,8 +1,8 @@
-import { BellAlertIcon } from "@heroicons/react/24/outline";
 import { Image } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import bellIcon from '../../assets/common-icons/bell.png'
 
 const MainNotices = () => {
 
@@ -34,7 +34,7 @@ const MainNotices = () => {
                     noticeData && noticeData.map(data => 
                         <div key={data._id} className='flex bg-[#F2F2F2] rounded-md my-2 p-2 gap-2' onClick={()=>document.getElementById(data._id).showModal()}>  
                             <div>
-                                <BellAlertIcon className='w-6 h-6'/>    
+                                <img src={bellIcon} alt={bellIcon} />
                             </div>          
                             <div className=''>
                                 <div className="cursor-pointer">
