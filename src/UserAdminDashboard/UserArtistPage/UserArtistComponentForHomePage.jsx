@@ -1,4 +1,7 @@
-import { UserPlusIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { 
+    RiUserAddLine,
+    RiGroupLine
+} from "@remixicon/react";
 import { Image } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -30,12 +33,22 @@ const UserArtistComponentForHomePage = () => {
     return (
         <div className="px-4 pt-4 border rounded-lg shadow my-3">
             <div className="flex items-center">
-                <UsersIcon className="h-5 w-5 text-slate-500 me-2"/>
-                <p className="text-sm font-semibold text-slate-500">Artists</p>
+                <RiGroupLine
+                    size={24}
+                    color="#252525"
+                    className='me-2'
+                />
+                <p className="font-bold text-[#252525]">Artists</p>
             </div>
             <div className="flex gap-4 flex-wrap py-3">
                 <div>                
-                    <p style={{cursor: 'pointer', width: '90px', height: '78px', borderRadius: '12px'}} onClick={() => navigate('/create-artist')} className="outline-dashed outline-1 outline-slate-500 flex items-center justify-center"><UserPlusIcon className="w-10 h-10 text-slate-500"/></p>
+                    <p style={{cursor: 'pointer', width: '90px', height: '78px', borderRadius: '12px'}} onClick={() => navigate('/create-artist')} className="outline-dashed outline-1 outline-slate-500 flex items-center justify-center">
+                        <RiUserAddLine
+                            size={48}
+                            color="#252525"
+                            className='me-2'
+                        />
+                    </p>
                     <p className="text-center pt-2 text-sm">Add New</p>
                 </div>
                 {

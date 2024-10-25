@@ -5,7 +5,10 @@ import UserArtistComponentForHomePage from '../UserArtistPage/UserArtistComponen
 import LatestApprovedRelease from './LatestApprovedRelease';
 import './UserHomePage.css';
 import PopUp from '../PopUP/PopUp';
-import { DocumentCheckIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { 
+    RiAddLine,
+    RiFileCheckLine,
+} from "@remixicon/react";
 import MainNotices from '../UserCommonComponent/MainNotices';
 import MainNoticesMobile from '../UserCommonComponent/MainNoticesMobile';
 import banarImage from '../../assets/user-home-page-image/dreamR-homeBanner.png'
@@ -52,8 +55,20 @@ const UserHomePage = () => {
                             }
                             <p className='font-semibold text-sm text-white'>Welcome to Dream Records</p>
                             <div className='py-1 flex items-center'>
-                                <button onClick={() => navigate('/create-release')} className='btn btn-neutral py-1 rounded btn-sm border-none me-2 flex items-center bg-[#252525]'><PlusIcon className='w-5 h-5'/> Create</button>
-                                <button onClick={() => navigate('/releases/All/1/6')} className='btn btn-neutral py-1 rounded btn-sm border-none flex items-center bg-[#252525]'><DocumentCheckIcon className='w-5 h-5'/> Releases</button>
+                                <button onClick={() => navigate('/create-release')} className='btn btn-neutral py-1 px-4 rounded btn-sm border-none me-2 flex items-center bg-[#252525] text-white'>
+                                    <RiAddLine
+                                        size={20}
+                                        color="white"
+                                    />
+                                    Create
+                                </button>
+                                <button onClick={() => navigate('/releases/All/1/6')} className='btn btn-neutral py-1 px-4 rounded btn-sm border-none flex items-center bg-[#252525] text-white'>
+                                    <RiFileCheckLine
+                                        size={20}
+                                        color="white"
+                                    />
+                                    Releases
+                                </button>
                             </div>
                         </div>
                     </div>

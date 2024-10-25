@@ -1,4 +1,6 @@
-import { DocumentCheckIcon } from "@heroicons/react/24/outline";
+import { 
+    RiFileCheckLine
+} from "@remixicon/react";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import ReleaseCardComponent from "../ReleasesPage/ReleaseCardComponent/ReleaseCardComponent";
@@ -35,8 +37,12 @@ const LatestApprovedRelease = () => {
     return (
         <div className="">
             <div className="flex items-center">
-                <DocumentCheckIcon className="h-5 w-5 text-slate-500 me-2"/>
-                <p className="text-sm font-semibold text-slate-500">Latest Approved</p>
+                <RiFileCheckLine
+                    size={24}
+                    color="#252525"
+                    className='me-2'
+                />
+                <p className="font-bold text-[#252525]">Latest Approved</p>
             </div>
             <ReleaseCardComponent releaseData={releaseData} totalItems={totalItems} fetchLoading={fetchLoading} currentPage={currentPage} itemPerPage={itemPerPage}/>
         </div>
