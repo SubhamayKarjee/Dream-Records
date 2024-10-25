@@ -44,6 +44,8 @@ const SignUp = () => {
             city: userData?.data?.data?.city,
             postalCode: userData?.data?.data?.postalCode,
             firstLabel: userData?.data?.data?.firstLabel,
+            addressLine1: userData?.data?.data?.addressLine1,
+            addressLine2: userData?.data?.data?.addressLine2,
         }});
     const onSubmit = async (data) => {
         setLoading(true)
@@ -136,7 +138,17 @@ const SignUp = () => {
 
                                     <div className="pt-4">
                                         <p className="text-sm text-[#020617] font-semibold pb-1">Address</p>
-                                        <div className="grid gap-2 grid-cols-2">
+                                        <div>
+                                            <p className="text-sm text-[#020617] font-semibold pb-1">Address Line 1 *</p>
+                                            <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Last Name" {...register("addressLine1", { required: true})}/>
+                                            {errors.addressLine1 && <span className='text-red-600 pb-2 block'>Please fill in the Address Line 1</span>}
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-[#020617] font-semibold pb-1 pt-3">Address Line 2</p>
+                                            <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Last Name" {...register("addressLine2")}/>
+                                        </div>
+
+                                        <div className="grid gap-2 grid-cols-2 mt-3">
                                             <div>
                                                 <p className="text-sm text-[#020617] font-semibold pb-1">Country</p>
                                                 <CountrySelect
