@@ -84,7 +84,7 @@ const ArtistList = ({handleCancel, reFetchArtist}) => {
               <div>
                   <Empty className="pt-12" />
                   <div className="flex justify-center items-center my-2">
-                    <a className="btn btn-sm btn-neutral rounded-full" href="https://app.dreamrecords.in/artist" target={'_blank'}>Add Artist</a>
+                    <a className="btn btn-sm btn-neutral rounded-full" href="https://app.dreamrecords.in/create-artist" target={'_blank'}>Add Artist</a>
                   </div>
               </div>
             }

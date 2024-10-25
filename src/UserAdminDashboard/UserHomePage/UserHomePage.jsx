@@ -12,7 +12,7 @@ import banarImage from '../../assets/user-home-page-image/dreamR-homeBanner.png'
 
 const UserHomePage = () => {
 
-    const { userNameIdRoll} = useContext(AuthContext);
+    const { userNameIdRoll, userFirstName} = useContext(AuthContext);
 
     const navigate = useNavigate()
 
@@ -48,12 +48,12 @@ const UserHomePage = () => {
                     <div className='p-4 flex items-end absolute bottom-2 left-2'>
                         <div>
                             {
-                                userNameIdRoll ? <h1 className='text-xl font-bold text-white'>Hi, {userNameIdRoll[0]}</h1> : <h1 className='text-xl font-bold text-white'>No User</h1>
+                                userNameIdRoll ? <h1 className='text-xl font-bold text-white'>Hi, {userFirstName}</h1> : <h1 className='text-xl font-bold text-white'>No User</h1>
                             }
                             <p className='font-semibold text-sm text-white'>Welcome to Dream Records</p>
                             <div className='py-1 flex items-center'>
                                 <button onClick={() => navigate('/create-release')} className='btn btn-neutral py-1 rounded btn-sm border-none me-2 flex items-center bg-[#252525]'><PlusIcon className='w-5 h-5'/> Create</button>
-                                <button onClick={() => navigate('/releases')} className='btn btn-neutral py-1 rounded btn-sm border-none flex items-center bg-[#252525]'><DocumentCheckIcon className='w-5 h-5'/> Releases</button>
+                                <button onClick={() => navigate('/releases/All/1/6')} className='btn btn-neutral py-1 rounded btn-sm border-none flex items-center bg-[#252525]'><DocumentCheckIcon className='w-5 h-5'/> Releases</button>
                             </div>
                         </div>
                     </div>

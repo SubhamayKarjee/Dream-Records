@@ -35,6 +35,8 @@ const UserAdminHomePage = () => {
     const [uploadedProfileImg, setUploadedProfileImg] = useState(user?.photoURL);
     const [mainProfileImage, setMainProfileImage] = useState(user?.photoURL);
 
+    const [userFirstName, setUserFirstName] = useState()
+
     useEffect(() => {
         if(loading){
             return <LoadingComponentsForPage/>
@@ -65,6 +67,7 @@ const UserAdminHomePage = () => {
             .then(res => {
                 if(res.status === 200){
                     const data = res.data.data;
+                    setUserFirstName(res.data.data.first_name)
                     const formData = {...data, lastLogin}
                     axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`, formData)
                 }
@@ -105,6 +108,7 @@ const UserAdminHomePage = () => {
     const contextValue = {
         user,
         userNameIdRoll,
+        userFirstName,
         uploadedProfileImg,
         setUploadedProfileImg,
         mainProfileImage,
