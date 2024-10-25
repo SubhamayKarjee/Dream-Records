@@ -42,7 +42,8 @@ const SignUp = () => {
             first_name: userData?.data?.data?.first_name, 
             last_name: userData?.data?.data?.last_name,
             city: userData?.data?.data?.city,
-            postalCode: userData?.data?.data?.postalCode
+            postalCode: userData?.data?.data?.postalCode,
+            firstLabel: userData?.data?.data?.firstLabel,
         }});
     const onSubmit = async (data) => {
         setLoading(true)
@@ -60,29 +61,19 @@ const SignUp = () => {
             setStateError('Please select your State')
         }
 
-        const status = 'Approved';
-        const masterUserId = userData?.data?.data?._id;
-        const userName = userData?.data?.data?.userName;
-        const labelName = data?.labelName
-        const labelData = { labelName, masterUserId, status, userName};
-        axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/create-labels', labelData)
+        
+        const formData = {...data, country, state, phone: value}
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, formData)
             .then(res => {
-                console.log(res);
                 if(res.status == 200){
-                    const formData = {...data, country, state, phone: value}
-                    delete formData.labelName
-                    axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, formData)
-                        .then(res => {
-                            if(res.status == 200){
-                                navigate(`/set-password/${id}`);
-                                setLoading(false)
-                            }
-                        })
-                        .catch(er => console.log(er)) 
-                        setLoading(false)
+                    navigate(`/set-password/${id}`);
+                    setLoading(false)
                 }
-                })
-                .catch(er => console.log(er))        
+            })
+            .catch(er => console.log(er)) 
+            setLoading(false)
+                
+     
     }
 
     const inputStyle ={
@@ -139,8 +130,8 @@ const SignUp = () => {
 
                                     <div className="pt-3">
                                         <p className="text-sm text-[#020617] font-semibold pb-1">Label Name</p>
-                                        <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Label Name" {...register("labelName", { required: true})}/>
-                                        {errors.labelName && <span className='text-red-600 pb-2 block'>Please fill in the Label Name</span>}
+                                        <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Label Name" {...register("firstLabel", { required: true})} readOnly/>
+                                        {errors.firstLabel && <span className='text-red-600 pb-2 block'>Please fill in the Label Name</span>}
                                     </div>
 
                                     <div className="pt-4">

@@ -33,9 +33,21 @@ const CreateUserForm = () => {
                     setMessage(res.data.message);
                     setUserEmail(res.data.email)
                     setUserId(res.data.data.insertedId);
-                    setLoading(false);
-                    setFormHidden(true);
-                    reset();
+                    if(data.firstLabel){
+                        const status = 'Approved';
+                        const masterUserId = res.data.data.insertedId;
+                        const userName = data.userName;
+                        const labelName = data.firstLabel
+                        const labelData = { labelName, masterUserId, status, userName};
+                        axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/create-labels', labelData)
+                        .then(res => {
+                            if(res.status == 200){
+                                setLoading(false);
+                                setFormHidden(true);
+                                reset();
+                            }
+                        })
+                    }
                 }
             }
             
@@ -45,6 +57,9 @@ const CreateUserForm = () => {
     const handleFormDiv = () => {
         setFormHidden(false)
     }
+
+    const [rollValue, setRollValue] = useState();
+
 
 
     return (
@@ -60,9 +75,13 @@ const CreateUserForm = () => {
                 formHidden == false ? <form onSubmit={handleSubmit(onSubmit)}>
 
                         <p className="mt-3 text-sm font-semibold text-slate-500">Select Role <span className="text-red-500">*</span></p>
-                        <select className="select select-sm select-bordered w-full" {...register("roll", { required: true})}>
-                            <option>User</option>
-                            <option>Admin</option>
+                        <select
+                            className="select select-sm select-bordered w-full"
+                            {...register("roll", { required: true })}
+                            onChange={(e) => setRollValue(e.target.value)}
+                        >
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>
                         </select>
                         {errors.roll && <span className='text-red-600 pt-2 block'>Please Select Role</span>}
 
@@ -73,6 +92,14 @@ const CreateUserForm = () => {
 
                         <input type="email" placeholder="Enter User Email" className="input input-sm input-bordered rounded-full mt-2 w-full" {...register("email", { required: true})}/>
                         {errors.email && <span className='text-red-600 pt-2 block'>Please Fill Email</span>}
+
+                        {
+                            rollValue !== "Admin" &&
+                            <>
+                                <input type="text" placeholder="Enter Label Name" className="input input-sm input-bordered rounded-full mt-2 w-full" {...register("firstLabel", { required: true})}/>
+                                {errors.firstLabel && <span className='text-red-600 pt-2 block'>Please Enter Label</span>}
+                            </>
+                        }
                         {
                             loading && <LoadingComponentsInsidePage/>
                         }
@@ -86,7 +113,7 @@ const CreateUserForm = () => {
                             message &&  <p className="font-bold">{message} <span className="text-green-500 font-bold">{userEmail}</span></p>
                         }
                         <div className="flex justify-between items-center">
-                            <span className="font-sm bg-slate-200 p-2 rounded-md">https://app.dreamrecords.in/set-password/{userId}</span>
+                            <span className="font-sm bg-slate-200 p-2 rounded-md">https://app.dreamrecords.in/sign-up/{userId}</span>
                         </div>
                     </div>
             }
