@@ -1,18 +1,6 @@
 import './UserAdminHomePage.css'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo/Dream Records Logo (Dark).png';
-import { 
-    HomeIcon, 
-    Bars3BottomLeftIcon,
-    DocumentCheckIcon,
-    UsersIcon,
-    ChartPieIcon,
-    CurrencyDollarIcon,
-    RectangleGroupIcon,
-    TagIcon,
-    InformationCircleIcon,
-    UserIcon,
- } from '@heroicons/react/24/outline'
 import { useEffect, useState } from 'react';
 import { Drawer, Image } from 'antd';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
@@ -21,7 +9,20 @@ import LoadingComponentsForPage from '../../LoadingComponents/LoadingComponentsF
 import { createContext } from 'react';
 import fallbackImage from '../../assets/userImage.webp'
 import axios from 'axios';
-import { RiArrowDownSLine } from "@remixicon/react";
+import { 
+    RiAddLine,
+    RiArrowDownSLine,
+    RiHome2Line,
+    RiFileCheckLine,
+    RiGroupLine,
+    RiPriceTag3Line,
+    RiPieChartLine,
+    RiWallet3Line,
+    RiErrorWarningLine,
+    RiServiceLine,
+    RiUserLine,
+    RiMenu2Line
+} from "@remixicon/react";
 
 
 export const AuthContext = createContext();
@@ -77,9 +78,6 @@ const UserAdminHomePage = () => {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-
-
 
 
     // State for Labels and Artist for Create Release ___________________________
@@ -161,7 +159,11 @@ const UserAdminHomePage = () => {
                                 <div className='pt-3'>
                                     <Link to={'/create-release'} className='w-full'>
                                         <button style={{width: '90%'}} className='btn text-white md:text-sm lg:text-lg font-semibold btn-neutral bg-[#252525] w-full'>
-                                        + Create
+                                        <RiAddLine
+                                            size={24}
+                                            color="white"
+                                        />
+                                        Create
                                         </button>
                                     </Link>
                                 </div>
@@ -171,40 +173,76 @@ const UserAdminHomePage = () => {
                              {/* __________________________________________________________________________________________________________ */}
                             {/* Admin All Nav Link ________________________________________________________________________________________ */}
                             <div className='py-2'> 
-                                <NavLink style={({isActive}) => activeLink(isActive)} className='flex items-center py-2 ps-3 rounded-md' to={'/'}>
-                                    <HomeIcon className="h-7 w-7 pe-2" />
+                                <NavLink style={({isActive}) => activeLink(isActive)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/'}>
+                                    <RiHome2Line
+                                        size={24}
+                                        color="#252525"
+                                        className='me-2'
+                                    />
                                     Home
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/releases', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/releases/All/1/6'}>
-                                    <DocumentCheckIcon className="h-7 w-7 pe-2" />
+                                <NavLink style={() => activeLinkDynamic('/releases', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/releases/All/1/6'}>
+                                    <RiFileCheckLine
+                                        size={24}
+                                        color="#252525"
+                                        className='me-2'
+                                    />
                                     Releases
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/artist', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/artist/1/8'}>
-                                    <UsersIcon className="h-7 w-7 pe-2" />
+                                <NavLink style={() => activeLinkDynamic('/artist', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/artist/1/8'}>
+                                    <RiGroupLine
+                                        size={24}
+                                        color="#252525"
+                                        className='me-2'
+                                    />
                                     Artists
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/labels', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/labels/All/1/6'}>
-                                    <TagIcon className="h-7 w-7 pe-2" />    
+                                <NavLink style={() => activeLinkDynamic('/labels', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/labels/All/1/6'}>
+                                    <RiPriceTag3Line
+                                        size={24}
+                                        color="#252525"
+                                        className='me-2'
+                                    />  
                                     Labels
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/analytics', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/analytics/1/12'}>
-                                    <ChartPieIcon className="h-7 w-7 pe-2" />
+                                <NavLink style={() => activeLinkDynamic('/analytics', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/analytics/1/12'}>
+                                    <RiPieChartLine
+                                        size={24}
+                                        color="#252525"
+                                        className='me-2'
+                                    />
                                     Analytics
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/wallet', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/wallet'}>
-                                    <CurrencyDollarIcon className="h-7 w-7 pe-2" />
+                                <NavLink style={() => activeLinkDynamic('/wallet', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/wallet'}>
+                                    <RiWallet3Line
+                                        size={24}
+                                        color="#252525"
+                                        className='me-2'
+                                    />
                                     Wallet
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/claim-release', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/claim-release/All/1/8'}>
-                                    <InformationCircleIcon className="h-7 w-7 pe-2" />
+                                <NavLink style={() => activeLinkDynamic('/claim-release', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/claim-release/All/1/8'}>
+                                    <RiErrorWarningLine
+                                        size={24}
+                                        color="#252525"
+                                        className='me-2'
+                                    />
                                     Rights manager
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/support', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/support/All/1/8'}>
-                                    <RectangleGroupIcon className="h-7 w-7 pe-2" />
+                                <NavLink style={() => activeLinkDynamic('/support', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/support/All/1/8'}>
+                                    <RiServiceLine
+                                        size={24}
+                                        color="#252525"
+                                        className='me-2'
+                                    />
                                     Support
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/account', currentPath)} className='flex items-center py-2 ps-3 rounded-md' to={'/account'}>
-                                    <UserIcon className="h-7 w-7 pe-2" />
+                                <NavLink style={() => activeLinkDynamic('/account', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/account'}>
+                                    <RiUserLine
+                                        size={24}
+                                        color="#252525"
+                                        className='me-2'
+                                    />
                                     Account
                                 </NavLink>
                             </div>
@@ -265,61 +303,105 @@ const UserAdminHomePage = () => {
                             <div className='block mb-4 md:hidden flex justify-between items-center'>
                                 {/* Left Drawer Icon _________________________________________________________________________________________ */}
                                 <button type="primary" onClick={showDrawer}>
-                                    <Bars3BottomLeftIcon className="h-10 w-10" />
+                                    <RiMenu2Line
+                                        size={40}
+                                        color="#252525"
+                                        className='me-2'
+                                    />
                                 </button>
                                 {/* __________________________________________________________________________________________________________ */}
                                 {/* Drawer____________________________________________________________________________________________________ */}
-                                <Drawer className='bg-slate-950' onClose={onClose} open={open} placement={'left'}>
-                                    <div className="pt-4 bg-slate-950">
+                                <Drawer className='' onClose={onClose} open={open} placement={'left'}>
+                                    <div className="pt-4">
                                         <div className="avatar">
                                             <div className="w-32">
                                                 <img src={logo} />
                                             </div>
                                         </div>
-                                        <h1 className='text-xl font-extrabold text-white'>Dream Records</h1>
-                                        <p className='text-white text-sm'>Sell your music worldwide.</p>
+                                        <h1 className='text-xl font-extrabold'>Dream Records</h1>
+                                        <p className='text-sm'>Sell your music worldwide.</p>
                                         <div className='py-4'>
                                             <Link to={'/create-release'}>
-                                                <button onClick={onClose} style={{width: '90%'}} className='btn-sm border-none rounded-full text-slate-950 md:text-sm lg:text-lg font-semibold bg-gradient-to-r from-[#EF4136] to-[#fff]'>
-                                                    + Create
+                                                <button onClick={onClose} style={{width: '90%'}} className='btn text-white md:text-sm lg:text-lg font-semibold btn-neutral bg-[#252525] w-full'>
+                                                    <RiAddLine
+                                                        size={24}
+                                                        color="white"
+                                                    />
+                                                    Create
                                                 </button>
                                             </Link>
                                             
                                             <div className='mt-2 py-2'> 
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' htmlFor="menu_drower" aria-label="close sidebar" to={'/'}>
-                                                    <HomeIcon className="h-7 w-7 pe-2" />
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' htmlFor="menu_drower" aria-label="close sidebar" to={'/'}>
+                                                    <RiHome2Line
+                                                        size={24}
+                                                        color="#252525"
+                                                        className='me-2'
+                                                    />
                                                     Home
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/releases/All/1/6'}>
-                                                    <DocumentCheckIcon className="h-7 w-7 pe-2" />
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/releases/All/1/6'}>
+                                                    <RiFileCheckLine
+                                                        size={24}
+                                                        color="#252525"
+                                                        className='me-2'
+                                                    />
                                                     Releases
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/artist/1/8'}>
-                                                    <UsersIcon className="h-7 w-7 pe-2" />
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/artist/1/8'}>
+                                                    <RiGroupLine
+                                                        size={24}
+                                                        color="#252525"
+                                                        className='me-2'
+                                                    />
                                                     Artists
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/labels/All/1/6'}>
-                                                    <TagIcon className="h-7 w-7 pe-2" />    
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/labels/All/1/6'}>
+                                                    <RiPriceTag3Line
+                                                        size={24}
+                                                        color="#252525"
+                                                        className='me-2'
+                                                    />  
                                                     Labels
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/analytics/1/8'}>
-                                                    <ChartPieIcon className="h-7 w-7 pe-2" />
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/analytics/1/8'}>
+                                                    <RiPieChartLine
+                                                        size={24}
+                                                        color="#252525"
+                                                        className='me-2'
+                                                    />
                                                     Analytics
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/wallet'}>
-                                                    <CurrencyDollarIcon className="h-7 w-7 pe-2" />
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/wallet'}>
+                                                    <RiWallet3Line
+                                                        size={24}
+                                                        color="#252525"
+                                                        className='me-2'
+                                                    />
                                                     Wallet
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/claim-release/All/1/8'}>
-                                                    <InformationCircleIcon className="h-7 w-7 pe-2" />
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/claim-release/All/1/8'}>
+                                                    <RiErrorWarningLine
+                                                        size={24}
+                                                        color="#252525"
+                                                        className='me-2'
+                                                    />
                                                     Rights manager
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/support/All/1/8'}>
-                                                    <RectangleGroupIcon className="h-7 w-7 pe-2" />
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/support/All/1/8'}>
+                                                    <RiServiceLine
+                                                        size={24}
+                                                        color="#252525"
+                                                        className='me-2'
+                                                    />
                                                     Support
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='text-white flex items-center py-2 ps-3 rounded-md' to={'/account'}>
-                                                    <UserIcon className="h-7 w-7 pe-2" />
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/account'}>
+                                                    <RiUserLine
+                                                        size={24}
+                                                        color="#252525"
+                                                        className='me-2'
+                                                    />
                                                     Account
                                                 </NavLink>
                                             </div>
