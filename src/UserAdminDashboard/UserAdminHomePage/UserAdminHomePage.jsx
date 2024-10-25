@@ -21,6 +21,8 @@ import LoadingComponentsForPage from '../../LoadingComponents/LoadingComponentsF
 import { createContext } from 'react';
 import fallbackImage from '../../assets/userImage.webp'
 import axios from 'axios';
+import { RiArrowDownSLine } from "@remixicon/react";
+
 
 export const AuthContext = createContext();
 
@@ -216,36 +218,45 @@ const UserAdminHomePage = () => {
                             <div className='hidden md:block md:flex justify-end items-center absolute top-3 right-5'>
                                 <div className="flex-none gap-2">
                                     <div className="dropdown dropdown-end">
-                                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                        <div className="w-12 rounded-full">
-                                        {
-                                            mainProfileImage ? <Image
-                                                width={'100%'}
-                                                height={'100%'}
-                                                className="rounded-full p-2 bg-slate-100"
-                                                src={mainProfileImage}
-                                                fallback={fallbackImage}
-                                                preview={false}
-                                                alt="profile-image"
-                                            /> : <Image
-                                                    width={'100%'}
-                                                    height={'100%'}
-                                                    className="rounded-full p-2 bg-slate-100"
-                                                    src={user.photoURL}
-                                                    fallback={fallbackImage}
-                                                    preview={false}
-                                                    alt="profile-image"
-                                                /> 
-                                        }
+                                        <div tabIndex={0} role="button" className="">
+                                            <div className="flex gap-2 items-center justify-between h-[48px] bg-[#F1F1F1] border border-[#E0E0E0] rounded-[64px] p-1">
+                                                <div className='flex gap-2 items-center'>
+                                                    {
+                                                        mainProfileImage ? <Image
+                                                            width={'40px'}
+                                                            height={'40px'}
+                                                            className="rounded-full"
+                                                            src={mainProfileImage}
+                                                            fallback={fallbackImage}
+                                                            preview={false}
+                                                            alt="profile-image"
+                                                        /> : <Image
+                                                                width={'40px'}
+                                                                height={'40px'}
+                                                                className="rounded-full"
+                                                                src={user.photoURL}
+                                                                fallback={fallbackImage}
+                                                                preview={false}
+                                                                alt="profile-image"
+                                                            /> 
+                                                    }
+                                                    <h2>{userFirstName}</h2>
+                                                </div>
+                                                <div>
+                                                    <RiArrowDownSLine
+                                                        size={24}
+                                                        color="#252525"
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <ul tabIndex={0} className="border mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                        {
-                                           userNameIdRoll?  <h3 className='text-lg font-bold px-2 border-b'>{userNameIdRoll[0]}</h3> : ''
-                                        }
-                                        <li><Link className='font-bold py-2 my-2' to={'/account'}>Account</Link></li>
-                                        <li><button onClick={signOutHandle} className='btn btn-sm btn-error'>Logout</button></li>
-                                    </ul>
+                                        <ul tabIndex={0} className="border mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                                            {
+                                            userNameIdRoll?  <h3 className='text-lg font-bold px-2 border-b'>{userNameIdRoll[0]}</h3> : ''
+                                            }
+                                            <li><Link className='font-bold py-2 my-2' to={'/account'}>Account</Link></li>
+                                            <li><button onClick={signOutHandle} className='btn btn-sm btn-error'>Logout</button></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -317,30 +328,39 @@ const UserAdminHomePage = () => {
                                 </Drawer>
                                 {/* __________________________________________________________________________________________________________ */}
                                 {/* Right Admin Profile ______________________________________________________________________________________ */}
-                                <div className='flex justify-end items-center border-b'>
+                                <div className='flex justify-end items-center'>
                                     <div className="flex-none gap-2">
                                         <div className="dropdown dropdown-end">
-                                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                            <div className="w-12 rounded-full">
-                                                {
-                                                    mainProfileImage ? <Image
-                                                        width={'100%'}
-                                                        height={'100%'}
-                                                        className="rounded-full bg-slate-100"
-                                                        src={mainProfileImage}
-                                                        fallback={fallbackImage}
-                                                        preview={false}
-                                                        alt="profile-image"
-                                                    /> : <Image
-                                                            width={'100%'}
-                                                            height={'100%'}
-                                                            className="rounded-full bg-slate-100"
-                                                            src={user.photoURL}
+                                        <div tabIndex={0} role="button" className="">
+                                            <div className="flex gap-2 items-center justify-between h-[48px] bg-[#F1F1F1] border border-[#E0E0E0] rounded-[64px] p-1 mt-2">
+                                                <div className='flex gap-2 items-center'>
+                                                    {
+                                                        mainProfileImage ? <Image
+                                                            width={'40px'}
+                                                            height={'40px'}
+                                                            className="rounded-full"
+                                                            src={mainProfileImage}
                                                             fallback={fallbackImage}
                                                             preview={false}
                                                             alt="profile-image"
-                                                        /> 
-                                                }
+                                                        /> : <Image
+                                                                width={'40px'}
+                                                                height={'40px'}
+                                                                className="rounded-full"
+                                                                src={user.photoURL}
+                                                                fallback={fallbackImage}
+                                                                preview={false}
+                                                                alt="profile-image"
+                                                            /> 
+                                                    }
+                                                    <h2>{userFirstName}</h2>
+                                                </div>
+                                                <div>
+                                                    <RiArrowDownSLine
+                                                        size={24} // set custom `width` and `height`
+                                                        color="#252525" // set `fill` color
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                         <ul tabIndex={0} className="border mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
