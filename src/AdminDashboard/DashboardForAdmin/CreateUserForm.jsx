@@ -24,6 +24,8 @@ const CreateUserForm = () => {
             setLoading(false);
             return;
         }
+        const userName = data.userName;
+        const labelName = data.firstLabel;
         axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/users', data).then(res => {
             if(res.status == 200){
                 if(res.data.message === 'This User Name all ready exist!'){
@@ -36,8 +38,6 @@ const CreateUserForm = () => {
                     if(data.firstLabel){
                         const status = 'Approved';
                         const masterUserId = res.data.data.insertedId;
-                        const userName = data.userName;
-                        const labelName = data.firstLabel
                         const labelData = { labelName, masterUserId, status, userName};
                         axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/create-labels', labelData)
                         .then(res => {
