@@ -1,5 +1,5 @@
 import { ArrowUpTrayIcon, CheckIcon } from "@heroicons/react/24/outline";
-import { ArrowDownTrayIcon, TrashIcon} from "@heroicons/react/24/solid";
+import { ArrowDownTrayIcon} from "@heroicons/react/24/solid";
 import { Divider } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -76,16 +76,6 @@ const SingleSupportPage = () => {
         })
     }
 
-
-    const deleteTicket = (id) => {
-        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/delete/${id}`)
-        .then(res => {
-            if(res.status == 200){
-                toast.success('Deleted the Ticket')
-            }
-        })
-    }
-
     const messagesEndRef = useRef(true);
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -114,7 +104,7 @@ const SingleSupportPage = () => {
             <div style={{height: '100%'}} className='md:pt-16 px-3 '>
                 <div className='bg-white h-[10%]'>
                     <div className="flex justify-between items-center">
-                        <h2 className="text-md md:text-xl font-bold flex items-center gap-2">{supportData?.title} <span className="text-xs md:text-sm font-semibold border px-2 py-1">{supportData?.status}</span> <TrashIcon onClick={() => deleteTicket(supportData?._id)} className='h-5 w-5 cursor-pointer'/></h2>
+                        <h2 className="text-md md:text-xl font-bold flex items-center gap-2">{supportData?.title} <span className="text-xs md:text-sm font-semibold border px-2 py-1">{supportData?.status}</span></h2>
                         <p>{supportData?.date.slice(0,10)}</p>
                     </div>
                     <p className="font-bold text-sm">{supportData?.userName}</p>
