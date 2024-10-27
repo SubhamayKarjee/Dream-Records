@@ -2,17 +2,13 @@ import { Button, DatePicker, Divider, Dropdown, Empty, Modal } from 'antd';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../UserAdminHomePage/UserAdminHomePage';
-// import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css'
-// import ChartSupport from './ChartSupport';
-// import CallSupport from './CallSupport';
 import { ArrowsUpDownIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { useForm } from 'react-hook-form';
 import './SupportPage.css'
 import { NavLink, useLocation, useParams } from 'react-router-dom';
-import ReactTimeAgo from 'react-time-ago'
+import SupportLIst from './SupportLIst';
 
 
 
@@ -20,7 +16,6 @@ import ReactTimeAgo from 'react-time-ago'
 const SupportPage = () => {
 
     const {userNameIdRoll} = useContext(AuthContext);
-    const navigate = useNavigate()
 
     const [attachment, setAttachment] = useState();
     const [upLoadLoading, setUploadLoading] = useState(false);
@@ -71,6 +66,7 @@ const SupportPage = () => {
         .then(res => {
             setSupportData(res.data.data);
             setTotalItems(res.data.dataCount)
+            console.log(res.data.data);
             setLoading(false)
         })
     },[userNameIdRoll, pageNumber, perPageSupport, status])
@@ -105,7 +101,6 @@ const SupportPage = () => {
 
     const [searchText, setSearchText] = useState()
     const handleKeyPress = (event) => {
-        console.log(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/search-ticket/${userNameIdRoll[1]}?status=${status}&search=${searchText}`);
         if (event.key === 'Enter') {
           setLoading(true);
           axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/search-ticket/${userNameIdRoll[1]}?status=${status}&search=${searchText}`)
@@ -222,27 +217,15 @@ const SupportPage = () => {
             </div>
 
             <div className='mt-4'>
-                <div className="flex flex-col gap-2">
-                    {
-                        loading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
-                    }
-                    {
-                        supportData && supportData.map(data => 
-                            <div key={data._id} onClick={() => navigate(`/support/${data._id}`)} className='border rounded-md shadow-sm p-3 hover:bg-[#E4E5EA] cursor-pointer'>
-                                <div className='flex items-center justify-between gap-2'>
-                                    <h4 className='font-bold text-[#252525]'>{data.title}</h4>
-                                    <ReactTimeAgo date={Date.parse(data.date)}/> 
-                                </div>
-                                <p className='text-[#252525]'>{data.firstText.slice(0,100)}..</p>
-                            </div>
-                        )
-                    }
+                {
+                    loading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
+                }
 
-                    {
-                        !totalItems && !loading && <Empty className="pt-8" />
-                    }
-                    
-                </div>
+                <SupportLIst data={supportData} roll={userNameIdRoll[2]}/>
+                {
+                    !totalItems && !loading && <Empty className="pt-8" />
+                }
+
             </div>
         </div>
     );
