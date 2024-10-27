@@ -74,7 +74,9 @@ const UpdateProfileInformation = () => {
             first_name: userData?.data?.data?.first_name, 
             last_name: userData?.data?.data?.last_name,
             city: userData?.data?.data?.city,
-            postalCode: userData?.data?.data?.postalCode
+            postalCode: userData?.data?.data?.postalCode,
+            addressLine1: userData?.data?.data?.addressLine1,
+            addressLine2: userData?.data?.data?.addressLine2
         }});
     const onSubmit = async (data) => {
         setUpdateLoading(true)
@@ -195,6 +197,18 @@ const UpdateProfileInformation = () => {
 
                         <div className="pt-4">
                             <p className="text-sm text-[#020617] font-semibold pb-1">Address</p>
+
+                            <div className="">
+                                <p className="text-sm text-[#768298]">Address Line 1</p>
+                                <input style={inputStyle} type="text" className="input w-full" {...register("addressLine1", { required: true})}/>
+                                {errors.first_name && <span className='text-red-600 pt-2 block'>First Name Required</span>}
+                            </div>
+                            <div className="py-2">
+                                <p className="text-sm text-[#768298]">Address Line 2</p>
+                                <input style={inputStyle} type="text" className="input w-full" {...register("addressLine2", { required: true})}/>
+                                {errors.last_name && <span className='text-red-600 pt-2 block'>Last Name Required</span>}
+                            </div>
+
                             <div className="grid gap-2 grid-cols-2">
                                 <div>
                                     <p className="text-sm text-[#020617] font-semibold pb-1">Country</p>

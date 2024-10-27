@@ -89,9 +89,26 @@ const UserProfile = () => {
                                 <p className="font-semibold text-base">{userData?.phone}</p>
                             </div>
 
-                            <h4 className='font-semibold text-xl pt-4 text-[#252525]'>Address</h4>
+                            <h4 className='font-semibold text-xl pt-4 pb-2 text-[#252525]'>Address</h4>
 
-                            <div className="grid grid-cols-2 gap-2 pt-2">
+                            <div className="grid grid-cols-1">
+                                {
+                                    userData?.addressLine1 && 
+                                    <div className="pb-2">
+                                        <p className="text-sm text-[#768298]">Address Line 1</p>
+                                        <p className="font-semibold text-base">{userData?.addressLine1}</p>
+                                    </div>
+                                }
+                                {
+                                    userData?.addressLine2 && 
+                                    <div className="pb-2"> 
+                                        <p className="text-sm text-[#768298]">Address Line 2</p>
+                                        <p className="font-semibold text-base">{userData?.addressLine2}</p>
+                                    </div>
+                                }
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-2">
                                 <div className="">
                                     <p className="text-sm text-[#768298]">Country</p>
                                     <p className="font-semibold text-base">{userData?.country?.name}</p>
