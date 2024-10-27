@@ -1,13 +1,14 @@
 import { ArrowsUpDownIcon } from '@heroicons/react/24/outline';
-import { Button, DatePicker, Divider, Dropdown, Empty } from 'antd';
+import { Button, DatePicker, Divider, Dropdown, Empty, Pagination } from 'antd';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
-import ReactTimeAgo from 'react-time-ago';
-// import supportIcon from '../../assets/support-icon/support.png';
+import SupportLIst from '../../UserAdminDashboard/SupportPage/SupportLIst';
+import { AdminAuthContext } from '../DashboardForAdmin/DashBoardForAdmin';
 
 const AdminSupportPage = () => {
 
+    const {adminNameIdRoll} = useContext(AdminAuthContext)
     const navigate = useNavigate();
     const {pageNumber, status, perPageSupport} = useParams();
 
@@ -23,6 +24,10 @@ const AdminSupportPage = () => {
             setLoading(false)
         })
     },[pageNumber, perPageSupport, status])
+
+    const handlePageChange = (page) => {
+        navigate(`/admin-dashboard/support/${status}/${page}/8`)
+    };
 
     const [searchText, setSearchText] = useState()
     const handleKeyPress = (event) => {
@@ -79,22 +84,6 @@ const AdminSupportPage = () => {
 
     return (
         <div>
-            {/* <div>
-                <div className='flex items-center mt-2 p-2 rounded-md bg-green-100'>
-                    <img className='me-2' src={supportIcon} alt={supportIcon} />
-                    <h1 className='font-semibold text-xl text-slate-500'>Support History...</h1>
-                </div>
-                <div className='py-3'>
-                    <NavLink style={() => activeLink('/admin-dashboard/support/chat', currentPath)} className='py-2 inactive-link me-4 fw-bold transition-all duration-300' to={'/admin-dashboard/support/chat/1/10/All'}>
-                        Chat Support
-                    </NavLink>
-                    <NavLink style={() => activeLink('/admin-dashboard/support/call', currentPath)} className='py-2 inactive-link fw-bold' to={'/admin-dashboard/support/call/1/10/All'}>
-                        Call Support
-                    </NavLink>
-                </div>
-                <Outlet/>
-            </div> */}
-
             <div className='mt-3 flex items-center justify-between'>
                 <h3 className='font-bold text-xl text-[#252525]'>Support</h3>
                 <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => setSearchText(e.target.value)} className='input input-sm border w-80' placeholder='Type & Enter to Search'/>
@@ -129,20 +118,21 @@ const AdminSupportPage = () => {
                     {
                         loading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
-                    {
-                        supportData && supportData.map(data => 
-                            <div key={data._id} onClick={() => navigate(`/admin-dashboard/support/${data._id}`)} className='border rounded-md shadow-sm p-3 hover:bg-[#E4E5EA] cursor-pointer'>
-                                <div className='flex items-center justify-between gap-2'>
-                                    <h4 className='font-bold text-[#252525]'>{data.title}</h4>
-                                    <ReactTimeAgo date={Date.parse(data.date)}/> 
-                                </div>
-                                <p className='text-[#252525]'>{data.firstText.slice(0,100)}..</p>
-                            </div>
-                        )
-                    }
+                   
+                    <SupportLIst data={supportData} roll={adminNameIdRoll[2]}/>
 
                     {
                         !totalItems && !loading && <Empty className="pt-8" />
+                    }
+                    {
+                        totalItems > 8 && !loading && <div className="flex justify-center items-center my-4">
+                            <Pagination 
+                            defaultCurrent={pageNumber} 
+                            total={totalItems}
+                            pageSize={perPageSupport}
+                            onChange={handlePageChange}
+                            /> 
+                        </div>
                     }
                     
                 </div>

@@ -1,4 +1,4 @@
-import { Button, DatePicker, Divider, Dropdown, Empty, Modal } from 'antd';
+import { Button, DatePicker, Divider, Dropdown, Empty, Modal, Pagination } from 'antd';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -7,7 +7,7 @@ import 'react-phone-number-input/style.css'
 import { ArrowsUpDownIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { useForm } from 'react-hook-form';
 import './SupportPage.css'
-import { NavLink, useLocation, useParams } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import SupportLIst from './SupportLIst';
 
 
@@ -16,7 +16,7 @@ import SupportLIst from './SupportLIst';
 const SupportPage = () => {
 
     const {userNameIdRoll} = useContext(AuthContext);
-
+    const navigate = useNavigate();
     const [attachment, setAttachment] = useState();
     const [upLoadLoading, setUploadLoading] = useState(false);
 
@@ -41,7 +41,6 @@ const SupportPage = () => {
         })
     }
 
-    
 
     // Create Ticket Modal __________________________________
     const {pageNumber, status, perPageSupport} = useParams();
@@ -70,6 +69,10 @@ const SupportPage = () => {
             setLoading(false)
         })
     },[userNameIdRoll, pageNumber, perPageSupport, status])
+
+    const handlePageChange = (page) => {
+        navigate(`/support/${status}/${page}/8`)
+    };
 
     const { register, handleSubmit, reset, formState: { errors }} = useForm();
     const onSubmit = async (data) => {
@@ -224,6 +227,16 @@ const SupportPage = () => {
                 <SupportLIst data={supportData} roll={userNameIdRoll[2]}/>
                 {
                     !totalItems && !loading && <Empty className="pt-8" />
+                }
+                {
+                    totalItems > 8 && !loading && <div className="flex justify-center items-center my-4">
+                        <Pagination 
+                        defaultCurrent={pageNumber} 
+                        total={totalItems}
+                        pageSize={perPageSupport}
+                        onChange={handlePageChange}
+                        /> 
+                    </div>
                 }
 
             </div>

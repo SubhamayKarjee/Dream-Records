@@ -27,11 +27,17 @@ const SupportLIst = ({data, roll}) => {
                     {/* row 1 */}
                     {
                         data && data.map(d => 
-                            <tr key={d._id} onClick={() => navigate(`/support/${d._id}`)} className="hover cursor-pointer">
+                            <tr key={d._id} onClick={() =>{
+                                if(roll === 'User'){
+                                    navigate(`/support/${d._id}`)
+                                }else{
+                                    navigate(`/admin-dashboard/support/${d._id}`)
+                                }
+                            }} className="hover cursor-pointer">
                                 {
                                     roll !== 'User' &&
                                     <td className="font-semibold text-sm text-[#09090B]">
-                                        
+                                        {d.userName}
                                     </td>
                                 }
                                 <td className="font-semibold text-sm text-[#09090B]">{d.title}</td>
@@ -64,11 +70,17 @@ const SupportLIst = ({data, roll}) => {
                     {/* row 1 */}
                     {
                         data && data.map(d => 
-                            <tr key={d._id} onClick={() => navigate(`/support/${d._id}`)} className="hover cursor-pointer">
+                            <tr key={d._id} onClick={() => {
+                                if(roll === 'User'){
+                                    navigate(`/support/${d._id}`)
+                                }else{
+                                    navigate(`/admin-dashboard/support/${d._id}`)
+                                }
+                            }} className="hover cursor-pointer">
                                 {
                                     roll !== 'User' &&
                                     <td className="font-semibold text-sm text-[#09090B]">
-                                        
+                                        {d.userName}
                                     </td>
                                 }
                                 <td className="font-semibold text-sm text-[#09090B]">{d.title.slice(0,10)}..</td>
