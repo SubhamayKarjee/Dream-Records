@@ -115,6 +115,7 @@ const SetPassword = () => {
                                             {
                                                 inputType1 === 'password' ? <EyeSlashIcon onClick={passwordTypeHandle1} className="h-5 w-5 absolute top-2 right-4"/> : <EyeIcon onClick={passwordTypeHandle1} className="h-5 w-5 absolute top-2 right-4"/>
                                             }
+                                            {errors.password1 && <span className='text-red-600 pb-2 block'>Please Set Password</span>}
                                         </div>
                                     </div>
 

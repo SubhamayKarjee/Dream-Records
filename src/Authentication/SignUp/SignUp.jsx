@@ -12,12 +12,18 @@ import {
     StateSelect,
 } from "react-country-state-city";
 import './SignUp.css'
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import auth from "../../../firebase.config";
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from "react-firebase-hooks/auth";
+
+
 
 const SignUp = () => {
     // Get Data From React Router Loader _______________
     const userData = useLoaderData();
     const navigate = useNavigate();
     const {id} = useParams()
+    const roll = userData?.data?.data?.roll;
 
     // Phone Number Input 
     const [value, setValue] = useState(userData?.data?.data?.phone);
@@ -32,8 +38,19 @@ const SignUp = () => {
 
 
 
+    // Create User IN Firebase __________________________
+    const [
+        createUserWithEmailAndPassword,
+        // user,
+        loading,
+        error,
+      ] = useCreateUserWithEmailAndPassword(auth);
 
-    const [loading, setLoading] = useState(false)
+      const [updateProfile, updating, error1] = useUpdateProfile(auth);
+
+    const [loading1, setLoading1] = useState(false)
+    const [loadingHandle, setLoadingHandle] = useState(false)
+    const [passwordError, setPasswordError] = useState();
     // User Update Form _________________________________
     const { register, handleSubmit, formState: { errors }} = useForm({
         values: {
@@ -48,7 +65,7 @@ const SignUp = () => {
             addressLine2: userData?.data?.data?.addressLine2,
         }});
     const onSubmit = async (data) => {
-        setLoading(true)
+        setLoading1(true)
         setValue('')
         setCountryError('')
         setStateError('')
@@ -63,24 +80,79 @@ const SignUp = () => {
             setStateError('Please select your State')
         }
 
-        
         const formData = {...data, country, state, phone: value}
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, formData)
-            .then(res => {
+            .then( async (res) => {
                 if(res.status == 200){
-                    navigate(`/set-password/${id}`);
-                    setLoading(false)
+                    console.log('yes');
+                    if(data.password1 === data.password2){
+                        return createAccount(data.password1)
+                    }else{
+                        setPasswordError('Password Not Match')
+                    }
+                    
                 }
             })
             .catch(er => console.log(er)) 
-            setLoading(false)
-                
-     
+            setLoading1(false)     
+    }
+
+    const createAccount = async (password) => {
+        const date = new Date();
+        const openingDate = date.toLocaleDateString();
+        const openingTime = date.toLocaleTimeString([], { hour12: true});
+        const email = userData?.data?.data?.email
+        console.log(password, email);
+        // _________________
+        await  createUserWithEmailAndPassword(email, password).then(res => {
+            console.log(res);
+            const uid = res.user.uid
+            const formData = {openingDate, openingTime, uid};
+            setLoadingHandle(true)
+            axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, formData).then( async res => {
+                const displayName = `${userData?.data?.data?.userName}'__'${id}'__'${roll}`
+                if(res.status == 200){
+                    setLoadingHandle(false);
+                    await updateProfile({ displayName });
+                    if(roll === 'User'){
+                        localStorage.setItem('popupShown', 'false');
+                        navigate('/')
+                        setLoading1(false)
+                    }
+                    if(roll === 'Admin'){
+                        navigate('/admin-dashboard')
+                        setLoading1(false)
+                    }
+                }
+            })
+        }).catch(error => {
+            console.log(error);
+        })
     }
 
     const inputStyle ={
         height: '36px',
         border: '1px solid #E2E8F0'
+    }
+
+    const [inputType1, setInputType1] = useState('password')
+    const [inputType2, setInputType2] = useState('password')
+
+    const passwordTypeHandle1 = () => {
+        if(inputType1 === 'password'){
+            setInputType1('text')
+        }
+        if(inputType1 === 'text'){
+            setInputType1('password')
+        }
+    }
+    const passwordTypeHandle2 = () => {
+        if(inputType2 === 'password'){
+            setInputType2('text')
+        }
+        if(inputType2 === 'text'){
+            setInputType2('password')
+        }
     }
 
     return (
@@ -139,13 +211,13 @@ const SignUp = () => {
                                     <div className="pt-4">
                                         <p className="text-sm text-[#020617] font-semibold pb-1">Address</p>
                                         <div>
-                                            <p className="text-sm text-[#020617] font-semibold pb-1">Address Line 1 *</p>
-                                            <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Last Name" {...register("addressLine1", { required: true})}/>
+                                            <p className="text-sm text-[#020617] font-semibold pb-1">Address Line 1</p>
+                                            <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Address Line 1" {...register("addressLine1", { required: true})}/>
                                             {errors.addressLine1 && <span className='text-red-600 pb-2 block'>Please fill in the Address Line 1</span>}
                                         </div>
                                         <div>
                                             <p className="text-sm text-[#020617] font-semibold pb-1 pt-3">Address Line 2</p>
-                                            <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Last Name" {...register("addressLine2")}/>
+                                            <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="Address Line 2" {...register("addressLine2")}/>
                                         </div>
 
                                         <div className="grid gap-2 grid-cols-2 mt-3">
@@ -160,6 +232,7 @@ const SignUp = () => {
                                                         setCountry(v)
                                                     }}
                                                     placeHolder="Select Country"
+                                                    defaultValue={userData?.data?.data?.country}
                                                 />
                                                 {
                                                     countryError && <p className="text-red-600 pb-2">{countryError}</p>
@@ -173,6 +246,7 @@ const SignUp = () => {
                                                         setState(e)
                                                     }}
                                                     placeHolder="Select State"
+                                                    defaultValue={userData?.data?.data?.state}
                                                 />
                                                 {
                                                     stateError && <p className="text-red-600 pb-2">{stateError}</p>
@@ -190,13 +264,52 @@ const SignUp = () => {
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div className="mt-3">
+                                        <p className="text-sm text-[#020617] font-semibold pb-1">Password</p>
+                                        <div className="relative">
+                                            <input style={inputStyle} type={inputType1} className="input-sm w-full input" {...register("password1", { required: true})}/>
+                                            {
+                                                inputType1 === 'password' ? <EyeSlashIcon onClick={passwordTypeHandle1} className="h-5 w-5 absolute top-2 right-4"/> : <EyeIcon onClick={passwordTypeHandle1} className="h-5 w-5 absolute top-2 right-4"/>
+                                            }
+                                            {errors.password1 && <span className='text-red-600 pt-1 block'>Please Set Password</span>}
+                                        </div>
+                                    </div>
+
+                                    <div className="pt-3">
+                                        <p className="text-sm text-[#020617] font-semibold pb-1">Confirm Password</p>
+                                        <div className="relative">
+                                            <input style={inputStyle} type={inputType2} className="input-sm w-full input" {...register("password2", { required: true})}/>
+                                            {
+                                                inputType2 === 'password' ? <EyeSlashIcon onClick={passwordTypeHandle2} className="h-5 w-5 absolute top-2 right-4"/> : <EyeIcon onClick={passwordTypeHandle2} className="h-5 w-5 absolute top-2 right-4"/>
+                                            }
+                                        </div>
+                                    </div>
+                                    {errors.password2 && <span className='text-red-600 pb-2 block'>Please Confirm Password</span>}
+                                    {passwordError && <span className='text-red-600 pb-2 block font-bold'>{passwordError}</span>}
+
                                     <div>
                                         {
-                                            loading && <LoadingComponentsInsidePage/>
+                                            loading1 && <LoadingComponentsInsidePage/>
+                                        }
+                                        {
+                                            loadingHandle && loading  && <LoadingComponentsInsidePage/>
+                                        }
+                                        {
+                                            updating && <LoadingComponentsInsidePage/>
+                                        }
+                                        {
+                                            error && <span className='text-red-600 pb-2 block font-bold'>{error}</span>
+                                        }
+                                        {
+                                            error1 && <span className='text-red-600 pb-2 block font-bold'>{error1}</span>
                                         }
                                     </div>
                                     <div className="flex justify-center py-5">
-                                         <input className="btn btn-md btn-neutral w-full bg-[#0F172A]" type="submit" value={'Finish Setup'} />
+                                        {
+                                            !userData?.data ? <input className="btn btn-md btn-neutral w-full bg-[#0F172A]" type="submit" value={'Finish Setup'} disabled/>: <input className="btn btn-md btn-neutral w-full bg-[#0F172A]" type="submit" value={'Finish Setup'} />
+                                        }
+                                         
                                     </div>
                                     <p>Finish your setup to upload your first Track</p>
 
@@ -206,7 +319,7 @@ const SignUp = () => {
                     </div>
                 </div>
                 <div className="flex-1 hidden md:block">
-                    <img className="" style={{width: 'auto', height: '1024px'}}  src={authImage} alt='log/sign up image' />
+                    <img className="" style={{width: 'auto', height: '1100px'}}  src={authImage} alt='log/sign up image' />
                 </div>
             </div>
         </div>

@@ -1,7 +1,6 @@
 // import React from 'react';
 
-import { ArrowsUpDownIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { BellAlertIcon, DocumentCheckIcon } from "@heroicons/react/24/outline";
+import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 import { Button, Divider, Drawer, Dropdown } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -9,6 +8,12 @@ import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import ActionRequiredRelease from "./ActionRequiredRelease";
 import ReleaseCardComponent from "./ReleaseCardComponent/ReleaseCardComponent";
+import bellIcon from '../../assets/common-icons/bell.png'
+import { 
+    RiAddLine,
+    RiFileCheckLine,
+} from "@remixicon/react";
+
 
 const ReleasesPage = () => {
 
@@ -115,7 +120,13 @@ const ReleasesPage = () => {
                             <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                         </div>
                         <div className="mt-2">
-                            <button onClick={()=>navigate('/create-release')} className='btn btn-neutral bg-[#18181B] h-9 btn-sm w-full'><PlusIcon className="w-5 h-5"/> Create Release</button>
+                            <button onClick={()=>navigate('/create-release')} className='btn btn-neutral bg-[#18181B] h-9 btn-sm w-full text-white'>
+                                <RiAddLine
+                                    size={22}
+                                    color="white"
+                                />
+                                Create Release
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -149,7 +160,11 @@ const ReleasesPage = () => {
 
                         <div className="flex justify-between items-center gap-2">
                             <div className="flex items-center">
-                                <DocumentCheckIcon className="w-4 h-4 me-1 text-slate-500"/>
+                                <RiFileCheckLine
+                                    size={16}
+                                    color="#252525"
+                                    className='me-2'
+                                />
                                 <span className="text-sm">Releases</span>
                             </div>
                             <div><span className="text-sm font-bold">{releaseData?.length}</span> </div>
@@ -173,7 +188,8 @@ const ReleasesPage = () => {
             </div>
 
             {/* Sideber Div Mobile _______________________________*/}
-            <BellAlertIcon onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer'/>
+            {/* <BellAlertIcon onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer'/> */}
+            <img onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer' src={bellIcon} alt={bellIcon} />
             <Drawer className='bg-white' title="Notification" onClose={onClose} open={open}>
                 <ActionRequiredRelease onClose={onClose}/>
             </Drawer>
