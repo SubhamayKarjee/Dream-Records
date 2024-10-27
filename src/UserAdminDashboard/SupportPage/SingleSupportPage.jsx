@@ -5,7 +5,6 @@ import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
-import ReactTimeAgo from "react-time-ago";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 
 const SingleSupportPage = () => {
@@ -96,13 +95,13 @@ const SingleSupportPage = () => {
     }, [supportSendCheck, messagesEndRef]);
 
     const adminColor = {
-        backgroundColor: '#F9F9F9',
-        marginRight: '2rem',
+        backgroundColor: '#E8E8E8 ',
+        marginLeft: '2rem',
         border: '1px solid #E8E8E8'
     }
     const userColor = {
-        backgroundColor: '#E8E8E8',
-        marginLeft: '2rem',
+        backgroundColor: '#F9F9F9',
+        marginRight: '2rem',
         border: '1px solid #E8E8E8'
     }
 
@@ -127,15 +126,28 @@ const SingleSupportPage = () => {
                     <div className='h-[60%] overflow-y-auto p-2 flex flex-col gap-2 mx-2' id="parentDiv">
                         {
                             supportData?.issue && supportData.issue.map((d,index) =>
-                                <div key={index} style={d.userName === userNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md bg-[#E8E8E8] relative">
-                                    <ReactTimeAgo className="text-xs absolute top-2 right-2" date={Date.parse(d.date)}/> 
-                                    <p className='text-sm text-[#252525]'>{d?.message}</p>
+                                <div key={index}>
+                                    <div style={d.userName === userNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md bg-[#E8E8E8]">
+                                        <p className='text-sm text-[#252525]'>{d?.message}</p>
+                                        {
+                                            d?.attachment &&
+                                            <div className='p-2 border rounded-md mt-2'>
+                                                <p className='text-sm text-slate-500'>Attachment</p>
+                                                <a className="px-2 text-sm py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={d?.attachment?.fileUrl} download={d?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
+                                            </div>
+                                        }
+                                    </div>
                                     {
-                                        d?.attachment &&
-                                        <div className='p-2 border rounded-md mt-2'>
-                                            <p className='text-sm text-slate-500'>Attachment</p>
-                                            <a className="px-2 text-sm py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={d?.attachment?.fileUrl} download={d?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
-                                        </div>
+                                        userNameIdRoll[0] === d.userName ? 
+                                            <div className="flex items-center gap-2 justify-end">
+                                                <p className="font-bold text-sm">{d.userName}</p>
+                                                <p className="text-sm">{d.date.slice(0,10)} {d.date.slice(11,19)}</p>
+                                            </div>
+                                            :
+                                            <div className="flex items-center gap-2 justify-start">
+                                                <p className="font-bold text-sm">{d.userName}</p>
+                                                <p className="text-sm">{d.date.slice(0,10)} {d.date.slice(11,19)}</p>
+                                            </div>
                                     }
                                 </div>
                             )
@@ -160,16 +172,29 @@ const SingleSupportPage = () => {
                     <div className='h-[85%] overflow-y-auto p-2 flex flex-col gap-2 mx-2' id="parentDiv">
                         {
                             supportData?.issue && supportData.issue.map((d,index) =>
-                                <div key={index} style={d.userName === userNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md bg-[#E8E8E8] relative">
-                                    <ReactTimeAgo className="text-xs absolute top-2 right-2" date={Date.parse(d.date)}/> 
-                                    <p className='text-sm text-[#252525]'>{d?.message}</p>
-                                    {
-                                        d?.attachment &&
-                                        <div className='p-2 border rounded-md mt-2'>
-                                            <p className='text-sm text-slate-500'>Attachment</p>
-                                            <a className="px-2 text-sm py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={d?.attachment?.fileUrl} download={d?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
-                                        </div>
-                                    }
+                                <div key={index}>
+                                    <div style={d.userName === userNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md bg-[#E8E8E8]">
+                                        <p className='text-sm text-[#252525]'>{d?.message}</p>
+                                        {
+                                            d?.attachment &&
+                                            <div className='p-2 border rounded-md mt-2'>
+                                                <p className='text-sm text-slate-500'>Attachment</p>
+                                                <a className="px-2 text-sm py-1 bg-slate-100 border rounded-md flex items-center font-bold" href={d?.attachment?.fileUrl} download={d?.attachment?.fileUrl}><ArrowDownTrayIcon className="w-4 h-4 me-2"/> Download</a>
+                                            </div>
+                                        }
+                                    </div>
+                                        {
+                                            userNameIdRoll[0] === d.userName ? 
+                                                <div className="flex items-center gap-2 justify-end">
+                                                    <p className="font-bold text-sm">{d.userName}</p>
+                                                    <p className="text-sm">{d.date.slice(0,10)} {d.date.slice(11,19)}</p>
+                                                </div>
+                                                :
+                                                <div className="flex items-center gap-2 justify-start">
+                                                    <p className="font-bold text-sm">{d.userName}</p>
+                                                    <p className="text-sm">{d.date.slice(0,10)} {d.date.slice(11,19)}</p>
+                                                </div>
+                                        }
                                 </div>
                             )
                         }  
