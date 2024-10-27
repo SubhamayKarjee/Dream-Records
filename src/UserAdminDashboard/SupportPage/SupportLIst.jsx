@@ -40,7 +40,10 @@ const SupportLIst = ({data, roll}) => {
                                         {d.userName}
                                     </td>
                                 }
-                                <td className="font-semibold text-sm text-[#09090B]">{d.title}</td>
+                                {
+                                    d.title.length > 50 ? <td className="font-semibold text-sm text-[#09090B]">{d.title.slice(0,50)}...</td>
+                                    : <td className="font-semibold text-sm text-[#09090B]">{d.title}</td>
+                                }
                                 <td className="font-semibold text-sm text-[#09090B]">{d.status}</td>
                                 <td className="font-semibold text-sm text-[#09090B]">{d.date.slice(0,10)} {d.date.slice(11,19)}</td>
                             </tr>
