@@ -1,3 +1,4 @@
+import { LockOpenIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import { ChartBarSquareIcon, CreditCardIcon, ExclamationCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { Empty, Image, Pagination, Popconfirm } from "antd";
 import axios from "axios";
@@ -90,6 +91,48 @@ const UsersList = () => {
         })
     }
 
+    const userLocked = (data) => {
+      const now = new Date();
+      // Get the user's local date, time, and time zone
+      const options = {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true,
+          timeZoneName: 'short' // This adds the time zone abbreviation
+      };
+
+      const dateTimeWithZone = new Intl.DateTimeFormat(undefined, options).format(now);
+
+      const userLocked = true;
+      const userLockedDate = dateTimeWithZone;
+      const newData = {...data, userLocked, userLockedDate}
+      axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${data._id}`, newData)
+      .then(res => {
+        if(res.status == 200){
+          const r = refetch + 1;
+          setRefetch(r)
+          toast.success('User Locked')
+        } 
+      })
+    }
+    const userUnlocked = (data) => {
+
+      const userLocked = false;
+      const userLockedDate = '';
+      const newData = {...data, userLocked, userLockedDate}
+      axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${data._id}`, newData)
+      .then(res => {
+        if(res.status == 200){
+          const r = refetch + 1;
+          setRefetch(r)
+          toast.success('User Unlocked')
+        } 
+      })
+    }
+
     const cancel = () => {
       return;
     };
@@ -154,6 +197,36 @@ const UsersList = () => {
                                 setIsOpenModalReport(true);
                                 setClickIdReport(data._id);
                               }} className="btn btn-sm btn-neutral m-2"><ChartBarSquareIcon className="w-5 h-5 text-white"/>Reports</button>
+
+                              {
+                                data.userLocked === true ? 
+                                <Popconfirm
+                                  title="UnLocked User"
+                                  placement="leftTop"
+                                  className="z-1000"
+                                  description="Are you sure to Unlocked User?"
+                                  onConfirm={() => userUnlocked(data)}
+                                  onCancel={cancel}
+                                  okText="Yes"
+                                  cancelText="No"
+                                  >
+                                  <LockClosedIcon className="w-5 h-5 cursor-pointer mx-2"/>
+                                </Popconfirm>                                
+                                : 
+                                <Popconfirm
+                                  title="Locked User"
+                                  placement="leftTop"
+                                  className="z-1000"
+                                  description="Are you sure to Locked User?"
+                                  onConfirm={() => userLocked(data)}
+                                  onCancel={cancel}
+                                  okText="Yes"
+                                  cancelText="No"
+                                  >
+                                  <LockOpenIcon className="w-5 h-5 cursor-pointer mx-2"/>
+                                </Popconfirm>
+                              }
+
                               <Popconfirm
                                 title="Delete"
                                 placement="leftTop"
