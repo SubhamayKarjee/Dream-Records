@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import { CurrencyRupeeIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { DatePicker, Empty, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -65,8 +65,8 @@ const WithdrawalList = ({id}) => {
                             <tr className="">
                                 <th className="text-md">Title</th>
                                 <th className="text-md">Date</th>
-                                <th className="text-md">Status</th>
                                 <th className="text-md">Ammount</th>
+                                <th className="text-md">Status</th>
                                 <th className="text-md text-end">Action</th>
                             </tr>
                         </thead>
@@ -76,7 +76,10 @@ const WithdrawalList = ({id}) => {
                             withdrawalData && withdrawalData.map(data => 
                                 <tr key={data._id} className="hover">
                                     <td className="font-semibold text-sm text-[#09090B]">Withdrawal Requested !</td>
-                                    <td className="font-semibold text-sm text-[#09090B]">{data?.withdrawalMonth.slice(0,3)} {data?.withdrawalYear}</td>
+                                    <td className="font-semibold text-sm text-[#09090B]">{data?.withdrawalDate} {data?.withdrawalMonth.slice(0,3)} {data?.withdrawalYear}</td>
+                                    <td className="">
+                                        <p className="font-semibold text-sm text-[#09090B]">₹ {data?.balance?.amount}</p>
+                                    </td>
                                     <td className="font-semibold text-sm text-[#09090B]">
                                     {
                                         data?.status === 'Pending' &&
@@ -88,23 +91,19 @@ const WithdrawalList = ({id}) => {
                                     {
                                         data?.status === 'Approved' &&
                                             <div className="flex items-center p-1">
-                                                <CheckBadgeIcon className="h-3 w-3 me-1"/>
-                                                <p className="text-sm font-semibold">{data.status}</p>
+                                                <CheckBadgeIcon className="h-3 w-3 me-1 text-[#39C616]"/>
+                                                <p className="text-sm font-semibold text-[#39C616]">{data.status}</p>
                                             </div>
                                     }
                                     {
                                         data?.status === 'Rejected' &&
                                             <div className="flex items-center p-1">
-                                                <ExclamationTriangleIcon className="h-3 w-3 me-1"/>
-                                                <p className="text-sm font-semibold">{data.status}</p>
+                                                <ExclamationTriangleIcon className="h-3 w-3 me-1 text-[#FF7050]"/>
+                                                <p className="text-sm font-semibold text-[#FF7050]">{data.status}</p>
                                             </div>
                                     }
                                     </td>
-                                    <td className="font-semibold text-sm text-[#09090B]">
-                                        <div className="flex items center gap-1">
-                                             <CurrencyRupeeIcon className="w-5 h-5"/><p className="font-semibold text-sm text-[#09090B]">{data?.balance?.amount}</p>
-                                        </div>
-                                    </td>
+                                    
                                     <td className="flex justify-end">
                                         <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm">View Details</button>
                                     </td>
@@ -118,7 +117,7 @@ const WithdrawalList = ({id}) => {
                                                 <h3 className="font-bold text-xl text-[#020617]">Withdrawal Details</h3>
                                                 <p className="text-sm text-[#64748B]">Transaction Details or Rejection Details</p>
                                                 <div className="py-3">
-                                                    <p className="text-5xl font-bold text-center">{data.withdrawalAmount}</p>
+                                                    <p className="text-5xl font-bold text-center">₹ {data.withdrawalAmount}</p>
                                                     <div className="flex justify-center">
                                                         {
                                                             data?.status === 'Pending' &&
@@ -137,8 +136,8 @@ const WithdrawalList = ({id}) => {
                                                         {
                                                             data?.status === 'Rejected' &&
                                                                 <div className="flex items-center p-1">
-                                                                    <ExclamationTriangleIcon className="h-3 w-3 me-1 text-[#71717A]"/>
-                                                                    <p className="text-sm font-semibold text-[#71717A]">{data.status}</p>
+                                                                    <ExclamationTriangleIcon className="h-3 w-3 me-1 text-[#FF7050]"/>
+                                                                    <p className="text-sm font-semibold text-[#FF7050]">{data.status}</p>
                                                                 </div>
                                                         }
                                                     </div>
@@ -216,22 +215,20 @@ const WithdrawalList = ({id}) => {
                                     {
                                         data?.status === 'Approved' &&
                                             <div className="flex items-center p-1">
-                                                <CheckBadgeIcon className="h-3 w-3 me-1"/>
-                                                <p className="text-sm font-semibold">{data.status}</p>
+                                                <CheckBadgeIcon className="h-3 w-3 me-1 text-[#39C616]"/>
+                                                <p className="text-sm font-semibold text-[#39C616]">{data.status}</p>
                                             </div>
                                     }
                                     {
                                         data?.status === 'Rejected' &&
                                             <div className="flex items-center p-1">
-                                                <ExclamationTriangleIcon className="h-3 w-3 me-1"/>
-                                                <p className="text-sm font-semibold">{data.status}</p>
+                                                <ExclamationTriangleIcon className="h-3 w-3 me-1 text-[#FF7050]"/>
+                                                <p className="text-sm font-semibold text-[#FF7050]">{data.status}</p>
                                             </div>
                                     }
                                     </td>
-                                    <td className="font-semibold text-sm text-[#09090B]">
-                                        <div className="flex items center gap-1">
-                                             <CurrencyRupeeIcon className="w-5 h-5"/><p className="font-semibold text-sm text-[#09090B]">{data?.balance?.amount}</p>
-                                        </div>
+                                    <td className="">
+                                        <p className="font-semibold text-sm text-[#09090B]">₹ {data?.balance?.amount}</p>
                                     </td>
                                     <td className="flex justify-end">
                                         <button onClick={()=>document.getElementById(data._id).showModal()} className="btn btn-sm">View Details</button>
