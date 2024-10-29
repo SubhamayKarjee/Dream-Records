@@ -119,7 +119,6 @@ const UsersList = () => {
       })
     }
     const userUnlocked = (data) => {
-
       const userLocked = false;
       const userLockedDate = '';
       const newData = {...data, userLocked, userLockedDate}
@@ -132,6 +131,7 @@ const UsersList = () => {
         } 
       })
     }
+
 
     const cancel = () => {
       return;

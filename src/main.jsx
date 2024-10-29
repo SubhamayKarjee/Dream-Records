@@ -18,15 +18,6 @@ import SetNewPassword from './Authentication/LogIn/SetNewPassword';
 
 
 
-import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-import ru from 'javascript-time-ago/locale/ru'
-TimeAgo.addDefaultLocale(en)
-TimeAgo.addLocale(ru)
-
-
-
-
 // Commont Routes import_______________________________________________________________
 // ____________________________________________________________________________________
 const LogIn = React.lazy(() => import('./Authentication/LogIn/LogIn'));
@@ -62,6 +53,7 @@ const MonthlyBasedWithdraw = React.lazy(() => import('./AdminDashboard/AdminSett
 const AdvertismentComponent = React.lazy(() => import('./AdminDashboard/AdminSetting/AdvertismentComponent/AdvertismentComponent'));
 // User Dashboard Routes import_________________________________________________________
 // _____________________________________________________________________________________
+const UserLockedPage = React.lazy(() => import('./UserAdminDashboard/UserCommonComponent/UserLockedPage'));
 const UserAdminHomePage = React.lazy(() => import('./UserAdminDashboard/UserAdminHomePage/UserAdminHomePage'));
 const UserHomePage = React.lazy(() => import('./UserAdminDashboard/UserHomePage/UserHomePage'));
 // User Profile Route___________________________________________________________________
@@ -144,7 +136,6 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin-dashboard/all-user/:pageNumber/:perPageUser',
-        // element: <ProtectAdminRoute></ProtectAdminRoute>
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UsersList/></ProtectAdminRoute></Suspense>,
       },
       {
@@ -377,6 +368,10 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><UserPassUpdateComponent/></ProtectUserRoute></Suspense>,
       },
     ]
+  },
+  {
+    path: '/locked/:id',
+    element: <Suspense fallback={<LoadingComponentsInsidePage/>}><UserLockedPage/></Suspense>,
   },
 ]);
 // Route End __________________________________
