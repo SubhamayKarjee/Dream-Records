@@ -1,4 +1,3 @@
-import { CurrencyRupeeIcon } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { DatePicker, Empty, Pagination, Popconfirm } from "antd";
 import axios from "axios";
@@ -20,6 +19,7 @@ const PaymentDetails = ({id, role}) => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/${id}?page=${currentPage}&limit=${itemPerPage}`)
         .then(res => {
             setPaymentData(res.data.data);
+            console.log(res.data.data);
             setTotalItems(res.data.dataCount)
             setFetchLoading(false)
         })
@@ -102,12 +102,10 @@ const PaymentDetails = ({id, role}) => {
                             paymentData && paymentData.map(data => 
                                 <tr key={data._id} className="hover">
                                     <td className="font-semibold text-sm text-[#09090B]">Successfully Get Payments</td>
-                                    <td className="font-semibold text-sm text-[#09090B]">{data?.month.slice(0,3)} {data?.year}</td>
+                                    <td className="font-semibold text-sm text-[#09090B]">{data?.date} {data?.month.slice(0,3)} {data?.year}</td>
                                     <td className="font-semibold text-sm text-[#09090B]">{data?.paymentReportDate}</td>
-                                    <td className="font-semibold text-sm text-[#09090B]">
-                                        <div className="flex items-center">
-                                            <CurrencyRupeeIcon className="w-5 h-5"/><p className="font-semibold text-sm text-[#09090B]">{data?.amount}.00</p>
-                                        </div>
+                                    <td>
+                                        <p className="font-semibold text-sm text-[#09090B]">₹ {data?.amount}.00</p>
                                     </td>
                                     {
                                         role == 'User' &&
@@ -144,7 +142,7 @@ const PaymentDetails = ({id, role}) => {
                                                 <h3 className="font-bold text-xl text-[#020617]">Payment Details</h3>
                                                 <p className="text-sm text-[#64748B]">Transaction Details or Rejection Details</p>
                                                 <div className="py-3">
-                                                    <p className="text-5xl font-bold text-center">{data.amount}</p>
+                                                    <p className="text-5xl font-bold text-center">₹ {data.amount}</p>
                                                     <p className="text-center">Completed</p>
                                                 </div>
                                                 <div className="grid grid-cols gap-2">
@@ -190,9 +188,7 @@ const PaymentDetails = ({id, role}) => {
                                 <tr key={data._id} className="hover">
                                     <td className="font-semibold text-sm text-[#09090B]">{data?.paymentReportDate}</td>
                                     <td className="font-semibold text-sm text-[#09090B]">
-                                        <div className="flex items-center">
-                                            <CurrencyRupeeIcon className="w-5 h-5"/><p className="font-semibold text-sm text-[#09090B]">{data?.amount}.00</p>
-                                        </div>
+                                        <p className="font-semibold text-sm text-[#09090B]">₹ {data?.amount}.00</p>
                                     </td>
                                     {
                                         role == 'User' &&
