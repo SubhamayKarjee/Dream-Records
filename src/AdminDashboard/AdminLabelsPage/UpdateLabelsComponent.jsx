@@ -225,6 +225,13 @@ const UpdateLabelsComponent = () => {
                                 <span className="bg-red-500 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><XCircleIcon className="w-4 h-4 me-1"/> {labels.status}</span>
                             }
                             {
+                                labels?.actionRequired &&
+                                <div className="p-2 rounded-md bg-[#F2F2F2]">
+                                    <p className="text-sm font-bold">Rejected Reasons</p>
+                                    <span className="text-sm me-2 ">{labels?.actionRequired}</span>
+                                </div>
+                            }
+                            {
                                 labels.status === 'Locked' &&
                                 <span className="bg-slate-200 my-3 py-1 px-2 rounded-md text-sm me-2 font-bold flex items-center"><LockClosedIcon className="w-4 h-4 me-1"/> {labels.status}</span>
                             }
