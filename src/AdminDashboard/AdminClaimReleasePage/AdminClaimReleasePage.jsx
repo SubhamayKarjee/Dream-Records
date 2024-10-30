@@ -100,12 +100,14 @@ const AdminClaimReleasePage = () => {
                                                         fallback={fallbackImage}
                                                     />
                                                 <div className="ps-2 grow">
-                                                    <div className="flex">
+                                                    <div className="flex items-center">
                                                         <input id={data?.release?._id} className="font-bold text-sm copy_text_field me-3" value={data?.release?.releaseTitle} readOnly/>
                                                         <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText(data?.release?._id)} className="w-5 h-5 text-slate-500"/>
                                                     </div>
-                                                    <div>
-                                                        <p className="text-xs text-slate-400">ID: {data?.release?._id}</p>
+                                                    <div className="flex items-center">
+                                                        <span className="me-2 text-sm">UPC:</span>
+                                                        <input id={data?.release?.UPC} className="text-sm text-slate-400 copy_text_field" type="text" value={data?.release?.UPC} readOnly/>
+                                                        <DocumentDuplicateIcon style={{cursor: 'pointer'}} onClick={() => handleCopyText(data?.release?.UPC)} className="w-5 h-5 text-slate-500"/>
                                                     </div>
                                                 </div>
                                             </div>
