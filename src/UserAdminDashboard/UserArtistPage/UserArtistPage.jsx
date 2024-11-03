@@ -8,13 +8,16 @@ import './UserArtistPage.css'
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import MainNotices from "../UserCommonComponent/MainNotices";
 import MainNoticesMobile from "../UserCommonComponent/MainNoticesMobile";
-import { DocumentCheckIcon, PlusIcon } from "@heroicons/react/24/outline";
-
 import appleImg from '../../assets/social-icon/apple.png' 
 import spotifyImg from '../../assets/social-icon/spotify.png' 
 import instagramImg from '../../assets/social-icon/instagram.png' 
 import facebookImg from '../../assets/social-icon/facebook.png' 
 import youtubeImg from '../../assets/social-icon/youtube.png' 
+import { 
+  RiFileCheckLine,
+  RiAddLine,
+} from "@remixicon/react";
+
 
 
 const UserArtistPage = () => {
@@ -87,7 +90,12 @@ const UserArtistPage = () => {
                           <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                       </div>
                       <div className="mt-2">
-                          <button onClick={()=>navigate('/create-artist')} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/>Create Artist</button>
+                          <button onClick={()=>navigate('/create-artist')} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9 text-white'>
+                            <RiAddLine
+                              size={22}
+                              color="white"
+                            />
+                            Create Artist</button>
                       </div>
                   </div>
 
@@ -97,7 +105,11 @@ const UserArtistPage = () => {
                       <h4 className="font-bold text-lg text-[#252525]">Profiles</h4>
                       <div className="flex justify-between items-center gap-2">
                         <div className="flex items-center">
-                            <DocumentCheckIcon className="w-4 h-4 me-1 text-slate-500"/>
+                              <RiFileCheckLine
+                                    size={16}
+                                    color="#252525"
+                                    className='me-2'
+                              />
                             <span className="text-sm">Artist Count</span>
                         </div>
                         <div><span className="text-sm font-bold">{artistData?.length} Out Of {totalItems}</span> </div>

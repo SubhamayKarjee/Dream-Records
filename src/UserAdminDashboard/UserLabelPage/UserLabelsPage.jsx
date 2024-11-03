@@ -4,8 +4,14 @@ import { useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import ActionRequiredLabels from "./ActionRequiredLabels";
-import { ArrowsUpDownIcon, DocumentCheckIcon, ExclamationTriangleIcon, PlusIcon, BellAlertIcon, CheckBadgeIcon, ClockIcon } from "@heroicons/react/24/outline";
+import { ExclamationTriangleIcon, CheckBadgeIcon, ClockIcon } from "@heroicons/react/24/outline";
 import fallbackImageLabel from '../../assets/fallbackImage/fallback-labels.png'
+import bellImage from '../../assets/common-icons/bell.png'
+import { 
+  RiAddLine,
+  RiFileCheckLine,
+  RiExpandUpDownLine
+} from "@remixicon/react";
 
 const UserLabelsPage = () => {
 
@@ -103,7 +109,12 @@ const UserLabelsPage = () => {
                         <input type="text" style={inputStyle} onKeyPress={handleKeyPress} onChange={e => handleSearch(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                     </div>
                     <div className="mt-2">
-                        <button onClick={()=>navigate(`/create-labels`)} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/> Create Label</button>
+                        <button onClick={()=>navigate(`/create-labels`)} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9 text-white'>
+                          <RiAddLine
+                            size={22}
+                            color="white"
+                          />
+                          Create Label</button>
                     </div>
                 </div>
                 <Divider/>
@@ -127,13 +138,23 @@ const UserLabelsPage = () => {
                                 placement="bottomLeft"
                                 className="h-10"
                             >
-                                <Button className="text-md font-semibold flex items-center gap-2">{status} <ArrowsUpDownIcon className="w-4 h-4"/></Button>
+                                <Button className="text-md font-semibold flex items-center gap-2">
+                                  {status}
+                                  <RiExpandUpDownLine
+                                    size={18}
+                                    color="#09090B"
+                                  />
+                                </Button>
                             </Dropdown>
                         </div>
 
                         <div className="flex justify-between items-center gap-2">
                             <div className="flex items-center">
-                                <DocumentCheckIcon className="w-4 h-4 me-1 text-slate-500"/>
+                                <RiFileCheckLine
+                                  size={16}
+                                  color="#252525"
+                                  className='me-2'
+                                />
                                 <span className="text-sm">Labels Count</span>
                             </div>
                             <div><span className="text-sm font-bold">{labelsData?.length} Out of {totalItems}</span> </div>
@@ -222,7 +243,7 @@ const UserLabelsPage = () => {
             </div>
 
             {/* Sideber Div Mobile _______________________________*/}
-            <BellAlertIcon onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4 pointer'/>
+            <img src={bellImage} alt={bellImage} onClick={showDrawer} className='w-10 h-10 p-2 text-slate-500 bg-white rounded-full border block md:hidden fixed top-[50%] right-4'/>
             <Drawer className='bg-white' title="Notification" onClose={onClose} open={open}>
               <ActionRequiredLabels onClose={onClose}/>
             </Drawer>

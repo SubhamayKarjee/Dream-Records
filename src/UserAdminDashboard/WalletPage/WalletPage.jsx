@@ -1,4 +1,4 @@
-import { CurrencyRupeeIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/solid";
 import { Divider, Modal, Tooltip } from "antd";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -126,7 +126,7 @@ const WalletPage = () => {
                                         <h2 className="font-semibold text-sm">Add Bank Details</h2>
                                         <p className="text-sm text-[#71717A]">Dont&apos;t Have Bank Account Yet! Please Add Bank Account Then You can Withdrawal</p>
                                     </div>
-                                    <button onClick={()=>document.getElementById('add_bank_info_modal').showModal()} className="btn btn-sm btn-neutral bg-[#18181B] h-9">Add Bank Acccount</button>
+                                    <button onClick={()=>document.getElementById('add_bank_info_modal').showModal()} className="btn btn-sm btn-neutral bg-[#18181B] h-9 text-white">Add Bank Acccount</button>
                                 </div> 
                             }
                             {
@@ -169,14 +169,14 @@ const WalletPage = () => {
                     <div className="md:flex items-center justify-between">
                     {
                         bankInfoLoading ? <div className="skeleton h-9 w-24 rounded-md"></div> :
-                        <p className="font-bold text-lg py-1 px-3 border rounded-md flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/>{userData?.balance?.amount ? userData.balance.amount : 0}</p>
+                        <p className="font-bold text-lg py-1 px-3 border rounded-md flex items-center">₹ {userData?.balance?.amount ? userData.balance.amount : 0}</p>
                     }
                     {
                         activePaymentMonth && !paymentMonthLoading ?
                         <div>
                                 {
                                     userData?.balance?.amount > 5000 && bankDataStatus === true && 
-                                    <button onClick={showModal} className="btn btn-sm btn-neutral my-2">Withdrawal</button>
+                                    <button onClick={showModal} className="btn btn-sm btn-neutral my-2 text-white">Withdrawal</button>
                                 }
                                 {
                                     userData?.balance?.amount > 5000 && bankDataStatus === false && 

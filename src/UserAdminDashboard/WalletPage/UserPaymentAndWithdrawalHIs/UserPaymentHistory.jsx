@@ -66,10 +66,6 @@ const UserPaymentHistory = () => {
         { key: '2',label: (<a rel="noopener noreferrer" href={'/wallet/withdrawal/1/12'}>Withdrawal History</a>),},
     ];
 
-    
-    
-
-
 
     return (
         <div className="">

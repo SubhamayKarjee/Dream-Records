@@ -1,4 +1,3 @@
-import { ArrowsUpDownIcon, DocumentCheckIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { CheckBadgeIcon, ClockIcon, ExclamationTriangleIcon, LinkIcon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Button, Divider, Dropdown, Empty, Image, Modal, Pagination, Select } from 'antd';
 import axios from 'axios';
@@ -8,6 +7,11 @@ import toast from 'react-hot-toast';
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import { AuthContext } from '../UserAdminHomePage/UserAdminHomePage';
+import { 
+    RiAddLine,
+    RiFileCheckLine,
+    RiExpandUpDownLine
+} from "@remixicon/react";
 
 
 const ClaimReleasePage = () => {
@@ -181,7 +185,13 @@ const ClaimReleasePage = () => {
                         <input type="text" style={inputStyle} onKeyPress={handleKeyPress} onChange={e => setSearchText(e.target.value)} placeholder="Type & Enter to Search" className="input input-sm w-full"/>
                     </div>
                     <div className="mt-2">
-                        <button onClick={showModal} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9'><PlusIcon className="w-5 h-5"/> Create Claim</button>
+                        <button onClick={showModal} className='btn btn-sm btn-neutral px-6 bg-[#18181B] h-9 text-white'>
+                            <RiAddLine
+                                size={22}
+                                color="white"
+                            />
+                            Create Claim
+                        </button>
                     </div>
                 </div>
                     {/* Create Claim form with Modal Start _______________________________________________________________________ */}
@@ -301,13 +311,23 @@ const ClaimReleasePage = () => {
                             placement="bottomLeft"
                             className="h-10"
                         >
-                            <Button className="text-md font-semibold flex items-center gap-2">{status} <ArrowsUpDownIcon className="w-4 h-4"/></Button>
+                            <Button className="text-md font-semibold flex items-center gap-2">
+                                {status}
+                                <RiExpandUpDownLine
+                                    size={18}
+                                    color="#09090B"
+                                />
+                            </Button>
                         </Dropdown>
                     </div>
 
                     <div className="flex justify-between items-center gap-2">
                         <div className="flex items-center">
-                            <DocumentCheckIcon className="w-4 h-4 me-1 text-slate-500"/>
+                            <RiFileCheckLine
+                                size={16}
+                                color="#252525"
+                                className='me-2'
+                            />
                             <span className="text-sm">Rights Manager Count</span>
                         </div>
                         <div><span className="text-sm font-bold">{claimData?.length} Out of {totalItems}</span> </div>

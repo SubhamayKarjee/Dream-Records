@@ -4,11 +4,14 @@ import { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../UserAdminHomePage/UserAdminHomePage';
 import 'react-phone-number-input/style.css'
-import { ArrowsUpDownIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { useForm } from 'react-hook-form';
 import './SupportPage.css'
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import SupportLIst from './SupportLIst';
+import { 
+    RiAddLine,
+    RiExpandUpDownLine
+  } from "@remixicon/react";
 
 
 
@@ -162,7 +165,13 @@ const SupportPage = () => {
             {/* <ReactTimeAgo date={dateTime}/> */}
             <div className='flex items-center justify-between py-2'>
                 <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => setSearchText(e.target.value)} className='input input-sm border w-80' placeholder='Type & Enter to Search'/>
-                <button onClick={showModal} className='btn btn-sm btn-neutral flex items-center bg-[#18181B] w-40 h-9'> <PlusIcon className='w-4 h-4'/> Create</button>
+                <button onClick={showModal} className='btn btn-sm btn-neutral flex items-center bg-[#18181B] w-40 h-9 text-white'>
+                    <RiAddLine
+                        size={22}
+                        color="white"
+                    />
+                    Create
+                </button>
 
                 <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
                     <h2 className='font-bold text-xl text-[#020617]'>Support Box</h2>
@@ -211,7 +220,13 @@ const SupportPage = () => {
                         placement="bottomLeft"
                         className="h-10"
                     >
-                        <Button className="text-md font-semibold flex items-center gap-2">{status} <ArrowsUpDownIcon className="w-4 h-4"/></Button>
+                        <Button className="text-md font-semibold flex items-center gap-2">
+                            {status}
+                            <RiExpandUpDownLine
+                                size={18}
+                                color="#09090B"
+                            />
+                        </Button>
                     </Dropdown>
                 </div>
                 <div>
