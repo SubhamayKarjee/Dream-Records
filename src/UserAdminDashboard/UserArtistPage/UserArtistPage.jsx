@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 // import CreateArtistForm from "./CreateArtistForm";
 import './UserArtistPage.css'
-import fallbackImage from '../../assets/fallbackImage.jpg'
+import fallbackImage from '../../assets/fallbackImage/commonDefaultImage.png'
 import MainNotices from "../UserCommonComponent/MainNotices";
 import MainNoticesMobile from "../UserCommonComponent/MainNoticesMobile";
 import appleImg from '../../assets/social-icon/apple.png' 
