@@ -1,7 +1,7 @@
 import { Image } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
-import fallbackImage from '../../assets/userImage.webp'
+import fallbackImage from '../../assets/fallbackImage/commonDefaultImage.png'
 import axios from "axios";
 import { ArrowUpTrayIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { useSignOut } from "react-firebase-hooks/auth";

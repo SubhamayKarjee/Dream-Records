@@ -6,7 +6,7 @@ import { Image } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
-import fallbackImage from '../../assets/userImage.webp'
+import fallbackImage from '../../assets/fallbackImage/commonDefaultImage.png'
 import { useNavigate } from "react-router-dom";
 
 
@@ -71,7 +71,11 @@ const UserArtistComponentForHomePage = () => {
                                   src={data.imgUrl}
                                   fallback={fallbackImage}
                                 />
-                                <p className="text-sm text-center">{data.artistName}</p>
+                                {
+                                    data.artistName.length > 6 ? <p className="text-sm text-center">{data.artistName.slice(0,6)}..</p>
+                                    : <p className="text-sm text-center">{data.artistName}</p>
+                                }
+                                
                             </div>
                         </div> 
                     ) 
