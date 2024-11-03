@@ -213,7 +213,7 @@ const UserAdminHomePage = () => {
                                     />
                                     Analytics
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/wallet', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/wallet'}>
+                                <NavLink style={() => activeLinkDynamic('/wallet', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/wallet/payment/1/12'}>
                                     <RiWallet3Line
                                         size={24}
                                         color="#252525"

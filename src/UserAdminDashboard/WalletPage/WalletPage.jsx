@@ -1,22 +1,20 @@
 import { CurrencyRupeeIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { Divider, Modal, Tabs, Tooltip } from "antd";
+import { Divider, Modal, Tooltip } from "antd";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import PaymentDetails from "../../AdminDashboard/UsersList/PaymentDetails";
+import { Outlet } from "react-router-dom";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import MainNotices from "../UserCommonComponent/MainNotices";
 import MainNoticesMobile from "../UserCommonComponent/MainNoticesMobile";
 import BankAccountCreateForm from "./BankAccountCreateForm";
 import WithdrawalForm from "./WithdrawalForm";
-import WithdrawalList from "./WithdrawalList";
 
 export const WalletPageContext = createContext();
 
 const WalletPage = () => {
 
     const {userNameIdRoll} = useContext(AuthContext);
-    const role = userNameIdRoll[2]
 
     const [userData, setUserData] = useState();
     const [bankData, setBankData] = useState([])
@@ -109,18 +107,6 @@ const WalletPage = () => {
         setIsModalOpen(false);
     };
 
-    const items = [
-        {
-          key: '1',
-          label: 'Payments History',
-          children: <PaymentDetails id={userNameIdRoll[1]} role={role} text='Successfully Get Payments from Dream Records' />,
-        },
-        {
-          key: '2',
-          label: 'Withdrawal History',
-          children: <WithdrawalList id={userNameIdRoll[1]} text='Withdrawal Requested'/>
-        },
-    ];
 
     const sideBarShadow = {
         boxShadow: '-2px 2px 18px 0px #EFEFEF',
@@ -219,7 +205,7 @@ const WalletPage = () => {
                 </div>
                 
                 <div>
-                    <Tabs className="mt-3" defaultActiveKey="1" items={items} />                
+                    <Outlet/>
                 </div>
             </div>
 

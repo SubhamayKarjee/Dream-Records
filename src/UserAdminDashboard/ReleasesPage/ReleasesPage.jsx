@@ -1,6 +1,6 @@
 // import React from 'react';
 
-import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
+// import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 import { Button, Divider, Drawer, Dropdown } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import bellIcon from '../../assets/common-icons/bell.png'
 import { 
     RiAddLine,
     RiFileCheckLine,
+    RiExpandUpDownLine
 } from "@remixicon/react";
 
 
@@ -154,7 +155,12 @@ const ReleasesPage = () => {
                                 placement="bottomLeft"
                                 className="h-10"
                             >
-                                <Button className="text-md font-semibold flex items-center gap-2">{status} <ArrowsUpDownIcon className="w-4 h-4"/></Button>
+                                <Button className="text-md font-semibold flex items-center gap-2">{status} 
+                                <RiExpandUpDownLine
+                                    size={18}
+                                    color="#09090B"
+                                />
+                                </Button>
                             </Dropdown>
                         </div>
 

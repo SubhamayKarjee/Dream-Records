@@ -14,6 +14,8 @@ import axios from 'axios';
 import ProtectAdminRoute from './ProtectRoute/ProtectAdminRoute';
 import ProtectUserRoute from './ProtectRoute/ProtectUserRoute';
 import SetNewPassword from './Authentication/LogIn/SetNewPassword';
+import UserPaymentHistory from './UserAdminDashboard/WalletPage/UserPaymentAndWithdrawalHIs/UserPaymentHistory';
+import UserWithDrawalHIstory from './UserAdminDashboard/WalletPage/UserPaymentAndWithdrawalHIs/UserWithDrawalHIstory';
 
 
 
@@ -332,6 +334,16 @@ const router = createBrowserRouter([
       {
         path: '/wallet',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><WalletPage/></ProtectUserRoute></Suspense>,
+        children: [
+          {
+            path:'/wallet/payment/:pageNumber/:perPagePaymentList',
+            element: <UserPaymentHistory/>
+          },
+          {
+            path:'/wallet/withdrawal/:pageNumber/:perPageWithdrawalList',
+            element: <UserWithDrawalHIstory/>
+          }
+        ]
       },
       {
         path: '/claim-release/:status/:pageNumber/:perPageRights',
