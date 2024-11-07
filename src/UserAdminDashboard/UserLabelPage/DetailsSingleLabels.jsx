@@ -136,7 +136,7 @@ const DetailsSingleLabels = () => {
                     <div className="md:flex justify-between">
                         <div className="md:flex-1 flex flex-col md:flex-row gap-2 pt-2">
                             <Image
-                            width={200}
+                            width={'auto'}
                             height={176}
                             className="rounded-lg"
                             src={labels.imgUrl}
