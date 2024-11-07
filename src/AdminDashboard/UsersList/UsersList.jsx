@@ -282,7 +282,7 @@ const UsersList = () => {
                             <Pagination 
                               defaultCurrent={pageNumber} 
                               total={totalItems}
-                              pageSize={activeList}
+                              pageSize={perPageUser}
                               onChange={handlePageChange}
                             /> 
                         </div>
