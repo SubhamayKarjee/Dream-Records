@@ -70,6 +70,7 @@ const UserArtistComponentForHomePage = () => {
                                   className="shadow border"
                                   src={data.imgUrl}
                                   fallback={fallbackImage}
+                                  preview={false}
                                 />
                                 {
                                     data.artistName.length > 6 ? <p className="text-sm text-center">{data.artistName.slice(0,6)}..</p>

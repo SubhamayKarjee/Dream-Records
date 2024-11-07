@@ -171,7 +171,7 @@ const UserLabelsPage = () => {
                             <div style={{borderRadius: '24px', height: '265px'}} className="p-1 border">
                                   <Image
                                     width={'100%'}
-                                    height={190}
+                                    height={180}
                                     style={{borderRadius: '20px'}}
                                     src={data.imgUrl}
                                     preview={false}
