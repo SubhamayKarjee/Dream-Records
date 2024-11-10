@@ -22,8 +22,8 @@ const UserLockedPage = () => {
         <div className="h-screen flex items-center justify-center">
             <div className="flex justify-center items-center flex-col">
                 <LockClosedIcon className="w-10 h-10 cursor-pointer mx-2"/>
-                <h1 className="font-bold text-xl">Your Profile Suspended</h1>
-                <p>Please contact to Dream Records Support <span className="font-bold">support@dreamrecords.in</span></p>
+                <h1 className="font-bold text-xl">Your Account is Suspended</h1>
+                <p>Your Dream Records account has been suspended which means you can&apos;t access your dashboard. For more information please contact <span className="font-bold">support@dreamrecords.in</span></p>
             </div>
         </div>
     );
