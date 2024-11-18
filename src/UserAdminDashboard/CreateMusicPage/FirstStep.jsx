@@ -35,6 +35,14 @@ const FirstStep = () => {
         setErrorMessage('')
         setUploadLoading(true)
         const file = event.target.files[0];
+        console.log(file.type);
+        if(file.type !== 'image/jpeg' && file.type !== 'image/png'){
+            setErrorMessage('Please Select JPEG, JPG and PNG file')
+            setUploadLoading(false)
+            return;
+        }
+        
+        console.log(file.type);
         const formData = new FormData();
         formData.append('file', file);
 
@@ -130,7 +138,6 @@ const FirstStep = () => {
                     </div>
                     <input type="file" accept=".jpeg, .JPG, .jpg" id="fileInputStyle" name='image' onChange={e => releaseImageUpload(e)} />
                 </div>
-                {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
                 {
                     upLoadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                 }
