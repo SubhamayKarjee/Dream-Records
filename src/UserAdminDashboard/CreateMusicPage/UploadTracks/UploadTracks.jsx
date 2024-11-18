@@ -503,7 +503,7 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                             <Modal title="Search/Select Artist" className='relative' open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1} footer={[]}>
                                 <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">You can add multiple Artist</p>
                                 <div>
-                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/artist" target={'_blank'}>Add Artist</a>
+                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/create-artist" target={'_blank'}>Add Artist</a>
                                     <ArtistList handleCancel={handleCancel1} reFetchArtist={reFetchArtist}/>
                                 </div>
                             </Modal>
@@ -540,7 +540,7 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                             <Modal title="Search/Select Label" className="relative" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={[]}>
                                 <p className="text-xs bg-slate-100 mb-2 rounded-md py-1 px-3">Select Label</p>
                                 <div>
-                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/labels" target={'_blank'}>Add Labels</a>
+                                    <a className="btn btn-xs btn-neutral rounded-full absolute top-4 right-12" href="https://app.dreamrecords.in/create-labels" target={'_blank'}>Add Labels</a>
                                     <LabelsList handleCancel={handleCancel2} reFetchLabels={reFetchLabels}/>
                                 </div>
                             </Modal>
