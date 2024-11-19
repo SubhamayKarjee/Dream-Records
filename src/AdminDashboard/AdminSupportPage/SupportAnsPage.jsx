@@ -81,7 +81,7 @@ const SupportAnsPage = () => {
 
 
     const deleteTicket = (id) => {
-        axios.delete(`http://localhost:5000/common/api/v1/ticket/delete/${id}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/delete/${id}`)
         .then(res => {
             if(res.status == 200){
                 toast.success('Deleted the Ticket')
