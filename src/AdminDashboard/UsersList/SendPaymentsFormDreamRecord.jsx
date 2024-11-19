@@ -118,7 +118,13 @@ const SendPaymentsFormDreamRecord = ({id, isOpenModalPayment, clickIdPayment}) =
                               {payAmountError && <span className='text-red-600 pt-2 block'>{payAmountError}</span>}
                               <div>
                                 <p className="text-sm font-bold mt-2 ms-2 text-slate-500">Payment Report Date</p>
-                                <input type="date" onChange={e => setPaymentReportDate(e.target.value.slice(0,7))} className="border rounded-full px-2 py-1" />
+                                <input type="date" onChange={e => {
+                                    const inputValue = e.target.value.slice(0, 7); // Get "YYYY-MM" format
+                                    const [year, month] = inputValue.split('-'); 
+                                    const date = new Date(year, month - 1); // Create a Date object
+                                    const formattedDate = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short' }).format(date);
+                                    setPaymentReportDate(formattedDate); // Set the formatted date
+                                }} className="border rounded-full px-2 py-1" />
                                 {paymentReportDateErr && <p className="font-bold text-sm text-red-500">{paymentReportDateErr}</p>}
                               </div>
                             </div>

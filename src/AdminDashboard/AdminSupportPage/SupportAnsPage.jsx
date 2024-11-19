@@ -169,15 +169,15 @@ const SupportAnsPage = () => {
                                     }
                                 </div>
                                     {
-                                        adminNameIdRoll[0] === d.userName ? 
+                                        adminNameIdRoll[0] === d?.userName ? 
                                             <div className="flex items-center gap-2 justify-end">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                <p className="text-sm">{d.date.slice(0,10)} {d.date.slice(11,19)}</p>
+                                                <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date.toString().slice(11,19)}</p>
                                             </div>
                                             :
                                             <div className="flex items-center gap-2 justify-start">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                <p className="text-sm">{d.date.slice(0,10)} {d.date.slice(11,19)}</p>
+                                                <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date.toString().slice(11,19)}</p>
                                             </div>
                                     }
                             </div>
