@@ -4,7 +4,7 @@ import { Divider, Select } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AdminAuthContext } from "../DashboardForAdmin/DashBoardForAdmin";
 import './SupportAnsPage.css'
 
@@ -12,6 +12,7 @@ const SupportAnsPage = () => {
 
     const {id} = useParams();
     const {adminNameIdRoll} = useContext(AdminAuthContext);
+    const navigate = useNavigate();
     
     const [reFetch, setReFetch] = useState(1)
     const [supportData, setSupportData] = useState();
@@ -23,7 +24,6 @@ const SupportAnsPage = () => {
         if(res.status === 200){
             setLoading(false)
             setSupportData(res.data.data[0]);
-            console.log(res.data.data);
         }
     })
     },[id, reFetch])
@@ -81,10 +81,12 @@ const SupportAnsPage = () => {
 
 
     const deleteTicket = (id) => {
-        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/delete/${id}`)
+        axios.delete(`http://localhost:5000/common/api/v1/ticket/delete/${id}`)
         .then(res => {
             if(res.status == 200){
                 toast.success('Deleted the Ticket')
+                navigate('/admin-dashboard/support/All/1/8')
+                
             }
         })
     }
