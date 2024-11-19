@@ -205,7 +205,7 @@ const ClaimReleasePage = () => {
                                 onChange={e => setClaimOption(e)}
                                 options={[
                                     {value: 'Release claim',label: 'Release claim',},
-                                    {value: 'Manual claim',label: 'Manual claim',}, 
+                                    // {value: 'Manual claim',label: 'Manual claim',}, 
                                     {value: 'Takedown video',label: 'Takedown video',}, 
                                     {value: 'Audio Fingerprinting',label: 'Audio Fingerprinting',}, 
                                 ]}
