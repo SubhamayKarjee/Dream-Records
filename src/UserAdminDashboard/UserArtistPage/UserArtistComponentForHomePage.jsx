@@ -49,7 +49,7 @@ const UserArtistComponentForHomePage = () => {
                             className='me-2'
                         />
                     </p>
-                    <p className="text-center pt-2 text-sm">Add New</p>
+                    <p className="text-center pt-2 text-sm text-[#000000]">Add New</p>
                 </div>
                 {
                     loading && 
@@ -63,22 +63,23 @@ const UserArtistComponentForHomePage = () => {
                 }
                 {
                     artistData && artistData.map((data) =>
-                        <div key={data._id} className="avatar">
-                            <div className="">
-                                <Image
-                                  style={{width: '90px', height: '78px', borderRadius: '12px'}}
-                                  className="shadow border"
-                                  src={data.imgUrl}
-                                  fallback={fallbackImage}
-                                  preview={false}
-                                />
-                                {
-                                    data.artistName.length > 6 ? <p className="text-sm text-center">{data.artistName.slice(0,6)}..</p>
-                                    : <p className="text-sm text-center">{data.artistName}</p>
-                                }
-                                
-                            </div>
-                        </div> 
+                        <div key={data._id}>
+                            <div  className="avatar">
+                                <div className="overflow-visible">
+                                    <Image
+                                    style={{width: '90px', height: '78px', borderRadius: '12px'}}
+                                    className="shadow border"
+                                    src={data.imgUrl}
+                                    fallback={fallbackImage}
+                                    preview={false}
+                                    />
+                                </div>
+                            </div> 
+                            {
+                                data.artistName.length > 6 ? <p className="text-sm text-center text-[#000000]">{data.artistName.slice(0,6)}..</p>
+                                : <p className="text-sm text-center text-[#000000]">{data.artistName}</p>
+                            }
+                        </div>
                     ) 
                 }                
             </div>
