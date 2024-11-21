@@ -278,7 +278,7 @@ const UserAdminHomePage = () => {
                                                                 alt="profile-image"
                                                             /> 
                                                     }
-                                                    <h2>{userFirstName}</h2>
+                                                    <h2 className='text-[#252525]'>{userFirstName}</h2>
                                                 </div>
                                                 <div>
                                                     <RiArrowDownSLine
@@ -318,8 +318,8 @@ const UserAdminHomePage = () => {
                                                 <img src={logo} />
                                             </div>
                                         </div>
-                                        <h1 className='text-xl font-extrabold'>Dream Records</h1>
-                                        <p className='text-sm'>Sell your music worldwide.</p>
+                                        <h1 className='text-xl font-extrabold text-[#252525]'>Dream Records</h1>
+                                        <p className='text-sm text-[#252525]'>Sell your music worldwide.</p>
                                         <div className='py-4'>
                                             <Link to={'/create-release'}>
                                                 <button onClick={onClose} style={{width: '90%'}} className='btn text-white md:text-sm lg:text-lg font-semibold btn-neutral bg-[#252525] w-full'>
@@ -332,7 +332,7 @@ const UserAdminHomePage = () => {
                                             </Link>
                                             
                                             <div className='mt-2 py-2'> 
-                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' htmlFor="menu_drower" aria-label="close sidebar" to={'/'}>
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md text-[#252525]' htmlFor="menu_drower" aria-label="close sidebar" to={'/'}>
                                                     <RiHome2Line
                                                         size={24}
                                                         color="#252525"
@@ -340,7 +340,7 @@ const UserAdminHomePage = () => {
                                                     />
                                                     Home
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/releases/All/1/6'}>
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md text-[#252525]' to={'/releases/All/1/6'}>
                                                     <RiFileCheckLine
                                                         size={24}
                                                         color="#252525"
@@ -348,7 +348,7 @@ const UserAdminHomePage = () => {
                                                     />
                                                     Releases
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/artist/1/8'}>
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md text-[#252525]' to={'/artist/1/8'}>
                                                     <RiGroupLine
                                                         size={24}
                                                         color="#252525"
@@ -356,7 +356,7 @@ const UserAdminHomePage = () => {
                                                     />
                                                     Artists
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/labels/All/1/6'}>
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md text-[#252525]' to={'/labels/All/1/6'}>
                                                     <RiPriceTag3Line
                                                         size={24}
                                                         color="#252525"
@@ -364,7 +364,7 @@ const UserAdminHomePage = () => {
                                                     />  
                                                     Labels
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/analytics/1/8'}>
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md text-[#252525]' to={'/analytics/1/8'}>
                                                     <RiPieChartLine
                                                         size={24}
                                                         color="#252525"
@@ -372,7 +372,7 @@ const UserAdminHomePage = () => {
                                                     />
                                                     Analytics
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/wallet'}>
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md text-[#252525]' to={'/wallet'}>
                                                     <RiWallet3Line
                                                         size={24}
                                                         color="#252525"
@@ -380,7 +380,7 @@ const UserAdminHomePage = () => {
                                                     />
                                                     Wallet
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/claim-release/All/1/8'}>
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md text-[#252525]' to={'/claim-release/All/1/8'}>
                                                     <RiErrorWarningLine
                                                         size={24}
                                                         color="#252525"
@@ -388,7 +388,7 @@ const UserAdminHomePage = () => {
                                                     />
                                                     Rights manager
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/support/All/1/8'}>
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md text-[#252525]' to={'/support/All/1/8'}>
                                                     <RiServiceLine
                                                         size={24}
                                                         color="#252525"
@@ -396,7 +396,7 @@ const UserAdminHomePage = () => {
                                                     />
                                                     Support
                                                 </NavLink>
-                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md' to={'/account'}>
+                                                <NavLink onClick={onClose} className='flex items-center py-2 ps-3 rounded-md text-[#252525]' to={'/account'}>
                                                     <RiUserLine
                                                         size={24}
                                                         color="#252525"
@@ -435,7 +435,7 @@ const UserAdminHomePage = () => {
                                                                 alt="profile-image"
                                                             /> 
                                                     }
-                                                    <h2>{userFirstName}</h2>
+                                                    <h2 className='text-[#252525]'>{userFirstName}</h2>
                                                 </div>
                                                 <div>
                                                     <RiArrowDownSLine
@@ -447,9 +447,9 @@ const UserAdminHomePage = () => {
                                         </div>
                                         <ul tabIndex={0} className="border mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                                             {
-                                               userNameIdRoll?  <h3 className='text-lg font-bold px-2 border-b'>{userNameIdRoll[0]}</h3> : ''
+                                               userNameIdRoll?  <h3 className='text-lg font-bold px-2 border-b text-[#252525]'>{userNameIdRoll[0]}</h3> : ''
                                             }
-                                            <li><Link className='font-bold py-2 my-2' to={'/account'}>Account</Link></li>
+                                            <li><Link className='font-bold py-2 my-2 text-[#252525]' to={'/account'}>Account</Link></li>
                                             <li><button onClick={async () => { const success = await signOut();
                                                                                 if (success) {
                                                                                     alert('You are sign out');
