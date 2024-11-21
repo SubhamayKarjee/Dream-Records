@@ -154,8 +154,8 @@ const UserAdminHomePage = () => {
                                 </div>
                             </div>
                             <div style={{marginTop: '-20px'}}>
-                                <h1 className='text-xl font-extrabold'>Dream Records</h1>
-                                <p className='text-sm'>Sell your music worldwide.</p>
+                                <h1 className='text-xl font-extrabold text-[#252525]'>Dream Records</h1>
+                                <p className='text-sm text-[#000000]'>Sell your music worldwide.</p>
                                 <div className='pt-3'>
                                     <Link to={'/create-release'} className='w-full'>
                                         <button style={{width: '90%'}} className='btn text-white md:text-sm lg:text-lg font-semibold btn-neutral bg-[#252525] w-full'>
@@ -173,7 +173,7 @@ const UserAdminHomePage = () => {
                              {/* __________________________________________________________________________________________________________ */}
                             {/* Admin All Nav Link ________________________________________________________________________________________ */}
                             <div className='py-2'> 
-                                <NavLink style={({isActive}) => activeLink(isActive)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/'}>
+                                <NavLink style={({isActive}) => activeLink(isActive)} className='flex items-center py-[12px] ps-3 rounded-md text-[#252525]' to={'/'}>
                                     <RiHome2Line
                                         size={24}
                                         color="#252525"
@@ -181,7 +181,7 @@ const UserAdminHomePage = () => {
                                     />
                                     Home
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/releases', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/releases/All/1/6'}>
+                                <NavLink style={() => activeLinkDynamic('/releases', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md text-[#252525]' to={'/releases/All/1/6'}>
                                     <RiFileCheckLine
                                         size={24}
                                         color="#252525"
@@ -189,7 +189,7 @@ const UserAdminHomePage = () => {
                                     />
                                     Releases
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/artist', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/artist/1/8'}>
+                                <NavLink style={() => activeLinkDynamic('/artist', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md text-[#252525]' to={'/artist/1/8'}>
                                     <RiGroupLine
                                         size={24}
                                         color="#252525"
@@ -197,7 +197,7 @@ const UserAdminHomePage = () => {
                                     />
                                     Artists
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/labels', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/labels/All/1/6'}>
+                                <NavLink style={() => activeLinkDynamic('/labels', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md text-[#252525]' to={'/labels/All/1/6'}>
                                     <RiPriceTag3Line
                                         size={24}
                                         color="#252525"
@@ -205,7 +205,7 @@ const UserAdminHomePage = () => {
                                     />  
                                     Labels
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/analytics', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/analytics/1/12'}>
+                                <NavLink style={() => activeLinkDynamic('/analytics', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md text-[#252525]' to={'/analytics/1/12'}>
                                     <RiPieChartLine
                                         size={24}
                                         color="#252525"
@@ -213,7 +213,7 @@ const UserAdminHomePage = () => {
                                     />
                                     Analytics
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/wallet', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/wallet/payment/1/12'}>
+                                <NavLink style={() => activeLinkDynamic('/wallet', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md text-[#252525]' to={'/wallet/payment/1/12'}>
                                     <RiWallet3Line
                                         size={24}
                                         color="#252525"
@@ -221,7 +221,7 @@ const UserAdminHomePage = () => {
                                     />
                                     Wallet
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/claim-release', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/claim-release/All/1/8'}>
+                                <NavLink style={() => activeLinkDynamic('/claim-release', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md text-[#252525]' to={'/claim-release/All/1/8'}>
                                     <RiErrorWarningLine
                                         size={24}
                                         color="#252525"
@@ -229,7 +229,7 @@ const UserAdminHomePage = () => {
                                     />
                                     Rights manager
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/support', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/support/All/1/8'}>
+                                <NavLink style={() => activeLinkDynamic('/support', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md text-[#252525]' to={'/support/All/1/8'}>
                                     <RiServiceLine
                                         size={24}
                                         color="#252525"
@@ -237,7 +237,7 @@ const UserAdminHomePage = () => {
                                     />
                                     Support
                                 </NavLink>
-                                <NavLink style={() => activeLinkDynamic('/account', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md' to={'/account'}>
+                                <NavLink style={() => activeLinkDynamic('/account', currentPath)} className='flex items-center py-[12px] ps-3 rounded-md text-[#252525]' to={'/account'}>
                                     <RiUserLine
                                         size={24}
                                         color="#252525"

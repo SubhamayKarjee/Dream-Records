@@ -82,7 +82,7 @@ const UserHomePage = () => {
 
             {/* Notification Div Desktop _______________________________*/}
             <div style={sideBarShadow} className="md:basis-1/4 hidden md:block bg-white md:pt-16 px-3">
-                <h3 className='font-semibold text-xl pb-2'>Notices</h3>
+                <h3 className='font-semibold text-xl pb-2 text-[#252525]'>Notices</h3>
                 <MainNotices/>
             </div>
         </div>
