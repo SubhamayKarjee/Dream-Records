@@ -84,7 +84,16 @@ const SingleUserPage = () => {
                         <p className="text-sm text-slate-700">Address: {userData?.address}</p>
                         <p className="text-sm text-slate-700">ID: {userData?._id}</p>
                         <p className="text-sm text-slate-700 font-semibold pt-2">{userData?.userEmail ? userData.userEmail : userData?.email}</p>
+                        <p className="text-sm text-slate-700 font-semibold">{userData?.phone}</p>
                         <p className="text-sm text-slate-700 font-semibold">Roll: <span className="bg-green-500 px-2 rounded-md text-white">{userData?.roll}</span></p>
+                        <p className="text-sm text-slate-700">Address Line 1: {userData?.addressLine1}</p>
+                        <p className="text-sm text-slate-700">Address Line 2: {userData?.addressLine2}</p>
+                        <div className="py-2">
+                            <p className="text-sm text-slate-700">Postal Code: {userData?.postalCode}</p>
+                            <p className="text-sm text-slate-700">City: {userData?.city}</p>
+                            <p className="text-sm text-slate-700">State: {userData?.state?.name}</p>
+                            <p className="text-sm text-slate-700">Country: {userData?.country?.name}</p>
+                        </div>
                         <p className="text-sm text-slate-700">Account Opening Date: {userData?.openingDate} || Time: {userData?.openingTime}</p>
                         <p className="text-sm bg-slate-200 rounded-md px-2">Last Active :  {userData?.lastLogin}</p>
                     </div>
