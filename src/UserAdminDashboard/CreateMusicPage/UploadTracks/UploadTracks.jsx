@@ -20,6 +20,7 @@ import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 const UploadTracks = ({setIsTrackUploadModal}) => {
 
     const { 
+        firstStep,
         secondStep,
         setSecondStep,
         audioData, setAudioData,
@@ -331,6 +332,7 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
             const d = {...data, ...audioData, lyricsLanguage, artist, labels, featuring, composer: composerDetails, format, authors: authorDetails}
             secondStep.push(d)
             setArtist()
+            setFeaturing()
             setLabels([])
             setAuthors([])
             setComposer([])
@@ -427,7 +429,14 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <p className="mt-3 mb-1 text-sm font-semibold text-[#09090B]">Album Name <span className="text-red-500">*</span></p>
-                    <input style={inputStyle} type="text" className="input input-sm w-full mt-1" placeholder="Enter the Album name here" {...register("albumName", { required: true})}/>
+                    {
+                        format === 'Album' &&
+                        <input style={inputStyle} type="text" className="input input-sm w-full mt-1" placeholder="Enter the Album name here" {...register("albumName", { required: true})}/>
+                    }
+                    {
+                        format !== 'Album' &&
+                        <input style={inputStyle} value={firstStep.releaseTitle} type="text" className="input input-sm w-full mt-1" placeholder="Enter the Album name here" {...register("albumName", { required: true})} readOnly/>
+                    }
                     {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>} 
                     
                     {/* Author Input ___________________________________ */}

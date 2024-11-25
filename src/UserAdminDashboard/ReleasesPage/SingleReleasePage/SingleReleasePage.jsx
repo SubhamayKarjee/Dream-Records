@@ -11,6 +11,7 @@ import { DocumentMagnifyingGlassIcon, ExclamationTriangleIcon, PencilSquareIcon 
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import './SingleReleasePage.css'
+import ReleaseCardComponent from "../ReleaseCardComponent/ReleaseCardComponent";
 
 
 const SingleReleasePage = () => {
@@ -21,18 +22,30 @@ const SingleReleasePage = () => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState()
 
+    let [albumData, setAlbumData] = useState();
+
     useEffect(() => {
         setLoading(true)
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/single/${id}`)
             .then( res => {
                 if(res.status == 200){
-                    setLoading(false);
                     setData(res.data.data[0]);
+                    const releaseData = res.data.data[0];
+                    if(releaseData.format === 'Album'){
+                        axios.get(`http://localhost:5000/api/v1/release/album-release/${releaseData.masterUserId}?albumId=${releaseData.albumId}`)
+                        .then(res =>{
+                            console.log(res.data.data);
+                            setAlbumData(res.data.data)
+                            setLoading(false);
+                        })
+                    }else{
+                        setLoading(false);
+                    }
                 }
             })
             .catch(er => console.log(er));
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [id]);
 
     const handleNavigate = (id) => {
         const link = `/releases/edit/${id}`
@@ -314,9 +327,15 @@ const SingleReleasePage = () => {
                                     <p className="font-semibold">{data?.ISRC}</p>
                                 </div>
                             </div>
-
                             
                             </div>
+                        </div>
+                    }
+                    {
+                        albumData && 
+                        <div className="p-2 md:p-4">
+                            <p className="font-bold">This Album Other Releases</p>
+                            <ReleaseCardComponent releaseData={albumData} totalItems={albumData?.length} fetchLoading={loading} currentPage={1} itemPerPage={30}/>
                         </div>
                     }
                 </div>

@@ -8,6 +8,7 @@ import { ArrowPathIcon, CheckBadgeIcon, ClockIcon, DocumentDuplicateIcon, Exclam
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import './AdminSingleReleasePage.css'
+import AdminReleaseCardComponent from "./AdminReleaseCardComponent";
 
 const AdminSingleReleasePage = () => {
 
@@ -18,14 +19,25 @@ const AdminSingleReleasePage = () => {
     const [releaseData, setReleaseData] = useState()
     const [releaseStatus, setReleaseStatus] = useState();
 
+    const [albumData, setAlbumData] = useState()
     useEffect(() => {
         setLoading(true)
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/single/${id}`)
             .then( res => {
                 if(res.status == 200){
-                    setLoading(false);
                     setReleaseData(res.data.data[0]);
                     setReleaseStatus(res.data.data[0].status)
+                    const rData = res.data.data[0]
+                    if(rData.format === 'Album'){
+                        axios.get(`http://localhost:5000/api/v1/release/album-release/${releaseData.masterUserId}?albumId=${releaseData.albumId}`)
+                        .then(res =>{
+                            console.log(res.data.data);
+                            setAlbumData(res.data.data)
+                            setLoading(false);
+                        })
+                    }else{
+                        setLoading(false);
+                    }
                 }
             })
             .catch(er => console.log(er));
@@ -507,6 +519,13 @@ const AdminSingleReleasePage = () => {
                         </div>
                     </div>
                 }
+
+                    {
+                        albumData && 
+                        <div className="p-2 md:p-4">
+                            <p className="font-bold">This Album Other Releases</p>
+                            <AdminReleaseCardComponent releaseData={albumData} totalItems={albumData.length} fetchLoading={loading} currentPage={1} itemPerPage={20}/>                        </div>
+                    }
             </div> 
         </div>
     );
