@@ -68,7 +68,6 @@ const SupportPage = () => {
         .then(res => {
             setSupportData(res.data.data);
             setTotalItems(res.data.dataCount)
-            console.log(res.data.data);
             setLoading(false)
         })
     },[userNameIdRoll, pageNumber, perPageSupport, status])
