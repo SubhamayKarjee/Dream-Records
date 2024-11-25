@@ -28,6 +28,7 @@ const UserWithDrawalHIstory = () => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/withdrawal/${userNameIdRoll[1]}?page=${pageNumber}&limit=${perPageWithdrawalList}`)
         .then(res => {
             setWithdrawalData(res.data.data);
+            console.log(res.data.data);
             setTotalItems(res.data.dataCount)
             setFetchLoading(false)
         })
@@ -221,6 +222,12 @@ const UserWithDrawalHIstory = () => {
                                                                 <p className="text-sm text-[#71717A]">{data.rejectResoan}</p>
                                                             </div>
                                                         </div>
+                                                    }
+                                                </div>
+                                                <div className="flex items-center justify-center py-3">
+                                                    {
+                                                        data?.invoice?.fileUrl &&
+                                                        <a className="border py-2 px-4 rounded-md" href={data?.invoice?.fileUrl} download={data?.invoice?.fileUrl}>Download Invoice</a>
                                                     }
                                                 </div>
                                         </div>

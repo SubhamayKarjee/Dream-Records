@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
+import './SingleWithdrawalDetails.css'
 
 const SingleWithdrawalDetails = () => {
 
@@ -38,6 +39,20 @@ const SingleWithdrawalDetails = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refetch])
 
+    const [withdrawalInvoice, setWithdrawalInvoice] = useState();
+
+    // Approved Status Handle
+    const [isModalOpen1, setIsModalOpen1] = useState(false);
+    const showModal1 = () => {
+        setIsModalOpen1(true);
+    };
+    const handleOk1 = () => {
+        setIsModalOpen1(false);
+    };
+    const handleCancel1 = () => {
+        setIsModalOpen1(false);
+    };
+
 
     const handleUpdateStatus = (id) => {
         setUpdateLoading(true)
@@ -45,18 +60,23 @@ const SingleWithdrawalDetails = () => {
         const currentDate = currentDateAndTime.toDateString();
         const updatedDate = currentDate;
         const updatedProcessed = `Your payment has been processed`
-        const data = {...withdrawalData, status: withdrawalStatus, updatedProcessed, updatedDate}
+        const data = {...withdrawalData, status: withdrawalStatus, updatedProcessed, updatedDate, invoice: withdrawalInvoice}
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/single/${id}`, data)
         .then(res => {
             if(res.status == 200){
                 const count = refetch + 1;
                 setRefetch(count);
                 setUpdateLoading(false);
+                setIsModalOpen1(false)
+                const file = document.getElementById('fileInput');
+                file.value = '';
                 toast.success('Withdrawal Status Updated!');
             }
         })
     }
 
+
+    
 
     // Reject Status Handle
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -107,6 +127,43 @@ const SingleWithdrawalDetails = () => {
             if(res.status === 200){
                 toast.success('Deleted');
                 navigate('/admin-dashboard/withdrawal-request/1/10/All')
+            }
+        })
+    }
+
+    const [uploadLoading, setUploadLoading] = useState();
+    const [invoiceUploadError, setInvoiceUploadError] = useState();
+    const uploadWithdrawalInvoice = (e) => {
+        setInvoiceUploadError('')
+        setUploadLoading(true)
+        const file = e[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        if(withdrawalInvoice){
+            axios.delete(`http://localhost:5000/common/api/v1/payment/admin/delete-invoice-file?key=${withdrawalInvoice.key}`)
+        }
+        axios.post(`http://localhost:5000/common/api/v1/payment/admin/withdrawal-invoice-upload`, formData)
+        .then(res => {
+            if(res.status == 200){
+                setUploadLoading(false);
+                setWithdrawalInvoice(res.data.data)
+                toast.success('File Uploaded')
+            }else{
+                setInvoiceUploadError('Internal Error Please try Again');
+                setUploadLoading(false);
+            }
+        })
+    }
+
+    const deleteInvoice = () => {
+        if(withdrawalInvoice)
+        axios.delete(`http://localhost:5000/common/api/v1/payment/admin/delete-invoice-file?key=${withdrawalInvoice.key}`)
+        .then(res => {
+            if(res.status == 200){
+                setWithdrawalInvoice();
+                const file = document.getElementById('fileInput');
+                file.value = '';
+                toast.success('Deleted')
             }
         })
     }
@@ -181,8 +238,36 @@ const SingleWithdrawalDetails = () => {
                                     }
                                     {
                                         withdrawalData.status === 'Pending' && withdrawalStatus === 'Approved' &&
-                                        <button onClick={() => handleUpdateStatus(withdrawalData._id)} className="btn btn-sm btn-neutral w-full mt-2">Update</button>
+                                        <button onClick={showModal1} className="btn btn-sm btn-neutral w-full mt-2">Update</button>
                                     }
+                                    <Modal 
+                                        title="Upload Withdrawal Invoice" 
+                                        open={isModalOpen1} 
+                                        onOk={handleOk1} 
+                                        onCancel={handleCancel1}
+                                        footer={[]}
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <input type="file" id="fileInput" name='file' onChange={e => uploadWithdrawalInvoice(e.target.files)} />
+                                                {
+                                                   withdrawalInvoice && 
+                                                   <button className="btn btn-sm" onClick={deleteInvoice}>Delete</button> 
+                                                }
+                                            </div>
+                                            {
+                                                invoiceUploadError && <p className="text-red-500">{invoiceUploadError}</p>
+                                            }
+                                            <div className="flex items-center">
+                                                {
+                                                    uploadLoading && 
+                                                    <div className="flex items-center">
+                                                        <span className="loading loading-spinner loading-md me-2"></span>
+                                                    </div>
+                                                }
+                                                <button onClick={() => handleUpdateStatus(withdrawalData._id)} className="btn btn-sm btn-neutral w-full mt-2">Update</button>
+                                            </div>
+                                    </Modal>
+
                                     {
                                         withdrawalData.status !== 'Rejected' && withdrawalStatus === 'Rejected' && 
                                         <button onClick={showModal} className="btn btn-sm btn-neutral w-full mt-2">Update</button>
