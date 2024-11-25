@@ -21,7 +21,6 @@ const ActionRequiredRelease = ({onClose}) => {
                 if(res.data.data.length === 0){
                     setNoData(true);
                 }
-                console.log(res.data.data);
               }
             })
             .catch(er => console.log(er));
