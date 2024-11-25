@@ -28,7 +28,6 @@ const UserWithDrawalHIstory = () => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/withdrawal/${userNameIdRoll[1]}?page=${pageNumber}&limit=${perPageWithdrawalList}`)
         .then(res => {
             setWithdrawalData(res.data.data);
-            console.log(res.data.data);
             setTotalItems(res.data.dataCount)
             setFetchLoading(false)
         })
