@@ -332,6 +332,15 @@ const SingleReleasePage = () => {
                         </div>
                     }
                     {
+                            data?.actionReqHistory &&
+                            <div className="py-3">
+                                <p className="font-bold">Action Require/Takedown History</p>
+                                {data.actionReqHistory.map((d, index) => {
+                                    return <p key={index} className='p-2'>{index+1}: {d}</p>
+                                })}
+                            </div>
+                    }
+                    {
                         albumData && 
                         <div className="p-2 md:p-4">
                             <p className="font-bold">This Album Other Releases</p>

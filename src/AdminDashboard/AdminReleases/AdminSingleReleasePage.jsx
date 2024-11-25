@@ -26,6 +26,7 @@ const AdminSingleReleasePage = () => {
             .then( res => {
                 if(res.status == 200){
                     setReleaseData(res.data.data[0]);
+                    console.log(res.data.data[0]);
                     setReleaseStatus(res.data.data[0].status)
                     const rData = res.data.data[0]
                     if(rData.format === 'Album'){
@@ -61,7 +62,20 @@ const AdminSingleReleasePage = () => {
     const onSubmit = (data) => {
         setUpdateLoading(true)
         const status = releaseStatus;
-        const formData = {...releaseData, status, ...data }
+        let formData;
+        if(status === 'Action Required' || status === 'Takedown'){
+            if(releaseData.actionReqHistory){
+                releaseData.actionReqHistory.push(data.actionRequired)
+                formData = {...releaseData, status, ...data }
+                console.log(formData);
+            }else{
+                formData = {...releaseData, status, ...data, actionReqHistory: [data.actionRequired]}
+                console.log(formData);
+            }
+        }else{
+            formData =  {...releaseData, status, ...data}
+        }
+        // const formData = {...releaseData, status, ...data }
             axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/update-release/${id}`, formData)
             .then(res => {
                 if(res.status == 200){
@@ -516,6 +530,15 @@ const AdminSingleReleasePage = () => {
                                 <tr><td>ISRC:</td><td>{releaseData?.ISRC}</td></tr>
                             </tbody>
                         </table>
+                        {
+                            releaseData?.actionReqHistory &&
+                            <div className="py-3">
+                                <p className="font-bold">Action Require/Takedown History</p>
+                                {releaseData.actionReqHistory.map((d, index) => {
+                                    return <p key={index} className='p-2'>{index+1}: {d}</p>
+                                })}
+                            </div>
+                        }
                         </div>
                     </div>
                 }
