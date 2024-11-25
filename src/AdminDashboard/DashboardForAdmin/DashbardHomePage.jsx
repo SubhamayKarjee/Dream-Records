@@ -22,6 +22,21 @@ const DashbardHomePage = () => {
             .catch(er => console.log(er));
     }, []);
 
+    const [reSubmitRelease, setReSubmitRelease] = useState();
+    const [reSubmitReleaseLoading, setReSubmitReleaseLoading] = useState(false)
+    // Get Release List ______________________________________________________________
+    useEffect(() => {
+        setReSubmitReleaseLoading(true)
+        axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/release?status=ReSubmitted&page=1&limit=2`)
+            .then( res => {
+              if(res.status == 200){
+                setReSubmitRelease(res.data.dataCount);
+                setReSubmitReleaseLoading(false)
+              }
+            })
+            .catch(er => console.log(er));
+    }, []);
+
     const [pendingLabels, setPendingLabels] = useState();
     const [pendingLabelsLoading, setPendingLabelsLoading] = useState(false)
     // Get Release List ______________________________________________________________
@@ -99,6 +114,16 @@ const DashbardHomePage = () => {
                         <p className="font-extrabold text-xl border rounded-md px-2 bg-green-100">{pendingRelease}</p>
                     }
                 </div>
+
+                <div style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/release/1/8/ReSubmitted')} className="p-2 rounded-md shadow border">
+                    <h2 className="font-extrabold text-2xl text-slate-500">ReSubmitted</h2>
+                    <p className="text-sm text-slate-500 flex items-center"><ClockIcon className="h-4 w-4 me-1"/>Releases</p>
+                    {
+                        reSubmitReleaseLoading === true ? <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-sm me-2"></span></div> :
+                        <p className="font-extrabold text-xl border rounded-md px-2 bg-green-100">{reSubmitRelease}</p>
+                    }
+                </div>
+                
                 <div style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/labels/1/10/Pending')} className="p-2 rounded-md shadow border">
                     <h2 className="font-extrabold text-2xl text-slate-500">Labels</h2>
                     <p className="text-sm text-slate-500 flex items-center"><ClockIcon className="h-4 w-4 me-1"/>Pending</p>
@@ -131,6 +156,7 @@ const DashbardHomePage = () => {
                         <p className="font-extrabold text-xl border rounded-md px-2 bg-green-100">{pendingWithdrawalReq}</p>
                     }
                 </div>
+                
             </div>
         </div>
     );
