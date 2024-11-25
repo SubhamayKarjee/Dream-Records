@@ -161,7 +161,7 @@ const SupportPage = () => {
 
     return (
         <div className='md:pt-16 px-3 overflow-y-auto h-full custom-scrollbar'>
-            <h3 className='font-bold text-xl text-[#252525]'>Support</h3>
+            <h3 className='font-bold text-xl text-[#252525]'>Support <span className='border px-2 rounded-md'>{totalItems}</span></h3>
             {/* <ReactTimeAgo date={dateTime}/> */}
             <div className='flex items-center justify-between py-2'>
                 <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => setSearchText(e.target.value)} className='input input-sm border w-80' placeholder='Type & Enter to Search'/>

@@ -57,11 +57,13 @@ const SingleSupportPage = () => {
             return;
         }
         const date = new Date();
+        const status = 'Pending';
         const userName = userNameIdRoll[0]
         const data = {message: supportText, date, attachment, userName }
         supportData.issue.push(data)
+        const updateMessage = {...supportData, status}
         setSupportText('')
-        axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/update-ticket/${id}`, supportData)
+        axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/update-ticket/${id}`, updateMessage)
         .then(res => {
             if(res.status === 200){
                 document.getElementById('text_box').value = ''
@@ -131,12 +133,12 @@ const SingleSupportPage = () => {
                                         userNameIdRoll[0] === d.userName ? 
                                             <div className="flex items-center gap-2 justify-end">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                <p className="text-sm">{d.date.slice(0,10)} {d.date.slice(11,19)}</p>
+                                                <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date?.toString().slice(11,19)}</p>
                                             </div>
                                             :
                                             <div className="flex items-center gap-2 justify-start">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                <p className="text-sm">{d.date.slice(0,10)} {d.date.slice(11,19)}</p>
+                                                <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date?.toString().slice(11,19)}</p>
                                             </div>
                                     }
                                 </div>

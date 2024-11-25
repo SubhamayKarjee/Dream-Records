@@ -85,7 +85,7 @@ const AdminSupportPage = () => {
     return (
         <div>
             <div className='mt-3 flex items-center justify-between'>
-                <h3 className='font-bold text-xl text-[#252525]'>Support</h3>
+                <h3 className='font-bold text-xl text-[#252525]'>Support <span className='border px-2 rounded-md'>{totalItems}</span></h3>
                 <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => setSearchText(e.target.value)} className='input input-sm border w-80' placeholder='Type & Enter to Search'/>
             </div>
             <Divider className='my-2'/>
