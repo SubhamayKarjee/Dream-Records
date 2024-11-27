@@ -57,25 +57,30 @@ const CreateLabelPage = () => {
     }
 
     // React Hook Form For Create New Artist _________________________
+    const [labelError, setLabelError] = useState()
     const { register, handleSubmit,  formState: { errors }} = useForm();
-
     const onSubmit = async (data) => {
       setSubmitLoading(true)
+      setLabelError('')
       const status = 'Pending';
       const masterUserId = userNameIdRoll[1];
-      const userName = userNameIdRoll[0]
-      const formData = {...data, ...uploadedImage, masterUserId, status, userName};
-      axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/create-labels', formData)
-          .then(res => {
-              if(res.status == 200){
-                toast.success('Successfully Created Labels. We will Review Shortly!')
-                setUploadedImageLink('');
-                setUploadedImage()
-                setSubmitLoading(false);
-                navigate(`/labels/All/1/6`)
-              }
-          })
-          .catch(er => console.log(er))
+      const userName = userNameIdRoll[0];
+      if(userName){
+        const formData = {...data, ...uploadedImage, masterUserId, status, userName};
+        axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/labels/create-labels', formData)
+            .then(res => {
+                if(res.status == 200){
+                  toast.success('Successfully Created Labels. We will Review Shortly!')
+                  setUploadedImageLink('');
+                  setUploadedImage()
+                  setSubmitLoading(false);
+                  navigate(`/labels/All/1/6`)
+                }
+            })
+            .catch(er => console.log(er))
+      }else{
+        setLabelError('Please refresh the page and try again')
+      }
     }
 
     const sideBarShadow = {
@@ -139,6 +144,9 @@ const CreateLabelPage = () => {
                         }
                         <input type="submit" className="btn btn-sm btn-neutral px-6 h-9 my-3 bg-[#18181B]" value="Create Label" />
                     </div>
+                        {
+                            labelError && <p className='text-red-500 font-bold'>{labelError}</p>
+                        }
                 </form>
 
                 

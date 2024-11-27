@@ -76,28 +76,34 @@ const SupportPage = () => {
         navigate(`/support/${status}/${page}/8`)
     };
 
+    const [supportErr, setSupportErr] = useState();
     const { register, handleSubmit, reset, formState: { errors }} = useForm();
     const onSubmit = async (data) => {
         try {
+            setSupportErr('')
             const title = data.title;
             const firstText = data.text;
             const masterUserId = userNameIdRoll[1]
-            const userName = userNameIdRoll[0]
-            const status = 'Pending';
-            const date = new Date();
-            const issue = [{message: firstText, attachment, date, userName}];
-            const formData = {title, issue, status, date, firstText, masterUserId, userName}
-            axios.post('https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket', formData)
-            .then(res => {
-                if(res.status == 200){
-                    toast.success('Succesfully Created The Ticket');
-                    reset();
-                    setAttachment()
-                    setIsModalOpen(false)
-                    const r = reFetch + 1;
-                    setReFetch(r)
-                }
-            })
+            const userName = userNameIdRoll[0];
+            if(userName){
+                const status = 'Pending';
+                const date = new Date();
+                const issue = [{message: firstText, attachment, date, userName}];
+                const formData = {title, issue, status, date, firstText, masterUserId, userName}
+                axios.post('https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket', formData)
+                .then(res => {
+                    if(res.status == 200){
+                        toast.success('Succesfully Created The Ticket');
+                        reset();
+                        setAttachment()
+                        setIsModalOpen(false)
+                        const r = reFetch + 1;
+                        setReFetch(r)
+                    }
+                })
+            }else{
+                setSupportErr('Please refresh the page and try again')
+            }
         } catch (error) {
             console.log(error);
         }
@@ -194,6 +200,9 @@ const SupportPage = () => {
                                     <input type="file" id="fileInput" name='image' onChange={e => attachmentUpload(e.target.files)} />
                                 </div>
                                 <p className='text-sm text-slate-500'>Supported files JPG, JPEG, PDF and PNG</p>
+                                {
+                                    supportErr && <p className='text-sm font-bold text-red-500'>{supportErr}</p>
+                                }
                                 <input id="fileInput" className='btn btn-sm mt-3 w-full rounded-md btn-neutral' type="submit" value="Submit" />
                             </div>
                         </form>
