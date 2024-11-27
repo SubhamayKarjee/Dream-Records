@@ -97,37 +97,43 @@ const SignUp = () => {
             setLoading1(false)     
     }
 
+    const [emailAndUserGetErr, setEmailAndUserGetErr] = useState();
     const createAccount = async (password) => {
         const date = new Date();
         const openingDate = date.toLocaleDateString();
         const openingTime = date.toLocaleTimeString([], { hour12: true});
-        const email = userData?.data?.data?.email
-        console.log(password, email);
-        // _________________
-        await  createUserWithEmailAndPassword(email, password).then(res => {
-            console.log(res);
-            const uid = res.user.uid
-            const formData = {openingDate, openingTime, uid};
-            setLoadingHandle(true)
-            axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, formData).then( async res => {
-                const displayName = `${userData?.data?.data?.userName}'__'${id}'__'${roll}`
-                if(res.status == 200){
-                    setLoadingHandle(false);
-                    await updateProfile({ displayName });
-                    if(roll === 'User'){
-                        localStorage.setItem('popupShown', 'false');
-                        navigate('/')
-                        setLoading1(false)
+        const email = userData?.data?.data?.email;
+        const userName = userData?.data?.data?.userName
+
+        if(email && userName){
+            await  createUserWithEmailAndPassword(email, password).then(res => {
+                console.log(res);
+                const uid = res.user.uid
+                const formData = {openingDate, openingTime, uid};
+                setLoadingHandle(true)
+                axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, formData).then( async res => {
+                    const displayName = `${userName}'__'${id}'__'${roll}`
+                    if(res.status == 200){
+                        setLoadingHandle(false);
+                        await updateProfile({ displayName });
+                        if(roll === 'User'){
+                            localStorage.setItem('popupShown', 'false');
+                            navigate('/')
+                            setLoading1(false)
+                        }
+                        if(roll === 'Admin'){
+                            navigate('/admin-dashboard')
+                            setLoading1(false)
+                        }
                     }
-                    if(roll === 'Admin'){
-                        navigate('/admin-dashboard')
-                        setLoading1(false)
-                    }
-                }
+                })
+            
+            }).catch(error => {
+                console.log(error);
             })
-        }).catch(error => {
-            console.log(error);
-        })
+        }else{
+            setEmailAndUserGetErr('Please Refresh the page and try again!')
+        }
     }
 
     const inputStyle ={
@@ -303,6 +309,9 @@ const SignUp = () => {
                                         }
                                         {
                                             error1 && <span className='text-red-600 pb-2 block font-bold'>{error1}</span>
+                                        }
+                                        {
+                                            emailAndUserGetErr && <span className='text-red-600 pb-2 block font-bold'>{emailAndUserGetErr}</span>
                                         }
                                     </div>
                                     <div className="flex justify-center py-5">
