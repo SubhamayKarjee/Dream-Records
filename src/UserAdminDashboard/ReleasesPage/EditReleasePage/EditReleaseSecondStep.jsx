@@ -349,6 +349,11 @@ const EditReleaseSecondStep = () => {
         setErrorMessage('')
         setUploadLoading(true)
         const file = event.target.files[0];
+        if(file.type !== 'audio/wav'){
+            setErrorMessage('Please Select WAV file')
+            setUploadLoading(false)
+            return;
+        }
         const formData = new FormData();
         formData.append('file', file);
   
