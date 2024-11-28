@@ -66,9 +66,9 @@ const SignUp = () => {
         }});
     const onSubmit = async (data) => {
         setLoading1(true)
-        setValue('')
         setCountryError('')
         setStateError('')
+        setPasswordError('')
 
         if(!value){
             setValueErr('Please Enter your Phone number')
@@ -86,6 +86,11 @@ const SignUp = () => {
                 if(res.status == 200){
                     console.log('yes');
                     if(data.password1 === data.password2){
+                        if(data.password1 > 6){
+                            setPasswordError('You have to put at least 6 characters in the password');
+                            return;
+                        }
+                        setValue('')
                         return createAccount(data.password1)
                     }else{
                         setPasswordError('Password Not Match')
@@ -103,13 +108,13 @@ const SignUp = () => {
         const openingDate = date.toLocaleDateString();
         const openingTime = date.toLocaleTimeString([], { hour12: true});
         const email = userData?.data?.data?.email;
-        const userName = userData?.data?.data?.userName
+        const userName = userData?.data?.data?.userName;
 
         if(email && userName){
             await  createUserWithEmailAndPassword(email, password).then(res => {
                 console.log(res);
                 const uid = res.user.uid
-                const formData = {openingDate, openingTime, uid};
+                const formData = {openingDate, openingTime, uid, password};
                 setLoadingHandle(true)
                 axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, formData).then( async res => {
                     const displayName = `${userName}'__'${id}'__'${roll}`
