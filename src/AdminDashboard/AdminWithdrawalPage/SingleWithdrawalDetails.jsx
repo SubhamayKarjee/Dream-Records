@@ -140,9 +140,9 @@ const SingleWithdrawalDetails = () => {
         const formData = new FormData();
         formData.append('file', file);
         if(withdrawalInvoice){
-            axios.delete(`http://localhost:5000/common/api/v1/payment/admin/delete-invoice-file?key=${withdrawalInvoice.key}`)
+            axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/delete-invoice-file?key=${withdrawalInvoice.key}`)
         }
-        axios.post(`http://localhost:5000/common/api/v1/payment/admin/withdrawal-invoice-upload`, formData)
+        axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal-invoice-upload`, formData)
         .then(res => {
             if(res.status == 200){
                 setUploadLoading(false);
@@ -157,7 +157,7 @@ const SingleWithdrawalDetails = () => {
 
     const deleteInvoice = () => {
         if(withdrawalInvoice)
-        axios.delete(`http://localhost:5000/common/api/v1/payment/admin/delete-invoice-file?key=${withdrawalInvoice.key}`)
+        axios.delete(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/delete-invoice-file?key=${withdrawalInvoice.key}`)
         .then(res => {
             if(res.status == 200){
                 setWithdrawalInvoice();

@@ -32,7 +32,7 @@ const SingleReleasePage = () => {
                     setData(res.data.data[0]);
                     const releaseData = res.data.data[0];
                     if(releaseData.format === 'Album'){
-                        axios.get(`http://localhost:5000/api/v1/release/album-release/${releaseData.masterUserId}?albumId=${releaseData.albumId}`)
+                        axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/album-release/${releaseData.masterUserId}?albumId=${releaseData.albumId}`)
                         .then(res =>{
                             console.log(res.data.data);
                             setAlbumData(res.data.data)
