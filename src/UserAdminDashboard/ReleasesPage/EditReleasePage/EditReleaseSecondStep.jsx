@@ -449,7 +449,7 @@ const EditReleaseSecondStep = () => {
                     {
                         uploadLoading && <span className="block loading loading-spinner loading-md me-2"></span>
                     }
-                    <input type="file" accept=".wav" id="audioUpload" name='audio' onChange={releaseAudioUpload} />   
+                    <input type="file" accept="audio/*" id="audioUpload" name='audio' onChange={releaseAudioUpload} />   
                 </div>
                 <p className="text-sm text-[#71717A]">Audio Formate Only Allow WAV</p>                     
                 {errorMessage && <p className="font-bold text-red-500">{errorMessage}</p>}
