@@ -353,7 +353,7 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
         setErrorMessage('')
         setUploadLoading(true)
         const file = event.target.files[0];
-        if(file.type !== 'audio/wav'){
+        if(file.type !== 'audio/wav' && file.type !== 'audio/x-wav'){
             setErrorMessage('Please Select WAV file')
             setUploadLoading(false)
             return;

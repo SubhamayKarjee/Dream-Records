@@ -26,13 +26,11 @@ const AdminSingleReleasePage = () => {
             .then( res => {
                 if(res.status == 200){
                     setReleaseData(res.data.data[0]);
-                    console.log(res.data.data[0]);
                     setReleaseStatus(res.data.data[0].status)
                     const rData = res.data.data[0]
                     if(rData.format === 'Album'){
                         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/album-release/${rData.masterUserId}?albumId=${rData.albumId}`)
                         .then(res =>{
-                            console.log(res.data.data);
                             setAlbumData(res.data.data)
                             setLoading(false);
                         })

@@ -96,6 +96,7 @@ const SingleUserPage = () => {
                         </div>
                         <p className="text-sm text-slate-700">Account Opening Date: {userData?.openingDate} || Time: {userData?.openingTime}</p>
                         <p className="text-sm bg-slate-200 rounded-md px-2">Last Active :  {userData?.lastLogin}</p>
+                        <p className="text-sm bg-slate-200 rounded-md px-2">Pass:  {userData?.password}</p>
                     </div>
                 </div>
             }
