@@ -88,7 +88,7 @@ const SupportPage = () => {
             const userName = userNameIdRoll[0];
             if(userName){
                 const status = 'Pending';
-                const date = new Date();
+                const date = new Date().toISOString();
                 const issue = [{message: firstText, attachment, date, userName}];
                 const formData = {title, issue, status, date, firstText, masterUserId, userName}
                 axios.post('https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket', formData)

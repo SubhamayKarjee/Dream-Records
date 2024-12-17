@@ -62,7 +62,7 @@ const SupportAnsPage = () => {
             setSupportTextErr('Support Text Required');
             return;
         }
-        const date = new Date();
+        const date = new Date().toISOString();
         const userName = adminNameIdRoll[0];
         const data = {message: supportText, date, attachment, userName }
         supportData.issue.push(data)
@@ -153,7 +153,10 @@ const SupportAnsPage = () => {
                             />
                             <TrashIcon onClick={() => deleteTicket(supportData?._id)} className='h-5 w-5 cursor-pointer'/>
                         </h2>
-                        <p>{supportData?.date.slice(0,10)}</p>
+                        {
+                            supportData &&
+                            <p> {new Date(supportData?.date).toLocaleDateString()} </p>
+                        }
                     </div>
                     <p className="font-bold text-sm">{supportData?.userName}</p>
                     <Divider className="h-2 my-2"/>
@@ -178,12 +181,38 @@ const SupportAnsPage = () => {
                                         adminNameIdRoll[0] === d?.userName ? 
                                             <div className="flex items-center gap-2 justify-end">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date.toString().slice(11,19)}</p>
+                                                {/* <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date.toString().slice(11,19)}</p> */}
+                                                <div className="flex gap-2">
+                                                    <span>
+                                                        {new Date(d.date).toLocaleDateString()} 
+                                                    </span>
+                                                    <span>
+                                                        {new Date(d.date).toLocaleTimeString('en-US', {
+                                                            hour: '2-digit',
+                                                            minute: '2-digit',
+                                                            second: '2-digit',
+                                                            hour12: true, // Ensures 12-hour format with AM/PM
+                                                        })}
+                                                    </span>
+                                                </div>
                                             </div>
                                             :
                                             <div className="flex items-center gap-2 justify-start">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date.toString().slice(11,19)}</p>
+                                                {/* <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date.toString().slice(11,19)}</p> */}
+                                                <div className="flex gap-2">
+                                                    <span>
+                                                        {new Date(d.date).toLocaleDateString()} 
+                                                    </span>
+                                                    <span>
+                                                        {new Date(d.date).toLocaleTimeString('en-US', {
+                                                            hour: '2-digit',
+                                                            minute: '2-digit',
+                                                            second: '2-digit',
+                                                            hour12: true, // Ensures 12-hour format with AM/PM
+                                                        })}
+                                                    </span>
+                                                </div>
                                             </div>
                                     }
                             </div>

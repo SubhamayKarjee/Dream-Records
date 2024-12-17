@@ -45,7 +45,23 @@ const SupportLIst = ({data, roll}) => {
                                     : <td className="font-semibold text-sm text-[#09090B]">{d.title}</td>
                                 }
                                 <td className="font-semibold text-sm text-[#09090B]">{d.status}</td>
-                                <td className="font-semibold text-sm text-[#09090B]">{d.date.slice(0,10)} {d.date.slice(11,19)}</td>
+                                <td className="font-semibold text-sm text-[#09090B]">
+                                    <div className="flex gap-2">
+                                        <span>
+                                            {new Date(d.date).toLocaleDateString()} 
+                                        </span>
+                                        <span>
+                                            {new Date(d.date).toLocaleTimeString('en-US', {
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                second: '2-digit',
+                                                hour12: true, // Ensures 12-hour format with AM/PM
+                                            })}
+                                        </span>
+                                    </div>
+
+                                </td>
+                                {/* <td className="font-semibold text-sm text-[#09090B]">{d.date.slice(0,10)} {d.date.slice(11,19)}</td> */}
                             </tr>
                         )
                     }                        

@@ -60,7 +60,7 @@ const SingleSupportPage = () => {
             setSupportTextErr('Support Text Required');
             return;
         }
-        const date = new Date();
+        const date = new Date().toISOString();
         const status = 'Pending';
         const userName = userNameIdRoll[0]
         const data = {message: supportText, date, attachment, userName }
@@ -111,7 +111,10 @@ const SingleSupportPage = () => {
                 <div className='bg-white h-[10%]'>
                     <div className="flex justify-between items-center">
                         <h2 className="text-md md:text-xl font-bold flex items-center gap-2">{supportData?.title} <span className="text-xs md:text-sm font-semibold border px-2 py-1">{supportData?.status}</span></h2>
-                        <p>{supportData?.date.slice(0,10)}</p>
+                        {
+                            supportData &&
+                            <p> {new Date(supportData?.date).toLocaleDateString()} </p>
+                        }
                     </div>
                     <p className="font-bold text-sm">{supportData?.userName}</p>
                     <Divider className="h-2 my-2"/>
@@ -138,12 +141,38 @@ const SingleSupportPage = () => {
                                         userNameIdRoll[0] === d.userName ? 
                                             <div className="flex items-center gap-2 justify-end">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date?.toString().slice(11,19)}</p>
+                                                {/* <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date?.toString().slice(11,19)}</p> */}
+                                                <div className="flex gap-2">
+                                                    <span>
+                                                        {new Date(d.date).toLocaleDateString()} 
+                                                    </span>
+                                                    <span>
+                                                        {new Date(d.date).toLocaleTimeString('en-US', {
+                                                            hour: '2-digit',
+                                                            minute: '2-digit',
+                                                            second: '2-digit',
+                                                            hour12: true, // Ensures 12-hour format with AM/PM
+                                                        })}
+                                                    </span>
+                                                </div>
                                             </div>
                                             :
                                             <div className="flex items-center gap-2 justify-start">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date?.toString().slice(11,19)}</p>
+                                                {/* <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date?.toString().slice(11,19)}</p> */}
+                                                <div className="flex gap-2">
+                                                    <span>
+                                                        {new Date(d.date).toLocaleDateString()} 
+                                                    </span>
+                                                    <span>
+                                                        {new Date(d.date).toLocaleTimeString('en-US', {
+                                                            hour: '2-digit',
+                                                            minute: '2-digit',
+                                                            second: '2-digit',
+                                                            hour12: true, // Ensures 12-hour format with AM/PM
+                                                        })}
+                                                    </span>
+                                                </div>
                                             </div>
                                     }
                                 </div>
