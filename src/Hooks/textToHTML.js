@@ -3,17 +3,15 @@ const textToHTML = (data) => {
     return data
         .split('\n') // newlines
         .map((line) =>
-            line.replace(
-                urlRegex,
-                (url) => {
+            line
+                .replace(/( +)/g, (spaces) => '&nbsp;'.repeat(spaces.length))
+                .replace(urlRegex, (url) => {
                     const hasProtocol = url.startsWith('http://') || url.startsWith('https://');
                     const formattedUrl = hasProtocol ? url : `http://${url}`;
                     return `<a href="${formattedUrl}" target="_blank" style="color: blue;" rel="noopener noreferrer">${url}</a>`;
-                }
-            )
+                })
         )
         .map((line) => `<p>${line}</p>`)
-        .join('');
+        .join(''); 
 };
-
 export default textToHTML;
