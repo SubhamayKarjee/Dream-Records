@@ -109,7 +109,7 @@ const router = createBrowserRouter([
     element: <Suspense fallback={<LoadingComponentsForPage/>}><ResetPassword/></Suspense>,
   },
   {
-    path: "/set-new-password",
+    path: "/action",
     element: <Suspense fallback={<LoadingComponentsForPage/>}><SetNewPassword/></Suspense>,
   },
   {

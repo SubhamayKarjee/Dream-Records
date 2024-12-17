@@ -1,19 +1,53 @@
 import { EyeIcon, EyeSlashIcon, LockClosedIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-// import { useNavigate } from "react-router-dom";
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 import auth from '../../../firebase.config';
-import {confirmPasswordReset} from 'firebase/auth'
+import {confirmPasswordReset, applyActionCode} from 'firebase/auth'
 import { useLocation, useNavigate } from "react-router-dom";
+import { Button, Result } from "antd";
+
 
 const SetNewPassword = () => {
     const navigate = useNavigate()
 
-
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const oobCode = queryParams.get('oobCode');
+    const mode = queryParams.get('mode');
+
+    const [message, setMessage] = useState("");
+    const [errMessage, setErrMessage] = useState('')
+    const [openEmailDiv, setOpenEmailDiv] = useState(false)
+    const [openPassDiv, setOpenPassDiv] = useState(false)
+
+    useEffect(() => {
+        if (mode && oobCode) {
+        switch (mode) {
+            case "verifyAndChangeEmail":
+            setOpenEmailDiv(true)
+            handleEmailVerification(auth, oobCode);
+            break;
+            case "resetPassword":
+            setOpenPassDiv(true)
+            break;
+        }
+        }
+    }, [mode, oobCode]);
+
+    const handleEmailVerification = async (auth, oobCode) => {
+        try {
+            await applyActionCode(auth, oobCode);
+            setMessage("Your email has been successfully updated!");
+            setErrMessage("")
+        } catch (error) {
+            if (error.code === 'auth/invalid-action-code') {
+                setErrMessage("The action code is invalid or has expired.");
+            } else {
+                setErrMessage("Error updating email: Mehedi " + error.message);
+            }
+        }
+    };
 
 
     const [resetPassSucessDiv, setResetPassSucessDiv] = useState(false)
@@ -42,8 +76,6 @@ const SetNewPassword = () => {
         setLoading(false)
     }
 
-
-
     const inputStyle ={
         height: '36px',
         border: '1px solid #E2E8F0'
@@ -71,58 +103,89 @@ const SetNewPassword = () => {
 
     return (
         <div className="h-screen flex justify-center items-center">
-            <div className="border shadow-sm p-4 rounded-md">
-                <div className="flex justify-center items-center pt-3 pb-2">
-                    <LockClosedIcon className="h-12 w-12 text-white bg-[#252525] p-3 rounded-full"/>
+            {
+                openPassDiv === true &&
+                <div className="border shadow-sm p-4 rounded-md">
+                    <div className="flex justify-center items-center pt-3 pb-2">
+                        <LockClosedIcon className="h-12 w-12 text-white bg-[#252525] p-3 rounded-full"/>
+                    </div>
+
+                    {
+                        resetPassSucessDiv === false ? 
+                        <>
+                            <h1 className="text-2xl font-bold text-center">Enter your new password</h1>
+                            <p className="text-sm text-[#64748B] text-center">Your new password must be different to your previous password</p>
+
+                            <form onSubmit={handleSubmit(onSubmit)} className='pt-4'>
+                                                
+                                <div>
+                                    <p className="text-sm text-[#020617] font-semibold pb-1">New Password</p>
+                                    <div className="relative">
+                                        <input style={inputStyle} type={inputType1} className="input-sm w-full input" {...register("password1", { required: true})}/>
+                                        {
+                                            inputType1 === 'password' ? <EyeSlashIcon onClick={passwordTypeHandle1} className="h-5 w-5 absolute top-2 right-4"/> : <EyeIcon onClick={passwordTypeHandle1} className="h-5 w-5 absolute top-2 right-4"/>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div className="pt-3">
+                                    <p className="text-sm text-[#020617] font-semibold pb-1">Confirm Password</p>
+                                    <div className="relative">
+                                        <input style={inputStyle} type={inputType2} className="input-sm w-full input" {...register("password2", { required: true})}/>
+                                        {
+                                            inputType2 === 'password' ? <EyeSlashIcon onClick={passwordTypeHandle2} className="h-5 w-5 absolute top-2 right-4"/> : <EyeIcon onClick={passwordTypeHandle2} className="h-5 w-5 absolute top-2 right-4"/>
+                                        }
+                                    </div>
+                                </div>
+
+                                {passwordError && <span className='text-red-600 pb-2 block font-bold'>{passwordError}</span>}
+                                {errors.password2 && <span className='text-red-600 pb-2 block'>Please Confirm Password</span>}
+
+                                <div>
+                                    {
+                                        loading && <LoadingComponentsInsidePage/>
+                                    }
+                                </div>
+                                <input className="btn btn-neutral bg-[#0F172A] w-full mt-3" type="submit" value={'Change Password'} />
+                            </form>
+                        </> :
+                        <>
+                            <h1 className="text-2xl font-bold text-center">Password changed Successfully!</h1>
+                            <p className="text-sm text-[#64748B] text-center">Your new password has been successfully updated</p>
+                            <button onClick={() => navigate('/log-in')} className="btn btn-neutral bg-[#0F172A] w-full mt-3">Log In</button>
+                        </>
+                    }
+
                 </div>
-
-                {
-                    resetPassSucessDiv === false ? 
-                    <>
-                        <h1 className="text-2xl font-bold text-center">Enter your new password</h1>
-                        <p className="text-sm text-[#64748B] text-center">Your new password must be different to your previous password</p>
-
-                        <form onSubmit={handleSubmit(onSubmit)} className='pt-4'>
-                                            
-                            <div>
-                                <p className="text-sm text-[#020617] font-semibold pb-1">New Password</p>
-                                <div className="relative">
-                                    <input style={inputStyle} type={inputType1} className="input-sm w-full input" {...register("password1", { required: true})}/>
-                                    {
-                                        inputType1 === 'password' ? <EyeSlashIcon onClick={passwordTypeHandle1} className="h-5 w-5 absolute top-2 right-4"/> : <EyeIcon onClick={passwordTypeHandle1} className="h-5 w-5 absolute top-2 right-4"/>
-                                    }
-                                </div>
-                            </div>
-
-                            <div className="pt-3">
-                                <p className="text-sm text-[#020617] font-semibold pb-1">Confirm Password</p>
-                                <div className="relative">
-                                    <input style={inputStyle} type={inputType2} className="input-sm w-full input" {...register("password2", { required: true})}/>
-                                    {
-                                        inputType2 === 'password' ? <EyeSlashIcon onClick={passwordTypeHandle2} className="h-5 w-5 absolute top-2 right-4"/> : <EyeIcon onClick={passwordTypeHandle2} className="h-5 w-5 absolute top-2 right-4"/>
-                                    }
-                                </div>
-                            </div>
-
-                            {passwordError && <span className='text-red-600 pb-2 block font-bold'>{passwordError}</span>}
-                            {errors.password2 && <span className='text-red-600 pb-2 block'>Please Confirm Password</span>}
-
-                            <div>
-                                {
-                                    loading && <LoadingComponentsInsidePage/>
+            }
+            {
+                openEmailDiv === true && 
+                <div>
+                    {
+                        message && 
+                        <div>
+                            <Result
+                                status="success"
+                                title={message}
+                                extra={[
+                                    <Button key="1" onClick={() => navigate('/log-in')}>Log In</Button>,
+                                ]}
+                            />
+                        </div> 
+                    }
+                    {
+                        !message && errMessage &&
+                            <Result
+                                title={errMessage}
+                                extra={
+                                <Button type="primary" key="2" onClick={() => navigate('/log-in')}>
+                                    Log In
+                                </Button>
                                 }
-                            </div>
-                            <input className="btn btn-neutral bg-[#0F172A] w-full mt-3" type="submit" value={'Change Password'} />
-                        </form>
-                    </> :
-                    <>
-                        <h1 className="text-2xl font-bold text-center">Password changed Successfully!</h1>
-                        <p className="text-sm text-[#64748B] text-center">Your new password has been successfully updated</p>
-                        <button onClick={() => navigate('/log-in')} className="btn btn-neutral bg-[#0F172A] w-full mt-3">Log In</button>
-                    </>
-                }
-
-            </div>
+                            />
+                    }
+                </div>
+            }
         </div>
     );
 };
