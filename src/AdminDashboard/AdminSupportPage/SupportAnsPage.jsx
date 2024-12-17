@@ -181,7 +181,6 @@ const SupportAnsPage = () => {
                                         adminNameIdRoll[0] === d?.userName ? 
                                             <div className="flex items-center gap-2 justify-end">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                {/* <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date.toString().slice(11,19)}</p> */}
                                                 <div className="flex gap-2">
                                                     <span>
                                                         {new Date(d.date).toLocaleDateString()} 
@@ -191,7 +190,7 @@ const SupportAnsPage = () => {
                                                             hour: '2-digit',
                                                             minute: '2-digit',
                                                             second: '2-digit',
-                                                            hour12: true, // Ensures 12-hour format with AM/PM
+                                                            hour12: true, 
                                                         })}
                                                     </span>
                                                 </div>
@@ -199,7 +198,6 @@ const SupportAnsPage = () => {
                                             :
                                             <div className="flex items-center gap-2 justify-start">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                {/* <p className="text-sm">{d.date?.toString().slice(0,10)} {d.date.toString().slice(11,19)}</p> */}
                                                 <div className="flex gap-2">
                                                     <span>
                                                         {new Date(d.date).toLocaleDateString()} 
@@ -209,7 +207,7 @@ const SupportAnsPage = () => {
                                                             hour: '2-digit',
                                                             minute: '2-digit',
                                                             second: '2-digit',
-                                                            hour12: true, // Ensures 12-hour format with AM/PM
+                                                            hour12: true, 
                                                         })}
                                                     </span>
                                                 </div>

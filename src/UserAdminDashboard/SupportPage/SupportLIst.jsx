@@ -61,7 +61,6 @@ const SupportLIst = ({data, roll}) => {
                                     </div>
 
                                 </td>
-                                {/* <td className="font-semibold text-sm text-[#09090B]">{d.date.slice(0,10)} {d.date.slice(11,19)}</td> */}
                             </tr>
                         )
                     }                        
