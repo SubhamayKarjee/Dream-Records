@@ -12,6 +12,7 @@ import {
     RiAddLine,
     RiExpandUpDownLine
   } from "@remixicon/react";
+import textToHTML from '../../Hooks/textToHTML';
 
 
 
@@ -82,7 +83,7 @@ const SupportPage = () => {
         try {
             setSupportErr('')
             const title = data.title;
-            const firstText = data.text;
+            const firstText = textToHTML(data.text);
             const masterUserId = userNameIdRoll[1]
             const userName = userNameIdRoll[0];
             if(userName){

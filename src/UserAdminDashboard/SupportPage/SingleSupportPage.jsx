@@ -1,11 +1,15 @@
-import { ArrowUpTrayIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import { ArrowDownTrayIcon} from "@heroicons/react/24/solid";
 import { Divider } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
+import textToHTML from "../../Hooks/textToHTML";
 import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
+import { 
+    RiCheckDoubleLine,
+} from "@remixicon/react";
 
 const SingleSupportPage = () => {
 
@@ -62,11 +66,11 @@ const SingleSupportPage = () => {
         const data = {message: supportText, date, attachment, userName }
         supportData.issue.push(data)
         const updateMessage = {...supportData, status}
-        setSupportText('')
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/update-ticket/${id}`, updateMessage)
         .then(res => {
             if(res.status === 200){
                 document.getElementById('text_box').value = ''
+                setSupportText('')
                 setSupportSendLoading(false)
                 setSupportSendCheck(true)
                 toast.success('Your Message Submited!')
@@ -113,6 +117,7 @@ const SingleSupportPage = () => {
                     <Divider className="h-2 my-2"/>
                 </div>
 
+
                 {
                     supportData?.status !== 'Closed' &&
                     <div className='h-[60%] overflow-y-auto p-2 flex flex-col gap-2 mx-2' id="parentDiv">
@@ -120,7 +125,7 @@ const SingleSupportPage = () => {
                             supportData?.issue && supportData.issue.map((d,index) =>
                                 <div key={index}>
                                     <div style={d.userName === userNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md bg-[#E8E8E8]">
-                                        <p className='text-sm text-[#252525]'>{d?.message}</p>
+                                        <div dangerouslySetInnerHTML={{ __html: d?.message }} />
                                         {
                                             d?.attachment &&
                                             <div className='p-2 border rounded-md mt-2'>
@@ -147,14 +152,18 @@ const SingleSupportPage = () => {
                             {
                                 supportSendCheck == true ?
                                 <div className="flex items-center justify-end">
-                                    <CheckIcon className="w-4 h-4 text-info"/>
-                                    <CheckIcon className="w-4 h-4 ms-[-6px] text-info"/>
+                                <RiCheckDoubleLine
+                                    size={18}
+                                    color="#00cad9"
+                                />
                                 </div> :
                                 <div className="flex items-center justify-end">
-                                    <CheckIcon className="w-4 h-4"/>
-                                    <CheckIcon className="w-4 h-4 ms-[-6px]"/>
+                                    <RiCheckDoubleLine
+                                        size={18}
+                                        color="#bdbdbd"
+                                    />
                                 </div> 
-                            }
+                                }
 
                             <div ref={messagesEndRef}></div>
                     </div>
@@ -166,7 +175,7 @@ const SingleSupportPage = () => {
                             supportData?.issue && supportData.issue.map((d,index) =>
                                 <div key={index}>
                                     <div style={d.userName === userNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md bg-[#E8E8E8]">
-                                        <p className='text-sm text-[#252525]'>{d?.message}</p>
+                                        <div dangerouslySetInnerHTML={{ __html: d?.message }} />
                                         {
                                             d?.attachment &&
                                             <div className='p-2 border rounded-md mt-2'>
@@ -193,12 +202,16 @@ const SingleSupportPage = () => {
                             {
                                 supportSendCheck == true ?
                                 <div className="flex items-center justify-end">
-                                    <CheckIcon className="w-4 h-4 text-info"/>
-                                    <CheckIcon className="w-4 h-4 ms-[-6px] text-info"/>
+                                <RiCheckDoubleLine
+                                    size={18}
+                                    color="#00cad9"
+                                />
                                 </div> :
                                 <div className="flex items-center justify-end">
-                                    <CheckIcon className="w-4 h-4"/>
-                                    <CheckIcon className="w-4 h-4 ms-[-6px]"/>
+                                    <RiCheckDoubleLine
+                                        size={18}
+                                        color="#bdbdbd"
+                                    />
                                 </div> 
                             }
 
@@ -210,7 +223,11 @@ const SingleSupportPage = () => {
                     <div className=' h-[28%] md:h-[28%] lg:h-[28%] rounded-lg border-t-2 border-l-2 border-r-2 p-3 mt-2'>
                         <div>
                             <div className="h-[70%]">
-                                <textarea id='text_box' onChange={e => setSupportText(e.target.value)} className="textarea textarea-bordered w-full h-[100%] border-none focus:outline-none" placeholder="If you have a complaint or opinion about something. Please write here!"></textarea>
+                                <textarea id='text_box' onChange={e => {
+                                    const content = e.target.value; 
+                                    const formattedContent = textToHTML(content);
+                                    setSupportText(formattedContent);
+                                }} className="textarea textarea-bordered w-full h-[100%] border-none focus:outline-none" placeholder="If you have a complaint or opinion about something. Please write here!"></textarea>
                                 {
                                     supportTextErr && <p className='text-sm text-red-500 mb-2'>{supportTextErr}</p>
                                 }

@@ -1,12 +1,16 @@
-import { ArrowUpTrayIcon, CheckIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { ArrowUpTrayIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid";
 import { Divider, Select } from "antd";
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import textToHTML from "../../Hooks/textToHTML";
 import { AdminAuthContext } from "../DashboardForAdmin/DashBoardForAdmin";
 import './SupportAnsPage.css'
+import { 
+    RiCheckDoubleLine,
+} from "@remixicon/react";
 
 const SupportAnsPage = () => {
 
@@ -161,7 +165,7 @@ const SupportAnsPage = () => {
                         supportData?.issue && supportData.issue.map((d,index) =>
                             <div key={index}>
                                 <div style={d.userName === adminNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md">
-                                    <p className='text-sm text-[#252525]'>{d?.message}</p>
+                                    <div dangerouslySetInnerHTML={{ __html: d?.message }} />
                                     {
                                         d?.attachment &&
                                         <div className='p-2 border rounded-md mt-2'>
@@ -188,12 +192,16 @@ const SupportAnsPage = () => {
                         {
                             supportSendCheck == true ?
                             <div className="flex items-center justify-end">
-                                <CheckIcon className="w-4 h-4 text-info"/>
-                                <CheckIcon className="w-4 h-4 ms-[-6px] text-info"/>
+                                <RiCheckDoubleLine
+                                    size={18}
+                                    color="#00cad9"
+                                />
                             </div> :
                             <div className="flex items-center justify-end">
-                                <CheckIcon className="w-4 h-4"/>
-                                <CheckIcon className="w-4 h-4 ms-[-6px]"/>
+                                <RiCheckDoubleLine
+                                    size={18}
+                                    color="#bdbdbd"
+                                />
                             </div> 
                         }
 
@@ -202,7 +210,11 @@ const SupportAnsPage = () => {
                 <div className=' h-[28%] md:h-[28%] lg:h-[28%] rounded-lg border-t-2 border-l-2 border-r-2 p-3 mt-2'>
                     <div>
                         <div className="h-[70%]">
-                            <textarea id='text_box' onChange={e => setSupportText(e.target.value)} className="textarea textarea-bordered w-full h-[100%] border-none focus:outline-none" placeholder="If you have a complaint or opinion about something. Please write here!"></textarea>
+                            <textarea id='text_box' onChange={e => {
+                                const content = e.target.value; 
+                                const formattedContent = textToHTML(content);
+                                setSupportText(formattedContent);
+                            }} className="textarea textarea-bordered w-full h-[100%] border-none focus:outline-none" placeholder="If you have a complaint or opinion about something. Please write here!"></textarea>
                             {
                                 supportTextErr && <p className='text-sm text-red-500 mb-2'>{supportTextErr}</p>
                             }

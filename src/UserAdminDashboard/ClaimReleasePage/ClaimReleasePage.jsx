@@ -71,7 +71,10 @@ const ClaimReleasePage = () => {
 
     const removeRelease = (id) => {
         const deleteRelease = release.filter(l => l._id !== id);
-        setRelease(deleteRelease)
+        setRelease(deleteRelease);
+        if(deleteRelease.length === 0){
+            setRelease('')
+        }
     }
 
     const { register, handleSubmit, formState: { errors }} = useForm();
@@ -84,7 +87,7 @@ const ClaimReleasePage = () => {
         }
         if(!release){
             setErrorMessageRelease('Please Select Release');
-            // return;
+            return;
         }
         setReleaseData([])
         setClaimOption('')
