@@ -11,6 +11,7 @@ import './SupportAnsPage.css'
 import { 
     RiCheckDoubleLine,
 } from "@remixicon/react";
+import wrapperStyle from "../../Hooks/commonCssForHTMLwarp";
 
 const SupportAnsPage = () => {
 
@@ -168,7 +169,7 @@ const SupportAnsPage = () => {
                         supportData?.issue && supportData.issue.map((d,index) =>
                             <div key={index}>
                                 <div style={d.userName === adminNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md">
-                                    <div dangerouslySetInnerHTML={{ __html: d?.message }} />
+                                    <div style={wrapperStyle} dangerouslySetInnerHTML={{ __html: d?.message }} />
                                     {
                                         d?.attachment &&
                                         <div className='p-2 border rounded-md mt-2'>

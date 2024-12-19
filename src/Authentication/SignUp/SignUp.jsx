@@ -141,6 +141,12 @@ const SignUp = () => {
         }
     }
 
+    // const newUpdate = async () => {
+    //     const displayName = `ArrowMusicPrivateLimitedIndia'__'67208ff681efade8917e7bed'__'${roll}`
+    //     console.log(displayName);
+    //     await updateProfile({ displayName });
+    // }
+
     const inputStyle ={
         height: '36px',
         border: '1px solid #E2E8F0'
@@ -327,7 +333,9 @@ const SignUp = () => {
                                     </div>
                                     <p>Finish your setup to upload your first Track</p>
 
+
                                 </form>
+                                    {/* <button onClick={newUpdate}>New Update</button> */}
                             </div>
                         </div>
                     </div>

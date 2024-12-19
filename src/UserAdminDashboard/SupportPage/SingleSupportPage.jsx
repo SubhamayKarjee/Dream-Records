@@ -10,6 +10,8 @@ import { AuthContext } from "../UserAdminHomePage/UserAdminHomePage";
 import { 
     RiCheckDoubleLine,
 } from "@remixicon/react";
+import './SupportPage.css';
+import wrapperStyle from "../../Hooks/commonCssForHTMLwarp";
 
 const SingleSupportPage = () => {
 
@@ -101,6 +103,8 @@ const SingleSupportPage = () => {
         border: '1px solid #E8E8E8'
     }
 
+    
+
 
     return (
         <div className="h-screen overflow-y-auto custom-scrollbar">
@@ -128,7 +132,7 @@ const SingleSupportPage = () => {
                             supportData?.issue && supportData.issue.map((d,index) =>
                                 <div key={index}>
                                     <div style={d.userName === userNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md bg-[#E8E8E8]">
-                                        <div dangerouslySetInnerHTML={{ __html: d?.message }} />
+                                        <div style={wrapperStyle} dangerouslySetInnerHTML={{ __html: d?.message }} />
                                         {
                                             d?.attachment &&
                                             <div className='p-2 border rounded-md mt-2'>
@@ -202,7 +206,9 @@ const SingleSupportPage = () => {
                             supportData?.issue && supportData.issue.map((d,index) =>
                                 <div key={index}>
                                     <div style={d.userName === userNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md bg-[#E8E8E8]">
-                                        <div dangerouslySetInnerHTML={{ __html: d?.message }} />
+                                        <div>
+                                            <div style={wrapperStyle} dangerouslySetInnerHTML={{ __html: d?.message }} />
+                                        </div>
                                         {
                                             d?.attachment &&
                                             <div className='p-2 border rounded-md mt-2'>
