@@ -162,26 +162,24 @@ const UserPaymentHistory = () => {
                                                     </div>
                                                     <div>
                                                         <p className="text-sm text-[#020617]">Payment Date & Time</p>
-                                                        <div>
-                                                            {   data?.isoDate ? <div className="flex gap-2 item-center">
-                                                                    <p className="text-sm text-[#71717A]">
-                                                                        {new Date(data.isoDate).toLocaleDateString(undefined, {
-                                                                            day: '2-digit',
-                                                                            month: 'short',
-                                                                            year: 'numeric',
-                                                                        })} 
-                                                                    </p>
-                                                                    <p className="text-sm text-[#71717A]">
-                                                                        {new Date(data.isoDate).toLocaleTimeString(undefined, {
-                                                                            hour: '2-digit',
-                                                                            minute: '2-digit',
-                                                                            second: '2-digit',
-                                                                            hour12: true, 
-                                                                        })}
-                                                                    </p>
-                                                                </div> : <p className="text-sm text-[#71717A]">{data?.date} {data?.month.slice(0,3)} {data?.year} || {data.time}</p>
-                                                            }
-                                                        </div>
+                                                        {   data?.isoDate ? <div className="flex gap-2 items-center">
+                                                                <p className="text-sm text-[#71717A]">
+                                                                    {new Date(data.isoDate).toLocaleDateString(undefined, {
+                                                                        day: '2-digit',
+                                                                        month: 'short',
+                                                                        year: 'numeric',
+                                                                    })} 
+                                                                </p>
+                                                                <p className="text-sm text-[#71717A]">
+                                                                    {new Date(data.isoDate).toLocaleTimeString(undefined, {
+                                                                        hour: '2-digit',
+                                                                        minute: '2-digit',
+                                                                        second: '2-digit',
+                                                                        hour12: true, 
+                                                                    })}
+                                                                </p>
+                                                            </div> : <p className="text-sm text-[#71717A]">{data?.date} {data?.month.slice(0,3)} {data?.year} || {data.time}</p>
+                                                        }
                                                     </div>
                                                 </div>
                                         </div>

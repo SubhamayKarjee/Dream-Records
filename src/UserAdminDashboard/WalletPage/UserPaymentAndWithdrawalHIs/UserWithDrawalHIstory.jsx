@@ -8,6 +8,9 @@ import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { 
     RiExpandUpDownLine
 } from "@remixicon/react";
+import wrapperStyle from "../../../Hooks/commonCssForHTMLwarp";
+import localDate from "../../../Hooks/localDate";
+import localTime from "../../../Hooks/localTime";
 
 
 
@@ -118,7 +121,12 @@ const UserWithDrawalHIstory = () => {
                             withdrawalData && withdrawalData.map(data => 
                                 <tr key={data._id} className="hover">
                                     <td className="font-semibold text-sm text-[#09090B]">Withdrawal Requested !</td>
-                                    <td className="font-semibold text-sm text-[#09090B]">{data?.withdrawalDate} {data?.withdrawalMonth.slice(0,3)} {data?.withdrawalYear}</td>
+                                    <td className="font-semibold text-sm text-[#09090B]">
+                                        {   
+                                            data?.withdrawISODate ? 
+                                            localDate(data?.withdrawISODate) : <>{data?.withdrawalDate} {data?.withdrawalMonth.slice(0,3)} {data?.withdrawalYear}</>
+                                        }
+                                    </td>
                                     <td className="">
                                         <p className="font-semibold text-sm text-[#09090B]">₹ {data?.balance?.amount}</p>
                                     </td>
@@ -210,7 +218,12 @@ const UserWithDrawalHIstory = () => {
                                                     </div>
                                                     <div>
                                                         <p className="text-sm text-[#020617]">Date and Time</p>
-                                                        <p className="text-sm text-[#71717A]">{data.withdrawalDate} {data.withdrawalMonth} {data.withdrawalYear}</p>
+                                                        {   data?.withdrawISODate ?
+                                                            <p className="text-sm text-[#71717A]">
+                                                                {localDate(data?.withdrawISODate)} &nbsp; {localTime(data?.withdrawISODate)}
+                                                            </p>
+                                                            : <p className="text-sm text-[#71717A]">{data?.withdrawalDate} {data?.withdrawalMonth.slice(0,3)} {data?.withdrawalYear}</p>
+                                                        }
                                                     </div>
                                                     {
                                                         data?.rejectResoan && 
@@ -218,7 +231,7 @@ const UserWithDrawalHIstory = () => {
                                                             <QuestionMarkCircleIcon className="w-5 h-5"/>
                                                             <div>
                                                                 <p className="text-sm font-semibold text-[#252525]">Rejection Reason</p>
-                                                                <p className="text-sm text-[#71717A]">{data.rejectResoan}</p>
+                                                                <div className="text-sm text-[#71717A]" style={wrapperStyle} dangerouslySetInnerHTML={{ __html: data.rejectResoan }} />
                                                             </div>
                                                         </div>
                                                     }
@@ -342,7 +355,12 @@ const UserWithDrawalHIstory = () => {
                                                     </div>
                                                     <div>
                                                         <p className="text-sm text-[#020617]">Date and Time</p>
-                                                        <p className="text-sm text-[#71717A]">{data.withdrawalDate} {data.withdrawalMonth} {data.withdrawalYear}</p>
+                                                        {   data?.withdrawISODate ?  
+                                                            <p className="text-sm text-[#71717A]">
+                                                                {localDate(data?.withdrawISODate)} &nbsp; {localTime(data?.withdrawISODate)}
+                                                            </p>
+                                                            : <p className="text-sm text-[#71717A]">{data?.withdrawalDate} {data?.withdrawalMonth.slice(0,3)} {data?.withdrawalYear}</p>
+                                                        }
                                                     </div>
                                                     {
                                                         data?.rejectResoan && 
@@ -350,7 +368,7 @@ const UserWithDrawalHIstory = () => {
                                                             <QuestionMarkCircleIcon className="w-5 h-5"/>
                                                             <div>
                                                                 <p className="text-sm font-semibold text-[#252525]">Rejection Reason</p>
-                                                                <p className="text-sm text-[#71717A]">{data.rejectResoan}</p>
+                                                                <div className="text-sm text-[#71717A]" style={wrapperStyle} dangerouslySetInnerHTML={{ __html: data.rejectResoan }} />
                                                             </div>
                                                         </div>
                                                     }

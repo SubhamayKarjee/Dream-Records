@@ -4,6 +4,8 @@ import { Empty, Pagination } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import localDate from "../../Hooks/localDate";
+import localTime from "../../Hooks/localTime";
 
 
 const AdminWithdrawalPage = () => {
@@ -17,14 +19,12 @@ const AdminWithdrawalPage = () => {
     
     const [withdrawalStatus, setWithdrawalStatus] = useState(status)
     const [withdrawalData, setWithdrawalData] = useState();
-    // const [activeList, setActiveList] = useState()
     useEffect( () => {
         setFetchLoading(true)
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/req-list?page=${pageNumber}&limit=${perPageList}&status=${withdrawalStatus}`)
         .then(res => {
             setWithdrawalData(res.data.data);
             setTotalItems(res.data.dataCount)
-            // setActiveList(res.data.data.length);
             setFetchLoading(false)
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,7 +50,6 @@ const AdminWithdrawalPage = () => {
         .then(res => {
             setWithdrawalData(res.data.data);
             setTotalItems(res.data.dataCount);
-            // setActiveList(res.data.data.length);
             setFetchLoading(false)
         })
     };
@@ -80,10 +79,16 @@ const AdminWithdrawalPage = () => {
                         <div style={{cursor: 'pointer'}} className="p-3 rounded-lg my-1 border" onClick={() => handleNavigate(data._id)} key={data._id}>
                             <div className="md:flex justify-between">
                                 <div>
-                                    <p className="text-green-500"> Withdrawal Request Form {data?.nick_name ? data.nick_name : data?.name} || <span className="font-bold text-slate-600">{data?.withdrawalDate}/{data?.withdrawalMonth}/{data?.withdrawalYear} || {data?.withdrawalTime}</span> </p>
+                                    <p className="text-green-500"> Withdrawal Request Form {data?.nick_name ? data.nick_name : data?.name} </p>
                                     <p>{data?.userName}</p>
+                                    {   data?.withdrawISODate ? 
+                                        <p className="text-sm text-[#71717A]">
+                                            {localDate(data?.withdrawISODate)} &nbsp; {localTime(data?.withdrawISODate)}
+                                        </p>
+                                        : <p className="text-sm text-[#71717A]">{data?.withdrawalDate} {data?.withdrawalMonth.slice(0,3)} {data?.withdrawalYear}</p>
+                                    }
                                     {
-                                        data?.status === 'Approved' && <p className="text-sm font-bold text-slate-500">Payment on {data.updatedDate} has been processed</p> 
+                                        data?.status === 'Approved' && <p className="text-sm font-bold text-slate-500">Payment on {localDate(data?.updatedDate)} - {localTime(data?.updatedDate)} has been processed</p> 
                                     }
                                 </div>
                                 <div className="">

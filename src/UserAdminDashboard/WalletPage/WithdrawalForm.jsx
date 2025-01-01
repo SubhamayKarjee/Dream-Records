@@ -20,22 +20,27 @@ const WithdrawalForm = () => {
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userData._id}`, updateUserBalance)
         .then(res => {
             if(res.status === 200){
-                const now = new Date();
-                const withdrawalDate = now.getDate().toLocaleString();
-                const withdrawalMonth = now.toLocaleString('default', { month: 'long' });
-                const withdrawalYear = now.getFullYear();
-                const withdrawalTime = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
+                const date = new Date().toISOString();
                 const withdrawalAmount = userData.balance.amount;
-                const data = {...userData,  masterUserId: userData._id, bankInfo, status, withdrawalMonth, withdrawalYear, withdrawalTime, withdrawalDate, withdrawalAmount};
+                const data = {...userData,  masterUserId: userData._id, bankInfo, status, withdrawISODate: date, withdrawalAmount};
                 axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/withdrawal`, data)
                 .then(res => {
-                if(res.status === 200){
-                    const reloadAPI = withdrawalReFetch + 1;
-                    setWithdrawalReFetch(reloadAPI);
-                    setWithdrawalLoading(false);
-                    setIsModalOpen(false);
-                    toast.success('Withdrawal Request Submited. We will review shortly!');
-                }
+                    if(res.status === 200){
+                        const reloadAPI = withdrawalReFetch + 1;
+                        setWithdrawalReFetch(reloadAPI);
+                        setWithdrawalLoading(false);
+                        setIsModalOpen(false);
+                        toast.success('Withdrawal Request Submited. We will review shortly!');
+                    }else if(res.status !== 200){
+                        axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userData._id}`, userData)
+                        .then(res => {
+                            if(res.status === 200){
+                                setWithdrawalLoading(false);
+                                setIsModalOpen(false);
+                                toast.error('Something wrong please try later')
+                            }
+                        })
+                    }
                 })
             }
         })

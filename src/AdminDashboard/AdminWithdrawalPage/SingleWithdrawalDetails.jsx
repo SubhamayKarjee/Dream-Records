@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import localDate from "../../Hooks/localDate";
+import localTime from "../../Hooks/localTime";
+import textToHTML from "../../Hooks/textToHTML";
 import LoadingComponentsInsidePage from "../../LoadingComponents/LoadingComponentsInsidePage";
 import './SingleWithdrawalDetails.css'
 
@@ -26,6 +29,7 @@ const SingleWithdrawalDetails = () => {
         .then(res => {
             if(res.status === 200) {
                 setWithdrawalData(res.data.data[0]);
+                console.log(res.data.data[0]);
                 setWithdrawalStatus(res.data.data[0].status)
                 axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${res.data.data[0]?.masterUserId}`)
                 .then(res => {
@@ -56,11 +60,9 @@ const SingleWithdrawalDetails = () => {
 
     const handleUpdateStatus = (id) => {
         setUpdateLoading(true)
-        const currentDateAndTime = new Date();
-        const currentDate = currentDateAndTime.toDateString();
-        const updatedDate = currentDate;
+        const date = new Date().toISOString();
         const updatedProcessed = `Your payment has been processed`
-        const data = {...withdrawalData, status: withdrawalStatus, updatedProcessed, updatedDate, invoice: withdrawalInvoice}
+        const data = {...withdrawalData, status: withdrawalStatus, updatedProcessed, updatedDate: date, invoice: withdrawalInvoice}
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/single/${id}`, data)
         .then(res => {
             if(res.status == 200){
@@ -99,11 +101,9 @@ const SingleWithdrawalDetails = () => {
             axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, updateUserBalance)
             .then(res => {
                 if(res.status === 200){
-                    const currentDateAndTime = new Date();
-                    const currentDate = currentDateAndTime.toDateString();
-                    const rejectResoan = actionRequired;
-                    const updatedDate = currentDate
-                    const data = {...withdrawalData, status: withdrawalStatus, rejectResoan, updatedDate}
+                    const date = new Date().toISOString();
+                    const rejectResoan = textToHTML(actionRequired);
+                    const data = {...withdrawalData, status: withdrawalStatus, rejectResoan, updatedDate: date}
                     axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment/admin/withdrawal/single/${withdrawalData._id}`, data)
                     .then(res => {
                         if(res.status == 200){
@@ -177,7 +177,7 @@ const SingleWithdrawalDetails = () => {
                 withdrawalData && 
                 <div>
                     {
-                        withdrawalData?.status === 'Approved' && <p className="text-sm font-bold text-slate-500 bg-green-200 text-center my-2 p-2 rounded-md">Payment on {withdrawalData?.updatedDate} has been processed</p> 
+                        withdrawalData?.status === 'Approved' && <p className="text-sm font-bold text-slate-500 bg-green-200 text-center my-2 p-2 rounded-md">Payment on {localDate(withdrawalData?.updatedDate)} - {localTime(withdrawalData?.updatedDate)} has been processed</p> 
                     }
                     <div className="md:flex gap-2 justify-between my-3 rounded-md border">
                         <div className="flex p-2">
@@ -191,8 +191,17 @@ const SingleWithdrawalDetails = () => {
                             <div className="ps-2">
                                 <h2 className="font-bold">{withdrawalData?.nick_name ? withdrawalData.nick_name : withdrawalData?.name}</h2>
                                 <div className="flex items-center">
-                                    <p className="text-green-500 me-2"> Withdrawal Requested || <span className="font-bold text-slate-600">{withdrawalData?.withdrawalDate}/{withdrawalData?.withdrawalMonth}/{withdrawalData?.withdrawalYear} || {withdrawalData?.withdrawalTime}</span> </p>
+                                    <p className="text-green-500 me-2"> Withdrawal Requested</p>
                                     <p className="font-bold text-lg md:pe-3 flex items-center"><CurrencyRupeeIcon className="w-5 h-5 me-2"/> {withdrawalData?.withdrawalAmount}</p>
+                                </div>
+                                <div>
+                                    {
+                                        withdrawalData?.withdrawISODate ? 
+                                        <p className="text-sm text-[#71717A]">
+                                            {localDate(withdrawalData?.withdrawISODate)} &nbsp; {localTime(withdrawalData?.withdrawISODate)}
+                                        </p>
+                                        : <>{withdrawalData?.withdrawalDate}/{withdrawalData?.withdrawalMonth}/{withdrawalData?.withdrawalYear} || {withdrawalData?.withdrawalTime}</>
+                                    }
                                 </div>
                                 <p className="text-sm text-slate-400">ID: {withdrawalData._id}</p>
                                 {
