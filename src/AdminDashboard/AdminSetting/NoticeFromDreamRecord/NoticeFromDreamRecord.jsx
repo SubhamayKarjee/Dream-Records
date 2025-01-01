@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
 import toast from "react-hot-toast";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import localDate from "../../../Hooks/localDate";
+import localTime from "../../../Hooks/localTime";
 
 const NoticeFromDreamRecord = () => {
 
@@ -26,11 +28,8 @@ const NoticeFromDreamRecord = () => {
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = (data) => {
         setLoading(true)
-        const now = new Date();
-        const currentDate = now.toJSON()
-        const date = currentDate.slice(0,10)
-        const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
-        const formData = {...data, date, time}
+        const date = new Date().toISOString();
+        const formData = {...data, isoDate: date}
         axios.post(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/notice`, formData)
         .then(res => {
             if(res.status === 200){
@@ -89,8 +88,8 @@ const NoticeFromDreamRecord = () => {
                                 </div>
                                     <p className="text-xs text-slate-500">{data?.noticeDescription.slice(0, 100)}...</p>
                                 <div className="flex justify-between items-center">
-                                    <span className="text-sm">{data?.date}</span>
-                                    <span className="text-sm">{data?.time}</span>
+                                    <span className="text-sm">{ data?.isoDate ? localDate(data?.isoDate) :data?.date}</span>
+                                    <span className="text-sm">{ data?.isoDate ? localTime(data?.isoDate) :data?.time}</span>
                                 </div>
                             </div>
                         </div>

@@ -3,6 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import fallbackImage from '../../assets/fallbackImage.jpg'
 import bellIcon from '../../assets/common-icons/bell.png'
+import localDate from "../../Hooks/localDate";
+import localTime from "../../Hooks/localTime";
 
 
 const MainNoticesMobile = () => {
@@ -64,8 +66,8 @@ const MainNoticesMobile = () => {
                                     <p className="font-semibold text-[#252525]">{data?.noticeTitle}</p>
                                     <p className="text-[#71717A]">{data?.noticeDescription.slice(0, 20)}...</p>
                                     <div className='flex justify-between items-center pt-2'>
-                                        <p className="text-sm text-[#71717A]">{data?.date}</p>
-                                        <p className="text-sm text-[#71717A]">{data?.time}</p>
+                                        <p className="text-sm text-[#71717A]">{ data?.isoDate ? localDate(data?.isoDate) :data?.date}</p>
+                                        <p className="text-sm text-[#71717A]">{ data?.isoDate ? localTime(data?.isoDate) :data?.time}</p>
                                     </div>
                                 </div>
                             </div>
@@ -77,8 +79,8 @@ const MainNoticesMobile = () => {
                                         <h3 className="font-bold text-[#252525] text-lg">{data?.noticeTitle}</h3>
                                         <p className="text-[#71717A]">{data?.noticeDescription}</p>
                                         <div className='flex justify-between items-center pt-2'>
-                                            <p className="text-sm text-[#71717A]">{data?.date}</p>
-                                            <p className="text-sm text-[#71717A]">{data?.time}</p>
+                                            <p className="text-sm text-[#71717A]">{ data?.isoDate ? localDate(data?.isoDate) :data?.date}</p>
+                                            <p className="text-sm text-[#71717A]">{ data?.isoDate ? localTime(data?.isoDate) :data?.time}</p>
                                         </div>
                                     </div>
                                 </dialog>
