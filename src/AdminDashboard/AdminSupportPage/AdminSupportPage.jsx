@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import SupportLIst from '../../UserAdminDashboard/SupportPage/SupportLIst';
 import { AdminAuthContext } from '../DashboardForAdmin/DashBoardForAdmin';
+import './SupportAnsPage.css'
 
 const AdminSupportPage = () => {
 
@@ -33,12 +34,12 @@ const AdminSupportPage = () => {
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
           setLoading(true);
-          axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/admin/search-ticket-title?status=${status}&search=${searchText}`)
+          axios.get(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/admin/search-ticket-by-userName?status=${status}&search=${searchText}`)
             .then( res => {
               if(res.status == 200){
                 setLoading(false);
                 setSupportData(res.data.data);
-                console.log(res.data.data);
+                setTotalItems(res.data.dataCount);
               }
             })
             .catch(er => console.log(er));
@@ -86,7 +87,7 @@ const AdminSupportPage = () => {
         <div>
             <div className='mt-3 flex items-center justify-between'>
                 <h3 className='font-bold text-xl text-[#252525]'>Support <span className='border px-2 rounded-md'>{totalItems}</span></h3>
-                <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => setSearchText(e.target.value)} className='input input-sm border w-80' placeholder='Type & Enter to Search'/>
+                <input style={inputStyle} type="text" onKeyPress={handleKeyPress} onChange={e => setSearchText(e.target.value)} className='input input-sm border w-80' placeholder='Type UserName & Enter to Search'/>
             </div>
             <Divider className='my-2'/>
             <div className='pt-2 flex justify-between items-center'>
