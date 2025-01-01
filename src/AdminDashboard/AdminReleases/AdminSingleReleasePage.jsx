@@ -9,6 +9,8 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import './AdminSingleReleasePage.css'
 import AdminReleaseCardComponent from "./AdminReleaseCardComponent";
+import textToHTML from "../../Hooks/textToHTML";
+import wrapperStyle from "../../Hooks/commonCssForHTMLwarp";
 
 const AdminSingleReleasePage = () => {
 
@@ -60,18 +62,23 @@ const AdminSingleReleasePage = () => {
     const onSubmit = (data) => {
         setUpdateLoading(true)
         const status = releaseStatus;
+        let actionRequired;
+        if(data.actionRequired){
+            actionRequired = textToHTML(data.actionRequired);
+        }
         let formData;
         if(status === 'Action Required' || status === 'Takedown'){
             if(releaseData.actionReqHistory){
-                releaseData.actionReqHistory.push(data.actionRequired)
-                formData = {...releaseData, status, ...data }
+                releaseData.actionReqHistory.push(actionRequired)
+                formData = {...releaseData, status, ...data, actionRequired: actionRequired }
                 console.log(formData);
             }else{
-                formData = {...releaseData, status, ...data, actionReqHistory: [data.actionRequired]}
+                formData = {...releaseData, status, ...data, actionReqHistory: [actionRequired], actionRequired: actionRequired}
                 console.log(formData);
             }
         }else{
-            formData =  {...releaseData, status, ...data}
+            formData =  {...releaseData, status, ...data,}
+            console.log(formData);
         }
         // const formData = {...releaseData, status, ...data }
             axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/update-release/${id}`, formData)
@@ -125,7 +132,7 @@ const AdminSingleReleasePage = () => {
                   <div>
                     {
                         releaseData?.actionRequired &&
-                        <p className="p-2 my-2 bg-red-200 rounded-md">{releaseData.actionRequired}</p>
+                        <div className="p-2 my-2 bg-red-200 rounded-md" style={wrapperStyle} dangerouslySetInnerHTML={{ __html: releaseData.actionRequired }} />
                     }
                     
                     <div className="md:flex p-4 bg-neutral rounded-lg">
@@ -533,7 +540,7 @@ const AdminSingleReleasePage = () => {
                             <div className="py-3">
                                 <p className="font-bold">Action Require/Takedown History</p>
                                 {releaseData.actionReqHistory.map((d, index) => {
-                                    return <p key={index} className='p-2'>{index+1}: {d}</p>
+                                    return <div key={index} className='p-2 my-1 bg-slate-100 rounded-md' style={wrapperStyle} dangerouslySetInnerHTML={{ __html: `${index + 1}. ${d}` }} />
                                 })}
                             </div>
                         }
