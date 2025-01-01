@@ -71,14 +71,14 @@ const AdminSingleReleasePage = () => {
             if(releaseData.actionReqHistory){
                 releaseData.actionReqHistory.push(actionRequired)
                 formData = {...releaseData, status, ...data, actionRequired: actionRequired }
-                console.log(formData);
+                // console.log(formData);
             }else{
                 formData = {...releaseData, status, ...data, actionReqHistory: [actionRequired], actionRequired: actionRequired}
-                console.log(formData);
+                // console.log(formData);
             }
         }else{
             formData =  {...releaseData, status, ...data,}
-            console.log(formData);
+            // console.log(formData);
         }
         // const formData = {...releaseData, status, ...data }
             axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/update-release/${id}`, formData)
