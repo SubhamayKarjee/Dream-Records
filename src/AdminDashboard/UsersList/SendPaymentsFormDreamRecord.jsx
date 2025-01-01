@@ -42,12 +42,8 @@ const SendPaymentsFormDreamRecord = ({id, isOpenModalPayment, clickIdPayment}) =
       if(!paymentReportDate){
         setPaymentReportDateErr('Please Select Date');
         return;
-    }
-      const now = new Date();
-      const date = now.getDate().toLocaleString();
-      const month = now.toLocaleString('default', { month: 'long' });
-      const year = now.getFullYear();
-      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
+      }
+      const date = new Date().toISOString();
 
       axios.get(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/users/${id}`)
       .then(res => {
@@ -56,11 +52,11 @@ const SendPaymentsFormDreamRecord = ({id, isOpenModalPayment, clickIdPayment}) =
           if(preData.balance){
             const preAmount = preData.balance.amount;
             const newAmount = parseInt(preAmount) + parseInt(payAmount);
-            const newData = {...preData, balance:{amount: parseInt(newAmount), year: year, month: month, time: time, date: date,}}
+            const newData = {...preData, balance:{amount: parseInt(newAmount), isoDate: date,}}
             axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, newData)
             .then(res => {
               if(res.status === 200){
-                const formData = {amount: parseInt(payAmount), date, time, month, year, masterUserId: id, paymentReportDate }
+                const formData = {amount: parseInt(payAmount), isoDate: date, masterUserId: id, paymentReportDate }
                 axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment`, formData)
                 .then(res => {
                   if(res.status === 200){
@@ -71,11 +67,11 @@ const SendPaymentsFormDreamRecord = ({id, isOpenModalPayment, clickIdPayment}) =
               }
             })
           }else{
-            const newData = {...preData, balance:{amount: parseInt(payAmount), year: year, month: month, time: time, date: date,}}
+            const newData = {...preData, balance:{amount: parseInt(payAmount), isoDate: date}}
             axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, newData)
             .then(res => {
               if(res.status === 200){
-                const formData = {amount: parseInt(payAmount), date, time, month, year, masterUserId: id, paymentReportDate }
+                const formData = {amount: parseInt(payAmount), isoDate: date, masterUserId: id, paymentReportDate }
                 axios.post(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/payment`, formData)
                 .then(res => {
                   if(res.status === 200){

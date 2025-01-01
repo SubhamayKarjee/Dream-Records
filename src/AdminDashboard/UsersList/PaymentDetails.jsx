@@ -102,7 +102,16 @@ const PaymentDetails = ({id, role}) => {
                             paymentData && paymentData.map(data => 
                                 <tr key={data._id} className="hover">
                                     <td className="font-semibold text-sm text-[#09090B]">Successfully Get Payments</td>
-                                    <td className="font-semibold text-sm text-[#09090B]">{data?.date} {data?.month.slice(0,3)} {data?.year}</td>
+                                    <td className="font-semibold text-sm text-[#09090B]">
+                                        {   data?.isoDate ? <>
+                                                {new Date(data.isoDate).toLocaleDateString(undefined, {
+                                                    day: '2-digit',
+                                                    month: 'short',
+                                                    year: 'numeric',
+                                                })} 
+                                            </> : <>{data?.date} {data?.month.slice(0,3)} {data?.year}</>
+                                        }
+                                    </td>
                                     <td className="font-semibold text-sm text-[#09090B]">{data?.paymentReportDate}</td>
                                     <td>
                                         <p className="font-semibold text-sm text-[#09090B]">₹ {data?.amount}.00</p>
@@ -160,7 +169,24 @@ const PaymentDetails = ({id, role}) => {
                                                     </div>
                                                     <div>
                                                         <p className="text-sm text-[#020617]">Payment Date & Time</p>
-                                                        <p className="text-sm text-[#71717A]">{data.date} {data.month} {data.year} || {data.time}</p>
+                                                        {   data?.isoDate ? <div className="flex gap-2 items-center">
+                                                                <p className="text-sm text-[#71717A]">
+                                                                    {new Date(data.isoDate).toLocaleDateString(undefined, {
+                                                                        day: '2-digit',
+                                                                        month: 'short',
+                                                                        year: 'numeric',
+                                                                    })} 
+                                                                </p>
+                                                                <p className="text-sm text-[#71717A]">
+                                                                    {new Date(data.isoDate).toLocaleTimeString(undefined, {
+                                                                        hour: '2-digit',
+                                                                        minute: '2-digit',
+                                                                        second: '2-digit',
+                                                                        hour12: true, 
+                                                                    })}
+                                                                </p>
+                                                            </div> : <p className="text-sm text-[#71717A]">{data?.date} {data?.month.slice(0,3)} {data?.year} || {data.time}</p>
+                                                        }
                                                     </div>
                                                 </div>
                                         </div>
@@ -243,7 +269,24 @@ const PaymentDetails = ({id, role}) => {
                                                     </div>
                                                     <div>
                                                         <p className="text-sm text-[#020617]">Payment Date & Time</p>
-                                                        <p className="text-sm text-[#71717A]">{data.date} {data.month} {data.year} || {data.time}</p>
+                                                        {   data?.isoDate ? <div className="flex gap-2 items-center">
+                                                                <p className="text-sm text-[#71717A]">
+                                                                    {new Date(data.isoDate).toLocaleDateString(undefined, {
+                                                                        day: '2-digit',
+                                                                        month: 'short',
+                                                                        year: 'numeric',
+                                                                    })} 
+                                                                </p>
+                                                                <p className="text-sm text-[#71717A]">
+                                                                    {new Date(data.isoDate).toLocaleTimeString(undefined, {
+                                                                        hour: '2-digit',
+                                                                        minute: '2-digit',
+                                                                        second: '2-digit',
+                                                                        hour12: true, 
+                                                                    })}
+                                                                </p>
+                                                            </div> : <p className="text-sm text-[#71717A]">{data?.date} {data?.month.slice(0,3)} {data?.year} || {data.time}</p>
+                                                        }
                                                     </div>
                                                 </div>
                                         </div>

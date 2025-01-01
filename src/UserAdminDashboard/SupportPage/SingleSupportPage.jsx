@@ -150,7 +150,7 @@ const SingleSupportPage = () => {
                                                         {new Date(d.date).toLocaleDateString()} 
                                                     </span>
                                                     <span>
-                                                        {new Date(d.date).toLocaleTimeString('en-US', {
+                                                        {new Date(d.date).toLocaleTimeString(undefined, {
                                                             hour: '2-digit',
                                                             minute: '2-digit',
                                                             second: '2-digit',
@@ -167,7 +167,7 @@ const SingleSupportPage = () => {
                                                         {new Date(d.date).toLocaleDateString()} 
                                                     </span>
                                                     <span>
-                                                        {new Date(d.date).toLocaleTimeString('en-US', {
+                                                        {new Date(d.date).toLocaleTimeString(undefined, {
                                                             hour: '2-digit',
                                                             minute: '2-digit',
                                                             second: '2-digit',
