@@ -2,6 +2,8 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import { DatePicker, Empty, Pagination, Popconfirm } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import localDate from "../../Hooks/localDate";
+import localTime from "../../Hooks/localTime";
 
 // eslint-disable-next-line react/prop-types
 const PaymentDetails = ({id, role}) => {
@@ -103,14 +105,7 @@ const PaymentDetails = ({id, role}) => {
                                 <tr key={data._id} className="hover">
                                     <td className="font-semibold text-sm text-[#09090B]">Successfully Get Payments</td>
                                     <td className="font-semibold text-sm text-[#09090B]">
-                                        {   data?.isoDate ? <>
-                                                {new Date(data.isoDate).toLocaleDateString(undefined, {
-                                                    day: '2-digit',
-                                                    month: 'short',
-                                                    year: 'numeric',
-                                                })} 
-                                            </> : <>{data?.date} {data?.month.slice(0,3)} {data?.year}</>
-                                        }
+                                        {   data?.isoDate ? localDate(data?.isoDate) : <>{data?.date} {data?.month.slice(0,3)} {data?.year}</>}
                                     </td>
                                     <td className="font-semibold text-sm text-[#09090B]">{data?.paymentReportDate}</td>
                                     <td>
@@ -169,23 +164,11 @@ const PaymentDetails = ({id, role}) => {
                                                     </div>
                                                     <div>
                                                         <p className="text-sm text-[#020617]">Payment Date & Time</p>
-                                                        {   data?.isoDate ? <div className="flex gap-2 items-center">
+                                                        {   data?.isoDate ?
                                                                 <p className="text-sm text-[#71717A]">
-                                                                    {new Date(data.isoDate).toLocaleDateString(undefined, {
-                                                                        day: '2-digit',
-                                                                        month: 'short',
-                                                                        year: 'numeric',
-                                                                    })} 
+                                                                    {localDate(data?.isoDate)} &nbsp; {localTime(data?.isoDate)}
                                                                 </p>
-                                                                <p className="text-sm text-[#71717A]">
-                                                                    {new Date(data.isoDate).toLocaleTimeString(undefined, {
-                                                                        hour: '2-digit',
-                                                                        minute: '2-digit',
-                                                                        second: '2-digit',
-                                                                        hour12: true, 
-                                                                    })}
-                                                                </p>
-                                                            </div> : <p className="text-sm text-[#71717A]">{data?.date} {data?.month.slice(0,3)} {data?.year} || {data.time}</p>
+                                                            : <p className="text-sm text-[#71717A]">{data?.date} {data?.month.slice(0,3)} {data?.year} || {data.time}</p>
                                                         }
                                                     </div>
                                                 </div>
@@ -269,23 +252,11 @@ const PaymentDetails = ({id, role}) => {
                                                     </div>
                                                     <div>
                                                         <p className="text-sm text-[#020617]">Payment Date & Time</p>
-                                                        {   data?.isoDate ? <div className="flex gap-2 items-center">
+                                                        {   data?.isoDate ? 
                                                                 <p className="text-sm text-[#71717A]">
-                                                                    {new Date(data.isoDate).toLocaleDateString(undefined, {
-                                                                        day: '2-digit',
-                                                                        month: 'short',
-                                                                        year: 'numeric',
-                                                                    })} 
+                                                                    {localDate(data?.isoDate)} &nbsp; {localTime(data?.isoDate)}
                                                                 </p>
-                                                                <p className="text-sm text-[#71717A]">
-                                                                    {new Date(data.isoDate).toLocaleTimeString(undefined, {
-                                                                        hour: '2-digit',
-                                                                        minute: '2-digit',
-                                                                        second: '2-digit',
-                                                                        hour12: true, 
-                                                                    })}
-                                                                </p>
-                                                            </div> : <p className="text-sm text-[#71717A]">{data?.date} {data?.month.slice(0,3)} {data?.year} || {data.time}</p>
+                                                            : <p className="text-sm text-[#71717A]">{data?.date} {data?.month.slice(0,3)} {data?.year} || {data.time}</p>
                                                         }
                                                     </div>
                                                 </div>
