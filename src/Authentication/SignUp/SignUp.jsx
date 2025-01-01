@@ -142,7 +142,7 @@ const SignUp = () => {
     }
 
     // const newUpdate = async () => {
-    //     const displayName = `ArrowMusicPrivateLimitedIndia'__'67208ff681efade8917e7bed'__'${roll}`
+    //     const displayName = `HASQCollection'__'671761eb81efade8917e7a7b'__'${roll}`
     //     console.log(displayName);
     //     await updateProfile({ displayName });
     // }
