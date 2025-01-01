@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 
 import { useNavigate } from "react-router-dom";
+import localDate from "../../Hooks/localDate";
+import localTime from "../../Hooks/localTime";
 
 const SupportLIst = ({data, roll}) => {
     const navigate = useNavigate()
@@ -46,20 +48,7 @@ const SupportLIst = ({data, roll}) => {
                                 }
                                 <td className="font-semibold text-sm text-[#09090B]">{d.status}</td>
                                 <td className="font-semibold text-sm text-[#09090B]">
-                                    <div className="flex gap-2">
-                                        <span>
-                                            {new Date(d.date).toLocaleDateString()} 
-                                        </span>
-                                        <span>
-                                            {new Date(d.date).toLocaleTimeString('en-US', {
-                                                hour: '2-digit',
-                                                minute: '2-digit',
-                                                second: '2-digit',
-                                                hour12: true, // Ensures 12-hour format with AM/PM
-                                            })}
-                                        </span>
-                                    </div>
-
+                                    {localDate(d?.date)} &nbsp; {localTime(d?.date)}
                                 </td>
                             </tr>
                         )
@@ -103,7 +92,7 @@ const SupportLIst = ({data, roll}) => {
                                 }
                                 <td className="font-semibold text-sm text-[#09090B]">{d.title.slice(0,10)}..</td>
                                 <td className="font-semibold text-sm text-[#09090B]">{d.status}</td>
-                                <td className="font-semibold text-sm text-[#09090B]">{d.date.slice(0,10)}</td>
+                                <td className="font-semibold text-sm text-[#09090B]">{localDate(d?.date)} {localTime(d?.date)}</td>
                             </tr>
                         )
                     }                        

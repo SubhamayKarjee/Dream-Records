@@ -12,6 +12,8 @@ import {
 } from "@remixicon/react";
 import './SupportPage.css';
 import wrapperStyle from "../../Hooks/commonCssForHTMLwarp";
+import localTime from "../../Hooks/localTime";
+import localDate from "../../Hooks/localDate";
 
 const SingleSupportPage = () => {
 
@@ -145,36 +147,16 @@ const SingleSupportPage = () => {
                                         userNameIdRoll[0] === d.userName ? 
                                             <div className="flex items-center gap-2 justify-end">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                <div className="flex gap-2">
-                                                    <span>
-                                                        {new Date(d.date).toLocaleDateString()} 
-                                                    </span>
-                                                    <span>
-                                                        {new Date(d.date).toLocaleTimeString(undefined, {
-                                                            hour: '2-digit',
-                                                            minute: '2-digit',
-                                                            second: '2-digit',
-                                                            hour12: true, 
-                                                        })}
-                                                    </span>
-                                                </div>
+                                                <p>
+                                                    {localDate(d?.date)} &nbsp; {localTime(d?.date)}
+                                                </p>
                                             </div>
                                             :
                                             <div className="flex items-center gap-2 justify-start">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                <div className="flex gap-2">
-                                                    <span>
-                                                        {new Date(d.date).toLocaleDateString()} 
-                                                    </span>
-                                                    <span>
-                                                        {new Date(d.date).toLocaleTimeString(undefined, {
-                                                            hour: '2-digit',
-                                                            minute: '2-digit',
-                                                            second: '2-digit',
-                                                            hour12: true, 
-                                                        })}
-                                                    </span>
-                                                </div>
+                                                <p>
+                                                    {localDate(d?.date)} &nbsp; {localTime(d?.date)}
+                                                </p>
                                             </div>
                                     }
                                 </div>
@@ -221,12 +203,16 @@ const SingleSupportPage = () => {
                                             userNameIdRoll[0] === d.userName ? 
                                                 <div className="flex items-center gap-2 justify-end">
                                                     <p className="font-bold text-sm">{d.userName}</p>
-                                                    <p className="text-sm">{d.date.slice(0,10)} {d.date.slice(11,19)}</p>
+                                                    <p className="text-sm">
+                                                        {localDate(d?.date)} &nbsp; {localTime(d?.date)}
+                                                    </p>
                                                 </div>
                                                 :
                                                 <div className="flex items-center gap-2 justify-start">
                                                     <p className="font-bold text-sm">{d.userName}</p>
-                                                    <p className="text-sm">{d.date.slice(0,10)} {d.date.slice(11,19)}</p>
+                                                    <p className="text-sm">
+                                                        {localDate(d?.date)} &nbsp; {localTime(d?.date)}
+                                                    </p>
                                                 </div>
                                         }
                                 </div>

@@ -12,6 +12,8 @@ import {
     RiCheckDoubleLine,
 } from "@remixicon/react";
 import wrapperStyle from "../../Hooks/commonCssForHTMLwarp";
+import localDate from "../../Hooks/localDate";
+import localTime from "../../Hooks/localTime";
 
 const SupportAnsPage = () => {
 
@@ -156,7 +158,7 @@ const SupportAnsPage = () => {
                         </h2>
                         {
                             supportData &&
-                            <p> {new Date(supportData?.date).toLocaleDateString()} </p>
+                            <p>{localDate(supportData?.date)}</p>
                         }
                     </div>
                     <p className="font-bold text-sm">{supportData?.userName}</p>
@@ -182,36 +184,16 @@ const SupportAnsPage = () => {
                                         adminNameIdRoll[0] === d?.userName ? 
                                             <div className="flex items-center gap-2 justify-end">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                <div className="flex gap-2">
-                                                    <span>
-                                                        {new Date(d.date).toLocaleDateString()} 
-                                                    </span>
-                                                    <span>
-                                                        {new Date(d.date).toLocaleTimeString('en-US', {
-                                                            hour: '2-digit',
-                                                            minute: '2-digit',
-                                                            second: '2-digit',
-                                                            hour12: true, 
-                                                        })}
-                                                    </span>
-                                                </div>
+                                                <p>
+                                                    {localDate(d?.date)} &nbsp; {localTime(d?.date)}
+                                                </p>
                                             </div>
                                             :
                                             <div className="flex items-center gap-2 justify-start">
                                                 <p className="font-bold text-sm">{d.userName}</p>
-                                                <div className="flex gap-2">
-                                                    <span>
-                                                        {new Date(d.date).toLocaleDateString()} 
-                                                    </span>
-                                                    <span>
-                                                        {new Date(d.date).toLocaleTimeString('en-US', {
-                                                            hour: '2-digit',
-                                                            minute: '2-digit',
-                                                            second: '2-digit',
-                                                            hour12: true, 
-                                                        })}
-                                                    </span>
-                                                </div>
+                                                <p>
+                                                    {localDate(d?.date)} &nbsp; {localTime(d?.date)}
+                                                </p>
                                             </div>
                                     }
                             </div>

@@ -120,7 +120,6 @@ const SupportPage = () => {
               if(res.status == 200){
                 setLoading(false);
                 setSupportData(res.data.data);
-                console.log(res.data.data);
               }
             })
             .catch(er => console.log(er));
