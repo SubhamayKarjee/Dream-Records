@@ -92,22 +92,9 @@ const UsersList = () => {
     }
 
     const userLocked = (data) => {
-      const now = new Date();
-      // Get the user's local date, time, and time zone
-      const options = {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true,
-          timeZoneName: 'short' // This adds the time zone abbreviation
-      };
-
-      const dateTimeWithZone = new Intl.DateTimeFormat(undefined, options).format(now);
-
+      const date = new Date().toISOString();     
       const userLocked = true;
-      const userLockedDate = dateTimeWithZone;
+      const userLockedDate = date;
       const newData = {...data, userLocked, userLockedDate}
       axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${data._id}`, newData)
       .then(res => {
