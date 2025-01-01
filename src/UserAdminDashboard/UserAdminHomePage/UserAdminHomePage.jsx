@@ -45,33 +45,15 @@ const UserAdminHomePage = () => {
             return <LoadingComponentsForPage/>
         }
         let userNameIdRoll = user?.displayName?.split("'__'");
-        // Create a new Date object for the current date and time
-        const now = new Date();
 
-        // Create an options object for formatting the date and time
-        const options = {
-            timeZone: 'Asia/Kolkata',
-            hour12: true,
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-        };
-
-        // Create a new Intl.DateTimeFormat object with the specified options
-        const formatter = new Intl.DateTimeFormat('en-GB', options);
-
-        // Format the current date and time for Kolkata
-        const lastLogin = formatter.format(now);
+        const date = new Date().toISOString();
         if(user){
             axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`)
             .then(res => {
                 if(res.status === 200){
                     const data = res.data.data;
                     setUserFirstName(res.data.data.first_name)
-                    const formData = {...data, lastLogin}
+                    const formData = {...data, lastLogin: date}
                     axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`, formData)
                 }
             })

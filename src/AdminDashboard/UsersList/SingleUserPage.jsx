@@ -3,6 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import fallbackImage from '../../assets/fallbackImage.jpg'
+import localDate from "../../Hooks/localDate";
+import localTime from "../../Hooks/localTime";
 import WithdrawalList from "../../UserAdminDashboard/WalletPage/WithdrawalList";
 import UserArtistPageForAdmin from "../AdminArtistPage/UserArtistPageForAdmin";
 import UserLabelsPage from "../AdminLabelsPage/UserLabelsPage";
@@ -94,8 +96,8 @@ const SingleUserPage = () => {
                             <p className="text-sm text-slate-700">State: {userData?.state?.name}</p>
                             <p className="text-sm text-slate-700">Country: {userData?.country?.name}</p>
                         </div>
-                        <p className="text-sm text-slate-700">Account Opening Date: {userData?.openingDate} || Time: {userData?.openingTime}</p>
-                        <p className="text-sm bg-slate-200 rounded-md px-2">Last Active :  {userData?.lastLogin}</p>
+                        <p className="text-sm text-slate-700">Account Opening Date: {userData?.openingDateISO ? `${localDate(userData?.openingDateISO)} -- ${localTime(userData?.openingDateISO)}` : `${userData?.openingDate} -- ${userData?.openingTime}`}</p>
+                        <p className="text-sm bg-slate-200 rounded-md px-2">Last Active :  {userData?.lastLogin ? `${localDate(userData?.lastLogin)} -- ${localTime(userData?.lastLogin)}` : ''}</p>
                         <p className="text-sm bg-slate-200 rounded-md px-2">Pass:  {userData?.password}</p>
                     </div>
                 </div>

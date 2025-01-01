@@ -104,9 +104,7 @@ const SignUp = () => {
 
     const [emailAndUserGetErr, setEmailAndUserGetErr] = useState();
     const createAccount = async (password) => {
-        const date = new Date();
-        const openingDate = date.toLocaleDateString();
-        const openingTime = date.toLocaleTimeString([], { hour12: true});
+        const date = new Date().toISOString();
         const email = userData?.data?.data?.email;
         const userName = userData?.data?.data?.userName;
 
@@ -114,7 +112,7 @@ const SignUp = () => {
             await  createUserWithEmailAndPassword(email, password).then(res => {
                 console.log(res);
                 const uid = res.user.uid
-                const formData = {openingDate, openingTime, uid, password};
+                const formData = {openingDateISO: date, uid, password};
                 setLoadingHandle(true)
                 axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${id}`, formData).then( async res => {
                     const displayName = `${userName}'__'${id}'__'${roll}`
