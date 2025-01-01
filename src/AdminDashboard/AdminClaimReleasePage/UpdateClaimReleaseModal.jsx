@@ -1,6 +1,7 @@
 import { Result } from "antd";
 import axios from "axios";
 import { useState } from "react";
+import textToHTML from "../../Hooks/textToHTML";
 
 // eslint-disable-next-line react/prop-types
 const UpdateClaimReleaseModal = ({id, data}) => {
@@ -13,10 +14,13 @@ const UpdateClaimReleaseModal = ({id, data}) => {
 
     const updateClaimStatus = () => {
         setActionReqErr('');
+        let actionReqHTML;
         if(claimStatus === 'Rejected'){
             if(!actionRequired){
                 setActionReqErr('Please Type Reason');
                 return;
+            }else if(actionRequired){
+                actionReqHTML = textToHTML(actionRequired)
             }
         }
 
@@ -28,7 +32,7 @@ const UpdateClaimReleaseModal = ({id, data}) => {
 
         let updatedData;
         if(claimStatus === 'Rejected'){
-            updatedData = {...data, status: claimStatus, ansDate: date, ansMonth: month, ansYear: year, ansTime: time, actionRequired: actionRequired}
+            updatedData = {...data, status: claimStatus, ansDate: date, ansMonth: month, ansYear: year, ansTime: time, actionRequired: actionReqHTML}
         }else{
             updatedData = {...data, status: claimStatus, ansDate: date, ansMonth: month, ansYear: year, ansTime: time,}
         }

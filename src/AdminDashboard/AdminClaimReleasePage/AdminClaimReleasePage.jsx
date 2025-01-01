@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import fallbackImage from "../../assets/fallbackImage.jpg"
 import UpdateClaimReleaseModal from "./UpdateClaimReleaseModal";
 import './AdminClaimReleasePage.css'
+import wrapperStyle from "../../Hooks/commonCssForHTMLwarp";
 
 const AdminClaimReleasePage = () => {
 
@@ -87,15 +88,35 @@ const AdminClaimReleasePage = () => {
                         claimData && claimData.map(data => 
                             <div className='p-2 my-1 rounded-md border md:flex justify-between' key={data._id}>
                                 <div className='grow m-2'>
-                                    <p>Submited Request <span className="font-bold text-slate-500">{data.userName}</span> <span className="font-bold text-slate-500">{data.date} {data.month} {data.year} || {data.time}</span></p>
+                                    <p>Submited Request <span className="font-bold text-slate-500">{data.userName}</span> 
+                                    {
+                                        data?.isoDate && 
+                                        <p className='text-sm text-[#71717A]'>
+                                            {new Date(data.isoDate).toLocaleDateString(undefined, {
+                                                day: '2-digit',
+                                                month: 'long',
+                                                year: 'numeric',
+                                            })} || {new Date(data.isoDate).toLocaleTimeString(undefined, {
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                hour12: true,
+                                              })}
+                                        </p>
+                                    }
+                                    {
+                                        !data?.isoDate &&
+                                        <span className="font-bold text-slate-500">{data.date} {data.month} {data.year} || {data.time}</span>
+                                    }
+                                    </p>
                                     <p className='font-bold'>{data.claimOption}</p>
                                         <div className="my-1 py-1 px-2 rounded-lg bg-slate-100">
                                             <div className="flex">
                                                     <Image
                                                         onClick={() => navigate(`/admin-dashboard/release/${data.release._id}`)}
-                                                        width={35}
-                                                        height={35}
-                                                        className="rounded-lg"
+                                                        width={65}
+                                                        height={65}
+                                                        className="rounded-md cursor-pointer"
+                                                        preview={false}
                                                         src={data?.release?.imgUrl}
                                                         fallback={fallbackImage}
                                                     />
@@ -121,7 +142,7 @@ const AdminClaimReleasePage = () => {
                                             }
                                         {
                                             data?.actionRequired &&
-                                            <p className="p-2 rounded-md bg-red-200">{data.actionRequired}</p>
+                                            <div className="p-2 rounded-md bg-red-200" style={wrapperStyle} dangerouslySetInnerHTML={{ __html: data.actionRequired }} />
                                         }
                                 </div>
                                 <div>

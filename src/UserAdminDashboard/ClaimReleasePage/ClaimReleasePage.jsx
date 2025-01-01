@@ -12,6 +12,7 @@ import {
     RiFileCheckLine,
     RiExpandUpDownLine
 } from "@remixicon/react";
+import wrapperStyle from '../../Hooks/commonCssForHTMLwarp';
 
 
 const ClaimReleasePage = () => {
@@ -94,12 +95,8 @@ const ClaimReleasePage = () => {
         const userName = userNameIdRoll[0]
         const masterUserId = userNameIdRoll[1]
         const status = 'Pending';
-        const now = new Date();
-        const date = now.getDate().toLocaleString();
-        const month = now.toLocaleString('default', { month: 'long' });
-        const year = now.getFullYear();
-        const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
-        const formData = {...data, release: release[0], claimOption, userName, masterUserId, status, date, month, year, time};
+        const isoDate = new Date().toISOString()
+        const formData = {...data, release: release[0], claimOption, userName, masterUserId, status, isoDate};
         axios.post('https://shark-app-65c5t.ondigitalocean.app/common/api/v1/claim-release', formData)
         .then(res => {
             if(res.status === 200){
@@ -368,7 +365,7 @@ const ClaimReleasePage = () => {
 
                                         {
                                             data?.actionRequired &&
-                                            <p className="p-2 rounded-md bg-white text-sm">{data.actionRequired}</p>
+                                            <div className="p-2 rounded-md bg-white text-sm" style={wrapperStyle} dangerouslySetInnerHTML={{ __html: data.actionRequired }} />
                                         }
                                         <div className='flex items-center justify-between my-1'>
                                             {
@@ -392,7 +389,24 @@ const ClaimReleasePage = () => {
                                                         <p className="text-xs font-semibold text-[#71717A]">{data.status}</p>
                                                     </div>
                                             }
-                                            <p className='text-sm text-[#71717A]'>{data.date} {data.month} {data.year}  {data.time}</p>
+                                            {
+                                                data?.isoDate && 
+                                                <p className='text-sm text-[#71717A]'>
+                                                    {new Date(data.isoDate).toLocaleDateString(undefined, {
+                                                        day: '2-digit',
+                                                        month: 'long',
+                                                        year: 'numeric',
+                                                    })} || {new Date(data.isoDate).toLocaleTimeString(undefined, {
+                                                        hour: '2-digit',
+                                                        minute: '2-digit',
+                                                        hour12: true,
+                                                      })}
+                                                </p>
+                                            }
+                                            {
+                                                !data?.isoDate &&
+                                                <p className='text-sm text-[#71717A]'>{data.date} {data.month} {data.year}  {data.time}</p>
+                                            }
                                         </div>
                                     </div>                                
                                 </div>
