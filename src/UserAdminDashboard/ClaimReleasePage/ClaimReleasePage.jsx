@@ -13,6 +13,8 @@ import {
     RiExpandUpDownLine
 } from "@remixicon/react";
 import wrapperStyle from '../../Hooks/commonCssForHTMLwarp';
+import localDate from '../../Hooks/localDate';
+import localTime from '../../Hooks/localTime';
 
 
 const ClaimReleasePage = () => {
@@ -390,21 +392,10 @@ const ClaimReleasePage = () => {
                                                     </div>
                                             }
                                             {
-                                                data?.isoDate && 
+                                                data?.isoDate ?
                                                 <p className='text-sm text-[#71717A]'>
-                                                    {new Date(data.isoDate).toLocaleDateString(undefined, {
-                                                        day: '2-digit',
-                                                        month: 'long',
-                                                        year: 'numeric',
-                                                    })} || {new Date(data.isoDate).toLocaleTimeString(undefined, {
-                                                        hour: '2-digit',
-                                                        minute: '2-digit',
-                                                        hour12: true,
-                                                      })}
-                                                </p>
-                                            }
-                                            {
-                                                !data?.isoDate &&
+                                                    {localDate(data?.isoDate)} &nbsp; {localTime(data?.isoDate)}
+                                                </p> :
                                                 <p className='text-sm text-[#71717A]'>{data.date} {data.month} {data.year}  {data.time}</p>
                                             }
                                         </div>

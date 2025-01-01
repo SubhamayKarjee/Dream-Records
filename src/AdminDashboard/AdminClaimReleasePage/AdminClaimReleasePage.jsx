@@ -8,6 +8,8 @@ import fallbackImage from "../../assets/fallbackImage.jpg"
 import UpdateClaimReleaseModal from "./UpdateClaimReleaseModal";
 import './AdminClaimReleasePage.css'
 import wrapperStyle from "../../Hooks/commonCssForHTMLwarp";
+import localDate from "../../Hooks/localDate";
+import localTime from "../../Hooks/localTime";
 
 const AdminClaimReleasePage = () => {
 
@@ -88,19 +90,11 @@ const AdminClaimReleasePage = () => {
                         claimData && claimData.map(data => 
                             <div className='p-2 my-1 rounded-md border md:flex justify-between' key={data._id}>
                                 <div className='grow m-2'>
-                                    <p>Submited Request <span className="font-bold text-slate-500">{data.userName}</span> 
+                                    <p>Submited Request <span className="font-bold text-slate-500 me-3">{data.userName}</span> 
                                     {
                                         data?.isoDate && 
                                         <p className='text-sm text-[#71717A]'>
-                                            {new Date(data.isoDate).toLocaleDateString(undefined, {
-                                                day: '2-digit',
-                                                month: 'long',
-                                                year: 'numeric',
-                                            })} || {new Date(data.isoDate).toLocaleTimeString(undefined, {
-                                                hour: '2-digit',
-                                                minute: '2-digit',
-                                                hour12: true,
-                                              })}
+                                            {localDate(data?.isoDate)} &nbsp; {localTime(data?.isoDate)}
                                         </p>
                                     }
                                     {
