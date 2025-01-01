@@ -12,6 +12,7 @@ import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import './SingleReleasePage.css'
 import ReleaseCardComponent from "../ReleaseCardComponent/ReleaseCardComponent";
+import wrapperStyle from "../../../Hooks/commonCssForHTMLwarp";
 
 
 const SingleReleasePage = () => {
@@ -112,7 +113,7 @@ const SingleReleasePage = () => {
                                     <div>
                                         <h2 className="font-bold text-lg">{data?.releaseTitle}</h2>
                                         {
-                                           data?.actionRequired && <p className="text-xs p-1 bg-[#F2F2F2] rounded-md">{data.actionRequired}</p>
+                                           data?.actionRequired && <div className='text-xs p-1 bg-[#F2F2F2] rounded-md' style={wrapperStyle} dangerouslySetInnerHTML={{ __html: data.actionRequired }} />
                                         }
                                     </div>
                                     <div className="flex items-center gap-3">
@@ -336,7 +337,7 @@ const SingleReleasePage = () => {
                             <div className="py-3">
                                 <p className="font-bold">Action Require/Takedown History</p>
                                 {data.actionReqHistory.map((d, index) => {
-                                    return <p key={index} className='p-2'>{index+1}: {d}</p>
+                                    return <div key={index} className='p-2 my-1 bg-[#F2F2F2] rounded-md' style={wrapperStyle} dangerouslySetInnerHTML={{ __html: `${index + 1}. ${d}` }} />
                                 })}
                             </div>
                     }
