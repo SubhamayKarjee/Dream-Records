@@ -9,6 +9,7 @@ import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsF
 import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 import ReleaseCardComponentFourColsGrid from "../ReleasesPage/ReleaseCardComponent/ReleaseCardComponentFourColsGrid";
 import fallbackImageLabel from '../../assets/fallbackImage/fallback-labels.png'
+import wrapperStyle from "../../Hooks/commonCssForHTMLwarp";
 
 const DetailsSingleLabels = () => {
 
@@ -151,7 +152,7 @@ const DetailsSingleLabels = () => {
                                     }
                                     {
                                         labels?.actionRequired && 
-                                        <div className="text-xs bg-red-200 p-1 rounded-md mt-1">{labels?.actionRequired}</div>
+                                        <div className="text-xs bg-red-200 p-1 rounded-md mt-1" style={wrapperStyle} dangerouslySetInnerHTML={{ __html: labels?.actionRequired }} />
                                     }
                                     {
                                         labels?.description &&

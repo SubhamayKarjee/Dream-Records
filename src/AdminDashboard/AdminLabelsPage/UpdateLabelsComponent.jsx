@@ -8,6 +8,8 @@ import youtubeImg from '../../assets/social-icon/youtube.png';
 import LoadingComponentsForPage from "../../LoadingComponents/LoadingComponentsForPage";
 import AdminReleaseCardComponent from "../AdminReleases/AdminReleaseCardComponent";
 import fallbackImageLabels from '../../assets/fallbackImage/fallback-labels.png'
+import textToHTML from "../../Hooks/textToHTML";
+import wrapperStyle from "../../Hooks/commonCssForHTMLwarp";
 
 const UpdateLabelsComponent = () => {
 
@@ -62,8 +64,9 @@ const UpdateLabelsComponent = () => {
     const handleRejectedStatus = () =>{
         setReasonFieldErr('')
         if(actionRequired){
+            const htmlText = textToHTML(actionRequired)
             setUpdateLoading(true)
-            const data = {...labels, status: labelsStatus, actionRequired };
+            const data = {...labels, status: labelsStatus, actionRequired: htmlText };
             axios.put(`https://shark-app-65c5t.ondigitalocean.app/admin/api/v1/labels/update/${id}`, data)
             .then(res => {
                 if(res.status == 200){
@@ -228,7 +231,7 @@ const UpdateLabelsComponent = () => {
                                 labels?.actionRequired &&
                                 <div className="p-2 rounded-md bg-[#F2F2F2]">
                                     <p className="text-sm font-bold">Rejected Reasons</p>
-                                    <span className="text-sm me-2 ">{labels?.actionRequired}</span>
+                                    <div className="text-sm me-2" style={wrapperStyle} dangerouslySetInnerHTML={{ __html: labels?.actionRequired }} />
                                 </div>
                             }
                             {
