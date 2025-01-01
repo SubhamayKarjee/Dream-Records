@@ -3,6 +3,7 @@ import { ArrowDownTrayIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { DatePicker, Divider, Empty, Pagination, Popconfirm } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import localDate from "../../Hooks/localDate";
 
 
 // eslint-disable-next-line react/prop-types
@@ -102,13 +103,9 @@ const UserAnalytics = ({id}) => {
                                     <tr className="hover">
                                         <td className="font-semibold text-sm text-[#09090B] hidden md:block">Analytics Report</td>
                                         <td className="font-semibold text-sm text-[#09090B]">
-                                            {   r?.isoDate ? <>
-                                                    {new Date(r.isoDate).toLocaleDateString(undefined, {
-                                                        day: '2-digit',
-                                                        month: 'short',
-                                                        year: 'numeric',
-                                                    })} 
-                                                </> : <>{r?.date} {r?.month.slice(0,3)} {r?.year}</>
+                                            {   r?.isoDate ? 
+                                                localDate(r?.isoDate)
+                                                : <>{r?.date} {r?.month.slice(0,3)} {r?.year}</>
                                             }
                                         </td>
                                         <td className="font-semibold text-sm text-[#09090B]">{r.reportDate}</td>
