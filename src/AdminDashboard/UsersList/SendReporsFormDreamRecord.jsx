@@ -65,12 +65,8 @@ const SendReporsFormDreamRecord = ({id, isOpenModalReport, clickIdReport}) => {
             setReportDateErr('Please Select Date');
             return;
         }
-        const now = new Date();
-        const date = now.getDate().toLocaleString();
-        const month = now.toLocaleString('default', { month: 'long' });
-        const year = now.getFullYear();
-        const time = now.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true });
-        const data = {...reportFile, reportDate, masterUserId: id, date, time, month, year}
+        const date = new Date().toISOString()
+        const data = {...reportFile, reportDate, masterUserId: id, isoDate: date,}
         axios.post('https://shark-app-65c5t.ondigitalocean.app/common/api/v1/reports', data)
         .then(res => {
             if(res.status === 200){
