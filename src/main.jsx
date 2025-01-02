@@ -16,9 +16,6 @@ import ProtectUserRoute from './ProtectRoute/ProtectUserRoute';
 import SetNewPassword from './Authentication/LogIn/SetNewPassword';
 import UserPaymentHistory from './UserAdminDashboard/WalletPage/UserPaymentAndWithdrawalHIs/UserPaymentHistory';
 import UserWithDrawalHIstory from './UserAdminDashboard/WalletPage/UserPaymentAndWithdrawalHIs/UserWithDrawalHIstory';
-import AdminProfile from './AdminDashboard/AdminProfile/AdminProfile';
-import AdminProfileInformationUpdate from './AdminDashboard/AdminProfile/AdminProfileUpdateComponent/AdminProfileInformationUpdate';
-import AdminEmailUpdate from './AdminDashboard/AdminProfile/AdminProfileUpdateComponent/AdminEmailUpdate';
 
 
 
@@ -56,6 +53,12 @@ const AddLanguageComponent = React.lazy(() => import('./AdminDashboard/AdminSett
 const NoticeFromDreamRecord = React.lazy(() => import('./AdminDashboard/AdminSetting/NoticeFromDreamRecord/NoticeFromDreamRecord'));
 const MonthlyBasedWithdraw = React.lazy(() => import('./AdminDashboard/AdminSetting/MonthlyBasedWithdraw/MonthlyBasedWithdraw'));
 const AdvertismentComponent = React.lazy(() => import('./AdminDashboard/AdminSetting/AdvertismentComponent/AdvertismentComponent'));
+// Admin Profile Route__________________________________________________________________
+const AdminProfile = React.lazy(() => import('./AdminDashboard/AdminProfile/AdminProfile'));
+const AdminProfileInformationUpdate = React.lazy(() => import('./AdminDashboard/AdminProfile/AdminProfileUpdateComponent/AdminProfileInformationUpdate'));
+const AdminEmailUpdate = React.lazy(() => import('./AdminDashboard/AdminProfile/AdminProfileUpdateComponent/AdminEmailUpdate'));
+const AdminPasswordUpdate = React.lazy(() => import('./AdminDashboard/AdminProfile/AdminProfileUpdateComponent/AdminPasswordUpdate'));
+
 // User Dashboard Routes import_________________________________________________________
 // _____________________________________________________________________________________
 const UserLockedPage = React.lazy(() => import('./UserAdminDashboard/UserCommonComponent/UserLockedPage'));
@@ -239,10 +242,10 @@ const router = createBrowserRouter([
         path: '/admin-dashboard/email-update',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminEmailUpdate/></ProtectAdminRoute></Suspense>,
       },
-      // {
-      //   path: '/admin-dashboard/password-update',
-      //   element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UserPassUpdateComponent/></ProtectAdminRoute></Suspense>,
-      // },
+      {
+        path: '/admin-dashboard/password-update',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminPasswordUpdate/></ProtectAdminRoute></Suspense>,
+      },
     ]
   },
 
