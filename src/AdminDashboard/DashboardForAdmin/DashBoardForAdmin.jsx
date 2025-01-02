@@ -61,11 +61,11 @@ const DashBoardForAdmin = () => {
         return <LoadingComponentsForPage/>
     }
     
-    let adminNameIdRoll = user?.displayName?.split("'__'");
+    let userNameIdRoll = user?.displayName?.split("'__'");
     
 
     const contextValue = {
-        adminNameIdRoll
+        userNameIdRoll
     }
 
     const logOutHandle = () => {

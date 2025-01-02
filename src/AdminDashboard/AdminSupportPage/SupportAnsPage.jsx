@@ -18,7 +18,7 @@ import localTime from "../../Hooks/localTime";
 const SupportAnsPage = () => {
 
     const {id} = useParams();
-    const {adminNameIdRoll} = useContext(AdminAuthContext);
+    const {userNameIdRoll} = useContext(AdminAuthContext);
     const navigate = useNavigate();
     
     const [reFetch, setReFetch] = useState(1)
@@ -66,7 +66,7 @@ const SupportAnsPage = () => {
             return;
         }
         const date = new Date().toISOString();
-        const userName = adminNameIdRoll[0];
+        const userName = userNameIdRoll[0];
         const data = {message: supportText, date, attachment, userName }
         supportData.issue.push(data)
         const newData = {...supportData, status: 'Open'}
@@ -119,7 +119,7 @@ const SupportAnsPage = () => {
 
     const onChange = (value) => {
         const date = new Date();
-        const adminName = adminNameIdRoll[0];
+        const adminName = userNameIdRoll[0];
         const newData = {...supportData, status: value, ansAdmin: adminName, closedDate: date}
         setSupportText('')
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/common/api/v1/ticket/update-ticket/${id}`, newData)
@@ -170,7 +170,7 @@ const SupportAnsPage = () => {
                     {
                         supportData?.issue && supportData.issue.map((d,index) =>
                             <div key={index}>
-                                <div style={d.userName === adminNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md">
+                                <div style={d.userName === userNameIdRoll[0] ? adminColor : userColor} className="p-4 rounded-md">
                                     <div style={wrapperStyle} dangerouslySetInnerHTML={{ __html: d?.message }} />
                                     {
                                         d?.attachment &&
@@ -181,7 +181,7 @@ const SupportAnsPage = () => {
                                     }
                                 </div>
                                     {
-                                        adminNameIdRoll[0] === d?.userName ? 
+                                        userNameIdRoll[0] === d?.userName ? 
                                             <div className="flex items-center gap-2 justify-end">
                                                 <p className="font-bold text-sm">{d.userName}</p>
                                                 <p>

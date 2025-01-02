@@ -9,7 +9,7 @@ import './SupportAnsPage.css'
 
 const AdminSupportPage = () => {
 
-    const {adminNameIdRoll} = useContext(AdminAuthContext)
+    const {userNameIdRoll} = useContext(AdminAuthContext)
     const navigate = useNavigate();
     const {pageNumber, status, perPageSupport} = useParams();
 
@@ -120,7 +120,7 @@ const AdminSupportPage = () => {
                         loading == true && <div className="mt-4 flex items-center justify-center"><span className="loading loading-spinner loading-md me-2"></span></div>
                     }
                    
-                    <SupportLIst data={supportData} roll={adminNameIdRoll[2]}/>
+                    <SupportLIst data={supportData} roll={userNameIdRoll[2]}/>
 
                     {
                         !totalItems && !loading && <Empty className="pt-8" />
