@@ -17,6 +17,7 @@ import SetNewPassword from './Authentication/LogIn/SetNewPassword';
 import UserPaymentHistory from './UserAdminDashboard/WalletPage/UserPaymentAndWithdrawalHIs/UserPaymentHistory';
 import UserWithDrawalHIstory from './UserAdminDashboard/WalletPage/UserPaymentAndWithdrawalHIs/UserWithDrawalHIstory';
 import AdminProfile from './AdminDashboard/AdminProfile/AdminProfile';
+import AdminProfileInformationUpdate from './AdminDashboard/AdminProfile/AdminProfileUpdateComponent/AdminProfileInformationUpdate';
 
 
 
@@ -228,11 +229,11 @@ const router = createBrowserRouter([
         path: '/admin-dashboard/account',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminProfile/></ProtectAdminRoute></Suspense>,
       },
-      // {
-      //   path: '/admin-dashboard/edit-profile/:id',
-      //   loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${params.id}`),
-      //   element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UpdateProfileInformation/></ProtectAdminRoute></Suspense>,
-      // },
+      {
+        path: '/admin-dashboard/edit-profile/:id',
+        loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${params.id}`),
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminProfileInformationUpdate/></ProtectAdminRoute></Suspense>,
+      },
       // {
       //   path: '/admin-dashboard/email-update',
       //   element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UserEmailUpdateComponent/></ProtectAdminRoute></Suspense>,

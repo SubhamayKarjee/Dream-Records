@@ -1,28 +1,27 @@
-// /* eslint-disable no-unused-vars */
 import { Image } from "antd";
 import axios from "axios";
 import { useContext, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { useUpdateProfile } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import auth from "../../../../firebase.config";
-import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
+import toast from "react-hot-toast";
 import PhoneInputWithCountrySelect from "react-phone-number-input";
-import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
-import './UpdateProfileInformation.css';
+import { useLoaderData, useNavigate } from "react-router-dom";
+import auth from "../../../../firebase.config";
+import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
+import { AdminAuthContext } from "../../DashboardForAdmin/DashBoardForAdmin";
+import fallbackImage from '../../../assets/fallbackImage/commonDefaultImage.png';
+import './AdminProfileUpdate.css';
 import 'react-phone-number-input/style.css'
 import "react-country-state-city/dist/react-country-state-city.css";
-import fallbackImage from '../../../assets/fallbackImage.jpg'
-import toast from "react-hot-toast";
-import LoadingComponentsInsidePage from "../../../LoadingComponents/LoadingComponentsInsidePage";
 
-const UpdateProfileInformation = () => {
+const AdminProfileInformationUpdate = () => {
 
     const userData = useLoaderData();
     const navigate = useNavigate();
 
     // Get And Set Data Using Context API ________________________________________
-    const {user, userNameIdRoll, uploadedProfileImg, setUploadedProfileImg, setMainProfileImage } = useContext(AuthContext);
+    const {user, userNameIdRoll, uploadedProfileImg, setUploadedProfileImg, setMainProfileImage } = useContext(AdminAuthContext);
 
     const [errorMessage, setErrorMessage] = useState('');
     const [upLoadLoading, setUploadLoading] = useState(false);
@@ -121,7 +120,7 @@ const UpdateProfileInformation = () => {
                     setMainProfileImage(res.data.data.photoURL)
                     setUpdateLoading(false)
                     toast.success('Successfully Updated Your Profile Information!')
-                    navigate('/admin-dashboard/account')
+                    navigate('/account')
                     
                 }
             })
@@ -153,6 +152,7 @@ const UpdateProfileInformation = () => {
                         <div>
                             <h2 className="text-2xl font-bold">{userData?.data?.data?.first_name} {userData?.data?.data?.last_name} </h2>
                             <p className="">User Name: {userData.data?.data?.userName}</p>
+                            <p className="">User Roll: {userData.data?.data?.roll}</p>
                         </div>
                     </div>
                     <p className="text-sm font-semibold text-[#09090B] mt-2">Change Profile Picture</p>
@@ -266,4 +266,4 @@ const UpdateProfileInformation = () => {
     );
 };
 
-export default UpdateProfileInformation;
+export default AdminProfileInformationUpdate;

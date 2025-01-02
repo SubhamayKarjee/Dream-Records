@@ -21,7 +21,6 @@ const AdminProfile = () => {
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${userNameIdRoll[1]}`)
             .then(res => {
                 setUserData(res.data.data)
-                console.log('user data', res.data.data)
             })
     },[userNameIdRoll]);
 
@@ -72,7 +71,7 @@ const AdminProfile = () => {
                     <div className="pt-4">
                         <div className="flex justify-between items-center">
                             <h4 className='font-semibold text-lg pb-2 text-[#252525]'>Personal Information</h4>
-                            <span style={{cursor: 'pointer'}} onClick={() => navigate(`/edit-profile/${userData._id}`)} className="text-sm flex items-center border px-3 pt-1 font-semibold rounded-md">Edit <PencilSquareIcon className="w-4 h-4 ms-1"/></span>
+                            <span style={{cursor: 'pointer'}} onClick={() => navigate(`/admin-dashboard/edit-profile/${userData._id}`)} className="text-sm flex items-center border px-3 pt-1 font-semibold rounded-md">Edit <PencilSquareIcon className="w-4 h-4 ms-1"/></span>
                         </div>
                         <div>
                             <div className="md:flex items-center">
