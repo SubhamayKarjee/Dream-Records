@@ -141,14 +141,14 @@ const AdminProfile = () => {
                                     <p className="text-sm text-[#768298]">Email</p>
                                     <div className="md:flex justify-between">
                                         <p className="font-semibold text-base">{user?.email}</p>
-                                        <span style={{cursor: 'pointer'}} onClick={() => navigate('/email-update')} className="text-sm flex items-center border px-3 pt-1 font-semibold rounded-md md:me-4">Change Email <PencilSquareIcon className="w-4 h-4 ms-1"/></span>
+                                        <span style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/email-update')} className="text-sm flex items-center border px-3 pt-1 font-semibold rounded-md md:me-4">Change Email <PencilSquareIcon className="w-4 h-4 ms-1"/></span>
                                     </div>
                                 </div>
                                 <div className="flex-1">
                                     <p className="text-sm text-[#768298] pt-4 md:pt-0">Password</p>
                                     <div className="md:flex justify-between">
                                         <p className="font-semibold text-base">***********</p>
-                                        <span style={{cursor: 'pointer'}} onClick={() => navigate('/password-update')} className="text-sm flex items-center border px-3 pt-1 font-semibold rounded-md">Change Password <PencilSquareIcon className="w-4 h-4 ms-1"/></span>
+                                        <span style={{cursor: 'pointer'}} onClick={() => navigate('/admin-dashboard/password-update')} className="text-sm flex items-center border px-3 pt-1 font-semibold rounded-md">Change Password <PencilSquareIcon className="w-4 h-4 ms-1"/></span>
                                     </div>
                                 </div>
                             </div>

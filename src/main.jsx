@@ -18,6 +18,7 @@ import UserPaymentHistory from './UserAdminDashboard/WalletPage/UserPaymentAndWi
 import UserWithDrawalHIstory from './UserAdminDashboard/WalletPage/UserPaymentAndWithdrawalHIs/UserWithDrawalHIstory';
 import AdminProfile from './AdminDashboard/AdminProfile/AdminProfile';
 import AdminProfileInformationUpdate from './AdminDashboard/AdminProfile/AdminProfileUpdateComponent/AdminProfileInformationUpdate';
+import AdminEmailUpdate from './AdminDashboard/AdminProfile/AdminProfileUpdateComponent/AdminEmailUpdate';
 
 
 
@@ -234,10 +235,10 @@ const router = createBrowserRouter([
         loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${params.id}`),
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminProfileInformationUpdate/></ProtectAdminRoute></Suspense>,
       },
-      // {
-      //   path: '/admin-dashboard/email-update',
-      //   element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UserEmailUpdateComponent/></ProtectAdminRoute></Suspense>,
-      // },
+      {
+        path: '/admin-dashboard/email-update',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminEmailUpdate/></ProtectAdminRoute></Suspense>,
+      },
       // {
       //   path: '/admin-dashboard/password-update',
       //   element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UserPassUpdateComponent/></ProtectAdminRoute></Suspense>,
