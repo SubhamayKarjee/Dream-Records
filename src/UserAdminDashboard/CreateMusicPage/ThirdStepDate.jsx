@@ -57,11 +57,11 @@ const ThirdStepDate = () => {
             setLoading(false)
             return
         }
-
+        const date = new Date().toISOString();
         const status = 'Pending'
         const masterUserId = userNameIdRoll[1];
         const userName = userNameIdRoll[0];
-        const firstAndThird = {...firstStep, releaseDate, status, masterUserId, userName };
+        const firstAndThird = {...firstStep, releaseDate, status, masterUserId, userName, date };
         const formData = []
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
         secondStep.map((secondStepData, index) => {
