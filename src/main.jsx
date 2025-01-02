@@ -16,6 +16,7 @@ import ProtectUserRoute from './ProtectRoute/ProtectUserRoute';
 import SetNewPassword from './Authentication/LogIn/SetNewPassword';
 import UserPaymentHistory from './UserAdminDashboard/WalletPage/UserPaymentAndWithdrawalHIs/UserPaymentHistory';
 import UserWithDrawalHIstory from './UserAdminDashboard/WalletPage/UserPaymentAndWithdrawalHIs/UserWithDrawalHIstory';
+import AdminProfile from './AdminDashboard/AdminProfile/AdminProfile';
 
 
 
@@ -222,6 +223,24 @@ const router = createBrowserRouter([
         path: '/admin-dashboard/notice-details/:id',
         element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><NoticeDetailsPage/></ProtectAdminRoute></Suspense>,
       },
+      //Admin Account/Profile Page _________________________________________________________________________________________
+      {
+        path: '/admin-dashboard/account',
+        element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><AdminProfile/></ProtectAdminRoute></Suspense>,
+      },
+      // {
+      //   path: '/admin-dashboard/edit-profile/:id',
+      //   loader: ({ params }) => axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/users/${params.id}`),
+      //   element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UpdateProfileInformation/></ProtectAdminRoute></Suspense>,
+      // },
+      // {
+      //   path: '/admin-dashboard/email-update',
+      //   element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UserEmailUpdateComponent/></ProtectAdminRoute></Suspense>,
+      // },
+      // {
+      //   path: '/admin-dashboard/password-update',
+      //   element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectAdminRoute><UserPassUpdateComponent/></ProtectAdminRoute></Suspense>,
+      // },
     ]
   },
 

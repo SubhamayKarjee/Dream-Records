@@ -47,6 +47,8 @@ const DashBoardForAdmin = () => {
 
     // const [signOut, error1] = useSignOut(auth);
     const [user, loading] = useAuthState(auth);
+    const [uploadedProfileImg, setUploadedProfileImg] = useState(user?.photoURL);
+    const [mainProfileImage, setMainProfileImage] = useState(user?.photoURL);
 
     const activeLink = (isActive) => {
         return {
@@ -66,9 +68,13 @@ const DashBoardForAdmin = () => {
     
     let userNameIdRoll = user?.displayName?.split("'__'");
     
-
     const contextValue = {
-        userNameIdRoll
+        user,
+        userNameIdRoll,
+        uploadedProfileImg,
+        setUploadedProfileImg,
+        mainProfileImage,
+        setMainProfileImage,
     }
 
     const logOutHandle = () => {
