@@ -21,6 +21,9 @@ import { createContext } from 'react';
 import LoadingComponentsForPage from '../../LoadingComponents/LoadingComponentsForPage';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.config';
+import { 
+    RiUserLine,
+} from "@remixicon/react";
 
 export const AdminAuthContext = createContext();
 
@@ -141,6 +144,14 @@ const DashBoardForAdmin = () => {
                                     <Cog6ToothIcon className="h-7 w-7 pe-2" />
                                     Settings
                                 </NavLink>
+                                <NavLink style={() => activeLinkDynamic('/admin-dashboard/account', currentPath)} className='text-white flex items-center py-2' to={'/admin-dashboard/account'}>
+                                    <RiUserLine
+                                        size={22}
+                                        color="white"
+                                        className='me-2'
+                                    />
+                                    Account
+                                </NavLink>
                             </div>
                         </div>
                     </div>
@@ -211,6 +222,14 @@ const DashBoardForAdmin = () => {
                                             <NavLink style={() => activeLinkDynamic('/admin-dashboard/settings', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/settings'}>
                                                 <Cog6ToothIcon className="h-7 w-7 pe-2" />
                                                 Settings
+                                            </NavLink>
+                                            <NavLink style={() => activeLinkDynamic('/admin-dashboard/account', currentPath)} onClick={onClose} className='text-white flex items-center py-2' to={'/admin-dashboard/account'}>
+                                                <RiUserLine
+                                                    size={22}
+                                                    color="white"
+                                                    className='me-2'
+                                                />
+                                                Account
                                             </NavLink>
                                         </div>
                                     </div>
