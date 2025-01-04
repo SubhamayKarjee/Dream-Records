@@ -140,9 +140,9 @@ const SignUp = () => {
     }
 
     // const newUpdate = async () => {
-    //     const displayName = `HASQCollection'__'671761eb81efade8917e7a7b'__'${roll}`
-    //     console.log(displayName);
-    //     await updateProfile({ displayName });
+        // const displayName = `VSRFilms'__'6723229381efade8917e7c59'__'User`
+        // console.log(displayName);
+        // await updateProfile({ displayName });
     // }
 
     const inputStyle ={

@@ -62,17 +62,17 @@ const ThirdStepDate = () => {
         const masterUserId = userNameIdRoll[1];
         const userName = userNameIdRoll[0];
         const firstAndThird = {...firstStep, releaseDate, status, masterUserId, userName, date };
-        const formData = []
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-        secondStep.map((secondStepData, index) => {
-            if(secondStepData.format === 'Album'){
-                const combineData = {...secondStepData, ...firstAndThird, albumId: uniqueSuffix, sl: index}
-                formData.push(combineData);
-            }else{
-                const combineData = {...secondStepData, ...firstAndThird}
-                formData.push(combineData);
-            }
-        })
+        const formData = [{...firstAndThird, secondStep}]
+        // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        // secondStep.map((secondStepData, index) => {
+        //     if(secondStepData.format === 'Album'){
+        //         const combineData = {...secondStepData, albumId: uniqueSuffix, sl: index}
+        //         formData.push(combineData);
+        //     }else{
+        //         const combineData = {...secondStepData, ...firstAndThird}
+        //         formData.push(combineData);
+        //     }
+        // })
         axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/release/create-release', formData)
             .then(res => {
                 if(res.status == 200){
