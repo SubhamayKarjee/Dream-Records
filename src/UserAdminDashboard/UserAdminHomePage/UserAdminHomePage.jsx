@@ -66,10 +66,15 @@ const UserAdminHomePage = () => {
     const [artist, setArtist] = useState([]);
     const [labels, setLabels] = useState([]);
     const [featuring, setFeaturing] = useState([]);
+    const [authors, setAuthors] = useState([]);
+    const [composer, setComposer] = useState([]);
 
     // Refetch API Data Handle ___________________________________________________
     const [refatchArtistData, setRefatchArtistData] = useState(1)
     const [refatchLabelsData, setRefatchLabelsData] = useState(1)
+    const [refatchFeaturingData, setRefatchFeaturingData] = useState(1)
+    const [refatchAuthorData, setRefatchAuthorData] = useState(1)
+    const [refatchComposerData, setRefatchComposerData] = useState(1)
 
     // Mobile Navigation Humbergo ______________________
     const [open, setOpen] = useState(false);
@@ -91,20 +96,18 @@ const UserAdminHomePage = () => {
         user,
         userNameIdRoll,
         userFirstName,
-        uploadedProfileImg,
-        setUploadedProfileImg,
-        mainProfileImage,
-        setMainProfileImage,
-        refatchArtistData,
-        setRefatchArtistData,
-        refatchLabelsData,
-        setRefatchLabelsData,
-        artist,
-        setArtist,
-        labels,
-        setLabels,
-        featuring,
-        setFeaturing
+        uploadedProfileImg, setUploadedProfileImg,
+        mainProfileImage, setMainProfileImage,
+        artist, setArtist,
+        labels, setLabels,
+        featuring, setFeaturing,
+        authors, setAuthors,
+        composer, setComposer,
+        refatchArtistData, setRefatchArtistData,
+        refatchLabelsData, setRefatchLabelsData,
+        refatchFeaturingData, setRefatchFeaturingData,
+        refatchAuthorData, setRefatchAuthorData,
+        refatchComposerData, setRefatchComposerData,
     }
 
     const signOutHandle = () => {

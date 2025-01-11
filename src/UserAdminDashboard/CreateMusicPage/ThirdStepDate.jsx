@@ -10,18 +10,17 @@ const ThirdStepDate = () => {
     const { 
         firstStep,
         secondStep,
+        format,
         setReleaseFormData,
         setFirstStep,
         setSecondStep,
         setAudioData,
         setLyricsLanguage,
-        setComposer,
-        setAuthors,
         setUploadedImageLink,
         setUploadedImage,
     } = useContext(ReleaseContext);
     const { userNameIdRoll, 
-        setArtist, setLabels, setFeaturing 
+        setArtist, setLabels, setFeaturing,setComposer, setAuthors,
     } = useContext(AuthContext);
 
     const navigate = useNavigate();
@@ -61,18 +60,9 @@ const ThirdStepDate = () => {
         const status = 'Pending'
         const masterUserId = userNameIdRoll[1];
         const userName = userNameIdRoll[0];
-        const firstAndThird = {...firstStep, releaseDate, status, masterUserId, userName, date };
-        const formData = [{...firstAndThird, secondStep}]
-        // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-        // secondStep.map((secondStepData, index) => {
-        //     if(secondStepData.format === 'Album'){
-        //         const combineData = {...secondStepData, albumId: uniqueSuffix, sl: index}
-        //         formData.push(combineData);
-        //     }else{
-        //         const combineData = {...secondStepData, ...firstAndThird}
-        //         formData.push(combineData);
-        //     }
-        // })
+        const firstAndThird = {...firstStep, format, releaseDate, status, masterUserId, userName, date, };
+        const formData = [{...firstAndThird, tracks: secondStep}]
+        console.log(formData);
         axios.post('https://shark-app-65c5t.ondigitalocean.app/api/v1/release/create-release', formData)
             .then(res => {
                 if(res.status == 200){

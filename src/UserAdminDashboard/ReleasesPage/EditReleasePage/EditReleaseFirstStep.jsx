@@ -10,7 +10,7 @@ import uploadIcon from '../../../assets/common-icons/uploadIcon.png'
 const EditReleaseFirstStep = () => {
 
 
-    const { setReleaseFormData, preReleaseData, uploadedImageLink, setUploadedImageLink,  uploadedImage, setUploadedImage } = useContext(EditReleaseContext);
+    const { setFirstStep, preReleaseData, uploadedImageLink, setUploadedImageLink,  uploadedImage, setUploadedImage } = useContext(EditReleaseContext);
 
     const navigate = useNavigate('')
 
@@ -92,7 +92,8 @@ const EditReleaseFirstStep = () => {
         }
         if(uploadedImage){
             const formData = {...data, ...uploadedImage, genre};
-            setReleaseFormData(formData)
+            setFirstStep(formData)
+            console.log(formData);
             navigate('/releases/edit/second-step')
         }else{
             setErrorMessage('Please Upload Art Image. Art Image Required');

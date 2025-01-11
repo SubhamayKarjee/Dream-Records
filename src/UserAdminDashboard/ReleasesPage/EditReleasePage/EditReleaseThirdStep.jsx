@@ -3,12 +3,20 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { EditReleaseContext } from "./EditReleaseMainPage";
+import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
 
 
 const EditReleaseThirdStep = () => {
 
-    const [releaseFormDataError, setReleaseFormDataError] = useState('')
-    const { releaseFormData, releaseId, setReleaseFormData, preReleaseData } = useContext(EditReleaseContext);
+    const [ releaseSubmitError, setReleaseSubmitError] = useState('')
+    const { releaseId, preReleaseData, firstStep, secondStep, format } = useContext(EditReleaseContext);
+    const { 
+        setArtist, 
+        setLabels, 
+        setFeaturing,
+        setAuthors,
+        setComposer,
+    } = useContext(AuthContext);
 
     const navigate = useNavigate()
 
@@ -39,19 +47,35 @@ const EditReleaseThirdStep = () => {
             setLoading(false)
             return
         }
-        if(!releaseFormData){
-            setReleaseFormDataError("Please go back to First Step and Edit properly and don't Reload the page when you edit");
+        if(!firstStep){
+            setReleaseSubmitError("Please go back to First Step and Edit properly and don't Reload the page when you edit");
+            setLoading(false)
+            return;
+        }
+        if(!secondStep){
+            setReleaseSubmitError("Please go back to Second Step and Edit properly and don't Reload the page when you edit");
             setLoading(false)
             return;
         }
         const actionRequired = '';
-        const status = 'ReSubmitted'
-        const data = {...releaseFormData, releaseDate, status, actionRequired }
+        const status = 'ReSubmitted';
+        const date = new Date().toISOString();
+        const data = {...firstStep, format, tracks: secondStep, releaseDate, status, actionRequired, reSubmittedDate: date };
+        // setArtist([])
+        // setLabels([])
+        // setFeaturing([])
+        // setAuthors([])
+        // setComposer([])
+        // console.log(data);
         axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/update-release/${releaseId}`, data)
             .then(res => {
                 if(res.status == 200){
                     setLoading(false);
-                    setReleaseFormData('')
+                    setArtist([])
+                    setLabels([])
+                    setFeaturing([])
+                    setAuthors([])
+                    setComposer([])
                     navigate('/releases/edit/thanks')
                 }
             })
@@ -82,7 +106,7 @@ const EditReleaseThirdStep = () => {
                     error && <p className="text-red-500">{error}</p>
                 }
                 {
-                    releaseFormDataError && <p className="text-red-500">{releaseFormDataError}</p>
+                    releaseSubmitError && <p className="text-red-500">{releaseSubmitError}</p>
                 }
                 <div className="flex items-center gap-4 my-5">
                     <button onClick={() => navigate('/releases/edit/second-step')} className="btn btn-sm px-6 h-9">Previus</button> 

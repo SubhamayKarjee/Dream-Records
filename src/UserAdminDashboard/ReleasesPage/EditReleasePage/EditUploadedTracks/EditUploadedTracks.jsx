@@ -1,36 +1,38 @@
-import { TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Image, Modal, Select, } from "antd";
+import { ArrowsUpDownIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Image, Modal, Select } from "antd";
+import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../UserAdminHomePage/UserAdminHomePage";
-import ArtistList from "../artistListComponent/ArtistList";
-import '../CreateMusicPage.css';
-import LabelsList from "../labelsListComponent/LabelsList";
-import fallbackImage from '../../../assets/fallbackImage.jpg'
-import { ReleaseContext } from "../CreateMusicPage";
-import axios from "axios";
-import FeaturingComponent from "../FeaturingComponent/FeaturingComponent";
 import toast from "react-hot-toast";
-import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
-import AuthorList from "../authorListComponent/AuthorList";
-import ComposerList from "../composerListComponent/ComposerList";
-
-
+import { useNavigate } from "react-router-dom";
+import ArtistList from "../../../CreateMusicPage/artistListComponent/ArtistList";
+import FeaturingComponent from "../../../CreateMusicPage/FeaturingComponent/FeaturingComponent";
+import LabelsList from "../../../CreateMusicPage/labelsListComponent/LabelsList";
+import { AuthContext } from "../../../UserAdminHomePage/UserAdminHomePage";
+import fallbackImage from '../../../../assets/fallbackImage/commonDefaultImage.png'
+import { EditReleaseContext } from "../EditReleaseMainPage";
+import AuthorList from '../../../CreateMusicPage/authorListComponent/AuthorList'
+import ComposerList from '../../../CreateMusicPage/composerListComponent/ComposerList'
 
 // eslint-disable-next-line react/prop-types
-const UploadTracks = ({setIsTrackUploadModal}) => {
+const EditUploadedTracks = ({setIsTrackUploadModal}) => {
 
     const { 
         firstStep,
-        secondStep,
-        setSecondStep,
+        secondStep, setSecondStep,
         audioData, setAudioData,
         lyricsLanguage, setLyricsLanguage,
-        format
-    } = useContext(ReleaseContext);
+        format,
+        releaseId,
+    } = useContext(EditReleaseContext);
 
-    const { artist, setArtist, labels, setLabels, featuring, setFeaturing, authors, setAuthors, composer, setComposer  } = useContext(AuthContext);
+    const { 
+        artist, setArtist, 
+        labels, setLabels, 
+        featuring, setFeaturing,
+        authors, setAuthors,
+        composer, setComposer,
+    } = useContext(AuthContext);
 
 
     const navigate = useNavigate('');
@@ -48,7 +50,6 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
     const [reFetchLabels, setRefetchLabels] = useState(1)
     const [reFetchAuthor, setRefetchAuthor] = useState(1)
     const [reFetchComposer, setRefetchComposer] = useState(1)
-
 
     // Modal Function For Featuring __________________________________
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -121,7 +122,6 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
         setLabels(deleteLabels)
     }
 
-
     // Modal Function For Author __________________________________
     const [errorMessageAuthor, setErrorMessageAuthor] = useState('');
     const [isModalOpenAuthor, setIsModalOpenAuthor] = useState(false);
@@ -179,7 +179,6 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
     // Filter `option.label` match the user type `input`
     const filterOption = (input, option) =>(option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
-
     // Handle Audio State _______________________________________
     const [errorMessageAudio, setErrorMessageAudio] = useState('');
     // FROM SUBMIT FUNCTION_______________________________________
@@ -191,17 +190,14 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
         // console.log(data);
         setErrorMessageArtist('');
         setErrorMessageLabels('');
-        setErrorMessageAuthor('');
-        setErrorMessageComposer('');
         setErrorMessageAudio('');
         setLanguageErr('');
-    
         // Audio File Error Handle ________________________________________
         if(!audioData){
             setErrorMessageAudio('Audio Required')
             return;
         }
-       
+        
         // Lyrics Language Error Handle ___________________________________
         if(!lyricsLanguage){
             setLanguageErr('Language Required')
@@ -222,24 +218,23 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
             setErrorMessageAuthor('Author Required')
             return;
         }
-        // Author Error Handle ____________________________________________
+        // Composer Error Handle ____________________________________________
         if(composer.length === 0){
             setErrorMessageComposer('Composer Required')
             return;
         }
-        
+
         if(format === 'Single'){
-            const d = [{...data, ...audioData, lyricsLanguage, artist, labels, featuring, composer, format, authors}]
-            console.log('Single', d)
+            const d = [{ISRC:data?.ISRC, albumName:data?.albumName, ...audioData, lyricsLanguage, artist, labels, featuring, composer, authors}]
+            console.log('2nd step', d);
             setSecondStep(d)
-            navigate('/create-release/date')
+            navigate('/releases/edit/third-step')
         }
         if(format === 'Album'){
-            const d = {...data, ...audioData, lyricsLanguage, artist, labels, featuring, composer, format, authors}
-            console.log('Album', d)
+            const d = {ISRC:data?.ISRC, albumName:data?.albumName, ...audioData, lyricsLanguage, artist, labels, featuring, composer, authors}
             secondStep.push(d)
-            setArtist()
-            setFeaturing()
+            setArtist([])
+            setFeaturing([])
             setLabels([])
             setAuthors([])
             setComposer([])
@@ -345,6 +340,7 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                         <input style={inputStyle} value={firstStep.releaseTitle} type="text" className="input input-sm w-full mt-1" placeholder="Enter the Album name here" {...register("albumName", { required: true})} readOnly/>
                     }
                     {errors.albumName && <span className='text-red-600 pt-2 block'>Album Name Required</span>} 
+                    
                     
 
                     {/* Select Language ____________________ */}
@@ -476,7 +472,6 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                             </Modal>
                     </div>
 
-
                     {/* Select Author ___________________________________ */}
                     <div className="">
                         <p className="mb-1 text-sm font-semibold text-[#09090B] mt-3">Authors <span className="text-red-500">*</span></p>
@@ -553,15 +548,15 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
                             </Modal>
                         {errorMessageComposer && <span className='text-red-600 pt-2 block'>{errorMessageComposer}</span>}
                     </div>
-
-                    <p className="mb-1 text-sm font-semibold text-[#09090B] mt-2">ISRC</p>
+                    
+                    <p className="mb-1 text-sm font-semibold text-[#09090B]">ISRC</p>
                     <input style={inputStyle} type="text" className="input input-sm w-full" placeholder="" {...register("ISRC")}/>
                     <p className="text-xs text-[#71717A] mt-1">(if released before ISRC required otherwise optional)</p>
                     
                     {
                         format === 'Single' &&
                         <div className="my-4 flex justify-between">
-                            <button onClick={() => navigate('/create-release')} className="btn btn-sm px-6">Previous</button>
+                            <button onClick={() => navigate(`/releases/edit/${releaseId}`)} className="btn btn-sm px-6">Previous</button>
                             <input type="submit" value={'Next'} className="btn btn-sm px-6 h-9 btn-neutral bg-[#18181B]" />
                         </div>
                     }
@@ -575,4 +570,4 @@ const UploadTracks = ({setIsTrackUploadModal}) => {
     );
 };
 
-export default UploadTracks;
+export default EditUploadedTracks;

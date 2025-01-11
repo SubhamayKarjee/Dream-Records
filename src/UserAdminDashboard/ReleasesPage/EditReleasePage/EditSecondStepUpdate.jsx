@@ -1,22 +1,18 @@
 import { ArrowTopRightOnSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Divider, Modal, Select, Steps } from "antd";
-import { useContext,  useEffect,  useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { ReleaseContext } from "./CreateMusicPage";
-import UploadTracks from "./UploadTracks/UploadTracks";
+import { EditReleaseContext } from "./EditReleaseMainPage";
+import EditUploadedTracks from "./EditUploadedTracks/EditUploadedTracks";
 
-
-const SecondStepTrack = () => {
+const EditSecondStepUpdate = () => {
 
     const navigate = useNavigate()
-    const { 
-        firstStep,
-        format,setFormat,
-        secondStep, setSecondStep
-    } = useContext(ReleaseContext);
+    const {firstStep, secondStep, setSecondStep, format, setFormat, preReleaseData,releaseId } = useContext(EditReleaseContext);
     
     const [formateErr, setFormateErr] = useState('');
+    console.log(secondStep);
 
     const steps = [
         {title: 'Basic'},
@@ -24,9 +20,9 @@ const SecondStepTrack = () => {
         {title: 'Date'},
     ];
 
-    useEffect(() => {
-        if(!firstStep){
-            navigate('/create-release')
+    useEffect( () => {
+        if(!preReleaseData){
+            navigate(`/releases/All/1/6`)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
@@ -45,7 +41,7 @@ const SecondStepTrack = () => {
             toast.error('Please Add Release')
             return;
         }
-        navigate('/create-release/date')
+        navigate('/releases/edit/third-step')
     }
 
     const [isTrackUploadModal, setIsTrackUploadModal] = useState(false);
@@ -66,13 +62,13 @@ const SecondStepTrack = () => {
 
 
     return (
-        <div>
+         <div>
             <div className="px-3">
                 <Steps current={1} items={steps} /> 
             </div>
 
             <div className="pt-4">
-                <p className="text-lg font-semibold">Upload Track</p>
+                <p className="text-lg font-semibold">Update Track</p>
                 <p className="text-sm text-[#71717A]">Update your account settings. Set your preferred language and timezone.</p>
             </div>
             <Divider/>
@@ -98,7 +94,7 @@ const SecondStepTrack = () => {
 
                     {
                         format === 'Single' &&
-                        <UploadTracks/>
+                        <EditUploadedTracks singleSecondStep={secondStep}/>
                     }
                     
 
@@ -141,11 +137,11 @@ const SecondStepTrack = () => {
                                         </div>
                                         <div>
                                             <p className="text-sm text-[#768298]">Lyrics language</p>
-                                            <p className="font-semibold text-base">{data.lyricsLanguage}</p>
+                                            <p className="font-semibold text-base">{data?.lyricsLanguage}</p>
                                         </div>
                                         <div className="grid grid-cols md:grid-cols-2 gap-2">
                                             <div>
-                                            <p className="text-sm text-[#768298]">Artist</p>
+                                                <p className="text-sm text-[#768298]">Artist</p>
                                                 {
                                                     data.artist && data.artist.map(d => 
                                                         <div key={d._id} className="flex items-center justify-between my-1 py-1 px-2 rounded-md border">
@@ -233,7 +229,7 @@ const SecondStepTrack = () => {
                                             </div>
                                         }
                                     </div>
-                                    <div  className="mt-2">
+                                    <div className="mt-2">
                                         <p className="text-sm text-[#768298]">ISRC</p>
                                         <p className="font-semibold text-base">{data?.ISRC}</p>
                                     </div>
@@ -249,7 +245,7 @@ const SecondStepTrack = () => {
                                 Add Tracks
                             </span>
                             <Modal title="Tracks" width={600} open={isTrackUploadModal} onOk={handleOk} onCancel={handleCancel} footer={[]}>
-                                <UploadTracks setIsTrackUploadModal={setIsTrackUploadModal}/>
+                                <EditUploadedTracks multipleSecondStep={secondStep} setIsTrackUploadModal={setIsTrackUploadModal}/>
                             </Modal>
                         </>
                     }
@@ -257,14 +253,13 @@ const SecondStepTrack = () => {
                     {
                         format === 'Album' &&
                         <div className="my-4 flex justify-between">
-                            <button onClick={() => navigate('/create-release')} className="btn btn-sm px-6">Previous</button>
+                            <button onClick={() => navigate(`/releases/edit/${releaseId}`)} className="btn btn-sm px-6">Previous</button>
                             <button onClick={() => next()} className="btn btn-sm px-6 h-9 btn-neutral bg-[#18181B]">Next</button>
                         </div>
                     }
-
             </div>
         </div>
     );
 };
 
-export default SecondStepTrack;
+export default EditSecondStepUpdate;

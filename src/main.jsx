@@ -16,6 +16,7 @@ import ProtectUserRoute from './ProtectRoute/ProtectUserRoute';
 import SetNewPassword from './Authentication/LogIn/SetNewPassword';
 import UserPaymentHistory from './UserAdminDashboard/WalletPage/UserPaymentAndWithdrawalHIs/UserPaymentHistory';
 import UserWithDrawalHIstory from './UserAdminDashboard/WalletPage/UserPaymentAndWithdrawalHIs/UserWithDrawalHIstory';
+import EditSecondStepUpdate from './UserAdminDashboard/ReleasesPage/EditReleasePage/EditSecondStepUpdate';
 
 
 
@@ -77,7 +78,14 @@ const SecondStepTrack = React.lazy(() => import('./UserAdminDashboard/CreateMusi
 const ThirdStepDate = React.lazy(() => import('./UserAdminDashboard/CreateMusicPage/ThirdStepDate'));
 const EditReleaseMainPage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseMainPage'));
 const EditReleaseFirstStep = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseFirstStep'));
-const EditReleaseSecondStep = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseSecondStep'));
+
+
+
+
+// const EditReleaseSecondStep = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseSecondStep'));
+
+
+
 const EditReleaseThirdStep = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/EditReleasePage/EditReleaseThirdStep'));
 const SingleReleasePage = React.lazy(() => import('./UserAdminDashboard/ReleasesPage/SingleReleasePage/SingleReleasePage'));
 // Artist Route_________________________________________________________________________
@@ -303,8 +311,12 @@ const router = createBrowserRouter([
           },
           {
             path: '/releases/edit/second-step',
-            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><EditReleaseSecondStep/></ProtectUserRoute></Suspense>,
+            element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><EditSecondStepUpdate/></ProtectUserRoute></Suspense>,
           },
+          // {
+          //   path: '/releases/edit/second-step',
+          //   element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><EditReleaseSecondStep/></ProtectUserRoute></Suspense>,
+          // },
           {
             path: '/releases/edit/third-step',
             element: <Suspense fallback={<LoadingComponentsInsidePage/>}><ProtectUserRoute><EditReleaseThirdStep/></ProtectUserRoute></Suspense>,
