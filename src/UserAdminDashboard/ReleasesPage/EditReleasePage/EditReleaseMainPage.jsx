@@ -11,162 +11,149 @@ export const EditReleaseContext = createContext();
 
 const EditReleaseMainPage = () => {
 
-    const customData = [{
-        _id: "673a17dc81efade8917e7f01",
-        userName: "Mehedi(dev)",
-        releaseTitle: "Gg",
-        imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/release-image/1731860207816-74252537-received_563886096588336.png",
-        key: "release-image/1731860207816-74252537-received_563886096588336.png",
-        genre: "Blues",
-        pLine: "Yy",
-        cLine: "Ty",
-        UPC: "ff",
-        releaseDate: "2024-11-21",
-        status: "Approved",
-        masterUserId: "662b71650a78738b0334837f",
-        actionReqHistory: ['jkhgjhgkjhkjhkljh', 'kjhghgkg'],
-        actionRequired: "",
-        format: "Single",
-        tracks: [
-            {
-                ISRC: "ff",
-                albumName: "Dd",
-                artist: [
-                    { 
-                        _id: "66f3f4a79b1f85c4a3a588b8",
-                        appleId: "apple.com",
-                        artistName: "Artist",
-                        facebook: "facebook.com",
-                        imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        instagramId: "instagram.com",
-                        key: "artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        masterUserId: "662b71650a78738b0334837f",
-                        spotifyId: "spotify.com",
-                        userName: "Mehedi(dev)",
-                        youtube: "youtube.com",
-                    },
-                    { 
-                        _id: "66f3f4a79b1f85c4a3a588b9",
-                        appleId: "apple.com",
-                        artistName: "update artist",
-                        facebook: "facebook.com",
-                        imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        instagramId: "instagram.com",
-                        key: "artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        masterUserId: "662b71650a78738b0334837f",
-                        spotifyId: "spotify.com",
-                        userName: "Mehedi(dev)",
-                        youtube: "youtube.com",
-                    }
-                ],
-                audioKey: "release-audio/1731860402889-643468749-twisterion-b1-221376.wav",
-                audioName: "twisterion-b1-221376.wav",
-                audioUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/release-audio/1731860402889-643468749-twisterion-b1-221376.wav",
-                authors: [
-                    { 
-                        _id: "66f3f4a79b1f85c4a3a588b8",
-                        appleId: "apple.com",
-                        artistName: "Artist",
-                        facebook: "facebook.com",
-                        imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        instagramId: "instagram.com",
-                        key: "artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        masterUserId: "662b71650a78738b0334837f",
-                        spotifyId: "spotify.com",
-                        userName: "Mehedi(dev)",
-                        youtube: "youtube.com",
-                    },
-                    { 
-                        _id: "66f3f4a79b1f85c4a3a588b9",
-                        appleId: "apple.com",
-                        artistName: "update artist",
-                        facebook: "facebook.com",
-                        imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        instagramId: "instagram.com",
-                        key: "artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        masterUserId: "662b71650a78738b0334837f",
-                        spotifyId: "spotify.com",
-                        userName: "Mehedi(dev)",
-                        youtube: "youtube.com",
-                    },
-                ],
-                composer: ['Dd Xx'],
-                featuring: [
-                    { 
-                        _id: "66f3f4a79b1f85c4a3a588b8",
-                        appleId: "apple.com",
-                        artistName: "Artist",
-                        facebook: "facebook.com",
-                        imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        instagramId: "instagram.com",
-                        key: "artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        masterUserId: "662b71650a78738b0334837f",
-                        spotifyId: "spotify.com",
-                        userName: "Mehedi(dev)",
-                        youtube: "youtube.com",
-                    },
-                    { 
-                        _id: "66f3f4a79b1f85c4a3a588b9",
-                        appleId: "apple.com",
-                        artistName: "update artist",
-                        facebook: "facebook.com",
-                        imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        instagramId: "instagram.com",
-                        key: "artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        masterUserId: "662b71650a78738b0334837f",
-                        spotifyId: "spotify.com",
-                        userName: "Mehedi(dev)",
-                        youtube: "youtube.com",
-                    }
-                ],
-                format: "Single",
-                labels: [
-                    {
-                        _id: "6693be9f0a78738b03348998",
-                        actionRequird: "",
-                        description: "New Description",
-                        imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/label-image/1720958600094-274869658-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        key: "label-image/1720958600094-274869658-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        labelName: "Demo Label",
-                        masterUserId: "662b71650a78738b0334837f",
-                        status: "Approved",
-                        userName: "Mehedi(dev)",
-                        youtubeChannelLink: "Youtube.com",
-                    },
-                    {
-                        _id: "6693be9f0a78738b03348999",
-                        actionRequird: "",
-                        description: "New Description another",
-                        imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/label-image/1720958600094-274869658-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        key: "label-image/1720958600094-274869658-entertainment-2015-03-zayn-malik-one-direction-main.webp",
-                        labelName: "Demo Label another",
-                        masterUserId: "662b71650a78738b0334837f",
-                        status: "Approved",
-                        userName: "Mehedi(dev)",
-                        youtubeChannelLink: "Youtube.com",
-                    },
-                ],
-                lyricsLanguage: "Italian"
-            },
-        ]
-    }];
+    // const customData = [{
+    //     _id: "673a17dc81efade8917e7f01",
+    //     userName: "Mehedi(dev)",
+    //     releaseTitle: "Gg",
+    //     imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/release-image/1731860207816-74252537-received_563886096588336.png",
+    //     key: "release-image/1731860207816-74252537-received_563886096588336.png",
+    //     genre: "Blues",
+    //     pLine: "Yy",
+    //     cLine: "Ty",
+    //     UPC: "ff",
+    //     releaseDate: "2024-11-21",
+    //     status: "Approved",
+    //     masterUserId: "662b71650a78738b0334837f",
+    //     actionReqHistory: ['jkhgjhgkjhkjhkljh', 'kjhghgkg'],
+    //     actionRequired: "",
+    //     format: "Single",
+    //     tracks: [
+    //         {
+    //             ISRC: "ff",
+    //             albumName: "Dd",
+    //             artist: [
+    //                 { 
+    //                     _id: "66f3f4a79b1f85c4a3a588b8",
+    //                     appleId: "apple.com",
+    //                     artistName: "Artist",
+    //                     facebook: "facebook.com",
+    //                     imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     instagramId: "instagram.com",
+    //                     key: "artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     masterUserId: "662b71650a78738b0334837f",
+    //                     spotifyId: "spotify.com",
+    //                     userName: "Mehedi(dev)",
+    //                     youtube: "youtube.com",
+    //                 },
+    //                 { 
+    //                     _id: "66f3f4a79b1f85c4a3a588b9",
+    //                     appleId: "apple.com",
+    //                     artistName: "update artist",
+    //                     facebook: "facebook.com",
+    //                     imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     instagramId: "instagram.com",
+    //                     key: "artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     masterUserId: "662b71650a78738b0334837f",
+    //                     spotifyId: "spotify.com",
+    //                     userName: "Mehedi(dev)",
+    //                     youtube: "youtube.com",
+    //                 }
+    //             ],
+    //             audioKey: "release-audio/1731860402889-643468749-twisterion-b1-221376.wav",
+    //             audioName: "twisterion-b1-221376.wav",
+    //             audioUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/release-audio/1731860402889-643468749-twisterion-b1-221376.wav",
+    //             authors: [
+    //                 { 
+    //                     _id: "66f3f4a79b1f85c4a3a588b8",
+    //                     appleId: "apple.com",
+    //                     artistName: "Artist",
+    //                     facebook: "facebook.com",
+    //                     imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     instagramId: "instagram.com",
+    //                     key: "artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     masterUserId: "662b71650a78738b0334837f",
+    //                     spotifyId: "spotify.com",
+    //                     userName: "Mehedi(dev)",
+    //                     youtube: "youtube.com",
+    //                 },
+    //                 { 
+    //                     _id: "66f3f4a79b1f85c4a3a588b9",
+    //                     appleId: "apple.com",
+    //                     artistName: "update artist",
+    //                     facebook: "facebook.com",
+    //                     imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     instagramId: "instagram.com",
+    //                     key: "artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     masterUserId: "662b71650a78738b0334837f",
+    //                     spotifyId: "spotify.com",
+    //                     userName: "Mehedi(dev)",
+    //                     youtube: "youtube.com",
+    //                 },
+    //             ],
+    //             composer: ['Dd Xx'],
+    //             featuring: [
+    //                 { 
+    //                     _id: "66f3f4a79b1f85c4a3a588b8",
+    //                     appleId: "apple.com",
+    //                     artistName: "Artist",
+    //                     facebook: "facebook.com",
+    //                     imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     instagramId: "instagram.com",
+    //                     key: "artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     masterUserId: "662b71650a78738b0334837f",
+    //                     spotifyId: "spotify.com",
+    //                     userName: "Mehedi(dev)",
+    //                     youtube: "youtube.com",
+    //                 },
+    //                 { 
+    //                     _id: "66f3f4a79b1f85c4a3a588b9",
+    //                     appleId: "apple.com",
+    //                     artistName: "update artist",
+    //                     facebook: "facebook.com",
+    //                     imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     instagramId: "instagram.com",
+    //                     key: "artist-image/1727263891155-580896161-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     masterUserId: "662b71650a78738b0334837f",
+    //                     spotifyId: "spotify.com",
+    //                     userName: "Mehedi(dev)",
+    //                     youtube: "youtube.com",
+    //                 }
+    //             ],
+    //             format: "Single",
+    //             labels: [
+    //                 {
+    //                     _id: "6693be9f0a78738b03348998",
+    //                     actionRequird: "",
+    //                     description: "New Description",
+    //                     imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/label-image/1720958600094-274869658-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     key: "label-image/1720958600094-274869658-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     labelName: "Demo Label",
+    //                     masterUserId: "662b71650a78738b0334837f",
+    //                     status: "Approved",
+    //                     userName: "Mehedi(dev)",
+    //                     youtubeChannelLink: "Youtube.com",
+    //                 },
+    //                 {
+    //                     _id: "6693be9f0a78738b03348999",
+    //                     actionRequird: "",
+    //                     description: "New Description another",
+    //                     imgUrl: "https://dream-records-2024.s3.ap-south-1.amazonaws.com/label-image/1720958600094-274869658-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     key: "label-image/1720958600094-274869658-entertainment-2015-03-zayn-malik-one-direction-main.webp",
+    //                     labelName: "Demo Label another",
+    //                     masterUserId: "662b71650a78738b0334837f",
+    //                     status: "Approved",
+    //                     userName: "Mehedi(dev)",
+    //                     youtubeChannelLink: "Youtube.com",
+    //                 },
+    //             ],
+    //             lyricsLanguage: "Italian"
+    //         },
+    //     ]
+    // }];
 
 
 
     
-    
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -174,29 +161,17 @@ const EditReleaseMainPage = () => {
     const {id} = useParams();
     const [releaseId] = useState(id)
 
-    // const [releaseFormData, setReleaseFormData] = useState();
-    // const [preReleaseData, setPreReleaseData] = useState();
-    // const [uploadedImageLink, setUploadedImageLink] = useState();
-    // const [uploadedImage, setUploadedImage] = useState('');
-    const [preReleaseData, setPreReleaseData] = useState(customData[0]);
+    const [preReleaseData, setPreReleaseData] = useState();
     const [firstStep, setFirstStep] = useState();
-    const [secondStep, setSecondStep] = useState(customData[0].tracks);
+    const [secondStep, setSecondStep] = useState();
     const [audioData, setAudioData] = useState();
     const [lyricsLanguage, setLyricsLanguage] = useState();
     const [genre, setGenre] = useState();
     const [uploadedImageLink, setUploadedImageLink] = useState('');
     const [uploadedImage, setUploadedImage] = useState();
-    const [format, setFormat] = useState(customData[0].format)
+    const [format, setFormat] = useState()
 
     const releaseContextValue = {
-        // releaseFormData,
-        // setReleaseFormData,
-        // preReleaseData, setPreReleaseData,
-        // setPreReleaseData,
-        // uploadedImageLink,
-        // setUploadedImageLink,
-        // uploadedImage,
-        // setUploadedImage,
         releaseId,
         preReleaseData, setPreReleaseData,
         firstStep, setFirstStep,
@@ -220,36 +195,32 @@ const EditReleaseMainPage = () => {
 
     const [loading, setLoading] = useState(false)
     useEffect(() => {
-        if(format === 'Single'){
-            setArtist(customData[0].tracks[0].artist)
-            setLabels(customData[0].tracks[0].labels)
-            setFeaturing(customData[0].tracks[0].featuring)
-            setAuthors(customData[0].tracks[0].authors)
-            setComposer(customData[0].tracks[0].composer)
-            setLyricsLanguage(customData[0].tracks[0].lyricsLanguage)
-            const audioKey = customData[0].tracks[0].audioKey
-            const audioName = customData[0].tracks[0].audioName
-            const audioUrl = customData[0].tracks[0].audioUrl
-            const aData = {audioKey, audioName, audioUrl}
-            setAudioData(aData)
-        }
+        
         setLoading(true)
         axios.get(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/single/${id}`)
             .then( res => {
               if(res.status == 200){
                 setLoading(false)
-               
-                setPreReleaseData(customData[0]);
-                console.log(res.data.data[0]);
-                setUploadedImageLink(customData[0].imgUrl)
-                const imgUrl = customData[0].imgUrl;
-                const key = customData[0].key;
+                setPreReleaseData(res.data.data[0]);
+                setUploadedImageLink(res.data.data[0].imgUrl)
+                const imgUrl = res.data.data[0].imgUrl;
+                const key = res.data.data[0].key;
                 setUploadedImage({imgUrl, key})
-                // setPreReleaseData(res.data.data[0]);
-                // setUploadedImageLink(res.data.data[0].imgUrl)
-                // const imgUrl = res.data.data[0].imgUrl;
-                // const key = res.data.data[0].key;
-                // setUploadedImage({imgUrl, key})
+                setSecondStep(res.data.data[0].tracks)
+                setFormat(res.data.data[0].format)
+                if(res.data.data[0].format === 'Single'){
+                    setArtist(res.data.data[0].tracks[0].artist)
+                    setLabels(res.data.data[0].tracks[0].labels)
+                    setFeaturing(res.data.data[0].tracks[0].featuring)
+                    setAuthors(res.data.data[0].tracks[0].authors)
+                    setComposer(res.data.data[0].tracks[0].composer)
+                    setLyricsLanguage(res.data.data[0].tracks[0].lyricsLanguage)
+                    const audioKey = res.data.data[0].tracks[0].audioKey
+                    const audioName = res.data.data[0].tracks[0].audioName
+                    const audioUrl = res.data.data[0].tracks[0].audioUrl
+                    const aData = {audioKey, audioName, audioUrl}
+                    setAudioData(aData)
+                }
               }
             })
             .catch(er => console.log(er));

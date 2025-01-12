@@ -20,6 +20,7 @@ const AdminSingleReleasePage = () => {
     const [loading, setLoading] = useState(false);
     const [releaseData, setReleaseData] = useState()
     const [releaseStatus, setReleaseStatus] = useState();
+    const [updatedTracks, setUpdatedTracks] = useState();
 
     const [albumData, setAlbumData] = useState()
     useEffect(() => {
@@ -28,6 +29,8 @@ const AdminSingleReleasePage = () => {
             .then( res => {
                 if(res.status == 200){
                     setReleaseData(res.data.data[0]);
+                    setUpdatedTracks(res.data.data[0].tracks);
+                    console.log(res.data.data[0]);
                     setReleaseStatus(res.data.data[0].status)
                     const rData = res.data.data[0]
                     if(rData.format === 'Album'){
@@ -67,6 +70,11 @@ const AdminSingleReleasePage = () => {
             actionRequired = textToHTML(data.actionRequired);
         }
         let formData;
+        const updatedTracksListISRC = updatedTracks.map((track, index) => ({
+            ...track,
+            ISRC: data[`ISRC${index}`] || track.ISRC, // Use the input ISRC or fallback to the existing one
+        }));
+
         if(status === 'Action Required' || status === 'Takedown'){
             if(releaseData.actionReqHistory){
                 releaseData.actionReqHistory.push(actionRequired)
@@ -77,16 +85,16 @@ const AdminSingleReleasePage = () => {
                 // console.log(formData);
             }
         }else{
-            formData =  {...releaseData, status, ...data,}
-            // console.log(formData);
+            actionRequired = ''
+            formData = {...releaseData, tracks: updatedTracksListISRC, UPC: data.UPC, status, actionRequired: actionRequired}
         }
-        // const formData = {...releaseData, status, ...data }
+
             axios.put(`https://shark-app-65c5t.ondigitalocean.app/api/v1/release/update-release/${id}`, formData)
             .then(res => {
                 if(res.status == 200){
                     setUpdateLoading(false);
-                    reset()
                     navigate('/admin-dashboard/release/updated-status')
+                    reset()
                 }
             })
             .catch(er => console.log(er))        
@@ -202,12 +210,29 @@ const AdminSingleReleasePage = () => {
                                             {
                                                 releaseStatus === 'Approved' && 
                                                 <div className="p-3 mt-3 border rounded-md">
-                                                    <p className="text-sm font-semibold text-slate-500 ms-2">ISRC <span className="text-red-500">*</span></p>
-                                                    <input {...register("ISRC", { required: true})} type="text" placeholder="ISRC" defaultValue={releaseData?.ISRC} className="input input-bordered input-sm w-full rounded-full" />
-                                                    {errors.ISRC && <span className='text-red-600 block'>ISRC Required</span>}
-                                                    <p className="mt-2 text-sm font-semibold text-slate-500 ms-2">UPC <span className="text-red-500">*</span></p>
-                                                    <input {...register("UPC", { required: true})} type="text" placeholder="UPC" defaultValue={releaseData?.UPC} className="input input-bordered input-sm w-full rounded-full" />
-                                                    {errors.UPC && <span className='text-red-600 block'>UPC Required</span>}
+                                                    <div className="pb-2">
+                                                        <p className="mt-2 text-sm font-semibold text-slate-500 ms-2">UPC <span className="text-red-500">*</span></p>
+                                                        <input {...register("UPC", { required: true})} type="text" placeholder="UPC" defaultValue={releaseData?.UPC} className="input input-bordered input-sm w-full rounded-md" />
+                                                        {errors.UPC && <span className='text-red-600 block'>UPC Required</span>}
+                                                    </div>
+                                                    
+                                                    {/* {
+                                                        releaseData?.format === 'Single' && releaseData.tracks.length < 1 &&
+                                                        <>
+                                                            <p className="text-sm font-semibold text-slate-500 ms-2">ISRC S<span className="text-red-500">*</span></p>
+                                                            <input {...register("ISRC", { required: true})} type="text" placeholder="ISRC" defaultValue={releaseData?.tracks[0].ISRC} className="input input-bordered input-sm w-full rounded-md" />
+                                                            {errors.ISRC && <span className='text-red-600 block'>ISRC Required</span>}
+                                                        </>
+                                                    } */}
+                                                    {
+                                                        releaseData && releaseData.tracks.map((track, index)=>{
+                                                            return <div key={index} className='py-2'>
+                                                                <p className="text-sm font-semibold text-slate-500 ms-2">ISRC <span className="bg-slate-100 rounded-md text-sm px-2"> Track {index + 1}</span><span className="text-red-500">*</span></p>
+                                                                <input {...register(`ISRC${index}`, { required: true})} type="text" placeholder="ISRC" defaultValue={track.ISRC} className="input input-bordered input-sm w-full rounded-md" />
+                                                                {errors[`ISRC${index}`] && <span className='text-red-600 block'>Please fill ISRC and UPC</span>}
+                                                            </div>
+                                                        })
+                                                    }
                                                 </div>
                                             }
                                             <div className="flex items-center">
@@ -245,7 +270,7 @@ const AdminSingleReleasePage = () => {
                             <p className="text-xs font-bold">Artist Details</p>
                             <div className=" p-2 bg-slate-100 rounded-md">
                                 {
-                                    releaseData?.artist.map((a, index) => 
+                                    releaseData?.artist?.map((a, index) => 
                                         <div key={a._id} onClick={()=>document.getElementById(`${index}`).showModal()} style={{cursor: 'pointer'}} className="flex my-2">
                                             <div>
                                                 <Image
@@ -341,7 +366,7 @@ const AdminSingleReleasePage = () => {
                             <p className="text-xs font-bold">Labels Details</p>
                             <div className=" p-2 bg-slate-100 rounded-md">
                                 {
-                                    releaseData?.labels.map((l) => 
+                                    releaseData?.labels?.map((l) => 
                                         <div key={l._id} onClick={()=>document.getElementById(`${l._id}`).showModal()} style={{cursor: 'pointer'}}>
                                             <div className="flex my-2">
                                                 <div>

@@ -47,6 +47,7 @@ const EditSpecificTrackFromAlbum = ({track, index}) => {
             const audioUrl = track.audioUrl
             const aData = {audioKey, audioName, audioUrl}
             setAudioData(aData)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
 
